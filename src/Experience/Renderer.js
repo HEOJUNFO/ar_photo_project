@@ -12,6 +12,7 @@ export default class Renderer
         this.camera = this.experience.camera
 
         this.setInstance()
+        this.setWebcamBackground()
     }
 
     setInstance()
@@ -25,9 +26,23 @@ export default class Renderer
         this.instance.toneMappingExposure = 1.75
         this.instance.shadowMap.enabled = true
         this.instance.shadowMap.type = THREE.PCFSoftShadowMap
-        this.instance.setClearColor('#211d20')
         this.instance.setSize(this.sizes.width, this.sizes.height)
         this.instance.setPixelRatio(this.sizes.pixelRatio)
+    }
+
+    async setWebcamBackground() {
+        const video = document.createElement('video');
+        const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
+        video.srcObject = stream;
+        video.play();
+
+        const videoTexture = new THREE.VideoTexture(video);
+        videoTexture.minFilter = THREE.LinearFilter;
+        videoTexture.magFilter = THREE.LinearFilter;
+        videoTexture.format = THREE.RGBAFormat;
+        videoTexture.encoding = THREE.sRGBEncoding;
+
+        this.scene.background = videoTexture;
     }
 
     resize()
