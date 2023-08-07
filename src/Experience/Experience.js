@@ -39,6 +39,8 @@ export default class Experience
         this.renderer = new Renderer()
         this.world = new World()
 
+        this.bindMethods()
+
         // Resize event
         this.sizes.on('resize', () =>
         {
@@ -50,6 +52,11 @@ export default class Experience
         {
             this.update()
         })
+    }
+
+    bindMethods()
+    {
+        this.camera.bindMethods()
     }
 
     resize()

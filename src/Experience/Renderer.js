@@ -31,6 +31,7 @@ export default class Renderer
 
     async setWebcamBackground() {
         const video = document.createElement('video');
+
         const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
         video.srcObject = stream;
         video.play();
