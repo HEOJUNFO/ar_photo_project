@@ -1,18 +1,26 @@
+import fs from 'fs';
+
 const isCodeSandbox = 'SANDBOX_URL' in process.env || 'CODESANDBOX_HOST' in process.env
 
+// 인증서 파일 경로를 지정합니다.
+const cert = fs.readFileSync('localhost.pem');
+const key = fs.readFileSync('localhost-key.pem');
+
 export default {
-    root: 'src/',
-    publicDir: '../static/',
-    base: './',
-    server:
-    {
-        host: true,
-        open: !isCodeSandbox // Open if it's not a CodeSandbox
+  root: 'src/',
+  publicDir: '../static/',
+  base: './',
+  server: {
+    host: true,
+    open: !isCodeSandbox, // Open if it's not a CodeSandbox
+    https: {
+      key,
+      cert,
     },
-    build:
-    {
-        outDir: '../dist',
-        emptyOutDir: true,
-        sourcemap: true
-    }
-}
+  },
+  build: {
+    outDir: '../dist',
+    emptyOutDir: true,
+    sourcemap: true
+  }
+};
