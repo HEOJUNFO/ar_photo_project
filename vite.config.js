@@ -1,4 +1,5 @@
 import fs from 'fs';
+import Vue from '@vitejs/plugin-vue';
 
 const isCodeSandbox = 'SANDBOX_URL' in process.env || 'CODESANDBOX_HOST' in process.env
 
@@ -22,5 +23,6 @@ export default {
     outDir: '../dist',
     emptyOutDir: true,
     sourcemap: true
-  }
+  },
+  plugins: [Vue()],
 };

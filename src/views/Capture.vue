@@ -1,12 +1,39 @@
-*
-{
+<template>
+    <div class="navbar">상단바</div>
+    <div class="webgl-container">
+        <canvas class="webgl"></canvas>
+    </div>
+    <div class="footer">
+        <button onclick="buttonClicked(1)">1 번</button>
+        <button onclick="captureImage()">촬영</button>
+        <button onclick="buttonClicked(3)">3 번</button>
+    </div>
+</template>
+
+<script>
+import Experience from '../Experience/Experience.js'
+import { onMounted } from 'vue';
+
+export default {
+    name: 'Capture',
+    setup() {
+        let experience;
+
+        onMounted(() => {
+            experience = new Experience(document.querySelector('canvas.webgl'));
+        });
+    }
+}
+</script>
+
+<style scoped>
+* {
     margin: 0;
     padding: 0;
 }
 
 html,
-body
-{
+body {
     overflow: hidden;
 }
 
@@ -16,6 +43,7 @@ body
     position: relative;
     overflow: hidden;
 }
+
 .webgl {
     position: fixed;
     top: 10vh;
@@ -23,7 +51,8 @@ body
     outline: none;
 }
 
-.navbar, .footer {
+.navbar,
+.footer {
     height: 10vh;
     width: 100%;
     background-color: #333;
@@ -33,6 +62,7 @@ body
     align-items: center;
     justify-content: center;
 }
+
 .footer button {
     margin: 0;
     padding: 10px;
@@ -47,6 +77,8 @@ body
     width: 100%;
     height: 100%;
 }
+
 .footer button:hover {
     background-color: #777;
 }
+</style>
