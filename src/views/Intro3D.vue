@@ -36,7 +36,7 @@ export default {
         });
 
         const exit = () => {
-            router.push('/');
+            router.push('/help');
         }
 
         return {
