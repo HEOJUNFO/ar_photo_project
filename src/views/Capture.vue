@@ -11,9 +11,12 @@
         <div class="webgl-container">
             <canvas class="webgl"></canvas>
         </div>
+        <div class="capture-container">
+            <button onclick="captureImage()">촬영</button>
+        </div>
         <div class="footer">
             <button onclick="buttonClicked(1)">1 번</button>
-            <button onclick="captureImage()">촬영</button>
+            <button onclick="buttonClicked(2)">2 번</button>
             <button onclick="buttonClicked(3)">3 번</button>
         </div>
     </div>
@@ -132,5 +135,32 @@ body {
     height: 10vh;
     justify-content: space-between;
     align-items: center;
+}
+
+.capture-container {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+.capture-container button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #555;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+}
+
+.capture-container button:hover {
+    background-color: #777;
 }
 </style>
