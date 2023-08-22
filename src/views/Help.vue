@@ -1,7 +1,12 @@
 <template>
     <div @click="handleIndexTransition()" class="loading-container">
-        <div :class="{ 'hidden-content': index >= 3 }" class="text-container1">
-            <p>TEST</p>
+        <div class="top-section">
+            <div :class="{ 'hidden-content': index >= 3 }" class="text-container1">
+                <p>TEST</p>
+            </div>
+            <div class="side-image-container">
+                <img :src="currentCharacter.src" alt="Side Image" />
+            </div>
         </div>
         <div class="image-container">
             <img :src="currentImageSrc" alt="Loading..." />
@@ -85,6 +90,15 @@ export default {
     background-color: #fff;
 }
 
+.top-section {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
 .text-container1 {
     display: flex;
     justify-content: center;
@@ -92,6 +106,7 @@ export default {
     border: 1px solid black;
     padding: 10px;
     background-color: #fff;
+    width: 80%;
 }
 
 .text-container1 p {
@@ -111,7 +126,6 @@ export default {
     display: flex;
     align-items: center;
     margin-top: 7vh;
-    margin-bottom: 7vh;
 }
 
 .image-container img {
@@ -130,5 +144,17 @@ export default {
 
 .image-container button:hover {
     background: rgba(0, 0, 0, 0.7);
+}
+
+.side-image-container {
+    width: 20%;
+    display: flex;
+    align-items: center;
+}
+
+.side-image-container img {
+    height: 100%;
+    width: 100%;
+    display: block;
 }
 </style>
