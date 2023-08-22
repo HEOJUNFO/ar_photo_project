@@ -8,8 +8,13 @@
                 <img :src="currentCharacter.src" alt="Side Image" />
             </div>
         </div>
+        <div class="button-container">
+            <button @click.stop="zoomIn">확대</button>
+            <button @click.stop="zoomOut">축소</button>
+        </div>
         <div class="image-container">
-            <img :src="currentImageSrc" alt="Loading..." />
+            <img :src="currentImageSrc" :style="{ transform: `scale(${zoom}) translate(${currentX}px, ${currentY}px)` }"
+                alt="Loading..." @touchstart="startDrag" @touchmove="drag" @touchend="endDrag" @touchcancel="endDrag" />
         </div>
     </div>
 </template>
@@ -33,6 +38,12 @@ export default {
         const index = ref(0)
         const imageIndex = ref(0)
         const characterIndex = ref(0)
+        const zoom = ref(1)
+        const dragging = ref(false)
+        const currentX = ref(0)
+        const currentY = ref(0)
+        const lastX = ref(0)
+        const lastY = ref(0)
 
         const currentImageSrc = computed(() => IMAGES[imageIndex.value])
 
@@ -66,6 +77,38 @@ export default {
             }
         }
 
+        const zoomIn = () => {
+            zoom.value += 0.1;
+        }
+
+        const zoomOut = () => {
+            if (zoom.value > 0.1) {
+                zoom.value -= 0.1;
+            }
+        }
+
+        const startDrag = (event) => {
+            event.preventDefault()
+            dragging.value = true
+            lastX.value = event.touches[0].clientX
+            lastY.value = event.touches[0].clientY
+        }
+
+        const drag = (event) => {
+            if (!dragging.value) return
+            event.preventDefault()
+            const deltaX = event.touches[0].clientX - lastX.value
+            const deltaY = event.touches[0].clientY - lastY.value
+            currentX.value += deltaX
+            currentY.value += deltaY
+            lastX.value = event.touches[0].clientX
+            lastY.value = event.touches[0].clientY
+        }
+
+        const endDrag = () => {
+            dragging.value = false
+        }
+
         watch(index, (value) => {
             console.log(value)
         })
@@ -76,6 +119,14 @@ export default {
             currentImageSrc,
             currentCharacter,
             characterContent: currentCharacterContent,
+            zoomIn,
+            zoomOut,
+            zoom,
+            startDrag,
+            drag,
+            endDrag,
+            currentX,
+            currentY
         }
     }
 }
@@ -89,14 +140,17 @@ export default {
     align-items: center;
     height: 100vh;
     background-color: #fff;
+    flex: 1;
 }
 
 .top-section {
     display: flex;
     flex-direction: row;
     width: 100%;
+    height: auto;
     justify-content: space-between;
     align-items: center;
+    z-index: 1;
 }
 
 
@@ -124,9 +178,9 @@ export default {
 }
 
 .image-container {
+    flex-grow: 1;
     display: flex;
     align-items: center;
-    margin-top: 7vh;
 }
 
 .image-container img {
@@ -157,5 +211,26 @@ export default {
     height: 100%;
     width: 100%;
     display: block;
+}
+
+.button-container {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    z-index: 10;
+}
+
+.button-container button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-container button:first-child {
+    order: -1;
 }
 </style>
