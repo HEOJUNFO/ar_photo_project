@@ -1,27 +1,46 @@
 <template>
-    <div class="navbar">상단바</div>
-    <div class="webgl-container">
-        <canvas class="webgl"></canvas>
-    </div>
-    <div class="footer">
-        <button onclick="buttonClicked(1)">1 번</button>
-        <button onclick="captureImage()">촬영</button>
-        <button onclick="buttonClicked(3)">3 번</button>
+    <div>
+        <div class="top-section">
+            <div :class="{ 'hidden-content': index >= 0 }" class="text-container1">
+                <p>TEST</p>
+            </div>
+            <div class="side-image-container">
+                <img :src="currentCharacter.src" alt="Side Image" />
+            </div>
+        </div>
+        <div class="webgl-container">
+            <canvas class="webgl"></canvas>
+        </div>
+        <div class="footer">
+            <button onclick="buttonClicked(1)">1 번</button>
+            <button onclick="captureImage()">촬영</button>
+            <button onclick="buttonClicked(3)">3 번</button>
+        </div>
     </div>
 </template>
 
 <script>
+import { useCharacterStore } from '../stores/characterStore.js'
 import Experience from '../Experience/Experience.js'
-import { onMounted } from 'vue';
+import { onMounted, computed, ref } from 'vue';
 
 export default {
     name: 'Capture',
     setup() {
         let experience;
+        const index = ref(0)
+        const characterStore = useCharacterStore()
+
+        const currentCharacter = computed(() => characterStore.currentCharacter)
 
         onMounted(() => {
             experience = new Experience(document.querySelector('canvas.webgl'));
         });
+
+        return {
+            index,
+            currentCharacter,
+        }
     }
 }
 </script>
@@ -38,21 +57,22 @@ body {
 }
 
 .webgl-container {
-    height: 80vh;
+    height: 90vh;
     width: 100%;
+    top: -10vh;
     position: relative;
     overflow: hidden;
 }
 
 .webgl {
     position: fixed;
-    top: 10vh;
     left: 0;
     outline: none;
 }
 
-.navbar,
 .footer {
+    position: relative;
+    bottom: 10vh;
     height: 10vh;
     width: 100%;
     background-color: #333;
@@ -80,5 +100,37 @@ body {
 
 .footer button:hover {
     background-color: #777;
+}
+
+.side-image-container {
+    width: 20%;
+    display: flex;
+    align-items: center;
+}
+
+.side-image-container img {
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+
+
+.hidden-content {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    height: 10vh;
+    overflow: hidden;
+}
+
+.top-section {
+    z-index: 1;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 10vh;
+    justify-content: space-between;
+    align-items: center;
 }
 </style>

@@ -60,6 +60,7 @@ export default {
         }
 
         const handleIndexTransition = () => {
+            router.push('/terms')
             if (transitions[index.value]) {
                 transitions[index.value]()
             }
