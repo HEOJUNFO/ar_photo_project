@@ -4,15 +4,18 @@
             <div :class="{ 'hidden-content': index >= 0 }" class="text-container1">
                 <p>TEST</p>
             </div>
-            <div class="side-image-container">
-                <img :src="currentCharacter.src" alt="Side Image" />
-            </div>
         </div>
         <div class="webgl-container">
             <canvas class="webgl"></canvas>
         </div>
         <div class="capture-container">
             <button onclick="captureImage()">촬영</button>
+        </div>
+        <div class="help-container">
+            <button @click="helpButtonClicked()">help</button>
+        </div>
+        <div class="side-image-container">
+            <img :src="currentCharacter.src" alt="Side Image" />
         </div>
         <div class="footer">
             <button onclick="buttonClicked(1)">1 번</button>
@@ -26,6 +29,8 @@
 import { useCharacterStore } from '../stores/characterStore.js'
 import Experience from '../Experience/Experience.js'
 import { onMounted, computed, ref } from 'vue';
+import { onBeforeRouteLeave } from 'vue-router'
+import router from '../router';
 
 export default {
     name: 'Capture',
@@ -36,13 +41,21 @@ export default {
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
+        const helpButtonClicked = () => {
+            router.push('/help');
+        }
         onMounted(() => {
             experience = new Experience(document.querySelector('canvas.webgl'));
+        });
+
+        onBeforeRouteLeave(() => {
+            experience.init()
         });
 
         return {
             index,
             currentCharacter,
+            helpButtonClicked,
         }
     }
 }
@@ -106,14 +119,16 @@ body {
 }
 
 .side-image-container {
-    width: 20%;
-    display: flex;
-    align-items: center;
+    position: absolute;
+    top: 60vh;
+    right: -70%;
+    transform: translateX(-50%);
+    z-index: 2;
 }
 
 .side-image-container img {
-    height: 100%;
-    width: 100%;
+    height: 50%;
+    width: 50%;
     display: block;
 }
 
@@ -139,7 +154,7 @@ body {
 
 .capture-container {
     position: absolute;
-    top: 70%;
+    top: 80vh;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 2;
@@ -160,7 +175,26 @@ body {
     outline: none;
 }
 
-.capture-container button:hover {
-    background-color: #777;
+.help-container {
+    position: absolute;
+    top: 5vh;
+    left: 90%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+.help-container button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #8252e2;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
 }
 </style>

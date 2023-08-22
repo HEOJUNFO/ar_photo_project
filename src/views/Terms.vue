@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { ref, computed, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 import router from '../router'
 
 export default {
@@ -41,6 +41,7 @@ export default {
         const showModal = ref(false);
 
         const start = () => {
+            localStorage.setItem('consentGiven', 'true');
             router.push('/capture')
         }
 

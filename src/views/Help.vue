@@ -71,7 +71,12 @@ export default {
         }
 
         const handleIndexTransition = () => {
-            router.push('/terms')
+            const consentGiven = localStorage.getItem('consentGiven');
+            if (consentGiven === 'true') {
+                router.push('/capture');
+            } else {
+                router.push('/terms');
+            }
             if (transitions[index.value]) {
                 transitions[index.value]()
             }
