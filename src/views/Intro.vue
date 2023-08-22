@@ -1,34 +1,33 @@
 <template>
-    <transition name="fade" mode="out-in">
-        <div :key="index === 5 ? 'animate' : 'static'" @click="handleIndexTransition()" class="loading-container">
-            <div :class="{ 'hidden-content': index >= 3 }" class="text-container1">
-                <p>{{ currentData.text1 }}</p>
-            </div>
-            <div class="image-container">
-                <button v-show="index === 2" @click.stop="navigateToPreviousImage()">◀</button>
-                <img :src="currentImageSrc" alt="Loading..." />
-                <button v-show="index === 2" @click.stop="navigateToNextImage()">▶</button>
-            </div>
-            <div :class="{ 'hidden-content': !(index === 0 || index >= 2) }" class="text-container2">
-                <img v-if="index === 5" :src="selectCharacterSrc" alt="Description" class="overlap-image" />
-                <p v-show="index >= 2">{{ characterContent.name }}</p>
-                <p v-show="index >= 2">{{ characterContent.text }}</p>
-                <div class="button-container">
-                    <button v-show="index === 0 || index === 2 || index === 3" @click.stop="handleIndexTransition()">{{
-                        currentData.buttonText1
-                    }}</button>
-                    <button v-show="index === 0 || index === 3" @click.stop="handleIndexTransition()">{{
-                        currentData.buttonText2
-                    }}</button>
-                </div>
+    <div @click="handleIndexTransition()" class="loading-container">
+        <div :class="{ 'hidden-content': index >= 3 }" class="text-container1">
+            <p>{{ currentData.text1 }}</p>
+        </div>
+        <div class="image-container">
+            <button v-show="index === 2" @click.stop="navigateToPreviousImage()">◀</button>
+            <img :src="currentImageSrc" alt="Loading..." />
+            <button v-show="index === 2" @click.stop="navigateToNextImage()">▶</button>
+        </div>
+        <div :class="{ 'hidden-content': !(index === 0 || index >= 2) }" class="text-container2">
+            <img v-if="index === 5" :src="selectCharacterSrc" alt="Description" class="overlap-image" />
+            <p v-show="index >= 2">{{ characterContent.name }}</p>
+            <p v-show="index >= 2">{{ characterContent.text }}</p>
+            <div class="button-container">
+                <button v-show="index === 0 || index === 2 || index === 3" @click.stop="handleIndexTransition()">{{
+                    currentData.buttonText1
+                }}</button>
+                <button v-show="index === 0 || index === 3" @click.stop="handleIndexTransition()">{{
+                    currentData.buttonText2
+                }}</button>
             </div>
         </div>
-    </transition>
+    </div>
 </template>
 
 <script>
 import { useCharacterStore } from '../stores/characterStore.js'
 import { ref, computed, watch } from 'vue'
+import router from '../router'
 
 const IMAGES = [
     'https://playar.syrup.co.kr/sodarimg/is/marketing/202308/17TZcrb5Q*38b3ed16b02bec43416b4a7dec923cb0.gif',
@@ -44,27 +43,6 @@ const DATA = [
     { text1: "", buttonText1: "응, 숲 속으로 가보자!", buttonText2: "얼른 신비의 숲을 보고 싶어." }
 ]
 
-const CHARACTER_DATAS = [
-    [
-        { name: "벨", text: "롯데백화점 분당점 어쩌구" },
-        { name: "벨", text: "안녕, 우리 같이 즐거운 시간 보내보자!" },
-        { name: "벨", text: "좋아. 우리 같이 신비의 숲 문을 열어볼까" },
-        { name: "벨", text: "신비의 숲 문을 두드려 볼래?" }
-    ],
-    [
-        { name: "벨2", text: "롯데백화점 분당점 어쩌구" },
-        { name: "벨2", text: "안녕, 우리 같이 즐거운 시간 보내보자!" },
-        { name: "벨2", text: "좋아. 우리 같이 신비의 숲 문을 열어볼까" },
-        { name: "벨2", text: "신비의 숲 문을 두드려 볼래?" }
-    ],
-    [
-        { name: "벨3", text: "롯데백화점 분당점 어쩌구" },
-        { name: "벨3", text: "안녕, 우리 같이 즐거운 시간 보내보자!" },
-        { name: "벨3", text: "좋아. 우리 같이 신비의 숲 문을 열어볼까" },
-        { name: "벨3", text: "신비의 숲 문을 두드려 볼래?" }
-    ]
-]
-
 export default {
     name: 'Intro',
     setup() {
@@ -72,16 +50,14 @@ export default {
         const index = ref(0)
         const imageIndex = ref(0)
         const characterIndex = ref(0)
-        const characterContent = ref({ name: "", text: "" })
 
         const currentImageSrc = computed(() => IMAGES[imageIndex.value])
-        const selectCharacterSrc = computed(() => characterStore.currentCharacterSrc)
         const currentData = computed(() => DATA[index.value] || {})
 
-        const updateCharacterContent = () => {
-            const charData = CHARACTER_DATAS[imageIndex.value - 1]
-            characterContent.value = charData ? charData[characterIndex.value] || {} : { name: "", text: "" }
-        }
+        const currentCharacterContent = computed(() => {
+            const char = characterStore.currentCharacter
+            return char.contents[imageIndex.value] || {}
+        })
 
         const transitions = {
             0: () => index.value = 1,
@@ -96,8 +72,7 @@ export default {
                 characterStore.setCharacterIndex(imageIndex.value - 1)
             },
             4: () => {
-                index.value = 5
-                characterIndex.value = 3
+                router.push('/intro3d')
             }
         }
 
@@ -115,7 +90,6 @@ export default {
             imageIndex.value = (imageIndex.value - 1) || IMAGES.length - 1
         }
 
-        watch([imageIndex, characterIndex], updateCharacterContent, { deep: true })
 
         watch(index, (value) => {
             console.log(value)
@@ -131,8 +105,8 @@ export default {
             currentImageSrc,
             navigateToNextImage,
             navigateToPreviousImage,
-            characterContent,
-            selectCharacterSrc
+            characterContent: currentCharacterContent,
+            selectCharacterSrc: characterStore.currentCharacterSrc
         }
     }
 }
@@ -239,19 +213,5 @@ export default {
     height: auto;
     z-index: 1;
     transform: translateY(-50%);
-}
-
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 1s ease-in-out;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-    opacity: 0;
-}
-
-.fade-enter-to {
-    opacity: 1;
 }
 </style>
