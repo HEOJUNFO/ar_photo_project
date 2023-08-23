@@ -83,10 +83,7 @@ export default class Camera
         ctx.putImageData(data, 0, 0);
         const image = canvas.toDataURL('image/png');
 
-        const link = document.createElement('a');
-        link.download = 'image.png';
-        link.href = image;
-        link.click();
+        this.experience.saveImage(image)
 
         return image;
     }

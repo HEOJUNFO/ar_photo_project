@@ -14,7 +14,7 @@ let instance = null
 
 export default class Experience
 {
-    constructor(_canvas)
+    constructor(_canvas,saveImageCallback)
     {
         // Singleton
         if(instance)
@@ -40,6 +40,8 @@ export default class Experience
         this.world = new World()
 
         this.bindMethods()
+
+        this.saveImageCallback = saveImageCallback;
 
         // Resize event
         this.sizes.on('resize', () =>
@@ -75,6 +77,13 @@ export default class Experience
     init()
     {
      instance = null;
+    }
+
+    saveImage(image)
+    {
+        if(this.saveImageCallback){
+            this.saveImageCallback(image);
+        }
     }
 
     destroy()
