@@ -18,9 +18,9 @@
             <img :src="currentCharacter.src" alt="Side Image" />
         </div>
         <div class="footer">
-            <button onclick="buttonClicked(1)">1 번</button>
-            <button onclick="buttonClicked(2)">2 번</button>
-            <button onclick="buttonClicked(3)">3 번</button>
+            <button onclick="buttonClicked(1)">쇼핑</button>
+            <button onclick="buttonClicked(2)">외식</button>
+            <button onclick="buttonClicked(3)">문화</button>
         </div>
     </div>
 </template>
@@ -36,6 +36,8 @@ export default {
     name: 'Capture',
     setup() {
         let experience;
+
+
         const index = ref(0)
         const characterStore = useCharacterStore()
 
@@ -44,8 +46,15 @@ export default {
         const helpButtonClicked = () => {
             router.push('/help');
         }
+
+        const saveImage = (image) => {
+            const link = document.createElement('a');
+            link.download = 'image.png';
+            link.href = image;
+            link.click();
+        }
         onMounted(() => {
-            experience = new Experience(document.querySelector('canvas.webgl'));
+            experience = new Experience(document.querySelector('canvas.webgl'), saveImage);
         });
 
         onBeforeRouteLeave(() => {
