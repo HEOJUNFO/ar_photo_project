@@ -1,10 +1,5 @@
 <template>
     <div>
-        <div class="top-section">
-            <div :class="{ 'hidden-content': index >= 0 }" class="text-container1">
-                <p>TEST</p>
-            </div>
-        </div>
         <div class="webgl-container">
             <canvas class="webgl"></canvas>
         </div>
@@ -48,10 +43,7 @@ export default {
         }
 
         const saveImage = (image) => {
-            const link = document.createElement('a');
-            link.download = 'image.png';
-            link.href = image;
-            link.click();
+            router.push({ path: '/capturepreview', query: { imgData: image } });
         }
         onMounted(() => {
             experience = new Experience(document.querySelector('canvas.webgl'), saveImage);
@@ -84,7 +76,7 @@ body {
 .webgl-container {
     height: 90vh;
     width: 100%;
-    top: -10vh;
+    top: 0vh;
     position: relative;
     overflow: hidden;
 }
@@ -97,7 +89,7 @@ body {
 
 .footer {
     position: relative;
-    bottom: 10vh;
+    bottom: 0vh;
     height: 10vh;
     width: 100%;
     background-color: #333;
@@ -110,7 +102,6 @@ body {
 
 .footer button {
     margin: 0;
-    padding: 10px;
     background-color: #555;
     border: none;
     color: #fff;

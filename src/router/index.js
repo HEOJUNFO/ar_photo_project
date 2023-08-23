@@ -6,6 +6,7 @@ import Intro from "../views/Intro.vue"
 import Intro3D from "../views/Intro3D.vue"
 import Help from "../views/Help.vue"
 import Terms from "../views/Terms.vue"
+import CapturePreview from "../views/CapturePreview.vue"
 
 export const routes = [
     {path: '/', component: Landing, name: 'Landing'},
@@ -14,6 +15,7 @@ export const routes = [
     {path: '/intro3d', component: Intro3D, name: 'Intro3D'},
     {path: '/help', component: Help, name: 'Help'},
     {path: '/terms', component: Terms, name: 'Terms'},
+    {path: '/capturepreview', component: CapturePreview, name: 'CapturePreview'},
 ]
 
 const router = createRouter({
