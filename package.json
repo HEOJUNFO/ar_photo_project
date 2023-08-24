@@ -12,6 +12,7 @@
     "vite": "^4.3.9"
   },
   "dependencies": {
+    "konva": "^9.2.0",
     "lil-gui": "^0.18.1",
     "pinia": "^2.1.6",
     "three": "^0.155.0",
