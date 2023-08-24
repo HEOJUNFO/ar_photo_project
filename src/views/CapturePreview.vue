@@ -8,11 +8,9 @@
                 <p>사진 촬영 프리뷰</p>
             </div>
         </div>
-        <div class="webgl-container">
-            <img :src="imgData" alt="Side Image" />
-        </div>
+        <div ref="konvaContainer" class="konva-container"></div>
         <div class="footer">
-            <button>편집</button>
+            <button @click="showToolbox = true">편집</button>
             <button @click="saveImage()">저장</button>
             <button @click="toggleFooter2()">공유</button>
         </div>
@@ -29,12 +27,41 @@
                 <button @click="confirmBack">확인</button>
             </div>
         </div>
+        <div v-if="showToolbox" class="toolbox">
+            <div class="toolbox-left">
+                <button @click="activateTool('draw')" :class="{ active: currentTool === 'draw' }">그리기</button>
+                <button @click="activateTool('text')" :class="{ active: currentTool === 'text' }">텍스트</button>
+            </div>
+            <div class="toolbox-center">
+                <div v-if="currentTool === 'draw'" class="toolbox-button">
+                    <button @click="setDrawingTool('pen')">펜</button>
+                    <button @click="setDrawingTool('highlighter')">형광펜</button>
+                    <button @click="setDrawingTool('eraser')">지우개</button>
+                </div>
+
+                <div v-if="currentTool === 'text'" class="toolbox-button">
+                    <button>일반</button>
+                    <button>굵게</button>
+                    <button>밑줄</button>
+                </div>
+
+                <div class="color-palette">
+                    <div class="color-row" v-for="row in 2" :key="row">
+                        <div v-for="color in colors.slice((row - 1) * 5, row * 5)" :key="color"
+                            :style="{ backgroundColor: color }" @click="setColor(color)"></div>
+                    </div>
+                </div>
+            </div>
+
+            <button @click="showToolbox = false, drawComplete()">완료</button>
+        </div>
     </div>
 </template>
 
 <script>
 import { onMounted, computed, ref } from 'vue';
 import router from '../router';
+import Konva from 'konva';
 
 export default {
     name: 'CapturePreview',
@@ -44,6 +71,34 @@ export default {
         const showFooter2 = ref(false);
         const showModal = ref(false);
 
+
+        const showToolbox = ref(false);
+        const currentTool = ref('draw');
+        const currentDrawingTool = ref(null);
+        const currentColor = ref('black');
+        const colors = ['red', 'blue', 'green', 'yellow', 'orange', 'purple', 'brown', 'black', 'white', 'gray'];
+
+
+
+        const line = ref(null);
+        const isDrawing = ref(false);
+
+        const activateTool = (tool) => {
+            currentTool.value = tool;
+        }
+
+        const setColor = (color) => {
+            currentColor.value = color;
+        }
+
+        const setDrawingTool = (tool) => {
+            currentDrawingTool.value = tool;
+        }
+
+        const konvaContainer = ref(null);
+        let stage;
+        let layer;
+        let drawingLayer;
 
         const back = () => {
             showModal.value = true;
@@ -58,6 +113,9 @@ export default {
             showModal.value = false;
         }
 
+        const drawComplete = () => {
+            imgData.value = stage.toDataURL();
+        }
 
         const saveImage = () => {
             const link = document.createElement('a');
@@ -94,9 +152,87 @@ export default {
                 .catch(console.error);
         }
 
+        const startDrawing = () => {
+            if (!showToolbox.value) return;
+            isDrawing.value = true;
+            const pos = stage.getPointerPosition();
+
+            line.value = new Konva.Line({
+                stroke: currentColor.value,
+                strokeWidth: currentDrawingTool.value === 'pen' ? 5 : 15,
+                globalCompositeOperation: currentDrawingTool.value === 'eraser' ? 'destination-out' : 'source-over',
+                points: [pos.x, pos.y],
+                draggable: false
+            });
+
+            drawingLayer.add(line.value);
+        }
+
+        const endDrawing = () => {
+            if (!showToolbox.value) return;
+            isDrawing.value = false;
+        }
+
+        const draw = () => {
+            if (!showToolbox.value) return;
+            if (!isDrawing.value) return;
+            const pos = stage.getPointerPosition();
+            const newPoints = line.value.points().concat([pos.x, pos.y],);
+            line.value.points(newPoints);
+            layer.batchDraw();
+        }
+
         onMounted(() => {
             imgData.value = router.currentRoute.value.query.imgData;
+
+            const imageObj = new Image();
+            imageObj.src = imgData.value;
+            imageObj.onload = () => {
+
+                const imageWidth = imageObj.width;
+
+                stage = new Konva.Stage({
+                    container: konvaContainer.value,
+                    width: imageWidth,
+                    height: window.innerHeight * 0.8
+                });
+
+                layer = new Konva.Layer();
+                drawingLayer = new Konva.Layer();
+
+                stage.add(layer);
+                stage.add(drawingLayer);
+
+                const konvaImage = new Konva.Image({
+                    x: 0,
+                    y: 0,
+                    image: imageObj,
+                    width: imageWidth,
+                    height: window.innerHeight * 0.8
+                });
+
+                layer.add(konvaImage);
+                layer.draw();
+
+                stage.on('mousedown touchstart', (e) => {
+                    if (currentTool.value === 'draw' || currentTool.value === '지우개') {
+                        console.log(e)
+                        startDrawing(e);
+                    }
+                });
+
+                stage.on('mouseup touchend', () => {
+                    endDrawing();
+                });
+
+                stage.on('mousemove touchmove', (e) => {
+                    draw(e);
+                });
+            };
+
+
         });
+
 
         return {
             index,
@@ -108,25 +244,21 @@ export default {
             share,
             showModal,
             confirmBack,
-            closeModal
+            closeModal,
+            konvaContainer,
+            currentTool,
+            colors,
+            activateTool,
+            setColor,
+            showToolbox,
+            setDrawingTool,
+            drawComplete
         }
     }
 }
 </script>
 
 <style scoped>
-.webgl-container {
-    height: 80vh;
-    width: 100%;
-    overflow: hidden;
-}
-
-.webgl-container img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-}
-
 .footer {
     height: 10vh;
     width: 100%;
@@ -252,5 +384,58 @@ export default {
 
 .modal button {
     margin-top: 15px;
+}
+
+
+.toolbox {
+    background-color: #fff;
+    border: 1px solid #000;
+    position: relative;
+    top: -16vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toolbox-center {
+    display: flex;
+    flex-direction: column
+}
+
+.toolbox-left button,
+.toolbox-center button {
+    margin: 0 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.toolbox-button {
+    display: flex;
+    flex-direction: row;
+}
+
+.active {
+    background-color: #aaa;
+}
+
+.color-palette {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.color-row {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.color-row div {
+    width: 20px;
+    height: 20px;
+    margin: 0 5px;
+    border: 1px solid #000;
+    cursor: pointer;
 }
 </style>
