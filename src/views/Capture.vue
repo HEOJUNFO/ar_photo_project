@@ -1,10 +1,5 @@
 <template>
     <div>
-        <div class="top-section">
-            <div :class="{ 'hidden-content': index >= 0 }" class="text-container1">
-                <p>TEST</p>
-            </div>
-        </div>
         <div class="webgl-container">
             <canvas class="webgl"></canvas>
         </div>
@@ -18,9 +13,9 @@
             <img :src="currentCharacter.src" alt="Side Image" />
         </div>
         <div class="footer">
-            <button onclick="buttonClicked(1)">1 번</button>
-            <button onclick="buttonClicked(2)">2 번</button>
-            <button onclick="buttonClicked(3)">3 번</button>
+            <button onclick="buttonClicked(1)">쇼핑</button>
+            <button onclick="buttonClicked(2)">외식</button>
+            <button onclick="buttonClicked(3)">문화</button>
         </div>
     </div>
 </template>
@@ -36,6 +31,8 @@ export default {
     name: 'Capture',
     setup() {
         let experience;
+
+
         const index = ref(0)
         const characterStore = useCharacterStore()
 
@@ -44,8 +41,12 @@ export default {
         const helpButtonClicked = () => {
             router.push('/help');
         }
+
+        const saveImage = (image) => {
+            router.push({ path: '/capturepreview', query: { imgData: image } });
+        }
         onMounted(() => {
-            experience = new Experience(document.querySelector('canvas.webgl'));
+            experience = new Experience(document.querySelector('canvas.webgl'), saveImage);
         });
 
         onBeforeRouteLeave(() => {
@@ -75,7 +76,7 @@ body {
 .webgl-container {
     height: 90vh;
     width: 100%;
-    top: -10vh;
+    top: 0vh;
     position: relative;
     overflow: hidden;
 }
@@ -88,7 +89,7 @@ body {
 
 .footer {
     position: relative;
-    bottom: 10vh;
+    bottom: 0vh;
     height: 10vh;
     width: 100%;
     background-color: #333;
@@ -101,7 +102,6 @@ body {
 
 .footer button {
     margin: 0;
-    padding: 10px;
     background-color: #555;
     border: none;
     color: #fff;
