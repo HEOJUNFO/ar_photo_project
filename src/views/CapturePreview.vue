@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="capture-preview">
         <div class="top-section">
             <div class="side-image-container">
                 <button @click="back()">뒤로</button>
@@ -30,7 +30,7 @@
         <div v-if="showToolbox" class="toolbox">
             <div class="toolbox-left">
                 <button @click="activateTool('draw')" :class="{ active: currentTool === 'draw' }">그리기</button>
-                <button @click="activateTool('text')" :class="{ active: currentTool === 'text' }">텍스트</button>
+                <button @click="activateTool('text'), addText()" :class="{ active: currentTool === 'text' }">텍스트</button>
             </div>
             <div class="toolbox-center">
                 <div v-if="currentTool === 'draw'" class="toolbox-button">
@@ -40,9 +40,9 @@
                 </div>
 
                 <div v-if="currentTool === 'text'" class="toolbox-button">
-                    <button>일반</button>
-                    <button>굵게</button>
-                    <button>밑줄</button>
+                    <button @click="setTextTool('normal')">일반</button>
+                    <button @click="setTextTool('bold')">굵게</button>
+                    <button @click="setTextTool('underline')">밑줄</button>
                 </div>
 
                 <div class="color-palette">
@@ -52,14 +52,17 @@
                     </div>
                 </div>
             </div>
-
             <button @click="showToolbox = false, drawComplete()">완료</button>
+        </div>
+        <div v-if="showToolbox" class="button-container">
+            <button @click="undo">Undo</button>
+            <button @click="redo">Redo</button>
         </div>
     </div>
 </template>
 
 <script>
-import { onMounted, computed, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import router from '../router';
 import Konva from 'konva';
 
@@ -71,17 +74,16 @@ export default {
         const showFooter2 = ref(false);
         const showModal = ref(false);
 
-
         const showToolbox = ref(false);
         const currentTool = ref('draw');
         const currentDrawingTool = ref(null);
+        const currentTextTool = ref(null);
         const currentColor = ref('black');
         const colors = ['red', 'blue', 'green', 'yellow', 'orange', 'purple', 'brown', 'black', 'white', 'gray'];
 
-
-
         const line = ref(null);
         const isDrawing = ref(false);
+
 
         const activateTool = (tool) => {
             currentTool.value = tool;
@@ -95,10 +97,67 @@ export default {
             currentDrawingTool.value = tool;
         }
 
+        const setTextTool = (tool) => {
+            currentTextTool.value = tool;
+        }
+
         const konvaContainer = ref(null);
+        const history = ref([]);
+        const historyIndex = ref(-1);
         let stage;
         let layer;
         let drawingLayer;
+
+        const undo = () => {
+            if (historyIndex.value <= 0) return;
+
+            historyIndex.value--;
+            const imageObj = new Image();
+            imageObj.src = history.value[historyIndex.value];
+            imageObj.onload = () => {
+                const prevImage = new Konva.Image({
+                    x: 0,
+                    y: 0,
+                    image: imageObj,
+                    width: stage.width(),
+                    height: stage.height(),
+                });
+                drawingLayer.destroyChildren();
+                drawingLayer.add(prevImage);
+                drawingLayer.draw();
+            };
+        };
+
+        // redo 기능
+        const redo = () => {
+            if (historyIndex.value >= history.value.length - 1) return;
+
+            historyIndex.value++;
+            const imageObj = new Image();
+            imageObj.src = history.value[historyIndex.value];
+            imageObj.onload = () => {
+                const nextImage = new Konva.Image({
+                    x: 0,
+                    y: 0,
+                    image: imageObj,
+                    width: stage.width(),
+                    height: stage.height(),
+                });
+                drawingLayer.destroyChildren();
+                drawingLayer.add(nextImage);
+                drawingLayer.draw();
+            };
+        };
+
+        const addHistory = () => {
+            if (historyIndex.value < history.value.length - 1) {
+                history.value = history.value.slice(0, historyIndex.value + 1);
+            }
+
+            history.value.push(drawingLayer.toDataURL());
+            historyIndex.value++;
+        };
+
 
         const back = () => {
             showModal.value = true;
@@ -160,6 +219,7 @@ export default {
             line.value = new Konva.Line({
                 stroke: currentColor.value,
                 strokeWidth: currentDrawingTool.value === 'pen' ? 5 : 15,
+                opacity: currentDrawingTool.value === 'highlighter' ? 0.5 : 1,
                 globalCompositeOperation: currentDrawingTool.value === 'eraser' ? 'destination-out' : 'source-over',
                 points: [pos.x, pos.y],
                 draggable: false
@@ -171,6 +231,7 @@ export default {
         const endDrawing = () => {
             if (!showToolbox.value) return;
             isDrawing.value = false;
+            addHistory();
         }
 
         const draw = () => {
@@ -181,6 +242,42 @@ export default {
             line.value.points(newPoints);
             layer.batchDraw();
         }
+
+        const addText = () => {
+            if (currentTool.value !== 'text') return;
+
+
+            const input = document.createElement('input');
+            input.style.position = 'absolute';
+            input.style.top = '50%';
+            input.style.left = '50%';
+            input.style.transform = 'translate(-50%, -50%)';
+
+            document.body.appendChild(input);
+            input.focus();
+
+            input.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    const text = new Konva.Text({
+                        x: 80,
+                        y: 160,
+                        text: input.value,
+                        fontFamily: 'Calibri',
+                        fontSize: 80,
+                        draggable: true,
+                        fill: currentColor.value,
+                        fontStyle: currentTextTool.value === 'bold' ? 'bold' : 'normal',
+                        textDecoration: currentTextTool.value === 'underline' ? 'underline' : 'none',
+                    });
+                    drawingLayer.add(text);
+                    layer.draw();
+
+                    addHistory();
+
+                    document.body.removeChild(input);
+                }
+            });
+        };
 
         onMounted(() => {
             imgData.value = router.currentRoute.value.query.imgData;
@@ -214,9 +311,10 @@ export default {
                 layer.add(konvaImage);
                 layer.draw();
 
+                addHistory();
+
                 stage.on('mousedown touchstart', (e) => {
                     if (currentTool.value === 'draw' || currentTool.value === '지우개') {
-                        console.log(e)
                         startDrawing(e);
                     }
                 });
@@ -228,11 +326,9 @@ export default {
                 stage.on('mousemove touchmove', (e) => {
                     draw(e);
                 });
+
             };
-
-
         });
-
 
         return {
             index,
@@ -252,13 +348,21 @@ export default {
             setColor,
             showToolbox,
             setDrawingTool,
-            drawComplete
+            drawComplete,
+            addText,
+            setTextTool,
+            undo,
+            redo,
         }
     }
 }
 </script>
 
 <style scoped>
+.konva-container {
+    touch-action: pan-x pan-y;
+}
+
 .footer {
     height: 10vh;
     width: 100%;
@@ -437,5 +541,27 @@ export default {
     margin: 0 5px;
     border: 1px solid #000;
     cursor: pointer;
+}
+
+
+.button-container {
+    position: absolute;
+    right: 1vw;
+    bottom: 16vh;
+    z-index: 10;
+}
+
+.button-container button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-container button:first-child {
+    order: -1;
 }
 </style>
