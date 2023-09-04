@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="webgl-container">
+        <div @click="next()" class="webgl-container">
             <canvas class="webgl"></canvas>
         </div>
         <div :class="{ 'hidden-content': !(index === 0 || index >= 2) }" class="text-container2">
@@ -12,13 +12,13 @@
 </template>
 
 <script>
-import Experience from '../three/Intro/Experience.js'
+import Experience from '../three/Shopping/Experience.js'
 import { onMounted, ref, computed } from 'vue';
 import router from '../router';
 import { useCharacterStore } from '../stores/characterStore.js'
 
 export default {
-    name: 'Intro3D',
+    name: 'Shopping3D',
     setup() {
         let experience;
         const characterStore = useCharacterStore()
@@ -31,18 +31,22 @@ export default {
             return currentCharacter.value.intro[imageIndex.value] || {}
         })
 
-        onMounted(() => {
-            experience = new Experience(document.querySelector('canvas.webgl'), exit);
-        });
-
-        const exit = () => {
-            router.push('/help');
+        const next = () => {
+            if (index.value === 0) {
+                index.value = 1
+                experience.modelVisible()
+            }
         }
+
+        onMounted(() => {
+            experience = new Experience(document.querySelector('canvas.webgl'));
+        });
 
         return {
             index,
             currentCharacter,
             characterContent: currentCharacterContent,
+            next,
         }
     }
 }
@@ -60,7 +64,7 @@ body {
 }
 
 .webgl-container {
-    height: 80vh;
+    height: 100vh;
     width: 100%;
     position: relative;
     overflow: hidden;
@@ -68,12 +72,12 @@ body {
 
 .webgl {
     position: fixed;
-    top: 10vh;
     left: 0;
     outline: none;
 }
 
 .text-container2 {
+    z-index: 2;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -82,6 +86,7 @@ body {
     border: 1px solid black;
     padding: 10px;
     background-color: #fff;
+    bottom: 10vh;
 }
 
 .hidden-content {
@@ -98,7 +103,7 @@ body {
     right: -50px;
     width: 150px;
     height: auto;
-    z-index: 1;
+    z-index: ;
     transform: translateY(-50%);
 }
 </style>
