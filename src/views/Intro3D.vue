@@ -16,6 +16,7 @@ import Experience from '../three/Intro/Experience.js'
 import { onMounted, ref, computed } from 'vue';
 import router from '../router';
 import { useCharacterStore } from '../stores/characterStore.js'
+import { onBeforeRouteLeave } from 'vue-router'
 
 export default {
     name: 'Intro3D',
@@ -33,6 +34,10 @@ export default {
 
         onMounted(() => {
             experience = new Experience(document.querySelector('canvas.webgl'), exit);
+        });
+
+        onBeforeRouteLeave(() => {
+            experience.init()
         });
 
         const exit = () => {

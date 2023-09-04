@@ -47,7 +47,7 @@ export default {
         }
 
         const shopping = () => {
-            router.push('/shopping3D');
+            router.push('/shopping');
         }
         onMounted(() => {
             experience = new Experience(document.querySelector('canvas.webgl'), saveImage);

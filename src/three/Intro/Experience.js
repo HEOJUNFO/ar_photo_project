@@ -72,6 +72,11 @@ export default class Experience
         this.renderer.resize()
     }
 
+    init()
+    {
+     instance = null;
+    }
+
     update()
     {
         this.camera.update()

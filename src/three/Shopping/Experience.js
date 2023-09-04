@@ -14,7 +14,7 @@ let instance = null
 
 export default class Experience
 {
-    constructor(_canvas,onModelClickCallback)
+    constructor(_canvas,goToNextSceneCallback)
     {
         // Singleton
         if(instance)
@@ -46,7 +46,7 @@ export default class Experience
 
         this.bindMethods()
 
-        this.onModelClickCallback = onModelClickCallback;
+        this.goToNextSceneCallback = goToNextSceneCallback;
 
         // Resize event
         this.sizes.on('resize', () =>
@@ -74,6 +74,11 @@ export default class Experience
 
     modelVisible(){
         this.world.modelVisible();
+    }
+
+    init()
+    {
+     instance = null;
     }
 
     update()
@@ -117,9 +122,9 @@ export default class Experience
             this.debug.ui.destroy()
     }
 
-    onModelClick() {
-        if (this.onModelClickCallback) {
-            this.onModelClickCallback();
+    goToNextScene(){
+        if(this.goToNextSceneCallback){
+            this.goToNextSceneCallback();
         }
     }
 

@@ -22,6 +22,12 @@ export default class Fox
 
         this.setModel()
         this.setAnimation()
+
+        this.movementDuration = 0;
+        this.startX = 0;
+
+        window.addEventListener('touchstart', this.onTouchStart.bind(this));
+        window.addEventListener('touchmove', this.onTouchMove.bind(this));
     }
 
     modelVisible(){
@@ -90,8 +96,35 @@ export default class Fox
         }
     }
 
+    onTouchStart(event)
+    {
+        this.startX = event.touches[0].clientX;
+    }
+
+    onTouchMove(event)
+    {
+        const currentX = event.touches[0].clientX;
+        const deltaX = currentX - this.startX;
+
+        this.model.position.x += deltaX * 0.01;  
+
+        this.startX = currentX;
+        this.hasMoved = true;
+    }
+
     update()
     {
         this.animation.mixer.update(this.time.delta * 0.001)
+
+        if (this.hasMoved) {
+            this.movementDuration += this.time.delta * 0.001;  
+        }
+        if (this.movementDuration >= 1) {
+            this.experience.goToNextScene();
+            this.movementDuration = 0; 
+        }
+
+    
+        this.hasMoved = false;
     }
 }
