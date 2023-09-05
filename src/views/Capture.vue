@@ -13,7 +13,7 @@
             <img :src="currentCharacter.src" alt="Side Image" />
         </div>
         <div class="footer">
-            <button onclick="buttonClicked(1)">쇼핑</button>
+            <button @click="shopping">쇼핑</button>
             <button onclick="buttonClicked(2)">외식</button>
             <button onclick="buttonClicked(3)">문화</button>
         </div>
@@ -22,7 +22,7 @@
 
 <script>
 import { useCharacterStore } from '../stores/characterStore.js'
-import Experience from '../Experience/Experience.js'
+import Experience from '../three/Experience/Experience.js'
 import { onMounted, computed, ref } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router'
 import router from '../router';
@@ -45,6 +45,10 @@ export default {
         const saveImage = (image) => {
             router.push({ path: '/capturepreview', query: { imgData: image } });
         }
+
+        const shopping = () => {
+            router.push('/shopping');
+        }
         onMounted(() => {
             experience = new Experience(document.querySelector('canvas.webgl'), saveImage);
         });
@@ -57,6 +61,7 @@ export default {
             index,
             currentCharacter,
             helpButtonClicked,
+            shopping
         }
     }
 }
