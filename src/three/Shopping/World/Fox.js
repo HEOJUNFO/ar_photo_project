@@ -119,7 +119,7 @@ export default class Fox
         if (this.hasMoved) {
             this.movementDuration += this.time.delta * 0.001;  
         }
-        if (this.movementDuration >= 1) {
+        if (this.movementDuration >= 6) {
             this.experience.goToNextScene();
             this.movementDuration = 0; 
         }
