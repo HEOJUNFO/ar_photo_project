@@ -14,7 +14,7 @@ let instance = null
 
 export default class Experience
 {
-    constructor(_canvas,onModelClickCallback)
+    constructor(_canvas,goToNextSceneCallback)
     {
         // Singleton
         if(instance)
@@ -46,7 +46,7 @@ export default class Experience
 
         this.bindMethods()
 
-        this.onModelClickCallback = onModelClickCallback;
+        this.goToNextSceneCallback = goToNextSceneCallback;
 
         // Resize event
         this.sizes.on('resize', () =>
@@ -70,6 +70,15 @@ export default class Experience
     {
         this.camera.resize()
         this.renderer.resize()
+    }
+
+    modelVisible(){
+        this.world.modelVisible();
+    }
+
+    init()
+    {
+     instance = null;
     }
 
     update()
@@ -113,9 +122,9 @@ export default class Experience
             this.debug.ui.destroy()
     }
 
-    onModelClick() {
-        if (this.onModelClickCallback) {
-            this.onModelClickCallback();
+    goToNextScene(){
+        if(this.goToNextSceneCallback){
+            this.goToNextSceneCallback();
         }
     }
 
@@ -129,7 +138,7 @@ export default class Experience
     
         for (let i = 0; i < intersects.length; i++) {
             if (this._isObjectChildOf(intersects[i].object, this.clickedObject)) {
-                    this.onModelClick();
+             
                 break;
             }
         }

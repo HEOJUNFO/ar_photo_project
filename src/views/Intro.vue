@@ -56,7 +56,7 @@ export default {
 
         const currentCharacterContent = computed(() => {
             const char = characterStore.currentCharacter
-            return char.contents[imageIndex.value] || {}
+            return char.intro[imageIndex.value] || {}
         })
 
         const transitions = {
