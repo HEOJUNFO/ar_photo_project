@@ -1,7 +1,7 @@
 import Experience from '../Experience.js'
 import Environment from './Environment.js'
-import Floor from './Floor.js'
-import Fox from './Fox.js'
+
+import Ship from './Ship.js'
 
 export default class World
 {
@@ -15,10 +15,11 @@ export default class World
         this.resources.on('ready', () =>
         {
             // Setup
-
+            this.Ship = new Ship()
             this.environment = new Environment()
         })
     }
+
 
     update()
     {
