@@ -15,7 +15,7 @@
         <div class="footer">
             <button @click="shopping">쇼핑</button>
             <button onclick="buttonClicked(2)">외식</button>
-            <button onclick="buttonClicked(3)">문화</button>
+            <button @click="culture">문화</button>
         </div>
     </div>
 </template>
@@ -49,6 +49,9 @@ export default {
         const shopping = () => {
             router.push('/shopping');
         }
+        const culture = () => {
+            router.push('/culture');
+        }
         onMounted(() => {
             experience = new Experience(document.querySelector('canvas.webgl'), saveImage);
         });
@@ -61,7 +64,8 @@ export default {
             index,
             currentCharacter,
             helpButtonClicked,
-            shopping
+            shopping,
+            culture
         }
     }
 }

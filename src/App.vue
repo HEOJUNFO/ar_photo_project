@@ -25,7 +25,7 @@ body {
 
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 1s ease-in-out;
+    transition: opacity 0.5s ease-in-out;
 }
 
 .fade-enter-from,

@@ -9,6 +9,7 @@ import Terms from "../views/Terms.vue"
 import CapturePreview from "../views/CapturePreview.vue"
 import Shopping from "../views/Shopping.vue"
 import ShoppingReward from "../views/ShoppingReward.vue"
+import Culture from "../views/Culture.vue"
 
 export const routes = [
     {path: '/', component: Landing, name: 'Landing'},
@@ -20,6 +21,7 @@ export const routes = [
     {path: '/capturepreview', component: CapturePreview, name: 'CapturePreview'},
     {path: '/shopping', component: Shopping, name: 'Shopping'},
     {path: '/shoppingreward', component: ShoppingReward, name: 'ShoppingReward'},
+    {path: '/culture', component: Culture, name: 'Culture'},
 ]
 
 const router = createRouter({
