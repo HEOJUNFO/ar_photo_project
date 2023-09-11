@@ -11,6 +11,7 @@ import Shopping from "../views/Shopping.vue"
 import ShoppingReward from "../views/ShoppingReward.vue"
 import Culture3D from "../views/Culture3D.vue"
 import Culture from "../views/Culture.vue"
+import CUlture2nd from "../views/Culture2nd.vue"
 
 export const routes = [
     {path: '/', component: Landing, name: 'Landing'},
@@ -24,6 +25,7 @@ export const routes = [
     {path: '/shoppingreward', component: ShoppingReward, name: 'ShoppingReward'},
     {path: '/culture3d', component: Culture3D, name: 'Culture3D'},
     {path: '/culture', component: Culture, name: 'Culture'},
+    {path: '/culture2', component: CUlture2nd, name: 'Culture2nd'},
 ]
 
 const router = createRouter({
