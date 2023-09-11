@@ -42,7 +42,7 @@ export default {
 
         const start = () => {
             localStorage.setItem('consentGiven', 'true');
-            router.go(-1);
+            localStorage.getItem('characterID') ? router.go(-1) : router.push("/intro")
         }
 
         const closeModal = () => {

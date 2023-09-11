@@ -1,17 +1,17 @@
 <template>
-    <div>
-        <!-- <div v-show="index === 1" class="top-section">
+    <div @click.stop="maxPercentage === 99.9 ? next() : null">
+        <div class="top-section">
             <div class="text-container1">
                 <p>{{ characterContent.text }}</p>
             </div>
             <div class="side-image-container">
                 <img :src="currentCharacter.src" alt="Side Image" />
             </div>
-        </div> -->
-        <div @click="next()" class="webgl-container">
+        </div>
+        <div class="webgl-container">
             <canvas class="webgl"></canvas>
         </div>
-        <div @click="next()" class="webgl-container">
+        <div class="webgl-container">
             <canvas class="webgl2"></canvas>
         </div>
         <div class="image-container">
@@ -26,11 +26,6 @@
             <img v-show="visibleStone3" @click="stone3()" src="../resource/culture/game_stone03.png" alt="Above Image"
                 class="image-stone" style="top:76vh; left: 9vw;">
         </div>
-        <!-- <div v-show="index === 0" class="text-container2">
-            <img :src="currentCharacter.src" alt="Description" class="overlap-image" />
-            <p>{{ currentCharacter.name }}</p>
-            <p>{{ characterContent.text }}</p>
-        </div> -->
     </div>
 </template>
 
@@ -49,6 +44,7 @@ export default {
         let experience2;
         const characterStore = useCharacterStore()
         const index = ref(0)
+        const textIndex = ref(4)
         const percentage = ref(0)
         const maxPercentage = ref(27)
         const visibleStone1 = ref(true)
@@ -58,17 +54,21 @@ export default {
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
         const currentCharacterContent = computed(() => {
-            return currentCharacter.value.culture[index.value] || {}
+            return currentCharacter.value.culture[textIndex.value] || {}
         })
 
         const stone1 = () => {
             visibleStone1.value = false
             if (visibleStone2.value === false && visibleStone3.value === false) {
                 maxPercentage.value = 99.9;
+                experience.world.ship.deltaT = 1
+                next()
             } else if (visibleStone2.value === false && visibleStone3.value === true) {
                 maxPercentage.value = 71;
+                experience.world.ship.deltaT = 0.6
             } else {
                 maxPercentage.value = 47;
+                experience.world.ship.deltaT = 0.32
             }
         }
 
@@ -76,8 +76,11 @@ export default {
             visibleStone2.value = false
             if (visibleStone1.value === false && visibleStone3.value === false) {
                 maxPercentage.value = 99.9;
+                experience.world.ship.deltaT = 1
+                next()
             } else if (visibleStone1.value === false && visibleStone3.value === true) {
                 maxPercentage.value = 71;
+                experience.world.ship.deltaT = 0.6
             } else {
                 maxPercentage.value = 27;
             }
@@ -88,8 +91,11 @@ export default {
             visibleStone3.value = false
             if (visibleStone1.value === false && visibleStone2.value === false) {
                 maxPercentage.value = 99.9;
+                experience.world.ship.deltaT = 1
+                next()
             } else if (visibleStone1.value === false && visibleStone2.value === true) {
                 maxPercentage.value = 47;
+                experience.world.ship.deltaT = 0.32
             } else {
                 maxPercentage.value = 27;
             }
@@ -98,9 +104,12 @@ export default {
         const next = () => {
             if (index.value === 0) {
                 index.value = 1
+                textIndex.value = 5
 
             } else if (index.value === 1) {
                 index.value = 2
+            }
+            else if (index.value === 2) {
                 router.push('/shoppingreward')
             }
         }
@@ -129,6 +138,7 @@ export default {
 
         onBeforeRouteLeave(() => {
             experience.init()
+            experience2.init()
         });
 
         return {
@@ -142,7 +152,8 @@ export default {
             stone3,
             visibleStone1,
             visibleStone2,
-            visibleStone3
+            visibleStone3,
+            maxPercentage
         }
     }
 }
@@ -179,36 +190,6 @@ body {
     outline: none;
 }
 
-.text-container2 {
-    z-index: 2;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid black;
-    padding: 10px;
-    background-color: #fff;
-    bottom: 10vh;
-}
-
-.hidden-content2 {
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
-    height: 10vh;
-    overflow: hidden;
-}
-
-.overlap-image {
-    position: absolute;
-    top: 50%;
-    right: -50px;
-    width: 150px;
-    height: auto;
-    z-index: 1;
-    transform: translateY(-50%);
-}
 
 .top-section {
     position: absolute;
@@ -218,7 +199,7 @@ body {
     height: auto;
     justify-content: space-between;
     align-items: center;
-    z-index: 1;
+    z-index: 5;
 }
 
 
@@ -234,16 +215,10 @@ body {
 
 .text-container1 p {
     padding: 7.5px 15px 7.5px 15px;
-    font-size: 1.5rem;
+    font-size: 1rem;
 }
 
-.hidden-content {
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
-    height: 10vh;
-    overflow: hidden;
-}
+
 
 .side-image-container {
     width: 20%;
