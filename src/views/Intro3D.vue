@@ -1,12 +1,11 @@
 <template>
-    <div>
+    <div @click.stop="next()">
         <div class="webgl-container">
             <canvas class="webgl"></canvas>
         </div>
-        <div :class="{ 'hidden-content': !(index === 0 || index >= 2) }" class="text-container2">
-            <img :src="currentCharacter.src" alt="Description" class="overlap-image" />
-            <p v-show="index === 0">{{ currentCharacter.name }}</p>
-            <p v-show="index === 0">{{ characterContent.text }}</p>
+        <div :class="{ 'hidden-content': !(index >= 0) }" class="text-container2">
+            <p v-show="index >= 0">{{ currentCharacter.name }}</p>
+            <p v-show="index >= 0">{{ characterContent.text }}</p>
         </div>
     </div>
 </template>
@@ -24,13 +23,32 @@ export default {
         let experience;
         const characterStore = useCharacterStore()
         const index = ref(0)
-        const imageIndex = ref(3)
+        const imageIndex = ref(1)
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
         const currentCharacterContent = computed(() => {
             return currentCharacter.value.intro[imageIndex.value] || {}
         })
+
+        const next = () => {
+            if (index.value === 0) {
+                index.value = 1
+                imageIndex.value = 2
+
+            } else if (index.value === 1) {
+                index.value = 2
+                imageIndex.value = 3
+            } else if (index.value === 2) {
+                index.value = 3
+                imageIndex.value = 4
+            } else if (index.value === 3) {
+                index.value = 4
+                imageIndex.value = 5
+            } else if (index.value === 4) {
+                router.push('/capture')
+            }
+        }
 
         onMounted(() => {
             experience = new Experience(document.querySelector('canvas.webgl'), exit);
@@ -48,6 +66,7 @@ export default {
             index,
             currentCharacter,
             characterContent: currentCharacterContent,
+            next
         }
     }
 }
@@ -73,20 +92,22 @@ body {
 
 .webgl {
     position: fixed;
-    top: 10vh;
+    top: 0vh;
     left: 0;
     outline: none;
 }
 
 .text-container2 {
-    position: relative;
+    position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     border: 1px solid black;
-    padding: 10px;
     background-color: #fff;
+    bottom: 0vh;
+    width: 100%;
+    height: 20vh;
 }
 
 .hidden-content {
@@ -95,15 +116,5 @@ body {
     pointer-events: none;
     height: 10vh;
     overflow: hidden;
-}
-
-.overlap-image {
-    position: absolute;
-    top: 50%;
-    right: -50px;
-    width: 150px;
-    height: auto;
-    z-index: 1;
-    transform: translateY(-50%);
 }
 </style>

@@ -42,7 +42,7 @@ export default {
 
         const start = () => {
             localStorage.setItem('consentGiven', 'true');
-            router.push('/capture')
+            router.go(-1);
         }
 
         const closeModal = () => {
