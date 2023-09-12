@@ -1,24 +1,24 @@
 <template>
-    <div @click="handleIndexTransition()" class="loading-container">
-        <div :class="{ 'hidden-content': index >= 3 }" class="text-container1">
-            <p>{{ currentData.text1 }}</p>
-        </div>
-        <div class="image-container">
-            <button v-show="index === 2" @click.stop="navigateToPreviousImage()">◀</button>
-            <img :src="currentImageSrc" alt="Loading..." />
-            <button v-show="index === 2" @click.stop="navigateToNextImage()">▶</button>
-        </div>
-        <div :class="{ 'hidden-content': !(index === 0 || index >= 2) }" class="text-container2">
-            <img v-if="index === 5" :src="selectCharacterSrc" alt="Description" class="overlap-image" />
-            <p v-show="index >= 2">{{ characterContent.name }}</p>
-            <p v-show="index >= 2">{{ characterContent.text }}</p>
-            <div class="button-container">
-                <button v-show="index === 0 || index === 2 || index === 3" @click.stop="handleIndexTransition()">{{
-                    currentData.buttonText1
-                }}</button>
-                <button v-show="index === 0 || index === 3" @click.stop="handleIndexTransition()">{{
-                    currentData.buttonText2
-                }}</button>
+    <div>
+        <loading-container>
+        </loading-container>
+        <div class="loading-container">
+            <div class="text-container1">
+                <p>숲에 동행할 요정을 골라주세요</p>
+            </div>
+            <div class="image-container">
+                <button @click.stop="navigateToPreviousImage()">◀</button>
+                <img :src="currentImageSrc" alt="Loading..." />
+                <button @click.stop="navigateToNextImage()">▶</button>
+            </div>
+            <div class="text-container2">
+                <p v-show="index === 0">{{ selectCharacterName }}</p>
+                <p v-show="index === 0">{{ characterContent.text }}</p>
+                <div class="button-container">
+                    <button v-show="index === 0" @click.stop="next()">
+                        선택하기
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -26,87 +26,62 @@
 
 <script>
 import { useCharacterStore } from '../stores/characterStore.js'
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import router from '../router'
+import LoadingContainer from '../components/LoadingContainer.vue'
 
 const IMAGES = [
-    'https://playar.syrup.co.kr/sodarimg/is/marketing/202308/17TZcrb5Q*38b3ed16b02bec43416b4a7dec923cb0.gif',
     'https://dt-static.syrup.co.kr/sodar/character/Thumbnail/Thumbnail_character(1).png',
     'https://dt-static.syrup.co.kr/sodar/character/Thumbnail/Thumbnail_character(2).png',
     'https://dt-static.syrup.co.kr/sodar/sticker/Thumbnail/Thumbnail_sticker (1).png'
 ]
 
-const DATA = [
-    { text1: "신비의 숲으로 떠날 준비는 됐나요?", buttonText1: "그런...거 같아?", buttonText2: "너무 기대된다!" },
-    { text1: "좋아요! 함께 여행할 다른 친구들을 만나보는 건 어떨까?", buttonText1: "", buttonText2: "" },
-    { text1: "당신의 마음에 드는 친구를 선택해주세요.", buttonText1: "선택하기", buttonText2: "" },
-    { text1: "", buttonText1: "응, 숲 속으로 가보자!", buttonText2: "얼른 신비의 숲을 보고 싶어." }
-]
+
 
 export default {
     name: 'Intro',
+    components: {
+        LoadingContainer
+    },
     setup() {
         const characterStore = useCharacterStore()
         const index = ref(0)
         const imageIndex = ref(0)
-        const characterIndex = ref(0)
 
         const currentImageSrc = computed(() => IMAGES[imageIndex.value])
-        const currentData = computed(() => DATA[index.value] || {})
 
         const currentCharacterContent = computed(() => {
             const char = characterStore.currentCharacter
-            return char.intro[imageIndex.value] || {}
+            return char.intro[index.value] || {}
         })
 
-        const transitions = {
-            0: () => index.value = 1,
-            1: () => index.value = 2,
-            2: () => {
-                index.value = 3
-                characterIndex.value = 1
-            },
-            3: () => {
-                index.value = 4
-                characterIndex.value = 2
-                characterStore.setCharacterIndex(imageIndex.value - 1)
-            },
-            4: () => {
-                router.push('/intro3d')
-            }
-        }
 
-        const handleIndexTransition = () => {
-            if (transitions[index.value]) {
-                transitions[index.value]()
-            }
+        const next = () => {
+            localStorage.setItem('characterID', imageIndex.value)
+            router.push('/intro3d')
         }
 
         const navigateToNextImage = () => {
-            imageIndex.value = (imageIndex.value + 1) % IMAGES.length || 1
+            imageIndex.value = (imageIndex.value + 1) % IMAGES.length;
+            characterStore.setCharacterIndex(imageIndex.value)
         }
 
         const navigateToPreviousImage = () => {
-            imageIndex.value = (imageIndex.value - 1) || IMAGES.length - 1
+            imageIndex.value = (imageIndex.value - 1 + IMAGES.length) % IMAGES.length;
+            characterStore.setCharacterIndex(imageIndex.value)
         }
 
 
-        watch(index, (value) => {
-            console.log(value)
-            if (value === 2) {
-                imageIndex.value = 1
-            }
-        })
 
         return {
-            currentData,
             index,
-            handleIndexTransition,
+            next,
             currentImageSrc,
             navigateToNextImage,
             navigateToPreviousImage,
             characterContent: currentCharacterContent,
-            selectCharacterSrc: characterStore.currentCharacterSrc
+            selectCharacterSrc: characterStore.currentCharacter.src,
+            selectCharacterName: characterStore.currentCharacter.name,
         }
     }
 }
@@ -172,13 +147,6 @@ export default {
     background-color: #eee;
 }
 
-.hidden-content {
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
-    height: 10vh;
-    overflow: hidden;
-}
 
 .image-container {
     display: flex;
@@ -203,15 +171,5 @@ export default {
 
 .image-container button:hover {
     background: rgba(0, 0, 0, 0.7);
-}
-
-.overlap-image {
-    position: absolute;
-    top: 50%;
-    right: -100px;
-    width: 150px;
-    height: auto;
-    z-index: 1;
-    transform: translateY(-50%);
 }
 </style>

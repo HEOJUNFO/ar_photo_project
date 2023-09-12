@@ -15,7 +15,7 @@ export default class World
         this.resources.on('ready', () =>
         {
             // Setup
-            this.Ship = new Ship()
+            this.ship = new Ship()
             this.environment = new Environment()
         })
     }
@@ -23,7 +23,9 @@ export default class World
 
     update()
     {
-        if(this.fox)
-            this.fox.update()
+    
+        if(this.ship){
+            this.ship.update()
+        }
     }
 }
