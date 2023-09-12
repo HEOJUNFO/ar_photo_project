@@ -11,7 +11,10 @@ import Shopping from "../views/Shopping.vue"
 import ShoppingReward from "../views/ShoppingReward.vue"
 import Culture3D from "../views/Culture3D.vue"
 import Culture from "../views/Culture.vue"
-import CUlture2nd from "../views/Culture2nd.vue"
+import Culture2nd from "../views/Culture2nd.vue"
+import Shopping2nd from "../views/Shopping2nd.vue"
+import Shopping2nd3D from "../views/Shopping2nd3D.vue"
+import Shopping2ndOut from "../views/Shopping2ndOut.vue"
 
 export const routes = [
     {path: '/', component: Landing, name: 'Landing'},
@@ -25,7 +28,10 @@ export const routes = [
     {path: '/shoppingreward', component: ShoppingReward, name: 'ShoppingReward'},
     {path: '/culture3d', component: Culture3D, name: 'Culture3D'},
     {path: '/culture', component: Culture, name: 'Culture'},
-    {path: '/culture2', component: CUlture2nd, name: 'Culture2nd'},
+    {path: '/culture2', component: Culture2nd, name: 'Culture2nd'},
+    {path: '/shopping2', component: Shopping2nd, name: 'Shopping2nd'},
+    {path: '/shopping3', component: Shopping2nd3D, name: 'Shopping2nd3D'},
+    {path: '/shopping2out', component: Shopping2ndOut, name: 'Shopping2ndOut'},
 ]
 
 const router = createRouter({

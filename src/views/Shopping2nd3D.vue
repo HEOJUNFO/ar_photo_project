@@ -1,57 +1,54 @@
 <template>
     <div>
-        <div v-show="index === 1" class="top-section">
+        <div class="top-section">
             <div class="text-container1">
                 <p>{{ characterContent.text }}</p>
             </div>
-            <div class="side-image-container">
+            <div class="side-image-container2">
                 <img :src="currentCharacter.src" alt="Side Image" />
             </div>
         </div>
-        <div @click="next()" class="webgl-container">
+        <div class="webgl-container">
             <canvas class="webgl"></canvas>
         </div>
-        <div v-show="index === 0" class="text-container2">
-            <img :src="currentCharacter.src" alt="Description" class="overlap-image" />
-            <p>{{ currentCharacter.name }}</p>
-            <p>{{ characterContent.text }}</p>
+        <div class="capture-container">
+            <button onclick="captureImage()">촬영</button>
+        </div>
+        <div class="side-image-container">
+            <img :src="currentCharacter.src" alt="Side Image" />
         </div>
     </div>
 </template>
 
 <script>
-import Experience from '../three/Shopping/Experience.js'
-import { onMounted, ref, computed } from 'vue';
-import router from '../router';
 import { useCharacterStore } from '../stores/characterStore.js'
+import Experience from '../three/Experience/Experience.js'
+import { onMounted, computed, ref } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router'
+import router from '../router';
 
 export default {
-    name: 'Shopping',
+    name: 'Capture',
     setup() {
         let experience;
-        const characterStore = useCharacterStore()
         const index = ref(0)
+        const textIndex = ref(5)
+        const eventName = ref('shopping2')
+
+        const characterStore = useCharacterStore()
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
         const currentCharacterContent = computed(() => {
-            return currentCharacter.value.shopping[index.value] || {}
+            return currentCharacter.value.shopping2[textIndex.value] || {}
         })
 
-        const next = () => {
-            if (index.value === 0) {
-                index.value = 1
-                experience.modelVisible()
-            } else if (index.value === 1) {
-                index.value = 2
-                router.push('/shoppingreward')
-            }
+        const saveImage = (image) => {
+            router.push({ path: '/capturepreview', query: { imgData: image, eventName: eventName.value } });
         }
 
-
         onMounted(() => {
-            experience = new Experience(document.querySelector('canvas.webgl'), next);
+            experience = new Experience(document.querySelector('canvas.webgl'), saveImage);
         });
 
         onBeforeRouteLeave(() => {
@@ -62,7 +59,6 @@ export default {
             index,
             currentCharacter,
             characterContent: currentCharacterContent,
-            next,
         }
     }
 }
@@ -72,6 +68,7 @@ export default {
 .webgl-container {
     height: 100vh;
     width: 100%;
+    top: 0vh;
     position: relative;
     overflow: hidden;
 }
@@ -82,27 +79,41 @@ export default {
     outline: none;
 }
 
-.text-container2 {
+.side-image-container {
+    position: absolute;
+    top: 60vh;
+    right: -70%;
+    transform: translateX(-50%);
     z-index: 2;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid black;
-    padding: 10px;
-    background-color: #fff;
-    bottom: 10vh;
 }
 
-.overlap-image {
+.side-image-container img {
+    height: 50%;
+    width: 50%;
+    display: block;
+}
+
+.capture-container {
     position: absolute;
-    top: 50%;
-    right: -50px;
-    width: 150px;
-    height: auto;
-    z-index: 1;
-    transform: translateY(-50%);
+    top: 80vh;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+.capture-container button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #555;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
 }
 
 .top-section {
@@ -122,23 +133,22 @@ export default {
     justify-content: center;
     align-items: center;
     border: 1px solid black;
-    padding: 10px;
     background-color: #fff;
     width: 80%;
 }
 
 .text-container1 p {
     padding: 7.5px 15px 7.5px 15px;
-    font-size: 1.5rem;
+    font-size: 1rem;
 }
 
-.side-image-container {
+.side-image-container2 {
     width: 20%;
     display: flex;
     align-items: center;
 }
 
-.side-image-container img {
+.side-image-container2 img {
     height: 100%;
     width: 100%;
     display: block;
