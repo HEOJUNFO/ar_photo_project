@@ -1,5 +1,16 @@
 <template>
     <div>
+        <div v-show="!showCaptureButton" class="top-section">
+            <div class="side-image-container">
+                <button @click="showModal = true">뒤로</button>
+            </div>
+            <div class="text-container1">
+                <p>염색색상변경</p>
+            </div>
+            <div class="side-image-container">
+                <button>완료</button>
+            </div>
+        </div>
         <div class="webcam" id="image">
             <canvas class="canvas1" id="canvas1"
                 :style="{ display: canvas1Display, position: 'relative', zIndex: 1 }"></canvas>
@@ -27,11 +38,19 @@
             <button @click="colVal('#8f8395')" class="png-button"
                 style="background-image: url('../resource/culture2/hair_06_ashpurple.png')"></button>
         </div>
+        <div v-if="showModal" class="modal">
+            <p>사진 촬영으로 돌아갑니다</p>
+            <div class="modal-buttons">
+                <button @click="showModal = false">취소</button>
+                <button @click="back()">확인</button>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 import vision from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0";
+import router from "../router";
 
 const { ImageSegmenter, SegmentationMask, FilesetResolver } = vision;
 let runningMode = "VIDEO"
@@ -50,6 +69,7 @@ export default {
             canvas1Display: 'none',
             videoDisplay: 'block',
             showCaptureButton: true,
+            showModal: false,
 
         };
     },
@@ -63,6 +83,9 @@ export default {
         this.init();
     },
     methods: {
+        back() {
+            window.location.reload();
+        },
         colVal(d) {
             if (d === 'none') {
                 this.canvas1Display = 'none';
@@ -94,8 +117,8 @@ export default {
             img.src = canvas.toDataURL();
 
             video.style.display = 'none';
-            image.style.height = '90vh';
-            image.style.top = '10vh';
+            image.style.height = '80vh';
+            image.style.top = '0vh';
 
             webcamRunning = false;
 
@@ -103,7 +126,7 @@ export default {
             this.showCaptureButton = false;
         },
         async createImageSegmenter() {
-            const vision = await FilesetResolver.forVisionTasks("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm");
+            const vision = await FilesetResolver.forVisionTasks("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm");
             imageSegmenter = await ImageSegmenter.createFromOptions(vision, {
                 baseOptions: {
                     modelAssetPath: "https://cdn.glitch.global/eb18e63f-936a-4172-8bdd-9263c7a6a04a/hair_segmenter.tflite?v=1689603953377",
@@ -121,7 +144,6 @@ export default {
 
             const canvasCtx = canvasElement.getContext("2d", { willReadFrequently: true })
 
-            let enableWebcamButton;
             webcamRunning = false;
 
             function callbackForVideo(result) {
@@ -193,8 +215,6 @@ export default {
 
             let canvasClick;
             async function handleClick(event) {
-
-
                 if (imageSegmenter === undefined) {
                     return;
                 }
@@ -204,23 +224,11 @@ export default {
 
                 const cxt = canvasClick.getContext("2d");
 
-                const imageUrl = canvasClick.toDataURL();
-                const a = document.createElement('a');
-                a.href = imageUrl;
-                a.download = 'canvasImage.png';  // 다운로드될 파일의 이름을 지정합니다.
-                a.textContent = 'Download Image';
-                // a.click();
-
-
-
-
                 canvasClick.width = document.getElementById("face").naturalWidth;
                 canvasClick.height = document.getElementById("face").naturalHeight;
 
-
                 cxt.clearRect(0, 0, canvasClick.width, canvasClick.height);
                 cxt.drawImage(img, 0, 0, canvasClick.width, canvasClick.height);
-
 
                 if (runningMode === "VIDEO") {
                     runningMode = "IMAGE";
@@ -296,10 +304,7 @@ export default {
 
 
             if (hasGetUserMedia()) {
-                enableWebcamButton = document.getElementById("webcamButton");
-                setTimeout(() => {
-                    enableCam();
-                }, 1000);
+                enableCam();
             }
             else {
                 console.warn("getUserMedia() is not supported by your browser");
@@ -414,5 +419,66 @@ export default {
 
 .png-button:hover {
     border: 1px solid #000;
+}
+
+.top-section {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 10vh;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+}
+
+
+.side-image-container {
+    width: 20%;
+    display: flex;
+    align-items: center;
+}
+
+.side-image-container button {
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+
+.text-container1 {
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    width: 80%;
+}
+
+.text-container1 p {
+    padding: 7.5px 15px 7.5px 15px;
+    font-size: 1.5rem;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 80vw;
+    height: 20vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border: 1px solid #000;
+    flex-direction: column;
+    z-index: 3;
+    transform: translate(-50%, -50%);
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 20%
+}
+
+.modal button {
+    margin-top: 15px;
 }
 </style>

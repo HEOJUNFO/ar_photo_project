@@ -18,13 +18,13 @@
             <img src="../resource/culture/game_bg_water.png" alt="Below Image" class="image-below" :style="clipStyle">
             <img src="../resource/culture/game_bg_land.png" alt="Above Image" class="image-above">
             <img v-show="visibleStone1" @click="stone1()" src="../resource/culture/game_stone01.png" alt="Above Image"
-                class="image-stone" style="top:30vh; left: 20vw;">
+                class="image-stone1" style="top:30vh; left: 20vw;">
             <img v-show="visibleStone2" @click="stone2()" src="../resource/culture/game_stone02.png" alt="Above Image"
-                class="image-stone" style="top:50vh; left: 60vw;">
+                class="image-stone2" style="top:50vh; left: 60vw;">
             <img v-show="visibleStone3" @click="stone3()" src="../resource/culture/game_stone04.png" alt="Above Image"
-                class="image-stone" style="top:75vh; left: 17vw;">
+                class="image-stone3" style="top:75vh; left: 17vw;">
             <img v-show="visibleStone3" @click="stone3()" src="../resource/culture/game_stone03.png" alt="Above Image"
-                class="image-stone" style="top:76vh; left: 9vw;">
+                class="image-stone4" style="top:76vh; left: 9vw;">
         </div>
     </div>
 </template>
@@ -60,7 +60,7 @@ export default {
         const stone1 = () => {
             visibleStone1.value = false
             if (visibleStone2.value === false && visibleStone3.value === false) {
-                maxPercentage.value = 99.9;
+                maxPercentage.value = 99.8;
                 experience.world.ship.deltaT = 1
                 next()
             } else if (visibleStone2.value === false && visibleStone3.value === true) {
@@ -75,7 +75,7 @@ export default {
         const stone2 = () => {
             visibleStone2.value = false
             if (visibleStone1.value === false && visibleStone3.value === false) {
-                maxPercentage.value = 99.9;
+                maxPercentage.value = 99.8;
                 experience.world.ship.deltaT = 1
                 next()
             } else if (visibleStone1.value === false && visibleStone3.value === true) {
@@ -90,7 +90,7 @@ export default {
         const stone3 = () => {
             visibleStone3.value = false
             if (visibleStone1.value === false && visibleStone2.value === false) {
-                maxPercentage.value = 99.9;
+                maxPercentage.value = 99.8;
                 experience.world.ship.deltaT = 1
                 next()
             } else if (visibleStone1.value === false && visibleStone2.value === true) {
@@ -116,10 +116,25 @@ export default {
 
         const updatePercentage = () => {
             if (percentage.value <= maxPercentage.value) {
-                percentage.value = (percentage.value + 0.1) % 100;
+                percentage.value = (percentage.value + 0.2) % 100;
             }
 
         };
+
+        const updateStone = () => {
+            if (visibleStone1.value) {
+                const stoneElem = document.querySelector('.image-stone1');
+                stoneElem.classList.toggle('scaling');
+            } else if (visibleStone2.value) {
+                const stoneElem = document.querySelector('.image-stone2');
+                stoneElem.classList.toggle('scaling');
+            } else if (visibleStone3.value) {
+                const stoneElem = document.querySelector('.image-stone3');
+                const stoneElem2 = document.querySelector('.image-stone4');
+                stoneElem.classList.toggle('scaling');
+                stoneElem2.classList.toggle('scaling');
+            }
+        }
 
         const clipStyle = computed(() => {
             return `clip-path: inset(0 0 ${100 - percentage.value}% 0);`;
@@ -129,7 +144,11 @@ export default {
         onMounted(() => {
             experience = new Experience(document.querySelector('canvas.webgl2'), next);
             experience2 = new Experience2(document.querySelector('canvas.webgl'), next);
-            const interval = setInterval(updatePercentage, 2);  // 100ms마다 percentage 값을 1씩 증가
+            const interval = setInterval(updatePercentage, 1);
+
+            setTimeout(() => {
+                const interval2 = setInterval(updateStone, 5000)
+            }, 5000)
 
             onBeforeUnmount(() => {
                 clearInterval(interval);
@@ -257,10 +276,49 @@ body {
 
 }
 
-.image-stone {
+.image-stone1 {
     position: absolute;
     z-index: 4;
     width: auto;
     height: 10%;
+}
+
+.image-stone2 {
+    position: absolute;
+    z-index: 4;
+    width: auto;
+    height: 10%;
+}
+
+.image-stone3 {
+    position: absolute;
+    z-index: 4;
+    width: auto;
+    height: 10%;
+}
+
+.image-stone4 {
+    position: absolute;
+    z-index: 4;
+    width: auto;
+    height: 10%;
+}
+
+@keyframes scaleAnimation {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.scaling {
+    animation: scaleAnimation 0.5s;
 }
 </style>
