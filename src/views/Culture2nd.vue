@@ -5,24 +5,26 @@
                 :style="{ display: canvas1Display, position: 'relative', zIndex: 1 }"></canvas>
             <video class="video" id="webcam" playsinline="true"
                 :style="{ display: videoDisplay, overflow: 'hidden' }"></video>
+            <img v-show="!showCaptureButton" class="canvas1" id="face"
+                src="https://cdn.glitch.global/eb18e63f-936a-4172-8bdd-9263c7a6a04a/0.jpg?v=1689605799161"
+                crossorigin="anonymous" title="Click to get segmentation!" />
         </div>
         <div v-show="showCaptureButton" class="capture-container">
             <button @click.stop="capture()">촬영</button>
         </div>
         <div v-show="!showCaptureButton" class="png-buttons-container">
-            <button @click="colVal('#000000')" class="png-button"
-                style="background-image: url('path_to_png_1.png')"></button>
+            <button @click="colVal('none')" class="png-button" style="background-image: url('path_to_png_1.png')"></button>
             <button @click="colVal('#A52A2A')" class="png-button"
                 style="background-image: url('../resource/culture2/hair_01_redbrown.png')"></button>
-            <button @click="colVal('#A52A2A')" class="png-button"
+            <button @click="colVal('#98623c')" class="png-button"
                 style="background-image: url('../resource/culture2/hair_02_ashbrown.png')"></button>
-            <button @click="colVal('#A52A2A')" class="png-button"
+            <button @click="colVal('#0047AB')" class="png-button"
                 style="background-image: url('../resource/culture2/hair_03_corbaltblue.png')"></button>
-            <button @click="colVal('#A52A2A')" class="png-button"
+            <button @click="colVal('#B2BEB5')" class="png-button"
                 style="background-image: url('../resource/culture2/hair_04_ashgray.png')"></button>
-            <button @click="colVal('#A52A2A')" class="png-button"
+            <button @click="colVal('#7B3F00')" class="png-button"
                 style="background-image: url('../resource/culture2/hair_05_chocobrown.png')"></button>
-            <button @click="colVal('#A52A2A')" class="png-button"
+            <button @click="colVal('#8f8395')" class="png-button"
                 style="background-image: url('../resource/culture2/hair_06_ashpurple.png')"></button>
         </div>
     </div>
@@ -62,6 +64,12 @@ export default {
     },
     methods: {
         colVal(d) {
+            if (d === 'none') {
+                this.canvas1Display = 'none';
+                let canvas = document.getElementById("canvas1");
+                canvas.style.display = 'none';
+                return;
+            }
             const hexToRgb = hex =>
                 hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, (m, r, g, b) => '#' + r + r + g + g + b + b)
                     .substring(1).match(/.{2}/g)
@@ -73,11 +81,18 @@ export default {
             legendColors[1] = hex;
         },
         capture() {
-            let canvasElement = document.getElementById("canvas1");
             let video = document.getElementById("webcam");
             let image = document.getElementById("image");
+            let img = document.getElementById("face");
 
-            canvasElement.style.display = 'block';
+            let canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            let ctx = canvas.getContext('2d');
+
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            img.src = canvas.toDataURL();
+
             video.style.display = 'none';
             image.style.height = '90vh';
             image.style.top = '10vh';
@@ -86,10 +101,6 @@ export default {
 
             isCapture = true;
             this.showCaptureButton = false;
-
-
-
-
         },
         async createImageSegmenter() {
             const vision = await FilesetResolver.forVisionTasks("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm");
@@ -117,7 +128,7 @@ export default {
                 if (isCapture === false) {
                     canvasElement.style.display = 'none';
                 } else {
-                    canvasElement.style.display = 'block';
+                    // canvasElement.style.display = 'block';
                 }
 
                 let imageData = canvasCtx.getImageData(0, 0, video.videoWidth, video.videoHeight);
@@ -172,10 +183,9 @@ export default {
             }
 
             const imageContainers = document.getElementsByClassName("png-buttons-container");
-            console.log(imageContainers)
 
-            for (let i = 0; i < 7; i++) {
-                console.log(imageContainers[0].getElementsByTagName("button")[i])
+            for (let i = 1; i < 7; i++) {
+
                 imageContainers[0]
                     .getElementsByTagName("button")[i]
                     .addEventListener("click", handleClick);
@@ -184,19 +194,33 @@ export default {
             let canvasClick;
             async function handleClick(event) {
 
-                console.log("ds")
 
                 if (imageSegmenter === undefined) {
                     return;
                 }
-                canvasClick = event.target.parentElement.getElementsByTagName("canvas")[0];
-                canvasClick.width = event.target.naturalWidth;
-                canvasClick.height = event.target.naturalHeight;
+                canvasClick = document.getElementById("canvas1");
+                canvasClick.style.display = 'block';
+                let img = document.getElementById("face");
+
                 const cxt = canvasClick.getContext("2d");
+
+                const imageUrl = canvasClick.toDataURL();
+                const a = document.createElement('a');
+                a.href = imageUrl;
+                a.download = 'canvasImage.png';  // 다운로드될 파일의 이름을 지정합니다.
+                a.textContent = 'Download Image';
+                // a.click();
+
+
+
+
+                canvasClick.width = document.getElementById("face").naturalWidth;
+                canvasClick.height = document.getElementById("face").naturalHeight;
+
+
                 cxt.clearRect(0, 0, canvasClick.width, canvasClick.height);
-                cxt.drawImage(event.target, 0, 0, canvasClick.width, canvasClick.height);
-                event.target.style.opacity = 0;
-                canvasClick.filter = "blur(10px)";
+                cxt.drawImage(img, 0, 0, canvasClick.width, canvasClick.height);
+
 
                 if (runningMode === "VIDEO") {
                     runningMode = "IMAGE";
@@ -205,7 +229,7 @@ export default {
                     });
                 }
 
-                imageSegmenter.segment(event.target, callback);
+                imageSegmenter.segment(img, callback);
             }
             function callback(result) {
                 const cxt = canvasClick.getContext("2d");
@@ -232,9 +256,7 @@ export default {
                 const dataNew = new ImageData(uint8Array, width, height);
                 canvasClick.imageSmoothingEnabled = true;
                 cxt.putImageData(dataNew, 0, 0);
-                const p = event.target.parentNode.getElementsByClassName("classification")[0];
-                p.classList.remove("removed");
-                p.innerText = "Category: " + category;
+
             }
 
             function hasGetUserMedia() {
@@ -386,8 +408,11 @@ export default {
     border: none;
     background-size: cover;
     background-repeat: no-repeat;
+    background-color: #fff;
     cursor: pointer;
 }
 
-.png-button:hover {}
+.png-button:hover {
+    border: 1px solid #000;
+}
 </style>
