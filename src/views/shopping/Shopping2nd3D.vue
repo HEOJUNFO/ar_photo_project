@@ -47,7 +47,16 @@ export default {
             router.push({ path: '/capturepreview', query: { imgData: image, eventName: eventName.value } });
         }
 
+        const setVH = () => {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+
         onMounted(() => {
+            setVH();
+
+            window.addEventListener('resize', setVH);
+
             experience = new Experience(document.querySelector('canvas.webgl'), saveImage);
         });
 
@@ -66,7 +75,7 @@ export default {
 
 <style scoped>
 .webgl-container {
-    height: 100vh;
+    height: calc(100 * var(--vh));
     width: 100%;
     top: 0vh;
     position: relative;
@@ -81,7 +90,7 @@ export default {
 
 .side-image-container {
     position: absolute;
-    top: 60vh;
+    top: calc(60 * var(--vh));
     right: -70%;
     transform: translateX(-50%);
     z-index: 2;
@@ -95,7 +104,7 @@ export default {
 
 .capture-container {
     position: absolute;
-    top: 80vh;
+    top: calc(80 * var(--vh));
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 2;
@@ -121,7 +130,7 @@ export default {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: auto;
+    height: calc(10 * var(--vh));
     justify-content: space-between;
     align-items: center;
     z-index: 1;

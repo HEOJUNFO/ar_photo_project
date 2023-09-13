@@ -49,7 +49,16 @@ export default {
             showModal.value = false;
         }
 
+        const setVH = () => {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
 
+        onMounted(() => {
+            setVH();
+
+            window.addEventListener('resize', setVH);
+        })
         return {
             start,
             showModal,
@@ -65,7 +74,7 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 100vh;
+    height: calc(100 * var(--vh));
     background-color: #fff;
 }
 
@@ -119,7 +128,7 @@ export default {
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: calc(100 * var(--vh));
     background: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;

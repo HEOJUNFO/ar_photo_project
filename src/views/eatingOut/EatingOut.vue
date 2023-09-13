@@ -50,6 +50,17 @@ export default {
             router.push('/eatingout3d')
         }
 
+        const setVH = () => {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+
+        onMounted(() => {
+            setVH();
+
+            window.addEventListener('resize', setVH);
+        })
+
         return {
             index,
             next,
@@ -68,7 +79,7 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 100vh;
+    height: calc(100 * var(--vh));
     background-color: #fff;
 }
 
@@ -87,7 +98,7 @@ export default {
     padding: 10px;
     background-color: #fff;
     width: 100%;
-    height: 20vh;
+    height: calc(20 * var(--vh));
 }
 
 .image-container {

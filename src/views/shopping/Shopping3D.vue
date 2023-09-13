@@ -42,8 +42,16 @@ export default {
             }
         }
 
+        const setVH = () => {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
 
         onMounted(() => {
+            setVH();
+
+            window.addEventListener('resize', setVH);
+
             experience = new Experience(document.querySelector('canvas.webgl'), next);
         });
 
@@ -63,7 +71,7 @@ export default {
 
 <style scoped>
 .webgl-container {
-    height: 100vh;
+    height: calc(100 * var(--vh));
     width: 100%;
     position: relative;
     overflow: hidden;
@@ -85,7 +93,7 @@ export default {
     border: 1px solid black;
     padding: 10px;
     background-color: #fff;
-    bottom: 10vh;
+    bottom: calc(10 * var(--vh));
 }
 
 .overlap-image {
@@ -103,7 +111,7 @@ export default {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: auto;
+    height: calc(10 * var(--vh));
     justify-content: space-between;
     align-items: center;
     z-index: 1;

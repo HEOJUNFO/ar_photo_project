@@ -71,7 +71,16 @@ export default {
             characterStore.setCharacterIndex(imageIndex.value)
         }
 
+        const setVH = () => {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
 
+        onMounted(() => {
+            setVH();
+
+            window.addEventListener('resize', setVH);
+        })
 
         return {
             index,
@@ -93,16 +102,18 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 100vh;
+    height: calc(100 * var(--vh));
     background-color: #fff;
 }
 
 .text-container1 {
+    height: 10%;
+    position: relative;
+    top: 1%;
     display: flex;
     justify-content: center;
     align-items: center;
     border: 1px solid black;
-    padding: 10px;
     background-color: #fff;
 }
 

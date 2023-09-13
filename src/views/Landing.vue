@@ -16,11 +16,20 @@ export default {
     name: 'Landing',
     setup() {
 
+        const setVH = () => {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+
+        onMounted(() => {
+            setVH();
+
+            window.addEventListener('resize', setVH);
+        })
+
         const next = () => {
             router.push('/intro')
         }
-
-
 
         return { next }
     }
@@ -32,7 +41,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 90vh;
+    height: calc(90 * var(--vh));
 }
 
 .loading-container img {

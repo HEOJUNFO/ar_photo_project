@@ -3,7 +3,7 @@
         <div class="webgl-container">
             <canvas class="webgl"></canvas>
         </div>
-        <div :class="{ 'hidden-content': !(index >= 0) }" class="text-container2">
+        <div class="text-container2">
             <p v-show="index >= 0">{{ currentCharacter.name }}</p>
             <p v-show="index >= 0">{{ characterContent.text }}</p>
         </div>
@@ -49,8 +49,16 @@ export default {
                 router.push('/capture')
             }
         }
+        const setVH = () => {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
 
         onMounted(() => {
+            setVH();
+
+            window.addEventListener('resize', setVH);
+
             experience = new Experience(document.querySelector('canvas.webgl'), exit);
         });
 
@@ -74,7 +82,7 @@ export default {
 
 <style scoped>
 .webgl-container {
-    height: 80vh;
+    height: calc(80 * var(--vh));
     width: 100%;
     position: relative;
     overflow: hidden;
@@ -97,14 +105,6 @@ export default {
     background-color: #fff;
     bottom: 0vh;
     width: 100%;
-    height: 20vh;
-}
-
-.hidden-content {
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
-    height: 10vh;
-    overflow: hidden;
+    height: calc(20 * var(--vh));
 }
 </style>
