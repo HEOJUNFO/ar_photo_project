@@ -19,8 +19,19 @@ export default {
 
         const systemCheck = ref(true)
 
+        const setVH = () => {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+
+
         onMounted(() => {
+            setVH();
+
+            window.addEventListener('resize', setVH);
             setTimeout(() => {
+
+
                 localStorage.getItem('consentGiven') === 'true' ? systemCheck.value = false : router.push('/terms')
             }, 1000)
 
@@ -30,16 +41,16 @@ export default {
 }
 </script>
   
-<style scoped>
+<style >
 .loading-container {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: calc(100 * var(--vh));
     z-index: 5;
-
 }
+
 
 .loading-container img {
     width: 100%;

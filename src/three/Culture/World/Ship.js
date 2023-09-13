@@ -73,7 +73,7 @@ export default class Ship
     }
 
     update() {
-            this.t += 0.001; 
+            this.t += 0.0015; 
             this.t = Math.min(this.t, this.deltaT); 
     
             const position = this.path.getPoint(this.t);

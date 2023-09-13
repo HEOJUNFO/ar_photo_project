@@ -23,11 +23,16 @@ export default class Fox
         this.setModel()
         this.setAnimation()
 
-        this.movementDuration = 0;
         this.startX = 0;
+        this.startY = 0;
 
         window.addEventListener('touchstart', this.onTouchStart.bind(this));
         window.addEventListener('touchmove', this.onTouchMove.bind(this));
+        this.moveDirection = 1; // 1: 오른쪽으로, -1: 왼쪽으로
+        this.maxX = 2;
+        this.minX = -2;
+
+        this.isAutoMoving = true;
     }
 
 
@@ -35,6 +40,7 @@ export default class Fox
     {
         this.model = this.resource.scene
         this.model.scale.set(0.02, 0.02, 0.02)
+        this.model.position.set(0, 1.5, 0)
         this.scene.add(this.model)
 
         this.model.traverse((child) =>
@@ -46,6 +52,8 @@ export default class Fox
         })
 
         this.experience.clickedObject = this.model;
+
+    
     }
 
     setAnimation()
@@ -92,9 +100,11 @@ export default class Fox
         }
     }
 
+
     onTouchStart(event)
     {
         this.startX = event.touches[0].clientX;
+        this.startY = event.touches[0].clientY;
     }
 
     onTouchMove(event)
@@ -102,25 +112,31 @@ export default class Fox
         const currentX = event.touches[0].clientX;
         const deltaX = currentX - this.startX;
 
+        const currentY = event.touches[0].clientY;
+        const deltaY = currentY - this.startY;
+
         this.model.position.x += deltaX * 0.01;  
+        this.model.position.y -= deltaY * 0.01;
 
         this.startX = currentX;
-        this.hasMoved = true;
+        this.startY = currentY;
     }
 
     update()
     {
         this.animation.mixer.update(this.time.delta * 0.001)
 
-        if (this.hasMoved) {
-            this.movementDuration += this.time.delta * 0.001;  
+        if(this.isAutoMoving) {
+            this.model.position.x += this.moveDirection * 0.01;
+    
+            if (this.model.position.x >= this.maxX) {
+                this.model.position.x = this.minX;
+            }
         }
-        if (this.movementDuration >= 6) {
+        if(this.model.position.y < -1) {  
+            this.scene.remove(this.model); 
             this.experience.goToNextScene();
-            this.movementDuration = 0; 
         }
 
-    
-        this.hasMoved = false;
     }
 }

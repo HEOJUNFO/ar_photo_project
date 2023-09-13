@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-show="index === 1" class="top-section">
+        <div class="top-section">
             <div class="text-container1">
                 <p>{{ characterContent.text }}</p>
             </div>
@@ -11,46 +11,47 @@
         <div @click="next()" class="webgl-container">
             <canvas class="webgl"></canvas>
         </div>
-        <div v-show="index === 0" class="text-container2">
-            <img :src="currentCharacter.src" alt="Description" class="overlap-image" />
-            <p>{{ currentCharacter.name }}</p>
-            <p>{{ characterContent.text }}</p>
-        </div>
     </div>
 </template>
 
 <script>
-import Experience from '../three/Shopping/Experience.js'
+import Experience from '../../three/EatingOut/Experience.js'
 import { onMounted, ref, computed } from 'vue';
-import router from '../router';
-import { useCharacterStore } from '../stores/characterStore.js'
+import router from '../../router';
+import { useCharacterStore } from '../../stores/characterStore.js'
 import { onBeforeRouteLeave } from 'vue-router'
 
 export default {
-    name: 'Shopping',
+    name: 'EatingOut3d',
     setup() {
         let experience;
         const characterStore = useCharacterStore()
         const index = ref(0)
+        const textIndex = ref(4)
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
         const currentCharacterContent = computed(() => {
-            return currentCharacter.value.shopping[index.value] || {}
+            return currentCharacter.value.eatingOut[textIndex.value] || {}
         })
 
         const next = () => {
             if (index.value === 0) {
                 index.value = 1
-                experience.modelVisible()
-            } else if (index.value === 1) {
-                index.value = 2
-                router.push('/shoppingreward')
+                router.push({ path: '/stickerreward', query: { eventName: "eatingOut" } });
             }
         }
 
+        const setVH = () => {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
 
         onMounted(() => {
+            setVH();
+
+            window.addEventListener('resize', setVH);
+
             experience = new Experience(document.querySelector('canvas.webgl'), next);
         });
 
@@ -69,18 +70,8 @@ export default {
 </script>
 
 <style scoped>
-* {
-    margin: 0;
-    padding: 0;
-}
-
-html,
-body {
-    overflow: hidden;
-}
-
 .webgl-container {
-    height: 100vh;
+    height: calc(100 * var(--vh));
     width: 100%;
     position: relative;
     overflow: hidden;
@@ -92,43 +83,13 @@ body {
     outline: none;
 }
 
-.text-container2 {
-    z-index: 2;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid black;
-    padding: 10px;
-    background-color: #fff;
-    bottom: 10vh;
-}
-
-.hidden-content2 {
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
-    height: 10vh;
-    overflow: hidden;
-}
-
-.overlap-image {
-    position: absolute;
-    top: 50%;
-    right: -50px;
-    width: 150px;
-    height: auto;
-    z-index: 1;
-    transform: translateY(-50%);
-}
 
 .top-section {
     position: absolute;
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: auto;
+    height: calc(10 * var(--vh));
     justify-content: space-between;
     align-items: center;
     z-index: 1;
@@ -147,15 +108,7 @@ body {
 
 .text-container1 p {
     padding: 7.5px 15px 7.5px 15px;
-    font-size: 1.5rem;
-}
-
-.hidden-content {
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
-    height: 10vh;
-    overflow: hidden;
+    font-size: 1rem;
 }
 
 .side-image-container {
