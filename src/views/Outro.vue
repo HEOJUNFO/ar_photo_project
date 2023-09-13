@@ -1,7 +1,5 @@
 <template>
     <div @click.stop="next()">
-        <loading-container>
-        </loading-container>
         <div class="loading-container">
             <div class="image-container">
                 <img :src="currentImageSrc" alt="Loading..." />
@@ -16,10 +14,9 @@
 </template>
 
 <script>
-import { useCharacterStore } from '../../stores/characterStore.js'
+import { useCharacterStore } from '../stores/characterStore.js'
 import { ref, computed, watch, onMounted } from 'vue'
-import router from '../../router'
-import LoadingContainer from '../../components/LoadingContainer.vue'
+import router from '../router'
 
 const IMAGES = [
     'https://dt-static.syrup.co.kr/sodar/character/Thumbnail/Thumbnail_character(1).png',
@@ -27,17 +24,12 @@ const IMAGES = [
     'https://dt-static.syrup.co.kr/sodar/sticker/Thumbnail/Thumbnail_sticker (1).png'
 ]
 
-
-
 export default {
-    name: 'Culture2',
-    components: {
-        LoadingContainer
-    },
+    name: 'Outro',
     setup() {
         const characterStore = useCharacterStore()
         const index = ref(0)
-        const textIndex = ref(3)
+        const textIndex = ref(6)
 
         const currentImageSrc = computed(() => IMAGES[0])
 
@@ -45,20 +37,27 @@ export default {
 
         const currentCharacterContent = computed(() => {
             const char = characterStore.currentCharacter
-            return char.culture2[textIndex.value] || {}
+
+            if (router.currentRoute.value.query.eventName === 'shopping2') {
+                return char.shopping2[textIndex.value] || {}
+            }
+            else if (router.currentRoute.value.query.eventName === 'culture2') {
+                return char.culture2[textIndex.value] || {}
+            }
+            else if (router.currentRoute.value.query.eventName === 'eatingOut2') {
+                return char.eatingOut2[textIndex.value] || {}
+            }
         })
 
 
         const next = () => {
             if (index.value === 0) {
                 index.value = 1
-                textIndex.value = 4
+                textIndex.value = 7
 
             } else if (index.value === 1) {
-                router.push('/culture3')
+                // router.push('/shopping3')
             }
-
-
         }
 
         return {

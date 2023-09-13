@@ -194,9 +194,7 @@ export default {
         }
 
         const next = () => {
-            if (router.currentRoute.value.query.eventName === 'shopping2') {
-                router.push('/shopping2out')
-            }
+            router.push({ path: '/outro', query: { eventName: router.currentRoute.value.query.eventName } });
         }
 
         const share = async () => {
@@ -297,7 +295,9 @@ export default {
             if (router.currentRoute.value.query.eventName === 'shopping2') {
                 premiumModal.value = true;
             } else if (router.currentRoute.value.query.eventName === 'culture2') {
-                premiumModal.value = false;
+                premiumModal.value = true;
+            } else if (router.currentRoute.value.query.eventName === 'eatingOut2') {
+                premiumModal.value = true;
             }
 
             const imageObj = new Image();

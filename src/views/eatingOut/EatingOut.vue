@@ -8,8 +8,8 @@
             </div>
             <div class="text-container2">
                 <img :src="selectCharacterSrc" alt="Description" class="overlap-image" />
-                <p>{{ selectCharacterName }}</p>
-                <p>{{ characterContent.text }}</p>
+                <p v-show="index === 0">{{ selectCharacterName }}</p>
+                <p v-show="index === 0">{{ characterContent.text }}</p>
             </div>
         </div>
     </div>
@@ -27,10 +27,8 @@ const IMAGES = [
     'https://dt-static.syrup.co.kr/sodar/sticker/Thumbnail/Thumbnail_sticker (1).png'
 ]
 
-
-
 export default {
-    name: 'Culture2',
+    name: 'EatingOut',
     components: {
         LoadingContainer
     },
@@ -45,20 +43,11 @@ export default {
 
         const currentCharacterContent = computed(() => {
             const char = characterStore.currentCharacter
-            return char.culture2[textIndex.value] || {}
+            return char.eatingOut[textIndex.value] || {}
         })
 
-
         const next = () => {
-            if (index.value === 0) {
-                index.value = 1
-                textIndex.value = 4
-
-            } else if (index.value === 1) {
-                router.push('/culture3')
-            }
-
-
+            router.push('/eatingout3d')
         }
 
         return {

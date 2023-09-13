@@ -1,5 +1,7 @@
 <template>
     <div @click.stop="next()">
+        <loading-container>
+        </loading-container>
         <div class="loading-container">
             <div class="image-container">
                 <img :src="currentImageSrc" alt="Loading..." />
@@ -17,6 +19,7 @@
 import { useCharacterStore } from '../../stores/characterStore.js'
 import { ref, computed, watch, onMounted } from 'vue'
 import router from '../../router'
+import LoadingContainer from '../../components/LoadingContainer.vue'
 
 const IMAGES = [
     'https://dt-static.syrup.co.kr/sodar/character/Thumbnail/Thumbnail_character(1).png',
@@ -27,11 +30,14 @@ const IMAGES = [
 
 
 export default {
-    name: 'Shopping2out',
+    name: 'EatingOut2',
+    components: {
+        LoadingContainer
+    },
     setup() {
         const characterStore = useCharacterStore()
         const index = ref(0)
-        const textIndex = ref(6)
+        const textIndex = ref(3)
 
         const currentImageSrc = computed(() => IMAGES[0])
 
@@ -39,18 +45,20 @@ export default {
 
         const currentCharacterContent = computed(() => {
             const char = characterStore.currentCharacter
-            return char.shopping2[textIndex.value] || {}
+            return char.eatingOut2[textIndex.value] || {}
         })
 
 
         const next = () => {
             if (index.value === 0) {
                 index.value = 1
-                textIndex.value = 7
+                textIndex.value = 4
 
             } else if (index.value === 1) {
-                router.push('/shopping3')
+                router.push('/eatingout3')
             }
+
+
         }
 
         return {
