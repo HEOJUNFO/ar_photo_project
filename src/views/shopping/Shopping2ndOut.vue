@@ -1,25 +1,22 @@
 <template>
     <div @click.stop="next()">
-        <loading-container>
-        </loading-container>
         <div class="loading-container">
             <div class="image-container">
                 <img :src="currentImageSrc" alt="Loading..." />
             </div>
             <div class="text-container2">
                 <img :src="selectCharacterSrc" alt="Description" class="overlap-image" />
-                <p v-show="index === 0">{{ selectCharacterName }}</p>
-                <p v-show="index === 0">{{ characterContent.text }}</p>
+                <p>{{ selectCharacterName }}</p>
+                <p>{{ characterContent.text }}</p>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import { useCharacterStore } from '../stores/characterStore.js'
+import { useCharacterStore } from '../../stores/characterStore.js'
 import { ref, computed, watch, onMounted } from 'vue'
-import router from '../router'
-import LoadingContainer from '../components/LoadingContainer.vue'
+import router from '../../router'
 
 const IMAGES = [
     'https://dt-static.syrup.co.kr/sodar/character/Thumbnail/Thumbnail_character(1).png',
@@ -30,14 +27,11 @@ const IMAGES = [
 
 
 export default {
-    name: 'Culture',
-    components: {
-        LoadingContainer
-    },
+    name: 'Shopping2out',
     setup() {
         const characterStore = useCharacterStore()
         const index = ref(0)
-        const textIndex = ref(3)
+        const textIndex = ref(6)
 
         const currentImageSrc = computed(() => IMAGES[0])
 
@@ -45,15 +39,19 @@ export default {
 
         const currentCharacterContent = computed(() => {
             const char = characterStore.currentCharacter
-            return char.culture[textIndex.value] || {}
+            return char.shopping2[textIndex.value] || {}
         })
 
 
         const next = () => {
-            router.push('/culture3d')
+            if (index.value === 0) {
+                index.value = 1
+                textIndex.value = 7
+
+            } else if (index.value === 1) {
+                router.push('/shopping3')
+            }
         }
-
-
 
         return {
             index,

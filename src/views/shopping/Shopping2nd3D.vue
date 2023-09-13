@@ -21,11 +21,11 @@
 </template>
 
 <script>
-import { useCharacterStore } from '../stores/characterStore.js'
-import Experience from '../three/Experience/Experience.js'
+import { useCharacterStore } from '../../stores/characterStore.js'
+import Experience from '../../three/Experience/Experience.js'
 import { onMounted, computed, ref } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router'
-import router from '../router';
+import router from '../../router';
 
 export default {
     name: 'Capture',

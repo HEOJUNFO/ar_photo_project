@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-show="index === 1" class="top-section">
+        <div class="top-section">
             <div class="text-container1">
                 <p>{{ characterContent.text }}</p>
             </div>
@@ -11,19 +11,14 @@
         <div @click="next()" class="webgl-container">
             <canvas class="webgl"></canvas>
         </div>
-        <div v-show="index === 0" class="text-container2">
-            <img :src="currentCharacter.src" alt="Description" class="overlap-image" />
-            <p>{{ currentCharacter.name }}</p>
-            <p>{{ characterContent.text }}</p>
-        </div>
     </div>
 </template>
 
 <script>
-import Experience from '../three/Shopping/Experience.js'
+import Experience from '../../three/Shopping/Experience.js'
 import { onMounted, ref, computed } from 'vue';
-import router from '../router';
-import { useCharacterStore } from '../stores/characterStore.js'
+import router from '../../router';
+import { useCharacterStore } from '../../stores/characterStore.js'
 import { onBeforeRouteLeave } from 'vue-router'
 
 export default {
@@ -32,20 +27,18 @@ export default {
         let experience;
         const characterStore = useCharacterStore()
         const index = ref(0)
+        const textIndex = ref(4)
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
         const currentCharacterContent = computed(() => {
-            return currentCharacter.value.shopping[index.value] || {}
+            return currentCharacter.value.shopping[textIndex.value] || {}
         })
 
         const next = () => {
             if (index.value === 0) {
                 index.value = 1
-                experience.modelVisible()
-            } else if (index.value === 1) {
-                index.value = 2
-                router.push('/shoppingreward')
+                router.push({ path: '/stickerreward', query: { eventName: "shopping" } });
             }
         }
 
@@ -129,7 +122,7 @@ export default {
 
 .text-container1 p {
     padding: 7.5px 15px 7.5px 15px;
-    font-size: 1.5rem;
+    font-size: 1rem;
 }
 
 .side-image-container {

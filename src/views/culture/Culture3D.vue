@@ -1,6 +1,6 @@
 <template>
-    <div @click.stop="maxPercentage === 99.9 ? next() : null">
-        <div class="top-section">
+    <div @click.stop="percentage > 99.8 ? next() : null">
+        <div class=" top-section">
             <div class="text-container1">
                 <p>{{ characterContent.text }}</p>
             </div>
@@ -15,26 +15,26 @@
             <canvas class="webgl2"></canvas>
         </div>
         <div class="image-container">
-            <img src="../resource/culture/game_bg_water.png" alt="Below Image" class="image-below" :style="clipStyle">
-            <img src="../resource/culture/game_bg_land.png" alt="Above Image" class="image-above">
-            <img v-show="visibleStone1" @click="stone1()" src="../resource/culture/game_stone01.png" alt="Above Image"
+            <img src="../../resource/culture/game_bg_water.png" alt="Below Image" class="image-below" :style="clipStyle">
+            <img src="../../resource/culture/game_bg_land.png" alt="Above Image" class="image-above">
+            <img v-show="visibleStone1" @click="stone1()" src="../../resource/culture/game_stone01.png" alt="Above Image"
                 class="image-stone1" style="top:30vh; left: 20vw;">
-            <img v-show="visibleStone2" @click="stone2()" src="../resource/culture/game_stone02.png" alt="Above Image"
+            <img v-show="visibleStone2" @click="stone2()" src="../../resource/culture/game_stone02.png" alt="Above Image"
                 class="image-stone2" style="top:50vh; left: 60vw;">
-            <img v-show="visibleStone3" @click="stone3()" src="../resource/culture/game_stone04.png" alt="Above Image"
+            <img v-show="visibleStone3" @click="stone3()" src="../../resource/culture/game_stone04.png" alt="Above Image"
                 class="image-stone3" style="top:75vh; left: 17vw;">
-            <img v-show="visibleStone3" @click="stone3()" src="../resource/culture/game_stone03.png" alt="Above Image"
+            <img v-show="visibleStone3" @click="stone3()" src="../../resource/culture/game_stone03.png" alt="Above Image"
                 class="image-stone4" style="top:76vh; left: 9vw;">
         </div>
     </div>
 </template>
 
 <script>
-import Experience from '../three/Culture/Experience.js'
-import Experience2 from '../three/Experience/Experience.js';
+import Experience from '../../three/Culture/Experience.js'
+import Experience2 from '../../three/Experience/Experience.js';
 import { onMounted, ref, computed, onBeforeUnmount } from 'vue';
-import router from '../router';
-import { useCharacterStore } from '../stores/characterStore.js'
+import router from '../../router';
+import { useCharacterStore } from '../../stores/characterStore.js'
 import { onBeforeRouteLeave } from 'vue-router'
 
 export default {
@@ -110,7 +110,8 @@ export default {
                 index.value = 2
             }
             else if (index.value === 2) {
-                router.push('/shoppingreward')
+                router.push({ path: '/stickerreward', query: { eventName: "culture" } });
+
             }
         }
 
@@ -172,7 +173,7 @@ export default {
             visibleStone1,
             visibleStone2,
             visibleStone3,
-            maxPercentage
+            percentage,
         }
     }
 }

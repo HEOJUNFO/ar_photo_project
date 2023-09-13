@@ -8,7 +8,7 @@
                 <p>염색색상변경</p>
             </div>
             <div class="side-image-container">
-                <button>완료</button>
+                <button @click="saveImage()">완료</button>
             </div>
         </div>
         <div class="webcam" id="image">
@@ -18,7 +18,7 @@
                 :style="{ display: videoDisplay, overflow: 'hidden' }"></video>
             <img v-show="!showCaptureButton" class="canvas1" id="face"
                 src="https://cdn.glitch.global/eb18e63f-936a-4172-8bdd-9263c7a6a04a/0.jpg?v=1689605799161"
-                crossorigin="anonymous" title="Click to get segmentation!" />
+                crossorigin="anonymous" />
         </div>
         <div v-show="showCaptureButton" class="capture-container">
             <button @click.stop="capture()">촬영</button>
@@ -50,7 +50,8 @@
 
 <script>
 import vision from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0";
-import router from "../router";
+import router from "../../router";
+import { setPointerCapture } from "konva/lib/PointerEvents";
 
 const { ImageSegmenter, SegmentationMask, FilesetResolver } = vision;
 let runningMode = "VIDEO"
@@ -117,7 +118,7 @@ export default {
             img.src = canvas.toDataURL();
 
             video.style.display = 'none';
-            image.style.height = '80vh';
+            image.style.height = '70vh';
             image.style.top = '0vh';
 
             webcamRunning = false;
@@ -290,10 +291,11 @@ export default {
                 video = document.getElementById("webcam");
 
                 video.addEventListener('loadedmetadata', function () {
-                    video.setAttribute('width', this.videoWidth);
-                    video.setAttribute('height', this.videoHeight);
-                    document.getElementById('canvas1').setAttribute('width', this.videoWidth);
-                    document.getElementById('canvas1').setAttribute('height', this.videoHeight);
+
+                    video.setAttribute('width', window.innerWidth);
+                    video.setAttribute('height', window.innerHeight);
+                    document.getElementById('canvas1').setAttribute('width', window.innerWidth);
+                    document.getElementById('canvas1').setAttribute('height', window.innerHeight);
                 });
 
                 video.srcObject = await navigator.mediaDevices.getUserMedia(constraints);
@@ -311,40 +313,19 @@ export default {
             }
         }
     },
+    setup() {
 
-    async enableCam() {
-        if (imageSegmenter === undefined) {
-            return;
+        const saveImage = () => {
+            let canvasElement = document.getElementById("canvas1");
+            let imageData = canvasElement.toDataURL();
+            router.push({ path: '/capturepreview', query: { imgData: imageData, eventName: 'culture2' } });
         }
-        if (webcamRunning === true) {
-            webcamRunning = false;
-
+        return {
+            saveImage
         }
-        else {
-            webcamRunning = true;
-
-        }
-
-        const constraints = {
-            video: true
-        };
-        video = document.getElementById("webcam");
-
-        video.addEventListener('loadedmetadata', function () {
-            video.setAttribute('width', this.videoWidth);
-            video.setAttribute('height', this.videoHeight);
-            document.getElementById('canvas1').setAttribute('width', this.videoWidth);
-            document.getElementById('canvas1').setAttribute('height', this.videoHeight);
-        });
-
-        video.srcObject = await navigator.mediaDevices.getUserMedia(constraints);
-        video.addEventListener("loadeddata", predictWebcam);
-        video.play();
-        video.style.display = 'none';
     },
-
-
 }
+
 </script>
 
 <style scoped>

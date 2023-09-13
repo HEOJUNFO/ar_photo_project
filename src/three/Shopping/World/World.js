@@ -20,11 +20,6 @@ export default class World
         })
     }
 
-    modelVisible()
-    {
-        this.fox.modelVisible()
-    }
-
 
     update()
     {

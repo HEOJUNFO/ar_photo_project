@@ -8,18 +8,18 @@
             </div>
             <div class="text-container2">
                 <img :src="selectCharacterSrc" alt="Description" class="overlap-image" />
-                <p>{{ selectCharacterName }}</p>
-                <p>{{ characterContent.text }}</p>
+                <p v-show="index === 0">{{ selectCharacterName }}</p>
+                <p v-show="index === 0">{{ characterContent.text }}</p>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import { useCharacterStore } from '../stores/characterStore.js'
+import { useCharacterStore } from '../../stores/characterStore.js'
 import { ref, computed, watch, onMounted } from 'vue'
-import router from '../router'
-import LoadingContainer from '../components/LoadingContainer.vue'
+import router from '../../router'
+import LoadingContainer from '../../components/LoadingContainer.vue'
 
 const IMAGES = [
     'https://dt-static.syrup.co.kr/sodar/character/Thumbnail/Thumbnail_character(1).png',
@@ -30,7 +30,7 @@ const IMAGES = [
 
 
 export default {
-    name: 'Shopping2',
+    name: 'Culture',
     components: {
         LoadingContainer
     },
@@ -45,23 +45,13 @@ export default {
 
         const currentCharacterContent = computed(() => {
             const char = characterStore.currentCharacter
-            return char.shopping2[textIndex.value] || {}
+            return char.culture[textIndex.value] || {}
         })
 
 
         const next = () => {
-            if (index.value === 0) {
-                index.value = 1
-                textIndex.value = 4
-
-            } else if (index.value === 1) {
-                router.push('/shopping3')
-            }
-
-
+            router.push('/culture3d')
         }
-
-
 
         return {
             index,

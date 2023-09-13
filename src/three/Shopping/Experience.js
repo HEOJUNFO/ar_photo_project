@@ -72,10 +72,6 @@ export default class Experience
         this.renderer.resize()
     }
 
-    modelVisible(){
-        this.world.modelVisible();
-    }
-
     init()
     {
      instance = null;

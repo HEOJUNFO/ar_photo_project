@@ -30,9 +30,6 @@ export default class Fox
         window.addEventListener('touchmove', this.onTouchMove.bind(this));
     }
 
-    modelVisible(){
-        this.model.visible = true;
-    }
 
     setModel()
     {
@@ -47,7 +44,6 @@ export default class Fox
                 child.castShadow = true
             }
         })
-        this.model.visible = false;
 
         this.experience.clickedObject = this.model;
     }

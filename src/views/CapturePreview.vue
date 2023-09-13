@@ -294,11 +294,10 @@ export default {
         onMounted(() => {
             imgData.value = router.currentRoute.value.query.imgData;
 
-
-            console.log(router.currentRoute.value.query.eventName)
             if (router.currentRoute.value.query.eventName === 'shopping2') {
-                console.log('ff')
                 premiumModal.value = true;
+            } else if (router.currentRoute.value.query.eventName === 'culture2') {
+                premiumModal.value = false;
             }
 
             const imageObj = new Image();
@@ -306,10 +305,11 @@ export default {
             imageObj.onload = () => {
 
                 const imageWidth = imageObj.width;
+                console.log(imageWidth)
 
                 stage = new Konva.Stage({
                     container: konvaContainer.value,
-                    width: imageWidth,
+                    width: window.innerWidth,
                     height: window.innerHeight * 0.8
                 });
 
@@ -323,7 +323,7 @@ export default {
                     x: 0,
                     y: 0,
                     image: imageObj,
-                    width: imageWidth,
+                    width: window.innerWidth,
                     height: window.innerHeight * 0.8
                 });
 
@@ -382,6 +382,9 @@ export default {
 <style scoped>
 .konva-container {
     touch-action: pan-x pan-y;
+    width: 100%;
+    display: block;
+    object-fit: cover;
 }
 
 .footer {
