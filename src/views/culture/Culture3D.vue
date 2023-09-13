@@ -18,13 +18,13 @@
             <img src="../../resource/culture/game_bg_water.png" alt="Below Image" class="image-below" :style="clipStyle">
             <img src="../../resource/culture/game_bg_land.png" alt="Above Image" class="image-above">
             <img v-show="visibleStone1" @click="stone1()" src="../../resource/culture/game_stone01.png" alt="Above Image"
-                class="image-stone1" style="top:30vh; left: 20vw;">
+                class="image-stone1" style="left: 20vw;">
             <img v-show="visibleStone2" @click="stone2()" src="../../resource/culture/game_stone02.png" alt="Above Image"
-                class="image-stone2" style="top:50vh; left: 60vw;">
+                class="image-stone2" style=" left: 60vw;">
             <img v-show="visibleStone3" @click="stone3()" src="../../resource/culture/game_stone04.png" alt="Above Image"
-                class="image-stone3" style="top:75vh; left: 17vw;">
+                class="image-stone3" style="left: 17vw;">
             <img v-show="visibleStone3" @click="stone3()" src="../../resource/culture/game_stone03.png" alt="Above Image"
-                class="image-stone4" style="top:76vh; left: 9vw;">
+                class="image-stone4" style=" left: 9vw;">
         </div>
     </div>
 </template>
@@ -140,9 +140,16 @@ export default {
         const clipStyle = computed(() => {
             return `clip-path: inset(0 0 ${100 - percentage.value}% 0);`;
         });
+        const setVH = () => {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
 
 
         onMounted(() => {
+            setVH();
+
+            window.addEventListener('resize', setVH);
             experience = new Experience(document.querySelector('canvas.webgl2'), next);
             experience2 = new Experience2(document.querySelector('canvas.webgl'), next);
             const interval = setInterval(updatePercentage, 1);
@@ -180,18 +187,8 @@ export default {
 </script>
 
 <style scoped>
-* {
-    margin: 0;
-    padding: 0;
-}
-
-html,
-body {
-    overflow: hidden;
-}
-
 .webgl-container {
-    height: 100vh;
+    height: calc(100 * var(--vh));
     width: 100%;
     position: absolute;
     overflow: hidden;
@@ -216,7 +213,8 @@ body {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: auto;
+    height: calc(10 * var(--vh));
+    top: calc(5 * var(--vh));
     justify-content: space-between;
     align-items: center;
     z-index: 5;
@@ -231,6 +229,7 @@ body {
     padding: 10px;
     background-color: #fff;
     width: 80%;
+    height: 100%;
 }
 
 .text-container1 p {
@@ -254,15 +253,14 @@ body {
 
 .image-container {
     position: absolute;
-    bottom: 10vh;
     width: 100%;
-    height: 100%;
+    height: calc(100 * var(--vh));
 }
 
 .image-above,
 .image-below {
     position: absolute;
-    top: 10vh;
+    top: 0vh;
     left: 0;
     width: 100%;
     height: 100%;
@@ -271,7 +269,7 @@ body {
 
 .image-above {
     z-index: 2;
-    top: 10vh;
+    top: 0vh;
     width: 100%;
     height: 100%;
 
@@ -282,6 +280,7 @@ body {
     z-index: 4;
     width: auto;
     height: 10%;
+    top: calc(20 * var(--vh));
 }
 
 .image-stone2 {
@@ -289,6 +288,7 @@ body {
     z-index: 4;
     width: auto;
     height: 10%;
+    top: calc(43 * var(--vh));
 }
 
 .image-stone3 {
@@ -296,6 +296,7 @@ body {
     z-index: 4;
     width: auto;
     height: 10%;
+    top: calc(65 * var(--vh));
 }
 
 .image-stone4 {
@@ -303,6 +304,7 @@ body {
     z-index: 4;
     width: auto;
     height: 10%;
+    top: calc(65 * var(--vh));
 }
 
 @keyframes scaleAnimation {

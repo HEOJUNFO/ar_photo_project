@@ -52,6 +52,7 @@
 import vision from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0";
 import router from "../../router";
 import { setPointerCapture } from "konva/lib/PointerEvents";
+import { onMounted } from "vue";
 
 const { ImageSegmenter, SegmentationMask, FilesetResolver } = vision;
 let runningMode = "VIDEO"
@@ -118,7 +119,7 @@ export default {
             img.src = canvas.toDataURL();
 
             video.style.display = 'none';
-            image.style.height = '70vh';
+            image.style.height = 'calc(80 * var(--vh))';
             image.style.top = '0vh';
 
             webcamRunning = false;
@@ -314,12 +315,21 @@ export default {
         }
     },
     setup() {
+        const setVH = () => {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
 
         const saveImage = () => {
             let canvasElement = document.getElementById("canvas1");
             let imageData = canvasElement.toDataURL();
             router.push({ path: '/capturepreview', query: { imgData: imageData, eventName: 'culture2' } });
         }
+
+        onMounted(() => {
+            setVH();
+            window.addEventListener('resize', setVH);
+        })
         return {
             saveImage
         }
@@ -331,7 +341,7 @@ export default {
 <style scoped>
 .capture-container {
     position: absolute;
-    top: 85vh;
+    top: calc(85 * var(--vh));
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 2;
@@ -355,7 +365,7 @@ export default {
 .webcam {
     position: relative;
     width: 100%;
-    height: 100vh;
+    height: calc(100 * var(--vh));
     overflow: hidden;
 }
 
@@ -384,7 +394,7 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 10vh;
+    height: calc(10 * var(--vh));
     align-items: center;
 }
 
@@ -406,7 +416,7 @@ export default {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 10vh;
+    height: calc(10 * var(--vh));
     justify-content: space-between;
     align-items: center;
     z-index: 1;

@@ -73,16 +73,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-    margin: 0;
-    padding: 0;
-}
-
-html,
-body {
-    overflow: hidden;
-}
-
 .webgl-container {
     height: 80vh;
     width: 100%;
