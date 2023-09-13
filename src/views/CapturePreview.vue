@@ -4,7 +4,7 @@
             <div class="side-image-container">
                 <button @click="back()">뒤로</button>
             </div>
-            <div :class="{ 'hidden-content': index >= 3 }" class="text-container1">
+            <div class="text-container1">
                 <p>사진 촬영 프리뷰</p>
             </div>
         </div>
@@ -18,7 +18,7 @@
             <p>공유 방법을 선택해 주세요.</p>
             <button>방명록에 공유하기</button>
             <button @click="share()">다른 곳에 공유하기</button>
-            <button @click="toggleFooter2()">닫기</button>
+            <button @click="next()">참여하지 않고 나가기</button>
         </div>
         <div v-if="showModal" class="modal">
             <p>뒤로 가시겠습니까?</p>
@@ -58,6 +58,11 @@
             <button @click="undo">Undo</button>
             <button @click="redo">Redo</button>
         </div>
+        <div v-if="premiumModal" class="modal2">
+            <button @click="premiumModal = false" class="close-btn">×</button>
+            <img src="https://playar.syrup.co.kr/sodarimg/is/marketing/202308/17TZcrb5Q*38b3ed16b02bec43416b4a7dec923cb0.gif"
+                alt="Loading..." />
+        </div>
     </div>
 </template>
 
@@ -73,6 +78,7 @@ export default {
         const imgData = ref('')
         const showFooter2 = ref(false);
         const showModal = ref(false);
+        const premiumModal = ref(false);
 
         const showToolbox = ref(false);
         const currentTool = ref('draw');
@@ -165,7 +171,7 @@ export default {
 
         const confirmBack = () => {
             showModal.value = false;
-            router.push('/capture');
+            router.go(-1)
         }
 
         const closeModal = () => {
@@ -185,6 +191,10 @@ export default {
 
         const toggleFooter2 = () => {
             showFooter2.value = !showFooter2.value;
+        }
+
+        const next = () => {
+            router.push({ path: '/outro', query: { eventName: router.currentRoute.value.query.eventName } });
         }
 
         const share = async () => {
@@ -282,15 +292,24 @@ export default {
         onMounted(() => {
             imgData.value = router.currentRoute.value.query.imgData;
 
+            if (router.currentRoute.value.query.eventName === 'shopping2') {
+                premiumModal.value = true;
+            } else if (router.currentRoute.value.query.eventName === 'culture2') {
+                premiumModal.value = true;
+            } else if (router.currentRoute.value.query.eventName === 'eatingOut2') {
+                premiumModal.value = true;
+            }
+
             const imageObj = new Image();
             imageObj.src = imgData.value;
             imageObj.onload = () => {
 
                 const imageWidth = imageObj.width;
+                console.log(imageWidth)
 
                 stage = new Konva.Stage({
                     container: konvaContainer.value,
-                    width: imageWidth,
+                    width: window.innerWidth,
                     height: window.innerHeight * 0.8
                 });
 
@@ -304,7 +323,7 @@ export default {
                     x: 0,
                     y: 0,
                     image: imageObj,
-                    width: imageWidth,
+                    width: window.innerWidth,
                     height: window.innerHeight * 0.8
                 });
 
@@ -353,6 +372,8 @@ export default {
             setTextTool,
             undo,
             redo,
+            premiumModal,
+            next
         }
     }
 }
@@ -361,6 +382,9 @@ export default {
 <style scoped>
 .konva-container {
     touch-action: pan-x pan-y;
+    width: 100%;
+    display: block;
+    object-fit: cover;
 }
 
 .footer {
@@ -391,15 +415,6 @@ export default {
 
 .footer button:hover {
     background-color: #777;
-}
-
-
-.hidden-content {
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
-    height: 10vh;
-    overflow: hidden;
 }
 
 .top-section {
@@ -478,6 +493,33 @@ export default {
     flex-direction: column;
     z-index: 3;
     transform: translate(-50%, -50%);
+}
+
+.modal2 {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 80vw;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border: 1px solid #000;
+    flex-direction: column;
+    z-index: 3;
+    transform: translate(-50%, -50%);
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    outline: none;
 }
 
 .modal-buttons {

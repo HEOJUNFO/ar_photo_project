@@ -42,7 +42,7 @@ export default class Experience
         this.raycaster = new THREE.Raycaster();
         this.mouse = new THREE.Vector2();
 
-        this.canvas.addEventListener('click', this._checkForModelClick.bind(this), false);
+        this.canvas.addEventListener('touchstart', this._checkForModelClick.bind(this), false);
 
         this.bindMethods()
 
@@ -120,13 +120,19 @@ export default class Experience
 
     goToNextScene(){
         if(this.goToNextSceneCallback){
+            console.log("goToNextSceneCallback")
             this.goToNextSceneCallback();
         }
     }
 
     _checkForModelClick(event) {
-        this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        this.mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+        if(event.type === 'click') {
+            this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            this.mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+        } else if(event.type === 'touchstart' && event.touches.length > 0) {
+            this.mouse.x = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
+            this.mouse.y = - (event.touches[0].clientY / window.innerHeight) * 2 + 1;
+        }
     
         this.raycaster.setFromCamera(this.mouse, this.camera.instance);
     
@@ -134,7 +140,7 @@ export default class Experience
     
         for (let i = 0; i < intersects.length; i++) {
             if (this._isObjectChildOf(intersects[i].object, this.clickedObject)) {
-             
+                this.world.fox.isAutoMoving = false;
                 break;
             }
         }

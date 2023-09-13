@@ -8,18 +8,18 @@
             </div>
             <div class="text-container2">
                 <img :src="selectCharacterSrc" alt="Description" class="overlap-image" />
-                <p v-show="index === 0">{{ selectCharacterName }}</p>
-                <p v-show="index === 0">{{ characterContent.text }}</p>
+                <p>{{ selectCharacterName }}</p>
+                <p>{{ characterContent.text }}</p>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import { useCharacterStore } from '../stores/characterStore.js'
+import { useCharacterStore } from '../../stores/characterStore.js'
 import { ref, computed, watch, onMounted } from 'vue'
-import router from '../router'
-import LoadingContainer from '../components/LoadingContainer.vue'
+import router from '../../router'
+import LoadingContainer from '../../components/LoadingContainer.vue'
 
 const IMAGES = [
     'https://dt-static.syrup.co.kr/sodar/character/Thumbnail/Thumbnail_character(1).png',
@@ -30,7 +30,7 @@ const IMAGES = [
 
 
 export default {
-    name: 'Culture',
+    name: 'Shopping',
     components: {
         LoadingContainer
     },
@@ -45,15 +45,27 @@ export default {
 
         const currentCharacterContent = computed(() => {
             const char = characterStore.currentCharacter
-            return char.culture[textIndex.value] || {}
+            return char.shopping[textIndex.value] || {}
         })
 
 
         const next = () => {
-            router.push('/culture3d')
+            if (index.value === 0) {
+                index.value = 1
+                router.push('/shopping3d')
+            }
         }
 
+        const setVH = () => {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
 
+        onMounted(() => {
+            setVH();
+
+            window.addEventListener('resize', setVH);
+        })
 
         return {
             index,
@@ -73,7 +85,7 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 100vh;
+    height: calc(100 * var(--vh));
     background-color: #fff;
 }
 
@@ -92,7 +104,7 @@ export default {
     padding: 10px;
     background-color: #fff;
     width: 100%;
-    height: 20vh;
+    height: calc(20 * var(--vh));
 }
 
 .image-container {

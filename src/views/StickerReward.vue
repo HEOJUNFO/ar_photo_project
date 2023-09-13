@@ -1,5 +1,5 @@
 <template>
-    <div class="loading-container">
+    <div @click.stop="next()" class="loading-container">
         <div class="image-container">
             <button @click.stop="navigateToPreviousImage()">◀</button>
             <img :src="currentImageSrc" alt="Loading..." />
@@ -9,13 +9,19 @@
         <div class="button-container">
             <button @click.stop="getReward()">획득하기</button>
         </div>
+        <div class="text-container2">
+            <img :src="selectCharacterSrc" alt="Description" class="overlap-image" />
+            <p>{{ selectCharacterName }}</p>
+            <p>{{ characterContent.text }}</p>
+        </div>
 
     </div>
 </template>
 
 <script>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import router from '../router'
+import { useCharacterStore } from '../stores/characterStore.js'
 
 const IMAGES = [
     'https://dt-static.syrup.co.kr/sodar/character/Thumbnail/Thumbnail_character(1).png',
@@ -24,11 +30,30 @@ const IMAGES = [
 ]
 
 export default {
-    name: 'Intro',
+    name: 'StickerReward',
     setup() {
         const imageIndex = ref(0)
+        const characterStore = useCharacterStore()
+        const index = ref(0)
+        const textIndex = ref(5)
 
         const currentImageSrc = computed(() => IMAGES[imageIndex.value])
+
+        characterStore.setCharacterIndex(localStorage.getItem('characterID'))
+
+        const currentCharacterContent = computed(() => {
+            const char = characterStore.currentCharacter
+
+            if (router.currentRoute.value.query.eventName === 'shopping') {
+                return char.shopping[textIndex.value] || {}
+            }
+            else if (router.currentRoute.value.query.eventName === 'culture') {
+                return char.culture[textIndex.value] || {}
+            }
+            else if (router.currentRoute.value.query.eventName === 'eatingOut') {
+                return char.eatingOut[textIndex.value] || {}
+            }
+        })
 
 
         const navigateToNextImage = () => {
@@ -40,6 +65,8 @@ export default {
         }
 
         const getReward = () => {
+            index.value = 2
+            textIndex.value = 7
             switch (imageIndex.value) {
                 case 0:
                     localStorage.setItem('characterSticker1', true)
@@ -52,13 +79,39 @@ export default {
                     break;
             }
         }
+        const next = () => {
+            if (index.value === 0) {
+                index.value = 1
+                textIndex.value = 6
+            }
+            if (index.value === 2) {
+                index.value = 3
+                textIndex.value = 8
+            }
+            if (index.value === 3) {
+                // router.push('/shopping')
+            }
+        }
+        const setVH = () => {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
 
+        onMounted(() => {
+            setVH();
+
+            window.addEventListener('resize', setVH);
+        })
 
         return {
             currentImageSrc,
             navigateToNextImage,
             navigateToPreviousImage,
-            getReward
+            getReward,
+            characterContent: currentCharacterContent,
+            selectCharacterSrc: characterStore.currentCharacter.src,
+            selectCharacterName: characterStore.currentCharacter.name,
+            next,
         }
     }
 }
@@ -70,7 +123,7 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 100vh;
+    height: calc(100 * var(--vh));
     background-color: #fff;
 }
 
@@ -117,5 +170,33 @@ export default {
 
 .image-container button:hover {
     background: rgba(0, 0, 0, 0.7);
+}
+
+.text-container2 p {
+    padding: 7.5px 15px 7.5px 15px;
+    font-size: 0.5rem;
+}
+
+.text-container2 {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    padding: 10px;
+    background-color: #fff;
+    width: 100%;
+    height: calc(20 * var(--vh));
+}
+
+.overlap-image {
+    position: absolute;
+    top: 50%;
+    right: -50px;
+    width: 150px;
+    height: auto;
+    z-index: 1;
+    transform: translateY(-50%);
 }
 </style>

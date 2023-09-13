@@ -8,7 +8,7 @@
                 <p>염색색상변경</p>
             </div>
             <div class="side-image-container">
-                <button>완료</button>
+                <button @click="saveImage()">완료</button>
             </div>
         </div>
         <div class="webcam" id="image">
@@ -18,7 +18,7 @@
                 :style="{ display: videoDisplay, overflow: 'hidden' }"></video>
             <img v-show="!showCaptureButton" class="canvas1" id="face"
                 src="https://cdn.glitch.global/eb18e63f-936a-4172-8bdd-9263c7a6a04a/0.jpg?v=1689605799161"
-                crossorigin="anonymous" title="Click to get segmentation!" />
+                crossorigin="anonymous" />
         </div>
         <div v-show="showCaptureButton" class="capture-container">
             <button @click.stop="capture()">촬영</button>
@@ -50,13 +50,15 @@
 
 <script>
 import vision from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0";
-import router from "../router";
+import router from "../../router";
+
+import { onMounted } from "vue";
 
 const { ImageSegmenter, SegmentationMask, FilesetResolver } = vision;
 let runningMode = "VIDEO"
 let imageSegmenter = null;
 let labels = [];
-let isCapture = false;
+
 let webcamRunning = false;
 let legendColors = [
     [0, 0, 0, 0],
@@ -101,6 +103,10 @@ export default {
             console.log(d)
             let hex = hexToRgb(d);
             hex[3] = 255;
+            hex[0] -= 10;
+            hex[1] -= 10;
+            hex[2] -= 10;
+
             legendColors[1] = hex;
         },
         capture() {
@@ -117,12 +123,11 @@ export default {
             img.src = canvas.toDataURL();
 
             video.style.display = 'none';
-            image.style.height = '80vh';
+            image.style.height = 'calc(80 * var(--vh))';
             image.style.top = '0vh';
 
             webcamRunning = false;
 
-            isCapture = true;
             this.showCaptureButton = false;
         },
         async createImageSegmenter() {
@@ -146,39 +151,7 @@ export default {
 
             webcamRunning = false;
 
-            function callbackForVideo(result) {
-                if (isCapture === false) {
-                    canvasElement.style.display = 'none';
-                } else {
-                    // canvasElement.style.display = 'block';
-                }
-
-                let imageData = canvasCtx.getImageData(0, 0, video.videoWidth, video.videoHeight);
-                let data = imageData.data;
-                const mask = result.categoryMask.getAsFloat32Array();
-
-                for (let i = 0, j = 0; i < mask.length; i++, j += 4) {
-                    const maskVal = Math.round(mask[i] * 255.0);
-                    if (maskVal > 0 && maskVal % legendColors.length !== 0) {
-                        const legendColor = legendColors[1];
-
-                        data[j] = (legendColor[0] + data[j]) / 2;
-                        data[j + 1] = (legendColor[1] + data[j + 1]) / 2;
-                        data[j + 2] = (legendColor[2] + data[j + 2]) / 2;
-                        data[j + 3] = (legendColor[3] + data[j + 3]) / 2;
-                    }
-                }
-
-                canvasCtx.imageSmoothingEnabled = true;
-                canvasCtx.putImageData(imageData, 0, 0);
-
-                if (webcamRunning) {
-                    window.requestAnimationFrame(predictWebcam);
-                }
-            }
-
             let lastWebcamTime = -1;
-            let lastRequestTime = 0;
             async function predictWebcam() {
                 const currentTime = video.currentTime;
 
@@ -199,9 +172,6 @@ export default {
                         runningMode: runningMode
                     });
                 }
-
-                let startTimeMs = performance.now();
-                imageSegmenter.segmentForVideo(video, startTimeMs, callbackForVideo);
             }
 
             const imageContainers = document.getElementsByClassName("png-buttons-container");
@@ -290,10 +260,11 @@ export default {
                 video = document.getElementById("webcam");
 
                 video.addEventListener('loadedmetadata', function () {
-                    video.setAttribute('width', this.videoWidth);
-                    video.setAttribute('height', this.videoHeight);
-                    document.getElementById('canvas1').setAttribute('width', this.videoWidth);
-                    document.getElementById('canvas1').setAttribute('height', this.videoHeight);
+
+                    video.setAttribute('width', window.innerWidth);
+                    video.setAttribute('height', window.innerHeight);
+                    document.getElementById('canvas1').setAttribute('width', window.innerWidth);
+                    document.getElementById('canvas1').setAttribute('height', window.innerHeight);
                 });
 
                 video.srcObject = await navigator.mediaDevices.getUserMedia(constraints);
@@ -311,46 +282,34 @@ export default {
             }
         }
     },
-
-    async enableCam() {
-        if (imageSegmenter === undefined) {
-            return;
-        }
-        if (webcamRunning === true) {
-            webcamRunning = false;
-
-        }
-        else {
-            webcamRunning = true;
-
+    setup() {
+        const setVH = () => {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
         }
 
-        const constraints = {
-            video: true
-        };
-        video = document.getElementById("webcam");
+        const saveImage = () => {
+            let canvasElement = document.getElementById("canvas1");
+            let imageData = canvasElement.toDataURL();
+            router.push({ path: '/capturepreview', query: { imgData: imageData, eventName: 'culture2' } });
+        }
 
-        video.addEventListener('loadedmetadata', function () {
-            video.setAttribute('width', this.videoWidth);
-            video.setAttribute('height', this.videoHeight);
-            document.getElementById('canvas1').setAttribute('width', this.videoWidth);
-            document.getElementById('canvas1').setAttribute('height', this.videoHeight);
-        });
-
-        video.srcObject = await navigator.mediaDevices.getUserMedia(constraints);
-        video.addEventListener("loadeddata", predictWebcam);
-        video.play();
-        video.style.display = 'none';
+        onMounted(() => {
+            setVH();
+            window.addEventListener('resize', setVH);
+        })
+        return {
+            saveImage
+        }
     },
-
-
 }
+
 </script>
 
 <style scoped>
 .capture-container {
     position: absolute;
-    top: 85vh;
+    top: calc(85 * var(--vh));
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 2;
@@ -374,7 +333,7 @@ export default {
 .webcam {
     position: relative;
     width: 100%;
-    height: 100vh;
+    height: calc(100 * var(--vh));
     overflow: hidden;
 }
 
@@ -403,7 +362,7 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 10vh;
+    height: calc(10 * var(--vh));
     align-items: center;
 }
 
@@ -425,7 +384,7 @@ export default {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 10vh;
+    height: calc(10 * var(--vh));
     justify-content: space-between;
     align-items: center;
     z-index: 1;
