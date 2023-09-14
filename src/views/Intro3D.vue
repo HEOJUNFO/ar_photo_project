@@ -63,6 +63,7 @@ export default {
         });
 
         onBeforeRouteLeave(() => {
+            experience.destroy()
             experience.init()
         });
 

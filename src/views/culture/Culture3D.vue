@@ -164,8 +164,11 @@ export default {
         });
 
         onBeforeRouteLeave(() => {
+            experience.destroy()
+            experience2.destroy()
             experience.init()
             experience2.init()
+
         });
 
         return {

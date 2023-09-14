@@ -16,11 +16,16 @@ import Shopping2nd from "../views/shopping/Shopping2nd.vue"
 import Shopping2nd3D from "../views/shopping/Shopping2nd3D.vue"
 import Shopping from "../views/shopping/Shopping.vue"
 import StickerReward from "../views/StickerReward.vue"
+import FrameReward from "../views/FrameReward.vue"
 import Outro from "../views/Outro.vue"
 import EatingOut from "../views/eatingOut/EatingOut.vue"
 import EatingOut3D from "../views/eatingOut/EatingOut3D.vue"
 import EatingOut2nd from "../views/eatingOut/EatingOut2nd.vue"
 import EatingOut2nd3D from "../views/eatingOut/EatingOut2nd3D.vue"
+import CommonOne from "../views/common/CommonOne.vue"
+import CommoneOne3D from "../views/common/CommonOne3D.vue"
+import CommonThree from "../views/common/CommonThree.vue"
+import CommonThree3D from "../views/common/CommonThree3D.vue"
 
 export const routes = [
     {path: '/', component: Landing, name: 'Landing'},
@@ -39,11 +44,17 @@ export const routes = [
     {path: '/shopping3', component: Shopping2nd3D, name: 'Shopping2nd3D'},
     {path: '/shopping', component: Shopping, name: 'Shopping'},
     {path: '/stickerreward', component: StickerReward, name: 'StickerReward'},
+    {path : '/framereward', component: FrameReward, name: 'FrameReward'},
     {path: '/outro', component: Outro, name: 'Outro'},
     {path: '/eatingout', component: EatingOut, name: 'EatingOut'},
     {path: '/eatingout3d', component: EatingOut3D, name: 'EatingOut3D'},
     {path: '/eatingout2', component: EatingOut2nd, name: 'EatingOut2nd'},
     {path: '/eatingout3', component: EatingOut2nd3D, name: 'EatingOut2nd3D'},
+    {path: '/commonone', component: CommonOne, name: 'CommonOne'},
+    {path: '/commonone3d', component: CommoneOne3D, name: 'CommoneOne3D'},
+    {path: '/commonthree', component: CommonThree, name: 'CommonThree'},
+    {path: '/commonthree3d', component: CommonThree3D, name: 'CommonThree3D'},
+
 ]
 
 const router = createRouter({

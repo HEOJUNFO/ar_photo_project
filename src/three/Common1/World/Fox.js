@@ -23,49 +23,20 @@ export default class Fox
         this.setModel()
         this.setAnimation()
 
-        this.clockwise = true;
-        this.angle = 2;
-        this.array = [new THREE.Vector3(), new THREE.Vector3()];
-        this._setupEventListeners();
+        this.startX = 0;
+        this.minX = -1.5;
+        this.maxX = 1.5;
+
+        window.addEventListener('touchstart', this.onTouchStart.bind(this));
+        window.addEventListener('touchmove', this.onTouchMove.bind(this));
     }
 
-    move(angle) {
-        const a = this.array[this.array.length - 2];
-        const b = this.array[this.array.length - 1];
-        
-        const vectorx = b.x - a.x;
-        const vectory = b.y - a.y;
-
-        // Apply a rotation matrix
-        const x = vectorx * Math.cos(angle) - vectory * Math.sin(angle);
-        const y = vectorx * Math.sin(angle) + vectory * Math.cos(angle);
-
-        // Add this new vector to the last coordinate
-        const new_x = b.x + x;
-        const new_y = b.y + y;
-
-        // Append to the array
-        this.array.push(new THREE.Vector3(new_x, new_y, b.z)); // Assuming z remains unchanged
-        
-        // Apply the new position to the fox model
-        this.model.position.set(new_x, new_y, b.z);
-    }
-
-    _setupEventListeners() {
-        window.addEventListener('touchstart', () => {
-            if (this.clockwise) {
-                this.move(-angle* Math.PI / 180);
-            } else {
-            this.move(angle* Math.PI / 180);
-            }
-            this.clockwise = !this.clockwise;
-        });
-    }
 
     setModel()
     {
         this.model = this.resource.scene
         this.model.scale.set(0.02, 0.02, 0.02)
+        this.model.position.set(0, -1, 0)
         this.scene.add(this.model)
 
         this.model.traverse((child) =>
@@ -121,6 +92,25 @@ export default class Fox
             this.debugFolder.add(debugObject, 'playWalking')
             this.debugFolder.add(debugObject, 'playRunning')
         }
+    }
+
+    onTouchStart(event)
+    {
+        this.startX = event.touches[0].clientX;
+    }
+
+    onTouchMove(event)
+    {
+        const currentX = event.touches[0].clientX;
+        const deltaX = currentX - this.startX;
+
+        const potentialNewX = this.model.position.x + deltaX * 0.01;
+
+        if (potentialNewX <= this.maxX && potentialNewX >= this.minX) {
+            this.model.position.x = potentialNewX;
+        } 
+
+        this.startX = currentX;
     }
 
     update()
