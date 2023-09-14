@@ -25,7 +25,7 @@ export default class Fox
 
         this.clockwise = true;
         this.angle = 2;
-        this.array = [new THREE.Vector3(), new THREE.Vector3()];
+        this.array = [new THREE.Vector3(0,0,0), new THREE.Vector3(0.01,0,0)];
         this._setupEventListeners();
     }
 
@@ -35,29 +35,26 @@ export default class Fox
         
         const vectorx = b.x - a.x;
         const vectory = b.y - a.y;
-
-        // Apply a rotation matrix
+    
         const x = vectorx * Math.cos(angle) - vectory * Math.sin(angle);
         const y = vectorx * Math.sin(angle) + vectory * Math.cos(angle);
-
-        // Add this new vector to the last coordinate
+    
         const new_x = b.x + x;
         const new_y = b.y + y;
-
-        // Append to the array
-        this.array.push(new THREE.Vector3(new_x, new_y, b.z)); // Assuming z remains unchanged
+    
+        this.array.push(new THREE.Vector3(new_x, new_y, b.z));
         
-        // Apply the new position to the fox model
         this.model.position.set(new_x, new_y, b.z);
+    
+        // Make the model look in the direction of movement
+        let direction = new THREE.Vector3(x, y, 0);
+        let lookAtPosition = new THREE.Vector3().addVectors(this.model.position, direction.normalize());
+        this.model.up.set(0, 0, 1);
+        this.model.lookAt(lookAtPosition);
     }
 
     _setupEventListeners() {
         window.addEventListener('touchstart', () => {
-            if (this.clockwise) {
-                this.move(-angle* Math.PI / 180);
-            } else {
-            this.move(angle* Math.PI / 180);
-            }
             this.clockwise = !this.clockwise;
         });
     }
@@ -65,9 +62,9 @@ export default class Fox
     setModel()
     {
         this.model = this.resource.scene
-        this.model.scale.set(0.02, 0.02, 0.02)
+        this.model.scale.set(0.005, 0.005, 0.005)
         this.scene.add(this.model)
-
+      
         this.model.traverse((child) =>
         {
             if(child instanceof THREE.Mesh)
@@ -126,5 +123,11 @@ export default class Fox
     update()
     {
         this.animation.mixer.update(this.time.delta * 0.001)
+
+        if (this.clockwise) {
+            this.move(-this.angle * Math.PI / 180);
+        } else {
+            this.move(this.angle * Math.PI / 180);
+        }
     }
 }

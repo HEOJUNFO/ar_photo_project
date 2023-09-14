@@ -24,6 +24,8 @@ import EatingOut2nd from "../views/eatingOut/EatingOut2nd.vue"
 import EatingOut2nd3D from "../views/eatingOut/EatingOut2nd3D.vue"
 import CommonOne from "../views/common/CommonOne.vue"
 import CommoneOne3D from "../views/common/CommonOne3D.vue"
+import CommonThree from "../views/common/CommonThree.vue"
+import CommonThree3D from "../views/common/CommonThree3D.vue"
 
 export const routes = [
     {path: '/', component: Landing, name: 'Landing'},
@@ -50,6 +52,8 @@ export const routes = [
     {path: '/eatingout3', component: EatingOut2nd3D, name: 'EatingOut2nd3D'},
     {path: '/commonone', component: CommonOne, name: 'CommonOne'},
     {path: '/commonone3d', component: CommoneOne3D, name: 'CommoneOne3D'},
+    {path: '/commonthree', component: CommonThree, name: 'CommonThree'},
+    {path: '/commonthree3d', component: CommonThree3D, name: 'CommonThree3D'},
 
 ]
 
