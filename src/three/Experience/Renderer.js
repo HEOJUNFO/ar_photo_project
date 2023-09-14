@@ -11,8 +11,14 @@ export default class Renderer
         this.scene = this.experience.scene
         this.camera = this.experience.camera
 
+        this.currentFacingMode = 'environment';
+
         this.setInstance()
         this.setWebcamBackground()
+    }
+
+    bindMethods() {
+        window.switchCamera = this.switchCamera.bind(this);
     }
 
     setInstance()
@@ -30,21 +36,37 @@ export default class Renderer
     }
 
     async setWebcamBackground() {
-        const video = document.createElement('video');
+        this.video = document.createElement('video');
 
-        const stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: 'environment' }
-        });
-        video.srcObject = stream;
-        video.play();
+        const stream = await this.getCameraStream(this.currentFacingMode);
+        this.video.srcObject = stream;
+        this.video.play();
 
-        const videoTexture = new THREE.VideoTexture(video);
+        const videoTexture = new THREE.VideoTexture(this.video);
         videoTexture.minFilter = THREE.LinearFilter;
         videoTexture.magFilter = THREE.LinearFilter;
         videoTexture.format = THREE.RGBAFormat;
         videoTexture.colorSpace = THREE.SRGBColorSpace;
 
         this.scene.background = videoTexture;
+    }
+
+    async getCameraStream(facingMode) {
+        if(this.video && this.video.srcObject) {
+            let tracks = this.video.srcObject.getTracks();
+            tracks.forEach(track => track.stop());
+        }
+
+        return await navigator.mediaDevices.getUserMedia({
+            video: { facingMode }
+        });
+    }
+
+    async switchCamera() {
+        this.currentFacingMode = this.currentFacingMode === 'user' ? 'environment' : 'user';
+        const stream = await this.getCameraStream(this.currentFacingMode);
+        this.video.srcObject = stream;
+        this.video.play();
     }
 
     resize()

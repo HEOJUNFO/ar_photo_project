@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="main">
         <div class="top-section">
             <div class="text-container1">
                 <p>{{ characterContent.text }}</p>
@@ -12,7 +12,15 @@
             <canvas class="webgl"></canvas>
         </div>
         <div class="capture-container">
-            <button onclick="captureImage()">촬영</button>
+            <button onclick="captureImage()"><svg xmlns="http://www.w3.org/2000/svg" width="70" height="70"
+                    viewBox="0 0 70 70" fill="none">
+                    <circle cx="35" cy="35" r="28" fill="#D50F4A" />
+                    <circle cx="35" cy="35" r="33.5" stroke="white" stroke-opacity="0.8" stroke-width="3" />
+                    <circle cx="35" cy="35" r="10.5" stroke="white" stroke-width="3" />
+                </svg></button>
+        </div>
+        <div class="switch-container">
+            <button onclick="switchCamera()">전환</button>
         </div>
         <div class="side-image-container">
             <img :src="currentCharacter.src" alt="Side Image" />
@@ -49,6 +57,15 @@ export default {
 
         const setVH = () => {
             let vh = window.innerHeight * 0.01;
+
+            // 삼성 브라우저 감지
+            const isSamsungBrowser = /SamsungBrowser/i.test(navigator.userAgent);
+
+            if (isSamsungBrowser) {
+                // 삼성 브라우저의 경우 보정 값을 적용
+                // vh = vh * 0.;  // 예: 현재 값의 95%로 설정. 원하는 비율로 조정하세요.
+            }
+
             document.documentElement.style.setProperty('--vh', `${vh}px`);
         }
 
@@ -75,11 +92,17 @@ export default {
 </script>
 
 <style scoped>
+.main {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+}
+
 .webgl-container {
     height: calc(100 * var(--vh));
     width: 100%;
     top: 0vh;
-    position: relative;
+    position: absolute;
     overflow: hidden;
 }
 
@@ -87,31 +110,45 @@ export default {
     position: fixed;
     left: 0;
     outline: none;
+    overflow: hidden;
 }
 
 .side-image-container {
+    overflow: hidden;
     position: absolute;
-    top: calc(60 * var(--vh));
+    top: calc(55 * var(--vh));
     right: -70%;
     transform: translateX(-50%);
     z-index: 2;
 }
 
 .side-image-container img {
+    overflow: hidden;
     height: 50%;
     width: 50%;
     display: block;
 }
 
 .capture-container {
+    overflow: hidden;
     position: absolute;
-    top: calc(80 * var(--vh));
+    top: calc(90 * var(--vh));
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 2;
 }
 
+.switch-container {
+    overflow: hidden;
+    position: absolute;
+    top: calc(90 * var(--vh));
+    left: 75%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
 .capture-container button {
+    overflow: hidden;
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -127,6 +164,7 @@ export default {
 }
 
 .top-section {
+    overflow: hidden;
     position: absolute;
     display: flex;
     flex-direction: row;
@@ -139,6 +177,7 @@ export default {
 
 
 .text-container1 {
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -148,17 +187,20 @@ export default {
 }
 
 .text-container1 p {
+    overflow: hidden;
     padding: 7.5px 15px 7.5px 15px;
     font-size: 1rem;
 }
 
 .side-image-container2 {
+    overflow: hidden;
     width: 20%;
     display: flex;
     align-items: center;
 }
 
 .side-image-container2 img {
+    overflow: hidden;
     height: 100%;
     width: 100%;
     display: block;
