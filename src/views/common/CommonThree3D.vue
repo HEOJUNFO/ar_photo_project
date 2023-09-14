@@ -8,7 +8,7 @@
                 <img :src="currentCharacter.src" alt="Side Image" />
             </div>
         </div>
-        <div @click="next()" class="webgl-container">
+        <div class="webgl-container">
             <canvas class="webgl"></canvas>
         </div>
     </div>
@@ -39,7 +39,7 @@ export default {
         const next = () => {
             if (index.value === 0) {
                 index.value = 1
-                // router.push({ path: '/stickerreward', query: { eventName: "common3" } });
+                router.push({ path: '/framereward', query: { eventName: "common3" } });
             }
         }
 

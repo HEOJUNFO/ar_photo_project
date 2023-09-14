@@ -26,6 +26,11 @@ export default class Fox
         this.clockwise = true;
         this.angle = 2;
         this.array = [new THREE.Vector3(0,0,0), new THREE.Vector3(0.01,0,0)];
+
+        this.xRange = { min: -1.3, max: 1.3}; 
+        this.yRange = { min: -0.7, max: 4}; 
+
+
         this._setupEventListeners();
     }
 
@@ -120,6 +125,11 @@ export default class Fox
         }
     }
 
+    end(){
+       this.experience.goToNextScene();
+       console.log("end")
+    }
+
     update()
     {
         this.animation.mixer.update(this.time.delta * 0.001)
@@ -128,6 +138,12 @@ export default class Fox
             this.move(-this.angle * Math.PI / 180);
         } else {
             this.move(this.angle * Math.PI / 180);
+        }
+
+        const currentPosition = this.model.position;
+        if (currentPosition.x < this.xRange.min || currentPosition.x > this.xRange.max ||
+            currentPosition.y < this.yRange.min || currentPosition.y > this.yRange.max) {
+            this.end();
         }
     }
 }

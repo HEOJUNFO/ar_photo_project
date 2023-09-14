@@ -8,7 +8,7 @@
                 <img :src="currentCharacter.src" alt="Side Image" />
             </div>
         </div>
-        <div @click="next()" class="webgl-container">
+        <div class="webgl-container">
             <canvas class="webgl"></canvas>
         </div>
     </div>

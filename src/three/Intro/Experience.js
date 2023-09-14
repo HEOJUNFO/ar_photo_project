@@ -134,7 +134,6 @@ export default class Experience
     
         for (let i = 0; i < intersects.length; i++) {
             if (this._isObjectChildOf(intersects[i].object, this.clickedObject)) {
-                    this.onModelClick();
                 break;
             }
         }
