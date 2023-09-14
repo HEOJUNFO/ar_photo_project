@@ -59,6 +59,7 @@ export default class Experience
     bindMethods()
     {
         this.camera.bindMethods()
+        this.renderer.bindMethods()
     }
 
     resize()
