@@ -164,7 +164,7 @@ export default {
 }
 
 .top-section {
-    overflow: hidden;
+    overflow: visible;
     position: absolute;
     display: flex;
     flex-direction: row;
@@ -173,23 +173,47 @@ export default {
     justify-content: space-between;
     align-items: center;
     z-index: 1;
+    margin-top: calc(2.5 * var(--vh));
 }
 
 
 .text-container1 {
-    overflow: hidden;
+    overflow: visible;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid black;
     background-color: #fff;
-    width: 80%;
+    width: 70%;
+    position: relative;
+    border-radius: 16px;
+    margin-left: 5%;
+}
+
+.text-container1::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 15px solid #fff;
+    position: absolute;
+    right: -15px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .text-container1 p {
     overflow: hidden;
-    padding: 7.5px 15px 7.5px 15px;
-    font-size: 1rem;
+    padding: 15px;
+    color: #000;
+    font-family: NanumSquare;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+    margin: 0;
+    border-radius: 10px;
 }
 
 .side-image-container2 {

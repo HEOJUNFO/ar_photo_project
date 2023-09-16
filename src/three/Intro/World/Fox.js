@@ -26,7 +26,7 @@ export default class Fox
         this.clockwise = true;
         this.angle = 2;
         this.array = [new THREE.Vector3(), new THREE.Vector3()];
-        this._setupEventListeners();
+        // this._setupEventListeners();
     }
 
     move(angle) {
@@ -54,9 +54,9 @@ export default class Fox
     _setupEventListeners() {
         window.addEventListener('touchstart', () => {
             if (this.clockwise) {
-                this.move(-angle* Math.PI / 180);
+                this.move(-this.angle* Math.PI / 180);
             } else {
-            this.move(angle* Math.PI / 180);
+            this.move(this.angle* Math.PI / 180);
             }
             this.clockwise = !this.clockwise;
         });

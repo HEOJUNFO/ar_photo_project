@@ -45,7 +45,7 @@ export default {
 
         const currentCharacterContent = computed(() => {
             const char = characterStore.currentCharacter
-            return char.shopping[textIndex.value] || {}
+            return char?.shopping[textIndex.value] || {}
         })
 
 
@@ -62,6 +62,7 @@ export default {
         }
 
         onMounted(() => {
+
             setVH();
 
             window.addEventListener('resize', setVH);
@@ -72,8 +73,8 @@ export default {
             next,
             currentImageSrc,
             characterContent: currentCharacterContent,
-            selectCharacterSrc: characterStore.currentCharacter.src,
-            selectCharacterName: characterStore.currentCharacter.name,
+            selectCharacterSrc: characterStore.currentCharacter?.src,
+            selectCharacterName: characterStore.currentCharacter?.name,
         }
     }
 }

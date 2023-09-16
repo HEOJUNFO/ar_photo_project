@@ -75,8 +75,8 @@ export default {
             next,
             currentImageSrc,
             characterContent: currentCharacterContent,
-            selectCharacterSrc: characterStore.currentCharacter.src,
-            selectCharacterName: characterStore.currentCharacter.name,
+            selectCharacterSrc: characterStore.currentCharacter?.src,
+            selectCharacterName: characterStore.currentCharacter?.name,
         }
     }
 }

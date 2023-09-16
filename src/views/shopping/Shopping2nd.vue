@@ -45,7 +45,7 @@ export default {
 
         const currentCharacterContent = computed(() => {
             const char = characterStore.currentCharacter
-            return char.shopping2[textIndex.value] || {}
+            return char?.shopping2[textIndex.value] || {}
         })
 
 
@@ -75,8 +75,8 @@ export default {
             next,
             currentImageSrc,
             characterContent: currentCharacterContent,
-            selectCharacterSrc: characterStore.currentCharacter.src,
-            selectCharacterName: characterStore.currentCharacter.name,
+            selectCharacterSrc: characterStore.currentCharacter?.src,
+            selectCharacterName: characterStore.currentCharacter?.name,
         }
     }
 }

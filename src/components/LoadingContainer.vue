@@ -12,6 +12,7 @@
 <script>
 import { ref, onMounted } from 'vue'
 import router from '../router'
+import { createRouterMatcher } from 'vue-router'
 
 export default {
     name: 'LoadingContainer',
@@ -26,6 +27,13 @@ export default {
 
 
         onMounted(() => {
+
+            if (localStorage.getItem('characterID') === null && router.currentRoute.value.path !== '/intro') {
+                router.push('/intro')
+
+                return
+            }
+
             setVH();
 
             window.addEventListener('resize', setVH);

@@ -52,13 +52,16 @@ export default {
 
         const currentCharacterContent = computed(() => {
             const char = characterStore.currentCharacter
-            return char.intro[index.value] || {}
+            return char?.intro[index.value] || {}
         })
 
 
         const next = () => {
             localStorage.setItem('characterID', imageIndex.value)
-            router.push('/intro3d')
+            setTimeout(() => {
+                router.push('/intro3d')
+            }, 1000);
+
         }
 
         const navigateToNextImage = () => {
@@ -89,8 +92,8 @@ export default {
             navigateToNextImage,
             navigateToPreviousImage,
             characterContent: currentCharacterContent,
-            selectCharacterSrc: characterStore.currentCharacter.src,
-            selectCharacterName: characterStore.currentCharacter.name,
+            selectCharacterSrc: characterStore.currentCharacter?.src,
+            selectCharacterName: characterStore.currentCharacter?.name,
         }
     }
 }

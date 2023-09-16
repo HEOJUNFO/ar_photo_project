@@ -43,7 +43,7 @@ export default {
 
         const currentCharacterContent = computed(() => {
             const char = characterStore.currentCharacter
-            return char.common3[textIndex.value] || {}
+            return char?.common3[textIndex.value] || {}
         })
 
         const next = () => {
@@ -66,8 +66,8 @@ export default {
             next,
             currentImageSrc,
             characterContent: currentCharacterContent,
-            selectCharacterSrc: characterStore.currentCharacter.src,
-            selectCharacterName: characterStore.currentCharacter.name,
+            selectCharacterSrc: characterStore.currentCharacter?.src,
+            selectCharacterName: characterStore.currentCharacter?.name,
         }
     }
 }
