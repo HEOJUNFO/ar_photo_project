@@ -64,7 +64,7 @@
             <button @click="next()">참여하지 않고 나가기</button>
         </div>
         <div v-if="showModal" class="modal">
-            <p>뒤로 가시겠습니까?</p>
+            <p>사진 촬영으로 돌아갑니다.</p>
             <div class="modal-buttons">
                 <button @click="closeModal">취소</button>
                 <button @click="confirmBack">확인</button>
@@ -472,7 +472,15 @@ export default {
 
         };
 
+        const setVH = () => {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+
         onMounted(() => {
+            setVH();
+            window.addEventListener('resize', setVH);
+
             imgData.value = router.currentRoute.value.query.imgData;
 
             if (router.currentRoute.value.query.eventName === 'shopping2') {
@@ -578,7 +586,7 @@ export default {
 }
 
 .footer {
-    height: 10vh;
+    height: calc(10 * var(--vh));
     width: 100%;
     background-color: #fff;
     color: #fff;
@@ -619,7 +627,7 @@ export default {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 10vh;
+    height: calc(10 * var(--vh));
     justify-content: center;
     align-items: center;
     z-index: 1;
@@ -663,7 +671,7 @@ export default {
 .footer2 {
     position: fixed;
     bottom: 0;
-    height: 30vh;
+    height: calc(30 * var(--vh));
     width: 100%;
     background-color: #fff;
     display: flex;
@@ -710,16 +718,71 @@ export default {
     position: fixed;
     top: 50%;
     left: 50%;
-    width: 80vw;
-    height: 20vh;
+    width: 60%;
+    height: calc(10 * var(--vh));
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    border: none;
     background-color: #fff;
-    border: 1px solid #000;
+    border-radius: 16px;
     flex-direction: column;
     z-index: 3;
+    padding-top: 10%;
     transform: translate(-50%, -50%);
+}
+
+.modal p {
+    color: #111;
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+}
+
+.modal-buttons {
+    margin-top: 10%;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.modal button {
+    width: 50%;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+
+
+.modal button:first-child {
+    border-radius: 0px 0px 0px 16px;
+    background: var(--Background_Grey, #D9D9D9);
+    color: var(--Text-Gray, #767676);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+}
+
+.modal button:last-child {
+    border-radius: 0px 0px 16px 0px;
+    background: var(--Main-Pink, #F0D7CA);
+    color: var(--Text-Black, #111);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
 }
 
 .modal2 {
@@ -727,7 +790,7 @@ export default {
     top: 50%;
     left: 50%;
     width: 80vw;
-    height: 80vh;
+    height: calc(80 * var(--vh));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -749,21 +812,13 @@ export default {
     outline: none;
 }
 
-.modal-buttons {
-    display: flex;
-    justify-content: space-between;
-    width: 20%
-}
 
-.modal button {
-    margin-top: 15px;
-}
 
 
 .toolbox {
     background-color: #fff;
     width: 100%;
-    height: 30vh;
+    height: calc(30 * var(--vh));
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -778,7 +833,7 @@ export default {
 
 .left {
     width: 20%;
-    height: 20vh;
+    height: calc(20 * var(--vh));
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -826,7 +881,7 @@ export default {
 
 
 .top-buttons {
-    height: 10vh;
+    height: calc(10 * var(--vh));
     display: flex;
     justify-content: space-evenly;
 }
@@ -877,7 +932,7 @@ export default {
 
 
 .color-palette {
-    height: 10vh;
+    height: calc(10 * var(--vh));
     display: flex;
     flex-direction: column;
     align-items: center;
