@@ -127,6 +127,8 @@ export default {
             img.src = canvas.toDataURL();
 
             video.style.display = 'none';
+            video.style.width = '80%'
+            img.style.width = '80%'
             image.style.height = 'calc(80 * var(--vh))';
             image.style.top = '0vh';
 
@@ -335,6 +337,8 @@ export default {
 }
 
 .webcam {
+    display: flex;
+    justify-content: center;
     position: relative;
     width: 100%;
     height: calc(100 * var(--vh));
@@ -458,25 +462,70 @@ export default {
     position: fixed;
     top: 50%;
     left: 50%;
-    width: 80vw;
-    height: 20vh;
+    width: 60%;
+    height: calc(10 * var(--vh));
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    border: none;
     background-color: #fff;
-    border: 1px solid #000;
+    border-radius: 16px;
     flex-direction: column;
     z-index: 3;
+    padding-top: 10%;
     transform: translate(-50%, -50%);
 }
 
+.modal p {
+    color: #111;
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+}
+
 .modal-buttons {
+    margin-top: 10%;
     display: flex;
-    justify-content: space-between;
-    width: 20%
+    justify-content: center;
+    width: 100%;
 }
 
 .modal button {
-    margin-top: 15px;
+    width: 50%;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+
+
+.modal button:first-child {
+    border-radius: 0px 0px 0px 16px;
+    background: var(--Background_Grey, #D9D9D9);
+    color: var(--Text-Gray, #767676);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+}
+
+.modal button:last-child {
+    border-radius: 0px 0px 16px 0px;
+    background: var(--Main-Pink, #F0D7CA);
+    color: var(--Text-Black, #111);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
 }
 </style>
