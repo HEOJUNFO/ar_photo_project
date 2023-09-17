@@ -27,8 +27,6 @@ const IMAGES = [
     'https://dt-static.syrup.co.kr/sodar/sticker/Thumbnail/Thumbnail_sticker (1).png'
 ]
 
-
-
 export default {
     name: 'Shopping2',
     components: {

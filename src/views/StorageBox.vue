@@ -24,8 +24,15 @@
             <button @click="setTab('unacquired')" :class="{ active: currentTab === 'unacquired' }">미획득 보상</button>
             <button @click="setTab('used')" :class="{ active: currentTab === 'used' }">사용완료쿠폰</button>
         </div>
-        <div class="list-container" v-if="currentTab === 'all'"> </div>
-        <div class="list-container" v-if="currentTab === 'unused'"> </div>
+        <div class="list-container" v-if="currentTab === 'all'">
+            <div v-for="item in tabData" :key="item.id" class="image-container">
+                <img src="../resource/storageBox/bg_reward.png" />
+                <img
+                    src="https://playar.syrup.co.kr/sodarimg/is/marketing/202308/17TZcrb5Q*38b3ed16b02bec43416b4a7dec923cb0.gif" />
+            </div>
+        </div>
+        <div class="list-container" v-if="currentTab === 'unused'">
+        </div>
         <div class="list-container" v-if="currentTab === 'unacquired'"></div>
         <div class="list-container" v-if="currentTab === 'used'"> </div>
         <div v-if="showModal" class="modal">
@@ -41,6 +48,8 @@
 <script>
 import { onMounted, ref, watch } from 'vue';
 import router from '../router';
+import { useRewardsStore } from '../stores/reward.js';
+import { Image } from 'konva/lib/shapes/Image';
 
 export default {
     name: 'StorageBox',
@@ -48,51 +57,37 @@ export default {
         const showModal = ref(false);
         const currentTab = ref('all');
         const tabData = ref({});
-
+        const rewardsStore = useRewardsStore();
         const setTab = (tabName) => {
             currentTab.value = tabName;
             fetchTabData(tabName);
-        }
-
+        };
         const fetchTabData = (tabName) => {
-            const data = localStorage.getItem(tabName);
-            if (data) {
-                tabData[tabName] = JSON.parse(data);
-            } else {
-                tabData[tabName] = [];
-            }
-        }
-
+            const data = localStorage.getItem('rewardsData');
+            const parsedData = JSON.parse(data);
+            tabData.value = parsedData[tabName] || [];
+        };
         const confirmBack = () => {
             showModal.value = false;
-            router.go(-1)
-        }
-
+            router.go(-1);
+        };
         const closeModal = () => {
             showModal.value = false;
-        }
-
+        };
         const bgClick = () => {
-
-        }
-
+        };
         const back = () => {
             showModal.value = true;
-        }
-
+        };
         const setVH = () => {
             let vh = window.innerHeight * 0.01;
             document.documentElement.style.setProperty('--vh', `${vh}px`);
-        }
-
+        };
         onMounted(() => {
             setVH();
             window.addEventListener('resize', setVH);
-
             fetchTabData('all');
-
         });
-
         return {
             back,
             bgClick,
@@ -102,8 +97,9 @@ export default {
             setTab,
             currentTab,
             tabData
-        }
-    }
+        };
+    },
+    components: { Image }
 }
 </script>
 
@@ -252,5 +248,37 @@ export default {
 .tabs button.active {
     background: var(--Main-Pink, #F0D7CA);
     color: var(--Text-Black, #111);
+}
+
+.list-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+/* .list-container img {
+    width: 100%;
+    height: calc(25 * var(--vh));
+} */
+
+.image-container {
+    position: relative;
+    width: 100%;
+    height: calc(34 * var(--vh));
+}
+
+.image-container img:first-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.image-container img:nth-child(2) {
+    position: absolute;
+    top: 5%;
+    left: 0;
+    width: 100%;
+    height: 60%;
 }
 </style>
