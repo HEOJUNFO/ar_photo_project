@@ -41,6 +41,8 @@ export default {
             router.push('/intro')
         }
 
+
+
         return { next1, next2, start }
     }
 }
@@ -48,7 +50,6 @@ export default {
 
 <style scoped>
 .loading-container {
-    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -57,13 +58,11 @@ export default {
 
 .image-container {
     position: relative;
-    object-fit: block;
     margin: -1%;
 }
 
 .image-container2 {
     position: relative;
-    object-fit: block;
     margin: -1%;
 }
 
@@ -71,7 +70,7 @@ export default {
 .image-container img {
     width: 100%;
     height: auto;
-    object-fit: cover;
+
 
 }
 
@@ -83,19 +82,35 @@ export default {
     left: 50%;
     transform: translateX(-50%);
     border: none;
-    border-radius: 16px;
+    border-radius: 100px;
     background-color: #fff;
+    color: var(--Text-White, #000);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
 }
 
 .image-container2 button {
     position: absolute;
     width: 80%;
     padding: 10px;
-    bottom: 5%;
+    bottom: 3%;
     left: 50%;
     transform: translateX(-50%);
     border: none;
-    border-radius: 16px;
+    border-radius: 100px;
     background-color: #fff;
+    color: var(--Text-White, #000);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
 }
 </style>

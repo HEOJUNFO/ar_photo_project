@@ -58,6 +58,7 @@ export default {
         const currentTab = ref('all');
         const tabData = ref({});
         const rewardsStore = useRewardsStore();
+
         const setTab = (tabName) => {
             currentTab.value = tabName;
             fetchTabData(tabName);
@@ -104,9 +105,6 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
-
-
 .top-section {
     display: flex;
     flex-direction: row;

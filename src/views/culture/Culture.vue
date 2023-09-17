@@ -1,5 +1,5 @@
 <template>
-    <div @click.stop="next()">
+    <div @click.stop="next()" style="overflow: hidden;">
         <loading-container>
         </loading-container>
         <div class="loading-container">

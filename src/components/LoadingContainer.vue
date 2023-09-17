@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="overflow: hidden;">
         <transition name="fade">
             <div v-if="systemCheck" class="loading-container">
                 <img src="https://playar.syrup.co.kr/sodarimg/is/marketing/202308/17TZcrb5Q*38b3ed16b02bec43416b4a7dec923cb0.gif"
@@ -20,22 +20,7 @@ export default {
 
         const systemCheck = ref(true)
 
-        const rewardsData = {
-            all: [
-                { id: 1, acquired: true },
-                { id: 2, acquired: false },
-            ],
-            unused: [
-                { id: 1, acquired: false },
-            ],
-            unacquired: [
-            ],
-            used: [
-                { id: 2, acquired: true },
-            ]
-        };
 
-        localStorage.setItem('rewardsData', JSON.stringify(rewardsData));
 
         const setVH = () => {
             let vh = window.innerHeight * 0.01;
@@ -47,6 +32,17 @@ export default {
 
             if (localStorage.getItem('characterID') === null && router.currentRoute.value.path !== '/intro') {
                 router.push('/intro')
+
+                const rewardsData = {
+                    all: [
+                        { id: 1, acquired: true, used: false },
+                        { id: 2, acquired: true, used: true },
+                        { id: 3, acquired: false, used: false },
+                        { id: 4, acquired: true, used: true },
+                    ]
+                }
+
+                localStorage.setItem('rewardsData', JSON.stringify(rewardsData));
 
                 return
             }
