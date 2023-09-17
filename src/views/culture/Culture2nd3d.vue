@@ -1,13 +1,16 @@
 <template>
     <div>
         <div v-show="!showCaptureButton" class="top-section">
-            <div class="side-image-container">
-                <button @click="showModal = true">뒤로</button>
+            <div class="side-image-container1">
+                <button @click="showModal = true"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        viewBox="0 0 16 16" fill="none">
+                        <path d="M3.825 9L9.425 14.6L8 16L0 8L8 0L9.425 1.4L3.825 7H16V9H3.825Z" fill="#111111" />
+                    </svg></button>
             </div>
             <div class="text-container1">
                 <p>염색색상변경</p>
             </div>
-            <div class="side-image-container">
+            <div class="side-image-container2">
                 <button @click="saveImage()">완료</button>
             </div>
         </div>
@@ -24,7 +27,8 @@
             <button @click.stop="capture()">촬영</button>
         </div>
         <div v-show="!showCaptureButton" class="png-buttons-container">
-            <button @click="colVal('none')" class="png-button" style="background-image: url('path_to_png_1.png')"></button>
+            <button @click="colVal('none')" class="png-button"
+                style="background-image: url('../../resource/shopping2/no_select_button.png'); width: 80px; height:  80px;"></button>
             <button @click="colVal('#A52A2A')" class="png-button"
                 style="background-image: url('../resource/culture2/hair_01_redbrown.png')"></button>
             <button @click="colVal('#98623c')" class="png-button"
@@ -123,6 +127,8 @@ export default {
             img.src = canvas.toDataURL();
 
             video.style.display = 'none';
+            video.style.width = '80%'
+            img.style.width = '80%'
             image.style.height = 'calc(80 * var(--vh))';
             image.style.top = '0vh';
 
@@ -331,6 +337,8 @@ export default {
 }
 
 .webcam {
+    display: flex;
+    justify-content: center;
     position: relative;
     width: 100%;
     height: calc(100 * var(--vh));
@@ -364,6 +372,7 @@ export default {
     right: 0;
     height: calc(10 * var(--vh));
     align-items: center;
+    padding-bottom: calc(0.25 * var(--vh));
 }
 
 .png-button {
@@ -372,7 +381,7 @@ export default {
     border: none;
     background-size: cover;
     background-repeat: no-repeat;
-    background-color: #fff;
+    background-color: rgba(0, 0, 0, 0);
     cursor: pointer;
 }
 
@@ -385,59 +394,138 @@ export default {
     flex-direction: row;
     width: 100%;
     height: calc(10 * var(--vh));
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     z-index: 1;
+    background: var(--Main-Pink, #F0D7CA);
 }
 
 
-.side-image-container {
-    width: 20%;
+.side-image-container1 {
     display: flex;
     align-items: center;
+    position: absolute;
+    left: 5vw;
 }
 
-.side-image-container button {
+.side-image-container2 {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 5vw;
+}
+
+
+.side-image-container1 button {
     height: 100%;
     width: 100%;
     display: block;
+    border: none;
+    background: none;
+    outline: none;
+}
+
+.side-image-container2 button {
+    height: 100%;
+    width: 100%;
+    display: block;
+    border: none;
+    background: none;
+    outline: none;
+    color: var(--Point-REd, var(--Point-Red, #D50F4A));
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 24px;
+    letter-spacing: -0.4px;
 }
 
 .text-container1 {
     justify-content: center;
     align-items: center;
-    background-color: #fff;
-    width: 80%;
 }
 
+
+
 .text-container1 p {
-    padding: 7.5px 15px 7.5px 15px;
-    font-size: 1.5rem;
+    color: var(--Text-Black, #111);
+    font-family: "NanumSquare", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 28px;
+    letter-spacing: -0.5px;
 }
 
 .modal {
     position: fixed;
     top: 50%;
     left: 50%;
-    width: 80vw;
-    height: 20vh;
+    width: 60%;
+    height: calc(10 * var(--vh));
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    border: none;
     background-color: #fff;
-    border: 1px solid #000;
+    border-radius: 16px;
     flex-direction: column;
     z-index: 3;
+    padding-top: 10%;
     transform: translate(-50%, -50%);
 }
 
+.modal p {
+    color: #111;
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+}
+
 .modal-buttons {
+    margin-top: 10%;
     display: flex;
-    justify-content: space-between;
-    width: 20%
+    justify-content: center;
+    width: 100%;
 }
 
 .modal button {
-    margin-top: 15px;
+    width: 50%;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+
+
+.modal button:first-child {
+    border-radius: 0px 0px 0px 16px;
+    background: var(--Background_Grey, #D9D9D9);
+    color: var(--Text-Gray, #767676);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+}
+
+.modal button:last-child {
+    border-radius: 0px 0px 16px 0px;
+    background: var(--Main-Pink, #F0D7CA);
+    color: var(--Text-Black, #111);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
 }
 </style>
