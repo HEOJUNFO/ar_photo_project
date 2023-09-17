@@ -221,7 +221,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     z-index: 10;
-    margin-top: calc(5 * var(--vh));
+    margin-top: calc(7.5 * var(--vh));
 }
 
 
@@ -231,7 +231,7 @@ export default {
     justify-content: center;
     align-items: center;
     background-color: #fff;
-    width: 70%;
+    width: 75%;
     position: relative;
     border-radius: 16px;
     margin-left: 5%;
@@ -245,8 +245,8 @@ export default {
     border-bottom: 10px solid transparent;
     border-left: 15px solid #fff;
     position: absolute;
-    right: -15px;
-    top: 50%;
+    right: -10px;
+    top: 30%;
     transform: translateY(-50%);
 }
 
@@ -262,6 +262,8 @@ export default {
     letter-spacing: -0.4px;
     margin: 0;
     border-radius: 10px;
+    overflow-wrap: break-word;
+    word-break: keep-all;
 }
 
 

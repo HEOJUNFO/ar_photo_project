@@ -8,8 +8,9 @@
             </div>
             <div class="text-container2">
                 <img :src="selectCharacterSrc" alt="Description" class="overlap-image" />
-                <p v-show="index === 0">{{ selectCharacterName }}</p>
-                <p v-show="index === 0">{{ characterContent.text }}</p>
+                <p class="character-name">{{ selectCharacterName }}</p>
+                <hr class="character-line">
+                <p class="character-text">{{ characterContent.text }}</p>
             </div>
         </div>
     </div>
@@ -83,22 +84,53 @@ export default {
     background-color: #fff;
 }
 
-.text-container2 p {
-    padding: 7.5px 15px 7.5px 15px;
-    font-size: 0.5rem;
-}
 
 .text-container2 {
-    position: relative;
+    bottom: 0%;
+    position: absolute;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     border: 1px solid black;
-    padding: 10px;
     background-color: #fff;
     width: 100%;
-    height: calc(20 * var(--vh));
+    height: calc(30 * var(--vh));
+}
+
+.text-container2 .character-name {
+    padding: 7.5px 15px 0 15px;
+    color: #000;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 34px;
+    letter-spacing: -0.6px;
+    align-self: flex-start;
+}
+
+.text-container2 .character-text {
+    padding: 7.5px 15px;
+    color: #767676;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 26px;
+    letter-spacing: -0.45px;
+    align-self: flex-start;
+    text-align: left;
+    max-width: 25ch;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+}
+
+.character-line {
+    width: 90%;
+    border: 1px solid #D9D9D9;
+    margin: 5px 0 5px 0;
+    align-self: center
 }
 
 .image-container {
