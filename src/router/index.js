@@ -26,6 +26,7 @@ import CommonOne from "../views/common/CommonOne.vue"
 import CommoneOne3D from "../views/common/CommonOne3D.vue"
 import CommonThree from "../views/common/CommonThree.vue"
 import CommonThree3D from "../views/common/CommonThree3D.vue"
+import StorageBox from "../views/StorageBox.vue"
 
 export const routes = [
     {path: '/', component: Landing, name: 'Landing'},
@@ -54,6 +55,7 @@ export const routes = [
     {path: '/commonone3d', component: CommoneOne3D, name: 'CommoneOne3D'},
     {path: '/commonthree', component: CommonThree, name: 'CommonThree'},
     {path: '/commonthree3d', component: CommonThree3D, name: 'CommonThree3D'},
+    {path: '/storagebox', component: StorageBox, name: 'StorageBox'},
 
 ]
 

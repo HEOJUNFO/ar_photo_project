@@ -20,6 +20,23 @@ export default {
 
         const systemCheck = ref(true)
 
+        const rewardsData = {
+            all: [
+                { id: 1, acquired: true },
+                { id: 2, acquired: false },
+            ],
+            unused: [
+                { id: 1, acquired: false },
+            ],
+            unacquired: [
+            ],
+            used: [
+                { id: 2, acquired: true },
+            ]
+        };
+
+        localStorage.setItem('rewardsData', JSON.stringify(rewardsData));
+
         const setVH = () => {
             let vh = window.innerHeight * 0.01;
             document.documentElement.style.setProperty('--vh', `${vh}px`);
