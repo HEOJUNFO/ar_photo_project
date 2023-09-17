@@ -32,9 +32,26 @@
             </div>
         </div>
         <div class="list-container" v-if="currentTab === 'unused'">
+            <div v-for="item in tabData" :key="item.id" class="image-container">
+                <img src="../resource/storageBox/bg_reward.png" />
+                <img
+                    src="https://playar.syrup.co.kr/sodarimg/is/marketing/202308/17TZcrb5Q*38b3ed16b02bec43416b4a7dec923cb0.gif" />
+            </div>
         </div>
-        <div class="list-container" v-if="currentTab === 'unacquired'"></div>
-        <div class="list-container" v-if="currentTab === 'used'"> </div>
+        <div class="list-container" v-if="currentTab === 'unacquired'">
+            <div v-for="item in tabData" :key="item.id" class="image-container">
+                <img src="../resource/storageBox/bg_reward.png" />
+                <img
+                    src="https://playar.syrup.co.kr/sodarimg/is/marketing/202308/17TZcrb5Q*38b3ed16b02bec43416b4a7dec923cb0.gif" />
+            </div>
+        </div>
+        <div class="list-container" v-if="currentTab === 'used'">
+            <div v-for="item in tabData" :key="item.id" class="image-container">
+                <img src="../resource/storageBox/bg_reward.png" />
+                <img
+                    src="https://playar.syrup.co.kr/sodarimg/is/marketing/202308/17TZcrb5Q*38b3ed16b02bec43416b4a7dec923cb0.gif" />
+            </div>
+        </div>
         <div v-if="showModal" class="modal">
             <p>뒤로 돌아갑니다.</p>
             <div class="modal-buttons">
@@ -46,49 +63,55 @@
 </template>
 
 <script>
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref } from 'vue';
 import router from '../router';
 import { useRewardsStore } from '../stores/reward.js';
-import { Image } from 'konva/lib/shapes/Image';
 
 export default {
     name: 'StorageBox',
     setup() {
         const showModal = ref(false);
         const currentTab = ref('all');
-        const tabData = ref({});
+
         const rewardsStore = useRewardsStore();
 
         const setTab = (tabName) => {
             currentTab.value = tabName;
             fetchTabData(tabName);
         };
+
         const fetchTabData = (tabName) => {
-            const data = localStorage.getItem('rewardsData');
-            const parsedData = JSON.parse(data);
-            tabData.value = parsedData[tabName] || [];
+            rewardsStore.setRewardsData();
+            return rewardsStore.fetchTabData(tabName);
         };
+
         const confirmBack = () => {
             showModal.value = false;
             router.go(-1);
         };
+
         const closeModal = () => {
             showModal.value = false;
         };
+
         const bgClick = () => {
+            // If there is any functionality you want when background is clicked, add here
         };
+
         const back = () => {
             showModal.value = true;
         };
+
         const setVH = () => {
             let vh = window.innerHeight * 0.01;
             document.documentElement.style.setProperty('--vh', `${vh}px`);
         };
+
         onMounted(() => {
             setVH();
             window.addEventListener('resize', setVH);
-            fetchTabData('all');
         });
+
         return {
             back,
             bgClick,
@@ -97,10 +120,9 @@ export default {
             closeModal,
             setTab,
             currentTab,
-            tabData
+            tabData: rewardsStore.rewardsData[currentTab.value]
         };
-    },
-    components: { Image }
+    }
 }
 </script>
 

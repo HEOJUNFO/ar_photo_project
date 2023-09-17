@@ -33,16 +33,10 @@ export default {
             if (localStorage.getItem('characterID') === null && router.currentRoute.value.path !== '/intro') {
                 router.push('/intro')
 
-                const rewardsData = {
-                    all: [
-                        { id: 1, acquired: true, used: false },
-                        { id: 2, acquired: true, used: true },
-                        { id: 3, acquired: false, used: false },
-                        { id: 4, acquired: true, used: true },
-                    ]
-                }
-
-                localStorage.setItem('rewardsData', JSON.stringify(rewardsData));
+                localStorage.setItem('item1', "null")
+                localStorage.setItem('item2', "null")
+                localStorage.setItem('item3', "null")
+                localStorage.setItem('item4', "null")
 
                 return
             }
