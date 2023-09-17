@@ -255,11 +255,6 @@ export default {
     grid-template-columns: 1fr 1fr;
 }
 
-/* .list-container img {
-    width: 100%;
-    height: calc(25 * var(--vh));
-} */
-
 .image-container {
     position: relative;
     width: 100%;

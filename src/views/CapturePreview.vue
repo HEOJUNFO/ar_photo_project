@@ -70,7 +70,6 @@
                 <button @click="confirmBack">확인</button>
             </div>
         </div>
-        Copy code
         <div v-if="showToolbox" class="toolbox">
             <div class="top-section2">
                 <div class="left">
@@ -223,9 +222,32 @@
             </div>
         </div>
         <div v-if="premiumModal" class="modal2">
-            <button @click="premiumModal = false" class="close-btn">×</button>
-            <img src="https://playar.syrup.co.kr/sodarimg/is/marketing/202308/17TZcrb5Q*38b3ed16b02bec43416b4a7dec923cb0.gif"
-                alt="Loading..." />
+            <div class="modal-content2">
+                <button @click="premiumModal = false" class="close-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                        height="25" viewBox="0 0 24 25" fill="none">
+                        <mask id="mask0_253_801" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"
+                            height="25">
+                            <rect y="0.0882416" width="24" height="24.2118" fill="#D9D9D9" />
+                        </mask>
+                        <g mask="url(#mask0_253_801)">
+                            <path
+                                d="M12 13.6065L7.10005 18.5497C6.91672 18.7347 6.68338 18.8271 6.40005 18.8271C6.11672 18.8271 5.88338 18.7347 5.70005 18.5497C5.51672 18.3648 5.42505 18.1294 5.42505 17.8435C5.42505 17.5577 5.51672 17.3223 5.70005 17.1374L10.6 12.1941L5.70005 7.25089C5.51672 7.06594 5.42505 6.83055 5.42505 6.54471C5.42505 6.25888 5.51672 6.02349 5.70005 5.83854C5.88338 5.65359 6.11672 5.56111 6.40005 5.56111C6.68338 5.56111 6.91672 5.65359 7.10005 5.83854L12 10.7818L16.9 5.83854C17.0834 5.65359 17.3167 5.56111 17.6 5.56111C17.8834 5.56111 18.1167 5.65359 18.3 5.83854C18.4834 6.02349 18.575 6.25888 18.575 6.54471C18.575 6.83055 18.4834 7.06594 18.3 7.25089L13.4 12.1941L18.3 17.1374C18.4834 17.3223 18.575 17.5577 18.575 17.8435C18.575 18.1294 18.4834 18.3648 18.3 18.5497C18.1167 18.7347 17.8834 18.8271 17.6 18.8271C17.3167 18.8271 17.0834 18.7347 16.9 18.5497L12 13.6065Z"
+                                fill="#111111" />
+                        </g>
+                    </svg></button>
+                <img src="https://playar.syrup.co.kr/sodarimg/is/marketing/202308/17TZcrb5Q*38b3ed16b02bec43416b4a7dec923cb0.gif"
+                    alt="Loading..." />
+            </div>
+        </div>
+        <div v-if="premiumModal2" class="modal2">
+            <div class="image-container2">
+                <div class="reward-container">
+                    <img src="../resource/common/reward_success_bg.png" />
+                    <img
+                        src="https://playar.syrup.co.kr/sodarimg/is/marketing/202308/17TZcrb5Q*38b3ed16b02bec43416b4a7dec923cb0.gif" />
+                </div>
+                <button @click="premiumModal2 = false">상품 획득 성공!</button>
+            </div>
         </div>
     </div>
 </template>
@@ -243,6 +265,7 @@ export default {
         const showFooter2 = ref(false);
         const showModal = ref(false);
         const premiumModal = ref(false);
+        const premiumModal2 = ref(false);
 
         const showToolbox = ref(false);
         const currentTool = ref('draw');
@@ -365,6 +388,7 @@ export default {
         }
 
         const toggleFooter2 = () => {
+            premiumModal.value = true;
             showFooter2.value = !showFooter2.value;
         }
 
@@ -568,7 +592,8 @@ export default {
             next,
             bgClick,
             currentDrawingTool,
-            currentTextTool
+            currentTextTool,
+            premiumModal2
         }
     }
 }
@@ -583,6 +608,7 @@ export default {
     display: flex;
     object-fit: cover;
     justify-content: center;
+    background-color: #565656;
 }
 
 .footer {
@@ -787,15 +813,27 @@ export default {
 
 .modal2 {
     position: fixed;
-    top: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    top: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5)
+}
+
+.modal-content2 {
+    position: fixed;
+    top: calc(40 * var(--vh));
     left: 50%;
-    width: 80vw;
-    height: calc(80 * var(--vh));
+    width: 90vw;
+    height: 90vw;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #fff;
-    border: 1px solid #000;
+    border-radius: 16px;
     flex-direction: column;
     z-index: 3;
     transform: translate(-50%, -50%);
@@ -811,9 +849,6 @@ export default {
     cursor: pointer;
     outline: none;
 }
-
-
-
 
 .toolbox {
     background-color: #fff;
@@ -951,6 +986,58 @@ export default {
 
 .bottom-buttons .right-button {
     margin-left: 50%;
+
+}
+
+.image-container2 {
+    width: 80%;
+    height: calc(50 * var(--vh));
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: calc(25 * var(--vh));
+}
+
+.reward-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+
+.reward-container img:first-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.reward-container img:nth-child(2) {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 50%;
+}
+
+.image-container2 button {
+    position: absolute;
+    width: 60.5%;
+    height: calc(7.5 * var(--vh));
+    top: calc(65 * var(--vh));
+    border-radius: 0px 0px 16px 16px;
+    border: none;
+    background: var(--Main-Pink, #F0D7CA);
+    color: var(--Text-Black, #111);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
 
 }
 </style>
