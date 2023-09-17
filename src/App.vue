@@ -19,9 +19,7 @@ export default {
 }
 
 html,
-body {
-    overflow: hidden;
-}
+body {}
 
 .fade-enter-active,
 .fade-leave-active {

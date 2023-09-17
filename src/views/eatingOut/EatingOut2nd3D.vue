@@ -137,7 +137,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     z-index: 1;
-    margin-top: calc(2.5 * var(--vh));
+    margin-top: calc(5 * var(--vh));
 }
 
 
