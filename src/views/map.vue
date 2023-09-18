@@ -43,14 +43,13 @@ export default {
 
         const characterStore = useCharacterStore()
         const index = ref(0)
-        const textIndex = ref(6)
+        const textIndex = ref(10)
         const zoom = ref(2)
         const dragging = ref(false)
         const currentX = ref(0)
         const currentY = ref(0)
         const lastX = ref(0)
         const lastY = ref(0)
-
 
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
@@ -63,18 +62,15 @@ export default {
         const next = () => {
             if (index.value === 0) {
                 index.value = 1
-                textIndex.value = 7
+                textIndex.value = 0
 
             } else if (index.value === 1) {
                 index.value = 2
-                textIndex.value = 8
+                textIndex.value = 1
             }
             else if (index.value === 2) {
                 index.value = 3
-                textIndex.value = 9
-            }
-            else if (index.value === 3) {
-                router.push('map')
+                textIndex.value = 2
             }
         }
 
