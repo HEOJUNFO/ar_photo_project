@@ -531,8 +531,7 @@ export default {
             imageObj.onload = () => {
 
                 const imageHeight = window.innerHeight * 0.8;
-                const imageWidth = imageObj.width * (imageHeight / imageObj.height);
-                console.log(imageWidth)
+                const imageWidth = imageHeight * 0.75
 
                 stage = new Konva.Stage({
                     container: konvaContainer.value,

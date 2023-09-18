@@ -10,6 +10,7 @@ export default class Renderer
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
         this.camera = this.experience.camera
+        this.aspectio = null;
 
         this.currentFacingMode = 'environment';
 
@@ -40,15 +41,37 @@ export default class Renderer
 
         const stream = await this.getCameraStream(this.currentFacingMode);
         this.video.srcObject = stream;
-        this.video.play();
+        return new Promise((resolve) => {
+            this.video.onloadedmetadata = () => {
+                this.video.play();
 
-        const videoTexture = new THREE.VideoTexture(this.video);
-        videoTexture.minFilter = THREE.LinearFilter;
-        videoTexture.magFilter = THREE.LinearFilter;
-        videoTexture.format = THREE.RGBAFormat;
-        videoTexture.colorSpace = THREE.SRGBColorSpace;
+                const videoAspectRatio = this.video.videoWidth / this.video.videoHeight;
 
-        this.scene.background = videoTexture;
+                const newHeight = this.sizes.height
+                const newWidth = this.sizes.height * 0.75
+    
+                this.instance.setSize(newWidth, newHeight);
+                this.instance.setViewport(
+                    (this.sizes.width - newWidth) / 2,
+                    (this.sizes.height - newHeight) / 2,
+                    newWidth,
+                    newHeight
+                );
+
+                const videoTexture = new THREE.VideoTexture(this.video);
+                videoTexture.minFilter = THREE.LinearFilter;
+                videoTexture.magFilter = THREE.LinearFilter;
+                videoTexture.format = THREE.RGBAFormat;
+                videoTexture.colorSpace = THREE.SRGBColorSpace;
+                videoTexture.wrapS = THREE.RepeatWrapping
+                videoTexture.wrapT = THREE.ClampToEdgeWrapping;
+            
+                this.scene.background = videoTexture;
+            
+
+                resolve();
+            };
+        });
     }
 
     async getCameraStream(facingMode) {
@@ -58,7 +81,7 @@ export default class Renderer
         }
 
         return await navigator.mediaDevices.getUserMedia({
-            video: { facingMode }
+            video: { facingMode: facingMode },
         });
     }
 

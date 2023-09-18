@@ -22,6 +22,7 @@
 
 <script>
 import { useCharacterStore } from '../../stores/characterStore.js'
+import { useImageDataStore } from '../../stores/imageData.js'
 import Experience from '../../three/Experience/Experience.js'
 import { onMounted, computed, ref } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router'
@@ -36,6 +37,7 @@ export default {
         const eventName = ref('eatingOut2')
 
         const characterStore = useCharacterStore()
+        const imageDataStore = useImageDataStore()
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
@@ -44,7 +46,9 @@ export default {
         })
 
         const saveImage = (image) => {
-            router.push({ path: '/capturepreview', query: { imgData: image, eventName: eventName.value } });
+            imageDataStore.setImageData(image)
+            imageDataStore.setEventName(eventName.value)
+            router.push({ path: '/capturepreview' });
         }
 
         const setVH = () => {

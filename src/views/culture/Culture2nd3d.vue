@@ -55,7 +55,7 @@
 <script>
 import vision from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0";
 import router from "../../router";
-
+import { useImageDataStore } from '../../stores/imageData.js'
 import { onMounted } from "vue";
 
 const { ImageSegmenter, SegmentationMask, FilesetResolver } = vision;
@@ -196,6 +196,7 @@ export default {
                 }
                 canvasClick = document.getElementById("canvas1");
                 canvasClick.style.display = 'block';
+                canvasClick.style.width = '80%';
                 let img = document.getElementById("face");
 
                 const cxt = canvasClick.getContext("2d");
@@ -289,6 +290,7 @@ export default {
         }
     },
     setup() {
+        const imageDataStore = useImageDataStore()
         const setVH = () => {
             let vh = window.innerHeight * 0.01;
             document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -297,7 +299,10 @@ export default {
         const saveImage = () => {
             let canvasElement = document.getElementById("canvas1");
             let imageData = canvasElement.toDataURL();
-            router.push({ path: '/capturepreview', query: { imgData: imageData, eventName: 'culture2' } });
+            imageDataStore.setImageData(imageData)
+            imageDataStore.setEventName('culture2')
+            router.push({ path: '/capturepreview' });
+
         }
 
         onMounted(() => {
