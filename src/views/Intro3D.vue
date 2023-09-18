@@ -47,7 +47,7 @@ export default {
                 index.value = 4
                 imageIndex.value = 5
             } else if (index.value === 4) {
-                router.push('/capture')
+                router.push('/tutorial')
             }
         }
         const setVH = () => {

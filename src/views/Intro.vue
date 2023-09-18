@@ -142,7 +142,6 @@ export default {
     justify-content: flex-start;
     align-items: center;
     height: calc(100 * var(--vh));
-    background-color: #fff;
 }
 
 .top-section {
