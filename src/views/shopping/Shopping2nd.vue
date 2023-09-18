@@ -101,7 +101,7 @@ export default {
     border: 1px solid black;
     background-color: #fff;
     width: 100%;
-    height: calc(25 * var(--vh));
+    height: calc(30 * var(--vh));
 }
 
 .text-container2 .character-name {

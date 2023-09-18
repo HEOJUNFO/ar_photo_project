@@ -12,7 +12,7 @@
                 <button @click.stop="navigateToNextImage()">▶</button>
             </div>
             <div class="text-container2">
-                <p v-show="index === 0">{{ selectCharacterName }}</p>
+                <p v-show="index === 0">{{ characterContent.name }}</p>
                 <p v-show="index === 0">{{ characterContent.text }}</p>
                 <div class="button-container">
                     <button v-show="index === 0" @click.stop="next()">
@@ -47,12 +47,13 @@ export default {
         const characterStore = useCharacterStore()
         const index = ref(0)
         const imageIndex = ref(0)
+        const char = ref(characterStore.currentCharacter)
 
         const currentImageSrc = computed(() => IMAGES[imageIndex.value])
 
         const currentCharacterContent = computed(() => {
-            const char = characterStore.currentCharacter
-            return char?.intro[index.value] || {}
+            char.value = characterStore.currentCharacter
+            return char.value?.intro[index.value] || {}
         })
 
 
@@ -80,6 +81,7 @@ export default {
         }
 
         onMounted(() => {
+            characterStore.setCharacterIndex(0)
             setVH();
 
             window.addEventListener('resize', setVH);
@@ -93,7 +95,6 @@ export default {
             navigateToPreviousImage,
             characterContent: currentCharacterContent,
             selectCharacterSrc: characterStore.currentCharacter?.src,
-            selectCharacterName: characterStore.currentCharacter?.name,
         }
     }
 }

@@ -255,13 +255,16 @@
 <script>
 import { onMounted, ref, watch } from 'vue';
 import router from '../router';
+import { useImageDataStore } from '../stores/imageData';
 import Konva from 'konva';
+
 
 export default {
     name: 'CapturePreview',
     setup() {
         const index = ref(0)
         const imgData = ref('')
+        const eventName = ref('')
         const showFooter2 = ref(false);
         const showModal = ref(false);
         const premiumModal = ref(false);
@@ -276,6 +279,8 @@ export default {
 
         const line = ref(null);
         const isDrawing = ref(false);
+
+        const imageDataStore = useImageDataStore();
 
         const bgClick = () => {
             if (showFooter2.value) {
@@ -416,8 +421,13 @@ export default {
                 .share(shareData)
                 .then(() => {
                     console.log("Thanks for sharing!");
+                    onShareComplete();
                 })
                 .catch(console.error);
+        }
+
+        const onShareComplete = () => {
+            premiumModal2.value = true;
         }
 
         const startDrawing = () => {
@@ -505,13 +515,14 @@ export default {
             setVH();
             window.addEventListener('resize', setVH);
 
-            imgData.value = router.currentRoute.value.query.imgData;
+            imgData.value = imageDataStore.getImageData();
+            eventName.value = imageDataStore.getEventName();
 
-            if (router.currentRoute.value.query.eventName === 'shopping2') {
+            if (eventName.value === 'shopping2') {
                 premiumModal.value = true;
-            } else if (router.currentRoute.value.query.eventName === 'culture2') {
+            } else if (eventName.value === 'culture2') {
                 premiumModal.value = true;
-            } else if (router.currentRoute.value.query.eventName === 'eatingOut2') {
+            } else if (eventName.value === 'eatingOut2') {
                 premiumModal.value = true;
             }
 

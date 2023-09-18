@@ -419,7 +419,9 @@ export const useCharacterStore = defineStore('character', {
         ],
     }),
     getters: {
-        currentCharacter: (state) => state.characters[state.selectCharacterIndex],
+        currentCharacter(state) {
+            return state.characters[state.selectCharacterIndex]
+        }
     },
     actions: {
         setCharacterIndex(index) {

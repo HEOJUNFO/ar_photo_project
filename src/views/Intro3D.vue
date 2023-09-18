@@ -4,8 +4,8 @@
             <canvas class="webgl"></canvas>
         </div>
         <div class="text-container2">
-            <p v-show="index >= 0">{{ currentCharacter.name }}</p>
-            <p v-show="index >= 0">{{ characterContent.text }}</p>
+            <p v-show="index >= 0">{{ currentCharacter?.name }}</p>
+            <p v-show="index >= 0">{{ characterContent?.text }}</p>
         </div>
     </div>
 </template>
@@ -28,7 +28,7 @@ export default {
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
         const currentCharacterContent = computed(() => {
-            return currentCharacter.value.intro[imageIndex.value] || {}
+            return currentCharacter.value?.intro[imageIndex.value] || {}
         })
 
         const next = () => {

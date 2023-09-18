@@ -5,19 +5,19 @@ export const useRewardsStore = defineStore('rewards', {
         rewardsData: {
             all: [{
                 id: 1,
-                url: '../resource/storageBox/icecream.png',
+                src: '../resource/storageBox/icecream.png',
                 required: "null"
             },{
                 id: 2,
-                url: '../resource/storageBox/Coupon_01_active.png',
+                src: '../resource/storageBox/Coupon_01_active.png',
                 required: "null"
             },{
                 id: 3,
-                url: '../resource/storageBox/Coupon_02_active.png',
+                src: '../resource/storageBox/Coupon_02_active.png',
                 required: "null"
             },{
                 id: 4,
-                url: '../resource/storageBox/Coupon_03_active.png',
+                src: '../resource/storageBox/Coupon_03_active.png',
                 required: "null"
             }],
             unused: [],
@@ -30,9 +30,15 @@ export const useRewardsStore = defineStore('rewards', {
             let unacquiredIds = new Set();
             let unusedIds = new Set();
             let usedIds = new Set();
+
+            this.rewardsData.unacquired = [];
+        this.rewardsData.unused = [];
+        this.rewardsData.used = [];
+
         
             this.rewardsData.all.forEach((reward, index) => {
                 const itemValue = localStorage.getItem(`item ${index + 1}`);
+    
                 if (itemValue) {
                     reward.required = itemValue;
                 }
@@ -62,6 +68,7 @@ export const useRewardsStore = defineStore('rewards', {
             });
         },
         fetchTabData(tabName) {
+            console.log(this.rewardsData[tabName])
             return this.rewardsData[tabName] || [];
         }
     }

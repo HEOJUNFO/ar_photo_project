@@ -27,8 +27,7 @@
         <div class="list-container" v-if="currentTab === 'all'">
             <div v-for="item in tabData" :key="item.id" class="image-container">
                 <img src="../resource/storageBox/bg_reward.png" />
-                <img
-                    src="https://playar.syrup.co.kr/sodarimg/is/marketing/202308/17TZcrb5Q*38b3ed16b02bec43416b4a7dec923cb0.gif" />
+                <img :src="item.src" />
             </div>
         </div>
         <div class="list-container" v-if="currentTab === 'unused'">
@@ -72,6 +71,7 @@ export default {
     setup() {
         const showModal = ref(false);
         const currentTab = ref('all');
+        const tabData = ref([]);
 
         const rewardsStore = useRewardsStore();
 
@@ -82,7 +82,7 @@ export default {
 
         const fetchTabData = (tabName) => {
             rewardsStore.setRewardsData();
-            return rewardsStore.fetchTabData(tabName);
+            tabData.value = rewardsStore.fetchTabData(tabName);
         };
 
         const confirmBack = () => {
@@ -110,6 +110,8 @@ export default {
         onMounted(() => {
             setVH();
             window.addEventListener('resize', setVH);
+
+            fetchTabData('all');
         });
 
         return {
@@ -120,7 +122,7 @@ export default {
             closeModal,
             setTab,
             currentTab,
-            tabData: rewardsStore.rewardsData[currentTab.value]
+            tabData
         };
     }
 }
@@ -248,6 +250,7 @@ export default {
     align-items: center;
     width: 100%;
     height: calc(5 * var(--vh));
+    margin-top: calc(1 * var(--vh));
     z-index: 1;
 }
 
@@ -291,9 +294,10 @@ export default {
 
 .image-container img:nth-child(2) {
     position: absolute;
-    top: 5%;
-    left: 0;
-    width: 100%;
-    height: 60%;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    height: 50%;
 }
 </style>

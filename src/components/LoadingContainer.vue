@@ -30,6 +30,13 @@ export default {
 
         onMounted(() => {
 
+            if (localStorage.getItem('consentGiven') === 'true') {
+                systemCheck.value = false
+            } else {
+                router.push('/terms')
+                return
+            }
+
             if (localStorage.getItem('characterID') === null && router.currentRoute.value.path !== '/intro') {
                 router.push('/intro')
 
@@ -44,11 +51,6 @@ export default {
             setVH();
 
             window.addEventListener('resize', setVH);
-            setTimeout(() => {
-
-
-                localStorage.getItem('consentGiven') === 'true' ? systemCheck.value = false : router.push('/terms')
-            }, 1000)
 
         })
         return { systemCheck }
