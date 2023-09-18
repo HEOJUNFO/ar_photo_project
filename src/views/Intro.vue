@@ -1,26 +1,26 @@
 <template>
     <div>
         <loading-container>
-        </loading-container>
-        <div class="loading-container">
-            <div class="text-container1">
-                <p>숲에 동행할 요정을 골라주세요</p>
-            </div>
-            <div class="image-container">
-                <button @click.stop="navigateToPreviousImage()">◀</button>
-                <img :src="currentImageSrc" alt="Loading..." />
-                <button @click.stop="navigateToNextImage()">▶</button>
-            </div>
-            <div class="text-container2">
-                <p v-show="index === 0">{{ characterContent.name }}</p>
-                <p v-show="index === 0">{{ characterContent.text }}</p>
-                <div class="button-container">
-                    <button v-show="index === 0" @click.stop="next()">
-                        선택하기
-                    </button>
+            <div class="loading-container">
+                <div class="text-container1">
+                    <p>숲에 동행할 요정을 골라주세요</p>
+                </div>
+                <div class="image-container">
+                    <button @click.stop="navigateToPreviousImage()">◀</button>
+                    <img :src="currentImageSrc" alt="Loading..." />
+                    <button @click.stop="navigateToNextImage()">▶</button>
+                </div>
+                <div class="text-container2">
+                    <p v-show="index === 0">{{ characterContent.name }}</p>
+                    <p v-show="index === 0">{{ characterContent.text }}</p>
+                    <div class="button-container">
+                        <button v-show="index === 0" @click.stop="next()">
+                            선택하기
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </loading-container>
     </div>
 </template>
 
