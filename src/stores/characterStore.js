@@ -23,7 +23,7 @@ export const useCharacterStore = defineStore('character', {
                     { text: "숲의 약도를 줄게. 원하는 장소를 선택하고, 그곳으로 가서 숲을 복원해줘.", src: '../resource/character/Bell_Normal.png' },
                     { text: "지도에서는 전체 퀘스트 위치를 확인할 수 있어.", src: '../resource/character/Bell_Normal.png'},
                     { text: "자세히 보고 싶은 층수를 누르면 해당 층 지도를 볼 수 있어." ,src: '../resource/character/Bell_Normal.png'},
-                    { text: "해당 층 퀘스트의 자세한 위치를 알 수 있어. 표시된 위치에서 마법진이 그려진 안내 팻말을 찾으면 돼.",src: '../resource/character/Bell_Normal.png' },
+                    { text: "해당 층 퀘스트의 자세한 위치를 알 수 있어. 표시된 위치에서 마법진이 그려진 안내 배너를 찾으면 돼.",src: '../resource/character/Bell_Normal.png' },
                     { text: "자, 이제 숲을 복원하러 가자. 어디로 갈래?" ,src: '../resource/character/Bell_Normal.png' },
 
                 ],
@@ -159,7 +159,7 @@ export const useCharacterStore = defineStore('character', {
                     { text: "숲의 약도를 줄게. 원하는 장소를 선택하고, 그곳으로 가서 숲을 복원해줘.",src: '../resource/character/Uno_Normal.png'},
                     { text: "지도에서는 전체 퀘스트 위치를 확인할 수 있어.",src: '../resource/character/Uno_Normal.png'},
                     { text: "자세히 보고 싶은 층수를 누르면 해당 층 지도를 볼 수 있어." ,src: '../resource/character/Uno_Normal.png'},
-                    { text: "해당 층 퀘스트의 자세한 위치를 알 수 있어. 표시된 위치에서 마법진이 그려진 안내 팻말을 찾으면 돼." ,src: '../resource/character/Uno_Normal.png'},
+                    { text: "해당 층 퀘스트의 자세한 위치를 알 수 있어. 표시된 위치에서 마법진이 그려진 안내 배너를 찾으면 돼." ,src: '../resource/character/Uno_Normal.png'},
                     { text: "자, 이제 숲을 복원하러 가자. 어디로 갈래?" ,src: '../resource/character/Uno_Normal.png'},
                 ],
                 shopping: [
@@ -294,7 +294,7 @@ export const useCharacterStore = defineStore('character', {
                     { text: "숲의 약도를 줄게. 원하는 장소를 선택하고, 그곳으로 가서 숲을 복원해줘.",src: '../resource/character/Sorina_Normal.png'},
                     { text: "지도에서는 전체 퀘스트 위치를 확인할 수 있어.",src: '../resource/character/Sorina_Normal.png'},
                     { text: "자세히 보고 싶은 층수를 누르면 해당 층 지도를 볼 수 있어.",src: '../resource/character/Sorina_Normal.png' },
-                    { text: "해당 층 퀘스트의 자세한 위치를 알 수 있어. 표시된 위치에서 마법진이 그려진 안내 팻말을 찾으면 돼.",src: '../resource/character/Sorina_Normal.png' },
+                    { text: "해당 층 퀘스트의 자세한 위치를 알 수 있어. 표시된 위치에서 마법진이 그려진 안내 배너를 찾으면 돼.",src: '../resource/character/Sorina_Normal.png' },
                     { text: "자, 이제 숲을 복원하러 가자. 어디로 갈래?",src: '../resource/character/Sorina_Normal.png' },
                 ],
                 shopping: [

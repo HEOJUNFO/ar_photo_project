@@ -5,7 +5,26 @@
                 <p>{{ characterContent.text }}</p>
             </div>
             <div class="side-image-container">
-                <img :src="currentCharacter.src" alt="Side Image" />
+                <img :src="characterContent.src" alt="Side Image" />
+            </div>
+        </div>
+        <div class="image-container">
+            <img v-show="index === 0" src="../resource/tutorial/story_tree.png">
+            <img v-show="index === 1" src="../resource/tutorial/map_01.png"
+                :style="{ transform: `scale(${zoom}) translate(${currentX}px, ${currentY}px)` }" alt="Loading..."
+                @touchstart="startDrag" @touchmove="drag" @touchend="endDrag" @touchcancel="endDrag" />
+        </div>
+        <div v-show="index === 1" class="button-container1">
+            <button @click.stop="zoomIn">+</button>
+            <button @click.stop="zoomOut">-</button>
+        </div>
+        <div v-show="index === 1" class="bottom-container2">
+            <div class="text-content">
+                <p class="medium-text">1F 오렌지동 에스컬레이터 옆</p>
+                <p class="large-text">The Wave</p>
+            </div>
+            <div class="image-right">
+                <img src="../resource/tutorial/mini_map_01.png" alt="Description of Image">
             </div>
         </div>
     </div>
@@ -24,23 +43,30 @@ export default {
 
         const characterStore = useCharacterStore()
         const index = ref(0)
-        const textIndex = ref(4)
+        const textIndex = ref(6)
+        const zoom = ref(2)
+        const dragging = ref(false)
+        const currentX = ref(0)
+        const currentY = ref(0)
+        const lastX = ref(0)
+        const lastY = ref(0)
+
 
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
         const currentCharacterContent = computed(() => {
-            return currentCharacter.value.culture[textIndex.value] || {}
+            return currentCharacter.value.intro[textIndex.value] || {}
         })
 
 
         const next = () => {
             if (index.value === 0) {
                 index.value = 1
-                textIndex.value = 5
+                textIndex.value = 7
 
             } else if (index.value === 1) {
-                index.value = 2
+
             }
             else if (index.value === 2) {
 
@@ -48,8 +74,37 @@ export default {
             }
         }
 
+        const zoomIn = () => {
+            zoom.value += 0.1;
+        }
 
+        const zoomOut = () => {
+            if (zoom.value > 1) {
+                zoom.value -= 0.1;
+            }
+        }
 
+        const startDrag = (event) => {
+            event.preventDefault()
+            dragging.value = true
+            lastX.value = event.touches[0].clientX
+            lastY.value = event.touches[0].clientY
+        }
+
+        const drag = (event) => {
+            if (!dragging.value) return
+            event.preventDefault()
+            const deltaX = event.touches[0].clientX - lastX.value
+            const deltaY = event.touches[0].clientY - lastY.value
+            currentX.value += deltaX
+            currentY.value += deltaY
+            lastX.value = event.touches[0].clientX
+            lastY.value = event.touches[0].clientY
+        }
+
+        const endDrag = () => {
+            dragging.value = false
+        }
 
         const setVH = () => {
             let vh = window.innerHeight * 0.01;
@@ -70,6 +125,15 @@ export default {
             currentCharacter,
             characterContent: currentCharacterContent,
             next,
+            zoomIn,
+            zoomOut,
+            zoom,
+            startDrag,
+            drag,
+            endDrag,
+            currentX,
+            currentY,
+
         }
     }
 }
@@ -91,7 +155,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     z-index: 10;
-    margin-top: calc(7.5 * var(--vh));
+    margin-top: calc(5 * var(--vh));
 }
 
 
@@ -125,7 +189,7 @@ export default {
     padding: 15px;
     color: #000;
     font-family: "NanumSquare", sans-serif;
-    font-size: 15px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 700;
     line-height: 24px;
@@ -140,6 +204,7 @@ export default {
 
 .side-image-container {
     margin-top: calc(-5 * var(--vh));
+    margin-right: -4%;
     position: relative;
     overflow: hidden;
     width: 20%;
@@ -150,10 +215,100 @@ export default {
 .side-image-container img {
     background-color: #FFECD6;
     overflow: hidden;
-    height: 100%;
-    width: 100%;
+    height: 70%;
+    width: 70%;
     display: block;
-    clip-path: circle(30%);
+    clip-path: circle(50%);
     object-fit: cover;
+}
+
+.image-container {
+    overflow: hidden;
+    width: 100%;
+    height: calc(80 * var(--vh));
+    position: absolute;
+    bottom: 0;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+}
+
+.button-container1 {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+    z-index: 10;
+}
+
+.button-container1 button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bottom-container2 {
+    position: absolute;
+    bottom: 10px;
+    left: 20%;
+    transform: translateX(-20%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 25px;
+    padding: 10px 30px 10px 20px;
+    width: 65%;
+}
+
+.text-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.medium-text {
+    color: #111;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+    max-width: 15ch;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+}
+
+.large-text {
+    color: #111;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 34px;
+    letter-spacing: -0.6px;
+}
+
+.image-right {
+    width: 40%;
+    height: 20%;
+    background-color: rgba(0, 0, 0, 0.0);
+
+}
+
+.image-right img {
+    padding-left: 5%;
+    padding-top: 5%;
+    clip-path: circle(35%);
+
 }
 </style>
