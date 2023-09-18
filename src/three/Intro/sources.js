@@ -26,5 +26,18 @@ export default [
         name: 'foxModel',
         type: 'gltfModel',
         path: '../models/Fox/glTF/Fox.gltf'
+    },
+    {
+        name: 'bellModel1',
+        type: 'gltfModel',
+        path: '../models/Bell/TheFlash_BELL_SD_03-001.gltf'
+    },{
+        name: 'sorinaModel1',
+        type: 'gltfModel',
+        path: '../models/Sorina/TheFlash_Sorina_SD_03-001.gltf'
+    },{
+        name: 'unoModel1',
+        type: 'gltfModel',
+        path: '../models/Uno/TheFlash_Uno_SD_03-001.gltf'
     }
 ]

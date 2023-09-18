@@ -1,36 +1,36 @@
 <template>
-    <div style="overflow: hidden;">
+    <div>
         <transition name="fade">
             <div v-if="systemCheck" class="loading-container">
                 <img src="../resource/common/bg.png" alt="Loading..." />
                 <img id="spinner" src="../resource/common/spinner.png" />
-                <div class="text-container2">
+                <div v-if="showModal" class="text-container2">
                     <p class="character-name">푸짐한 상품과 콘텐츠를</p>
                     <p class="character-name">제공해드리기 위해</p>
                     <p class="character-name">동의가 필요해요</p>
                     <hr class="character-line">
-                    <p class="character-text"><button class="check-button"><svg xmlns="http://www.w3.org/2000/svg"
-                                width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <p class="character-text"><button @click="buttonCheck1()" :class="{ active: check1 }"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                 <mask id="mask0_253_1392" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
                                     width="24" height="24">
                                     <rect width="24" height="24" fill="#D9D9D9" />
                                 </mask>
                                 <g mask="url(#mask0_253_1392)">
-                                    <circle cx="12" cy="12" r="10" fill="#F0D7CA" />
+                                    <circle cx="12" cy="12" r="10" fill="#D9D9D9" />
                                     <path d="M10.25 16.45L17.3 9.4L15.9 8L10.25 13.65L7.4 10.8L6 12.2L10.25 16.45Z"
                                         fill="white" />
                                 </g>
                             </svg></button><span style="margin-left: 30px;">쿠키 관련 동의 약관</span>
                         <span class="essential-icon">필수</span>
                     </p>
-                    <p class="character-text"><button class="check-button"><svg xmlns="http://www.w3.org/2000/svg"
-                                width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <p class="character-text"><button @click="buttonCheck2()" :class="{ active: check2 }"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                 <mask id="mask0_253_1392" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
                                     width="24" height="24">
                                     <rect width="24" height="24" fill="#D9D9D9" />
                                 </mask>
                                 <g mask="url(#mask0_253_1392)">
-                                    <circle cx="12" cy="12" r="10" fill="#F0D7CA" />
+                                    <circle cx="12" cy="12" r="10" fill="#D9D9D9" />
                                     <path d="M10.25 16.45L17.3 9.4L15.9 8L10.25 13.65L7.4 10.8L6 12.2L10.25 16.45Z"
                                         fill="white" />
                                 </g>
@@ -38,12 +38,11 @@
                         <span class="essential-icon">필수</span>
                     </p>
                     <div class="button-container">
-                        <button @click="start">닫기</button>
+                        <button @click="close">닫기</button>
                         <button @click="start">동의 및 시작</button>
                     </div>
                 </div>
             </div>
-
         </transition>
     </div>
 </template>
@@ -59,10 +58,25 @@ export default {
 
         const systemCheck = ref(true)
         const showModal = ref(false);
+        const check1 = ref(false);
+        const check2 = ref(false);
+
+        const buttonCheck1 = () => {
+            check1.value = !check1.value
+            console.log(check1.value)
+        }
+
+        const buttonCheck2 = () => {
+            check2.value = !check2.value
+        }
 
         const start = () => {
             localStorage.setItem('consentGiven', 'true');
-            localStorage.getItem('characterID') ? router.go(-1) : router.push("/intro")
+            systemCheck.value = false
+        }
+
+        const close = () => {
+            router.go(-1)
         }
 
         const setVH = () => {
@@ -72,16 +86,15 @@ export default {
 
 
         onMounted(() => {
+            document.body.style.overflow = 'hidden';
+            if (localStorage.getItem('consentGiven') === 'true') {
+                showModal.value = false
+            }
+            else {
+                showModal.value = true
+            }
+
             setTimeout(() => {
-
-
-                if (localStorage.getItem('consentGiven') === 'true') {
-                    // systemCheck.value = false
-
-                } else {
-
-                    return
-                }
 
                 if (localStorage.getItem('characterID') === null && router.currentRoute.value.path !== '/intro') {
                     router.push('/intro')
@@ -93,13 +106,16 @@ export default {
 
                     return
                 }
+
+                systemCheck.value = false
+
             }, 1000);
             setVH();
 
             window.addEventListener('resize', setVH);
 
         })
-        return { systemCheck, showModal, start }
+        return { systemCheck, showModal, start, close, buttonCheck1, buttonCheck2, check1, check2 }
     }
 }
 </script>
@@ -145,7 +161,7 @@ export default {
     width: 35%;
     height: calc(20 * var(--vh));
     animation: spin 2s linear infinite;
-    top: calc(30 * var(--vh));
+    top: calc(35 * var(--vh));
 }
 
 .text-container2 {
@@ -256,11 +272,15 @@ export default {
     padding: 2px 4px;
 }
 
-.check-button {
+.character-text button {
     position: absolute;
     margin-right: 10px;
     background-color: rgba(0, 0, 0, 0);
     border: none;
 
+}
+
+.character-text button.active svg circle {
+    fill: #F0D7CA;
 }
 </style>

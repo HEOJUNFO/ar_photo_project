@@ -7,7 +7,7 @@
             <div class="text-container2">
                 <img :src="selectCharacterSrc" alt="Description" class="overlap-image" />
                 <p>{{ selectCharacterName }}</p>
-                <p>{{ characterContent.text }}</p>
+                <p>{{ characterContent?.text }}</p>
             </div>
         </div>
     </div>

@@ -1,8 +1,8 @@
 <template>
-    <div @click.stop="next()" style="overflow: hidden;">
+    <div @click.stop="next()" style="background-image: url('../../resource/common/bg.png');">
         <loading-container>
         </loading-container>
-        <div class="loading-container">
+        <div class=" loading-container">
             <div class="image-container">
                 <img :src="currentImageSrc" alt="Loading..." />
             </div>
@@ -72,7 +72,6 @@ export default {
     justify-content: flex-start;
     align-items: center;
     height: 100vh;
-    background-color: #fff;
 }
 
 .text-container2 {
@@ -82,10 +81,10 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    border: 1px solid black;
+    border-radius: 0px;
     background-color: #fff;
     width: 100%;
-    height: calc(25 * var(--vh));
+    height: calc(30 * var(--vh));
 }
 
 .text-container2 .character-name {

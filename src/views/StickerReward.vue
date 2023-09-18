@@ -259,26 +259,13 @@ export default {
     height: 100%;
 }
 
-.image-container button:first-child {
+.image-container button {
     background: rgba(0, 0, 0, 0.5);
     color: #fff;
     cursor: pointer;
     border: none;
     transition: background-color 0.3s;
 }
-
-.image-container button:last-child {
-    background: rgba(0, 0, 0, 0.5);
-    color: #fff;
-    cursor: pointer;
-    border: none;
-    transition: background-color 0.3s;
-}
-
-.image-container button:hover {
-    background: rgba(0, 0, 0, 0.7);
-}
-
 
 .text-container2 {
     bottom: 0%;

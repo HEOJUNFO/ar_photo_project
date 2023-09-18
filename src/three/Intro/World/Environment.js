@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import Experience from '../Experience.js'
+import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 
 export default class Environment
 {
@@ -17,12 +18,14 @@ export default class Environment
         }
 
         this.setSunLight()
-        this.setEnvironmentMap()
+        // this.setEnvironmentMap()
+        this.setEnvironmentMap2()
     }
 
     setSunLight()
     {
-        this.sunLight = new THREE.DirectionalLight('#ffffff', 4)
+        this.ambientLight = new THREE.AmbientLight('#ffffff', 0.3)
+        this.sunLight = new THREE.DirectionalLight('#ffffff', 0.8 * Math.PI)
         this.sunLight.castShadow = true
         this.sunLight.shadow.camera.far = 15
         this.sunLight.shadow.mapSize.set(1024, 1024)
@@ -66,7 +69,7 @@ export default class Environment
     setEnvironmentMap()
     {
         this.environmentMap = {}
-        this.environmentMap.intensity = 0.4
+        this.environmentMap.intensity = 0
         this.environmentMap.texture = this.resources.items.environmentMapTexture
         this.environmentMap.texture.colorSpace = THREE.SRGBColorSpace
         
@@ -86,16 +89,15 @@ export default class Environment
         }
         this.environmentMap.updateMaterials()
 
-        // Debug
-        if(this.debug.active)
-        {
-            this.debugFolder
-                .add(this.environmentMap, 'intensity')
-                .name('envMapIntensity')
-                .min(0)
-                .max(4)
-                .step(0.001)
-                .onChange(this.environmentMap.updateMaterials)
-        }
+      
+    }
+
+    setEnvironmentMap2(){
+        this.pmremGenerator = new THREE.PMREMGenerator( this.experience.renderer.instance );
+        this.pmremGenerator.compileEquirectangularShader();
+    
+        this.neutralEnvironment = this.pmremGenerator.fromScene( new RoomEnvironment() ).texture;
+        this.scene.environment = this.neutralEnvironment;
+
     }
 }
