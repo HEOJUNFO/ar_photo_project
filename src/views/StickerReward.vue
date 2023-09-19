@@ -1,5 +1,6 @@
 <template>
-    <div @click.stop="next()" class="loading-container" style="background-image: url('../resource/common/bg.png');">
+    <div @click.stop="next()" class="loading-container"
+        style="background-image: url('../resource/common/bg.png'); background-size: cover;">
         <div v-show="index < 2" class=" top-section">
             <div class="text-container1">
                 <p>마음에 드는 캐릭터 스티커를 골라주세요.</p>
@@ -60,6 +61,7 @@
 import { ref, computed, watch, onMounted } from 'vue'
 import router from '../router'
 import { useCharacterStore } from '../stores/characterStore.js'
+import { useRewardsStore } from '../stores/reward.js'
 
 const IMAGES = [
     '../resource/storageBox/Bell_Reward.png',
@@ -78,6 +80,7 @@ export default {
     setup() {
         const imageIndex = ref(0)
         const characterStore = useCharacterStore()
+        const rewardsStore = useRewardsStore()
         const index = ref(0)
         const textIndex = ref(6)
 

@@ -27,7 +27,7 @@
                 <img :src="characterContent?.src" alt="Side Image" />
             </div>
         </div>
-        <div class="webgl-container" style="background-image: url('../resource/common/bg.png');">
+        <div class="webgl-container" style="background-image: url('../resource/common/bg.png'); background-size: cover;">
             <canvas class="webgl2"></canvas>
         </div>
         <div class="image-container">

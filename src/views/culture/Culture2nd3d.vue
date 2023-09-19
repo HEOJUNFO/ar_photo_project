@@ -369,6 +369,7 @@ export default {
     width: 100%;
     height: calc(100 * var(--vh));
     overflow: hidden;
+    background-color: #565656;
 }
 
 .video {

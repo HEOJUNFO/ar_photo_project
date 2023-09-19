@@ -63,7 +63,7 @@ export default class World
 
     handleAvocadoVisibility() {
         if (this.avocado && this.blueBerry && this.peach && this.cauldron2) {
-            if (this.avocado.model.position.y < 0 && this.avocado.model.position.x > -0.5 && this.avocado.model.position.x < 0.5) {
+            if (this.avocado.model.position.y < 0.5 && this.avocado.model.position.x > -0.5 && this.avocado.model.position.x < 0.5) {
                return true;
             }
         }
@@ -71,7 +71,7 @@ export default class World
     }
     handleBlueBerryVisibility() {
         if (this.avocado && this.blueBerry && this.peach && this.cauldron2) {
-            if (this.blueBerry.model.position.y < 0 && this.blueBerry.model.position.x > -0.5 && this.blueBerry.model.position.x < 0.5) {
+            if (this.blueBerry.model.position.y < 0.5 && this.blueBerry.model.position.x > -0.5 && this.blueBerry.model.position.x < 0.5) {
                 return true
             }
         }
@@ -79,7 +79,7 @@ export default class World
     }
     handlePeachVisibility() {
         if (this.avocado && this.blueBerry && this.peach && this.cauldron2) {
-            if (this.peach.model.position.y < 0 && this.peach.model.position.x > -0.5 && this.peach.model.position.x < 0.5) { 
+            if (this.peach.model.position.y < 0.5 && this.peach.model.position.x > -0.5 && this.peach.model.position.x < 0.5) { 
                 return true
             }
         }

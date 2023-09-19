@@ -28,6 +28,7 @@ export default {
         const characterStore = useCharacterStore()
         const index = ref(0)
         const textIndex = ref(5)
+        const count = ref(0)
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
@@ -36,8 +37,10 @@ export default {
         })
 
         const next = () => {
-            if (index.value === 0) {
-                index.value = 1
+            if (count.value < 2) {
+                count.value++
+
+            } else {
                 router.push({ path: '/stickerreward', query: { eventName: "eatingOut" } });
             }
         }

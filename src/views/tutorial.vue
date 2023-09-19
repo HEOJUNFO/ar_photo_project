@@ -1,5 +1,6 @@
 <template>
-    <div @click.stop="next()" style="background-image: url('../resource/common/bg.png');" class="main">
+    <div @click.stop="next()" style="background-image: url('../resource/common/bg.png'); background-size: cover;"
+        class="main">
         <div class=" top-section">
             <div class="text-container1">
                 <p>{{ characterContent.text }}</p>

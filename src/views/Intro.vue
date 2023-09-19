@@ -2,7 +2,7 @@
     <div>
         <loading-container>
         </loading-container>
-        <div class="loading-container" style="background-image: url('../resource/common/bg.png');">
+        <div class="loading-container" style="background-image: url('../resource/common/bg.png'); background-size: cover;">
             <div class=" top-section">
                 <div class="text-container1">
                     <p>숲에 동행할 요정을 골라주세요</p>

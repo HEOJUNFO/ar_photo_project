@@ -15,8 +15,6 @@ export default class Cauldron
         this.resource = this.resources.items.cauldronCloseModel
        
         this.setModel()
-
-
     
     }
 

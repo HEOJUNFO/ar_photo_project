@@ -2,7 +2,7 @@
     <div @click.stop="next()">
         <loading-container>
         </loading-container>
-        <div class="loading-container" style="background-image: url('../resource/common/bg.png');">
+        <div class="loading-container" style="background-image: url('../resource/common/bg.png'); background-size: cover;">
             <div class="image-container2">
                 <div class="reward-container">
                     <img src="../../resource/common/unreward_bg.png" />
