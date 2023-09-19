@@ -59,7 +59,7 @@
         </div>
         <div v-show="showFooter2" class="footer2">
             <p>공유 방법을 선택해 주세요.</p>
-            <button>방명록에 공유하기</button>
+            <button @click="editor()">방명록에 공유하기</button>
             <button @click="share()">다른 곳에 공유하기</button>
             <button @click="next()">참여하지 않고 나가기</button>
         </div>
@@ -235,18 +235,20 @@
                                 fill="#111111" />
                         </g>
                     </svg></button>
-                <img src="https://playar.syrup.co.kr/sodarimg/is/marketing/202308/17TZcrb5Q*38b3ed16b02bec43416b4a7dec923cb0.gif"
-                    alt="Loading..." />
+                <img :src="premiumImageSrc" />
+                <p class="p1">{{ premiumText }}</p>
+                <p class="p2">획득기회!</p>
             </div>
         </div>
         <div v-if="premiumModal2" class="modal2">
             <div class="image-container2">
                 <div class="reward-container">
                     <img src="../resource/common/reward_success_bg.png" />
-                    <img
-                        src="https://playar.syrup.co.kr/sodarimg/is/marketing/202308/17TZcrb5Q*38b3ed16b02bec43416b4a7dec923cb0.gif" />
+                    <img :src="premiumImageSrc" />
+                    <p class="p">{{ premiumText }}</p>
                 </div>
-                <button @click="premiumModal2 = false">상품 획득 성공!</button>
+
+                <button @click="premiumModal2 = false, getReward()">상품 획득 성공!</button>
             </div>
         </div>
     </div>
@@ -256,6 +258,7 @@
 import { onMounted, ref, watch } from 'vue';
 import router from '../router';
 import { useImageDataStore } from '../stores/imageData';
+import { useRewardsStore } from '../stores/reward';
 import Konva from 'konva';
 
 
@@ -269,6 +272,8 @@ export default {
         const showModal = ref(false);
         const premiumModal = ref(false);
         const premiumModal2 = ref(false);
+        const premiumImageSrc = ref('');
+        const premiumText = ref('');
 
         const showToolbox = ref(false);
         const currentTool = ref('draw');
@@ -281,6 +286,19 @@ export default {
         const isDrawing = ref(false);
 
         const imageDataStore = useImageDataStore();
+        const rewardsStore = useRewardsStore();
+
+        const getReward = () => {
+            if (eventName.value === 'shoppingClear') {
+                localStorage.setItem('item2', 'true')
+            } else if (eventName.value === 'cultureClear') {
+                localStorage.setItem('item4', 'true')
+            } else if (eventName.value === 'eatingOutClear') {
+                localStorage.setItem('item3', 'true')
+            }
+            rewardsStore.setRewardsData();
+            router.push('./outro');
+        }
 
         const bgClick = () => {
             if (showFooter2.value) {
@@ -399,6 +417,10 @@ export default {
 
         const next = () => {
             router.push({ path: '/outro', query: { eventName: router.currentRoute.value.query.eventName } });
+        }
+
+        const editor = () => {
+            router.push({ path: '/texteditor', query: { eventName: router.currentRoute.value.query.eventName } });
         }
 
         const share = async () => {
@@ -520,10 +542,30 @@ export default {
 
             if (eventName.value === 'shopping2') {
                 premiumModal.value = true;
+                premiumImageSrc.value = '../resource/storageBox/02_Coupon_active.png'
+                premiumText.value = '패션·잡화 1만원 금액할인권'
             } else if (eventName.value === 'culture2') {
                 premiumModal.value = true;
+                premiumImageSrc.value = '../resource/storageBox/04_Coupon_active.png'
+                premiumText.value = '몽드이기자 1만원 금액할인권'
             } else if (eventName.value === 'eatingOut2') {
                 premiumModal.value = true;
+                premiumImageSrc.value = '../resource/storageBox/03_Coupon_active.png'
+                premiumText.value = 'F&B 5천원 금액할인권'
+            }
+
+            if (eventName.value === 'shoppingClear') {
+                premiumModal2.value = true;
+                premiumImageSrc.value = '../resource/storageBox/02_Coupon_active.png'
+                premiumText.value = '패션·잡화 1만원 금액할인권'
+            } else if (eventName.value === 'cultureClear') {
+                premiumModal2.value = true;
+                premiumImageSrc.value = '../resource/storageBox/04_Coupon_active.png'
+                premiumText.value = '몽드이기자 1만원 금액할인권'
+            } else if (eventName.value === 'eatingOutClear') {
+                premiumModal2.value = true;
+                premiumImageSrc.value = '../resource/storageBox/03_Coupon_active.png'
+                premiumText.value = 'F&B 5천원 금액할인권'
             }
 
             const imageObj = new Image();
@@ -603,7 +645,11 @@ export default {
             bgClick,
             currentDrawingTool,
             currentTextTool,
-            premiumModal2
+            premiumModal2,
+            premiumImageSrc,
+            premiumText,
+            editor,
+            getReward
         }
     }
 }
@@ -739,6 +785,17 @@ export default {
     cursor: pointer;
 }
 
+.footer2 button:last-child {
+    width: 80%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 16px;
+    background: var(--Main-Pink, #d9d9d9);
+    border: none;
+    color: #000;
+    cursor: pointer;
+}
+
 .footer2 button p {
     color: var(--Text-Black, #111);
     text-align: center;
@@ -848,6 +905,41 @@ export default {
     z-index: 3;
     transform: translate(-50%, -50%);
 }
+
+.modal-content2 img {
+    pointer-events: none;
+    position: absolute;
+    top: calc(-5 * var(--vh));
+    width: 100%;
+    height: 100%;
+}
+
+.p1 {
+    position: absolute;
+    top: 65%;
+    color: var(--Text-Black, #111);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+}
+
+.p2 {
+    position: absolute;
+    top: 75%;
+    color: var(--Point-REd, var(--Point-Red, #D50F4A));
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+}
+
 
 .close-btn {
     position: absolute;
@@ -1012,8 +1104,23 @@ export default {
     position: relative;
     width: 100%;
     height: 100%;
+    justify-content: center;
+    display: flex;
 }
 
+.reward-container p {
+    position: absolute;
+    top: 60%;
+    color: var(--Text-Black, #111);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+
+}
 
 .reward-container img:first-child {
     position: absolute;
@@ -1025,11 +1132,11 @@ export default {
 
 .reward-container img:nth-child(2) {
     position: absolute;
-    top: 15%;
+    top: 0%;
     left: 50%;
     transform: translateX(-50%);
     width: 80%;
-    height: 50%;
+    height: 80%;
 }
 
 .image-container2 button {

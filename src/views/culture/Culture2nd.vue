@@ -2,12 +2,12 @@
     <div @click.stop="next()">
         <loading-container>
         </loading-container>
-        <div class="loading-container">
-            <div class="image-container">
+        <div class="loading-container" style="background-image: url('../resource/common/bg.png');">
+            <!-- <div class="image-container">
                 <img :src="currentImageSrc" alt="Loading..." />
-            </div>
+            </div> -->
             <div class="text-container2">
-                <img :src="selectCharacterSrc" alt="Description" class="overlap-image" />
+                <img :src="characterContent.src" alt="Description" class="overlap-image" />
                 <p class="character-name">{{ selectCharacterName }}</p>
                 <hr class="character-line">
                 <p class="character-text">{{ characterContent.text }}</p>
@@ -56,9 +56,12 @@ export default {
                 textIndex.value = 4
 
             } else if (index.value === 1) {
+                index.value = 2
+                textIndex.value = 5
+            }
+            else if (index.value === 2) {
                 router.push('/culture3')
             }
-
 
         }
 
@@ -91,7 +94,7 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    border: 1px solid black;
+    border: none;
     background-color: #fff;
     width: 100%;
     height: calc(25 * var(--vh));
@@ -120,7 +123,7 @@ export default {
     letter-spacing: -0.45px;
     align-self: flex-start;
     text-align: left;
-    max-width: 25ch;
+    max-width: 20ch;
     overflow-wrap: break-word;
     word-break: keep-all;
 }
@@ -159,8 +162,8 @@ export default {
 
 .overlap-image {
     position: absolute;
-    top: 50%;
-    right: -50px;
+    top: 30%;
+    right: -5%;
     width: 150px;
     height: auto;
     z-index: 1;

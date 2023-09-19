@@ -120,7 +120,7 @@ export default {
 }
 </script>
   
-<style >
+<style scoped>
 .loading-container {
     position: relative;
     display: flex;
@@ -158,7 +158,7 @@ export default {
 
 #spinner {
     position: fixed;
-    width: 35%;
+    width: calc(20 * var(--vh));
     height: calc(20 * var(--vh));
     animation: spin 2s linear infinite;
     top: calc(35 * var(--vh));

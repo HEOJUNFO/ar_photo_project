@@ -5,20 +5,24 @@ export const useRewardsStore = defineStore('rewards', {
         rewardsData: {
             all: [{
                 id: 1,
-                src: '../resource/storageBox/icecream.png',
-                required: "null"
+                src: '../resource/storageBox/IceCream_active.png',
+                required: "null",
+                text:"백미당 아이스크림 1EA 쿠폰 교환권",
             },{
                 id: 2,
-                src: '../resource/storageBox/Coupon_01_active.png',
-                required: "null"
+                src: '../resource/storageBox/02_Coupon_active.png',
+                required: "null",
+                text:"패션·잡화 1만원 금액할인권",
             },{
                 id: 3,
-                src: '../resource/storageBox/Coupon_02_active.png',
-                required: "null"
+                src: '../resource/storageBox/03_Coupon_active.png',
+                required: "null",
+                text:"F&B 5천원 금액할인권",
             },{
                 id: 4,
-                src: '../resource/storageBox/Coupon_03_active.png',
-                required: "null"
+                src: '../resource/storageBox/04_Coupon_active.png',
+                required: "null",
+                text:"몽드이기자 1만원 금액할인권",
             }],
             unused: [],
             unacquired: [],
@@ -37,10 +41,11 @@ export const useRewardsStore = defineStore('rewards', {
 
         
             this.rewardsData.all.forEach((reward, index) => {
-                const itemValue = localStorage.getItem(`item ${index + 1}`);
+                const itemValue = localStorage.getItem(`item${index + 1}`);
     
                 if (itemValue) {
                     reward.required = itemValue;
+                    console.log(reward.required)
                 }
                 
                 switch(reward.required) {

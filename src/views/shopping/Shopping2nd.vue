@@ -2,10 +2,10 @@
     <div @click.stop="next()">
         <loading-container>
         </loading-container>
-        <div class="loading-container">
-            <div class="image-container">
+        <div class="loading-container" style="background-image: url('../resource/common/bg.png');">
+            <!-- <div class="image-container">
                 <img :src="currentImageSrc" alt="Loading..." />
-            </div>
+            </div> -->
             <div class="text-container2">
                 <img :src="selectCharacterSrc" alt="Description" class="overlap-image" />
                 <p class="character-name">{{ selectCharacterName }}</p>
@@ -98,7 +98,7 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    border: 1px solid black;
+    border: none;
     background-color: #fff;
     width: 100%;
     height: calc(30 * var(--vh));

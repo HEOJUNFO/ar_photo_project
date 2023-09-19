@@ -27,28 +27,27 @@
         <div class="list-container" v-if="currentTab === 'all'">
             <div v-for="item in tabData" :key="item.id" class="image-container">
                 <img src="../resource/storageBox/bg_reward.png" />
-                <img :src="item.src" />
+                <img :src="item.src" :class="setGrayscale(item)" />
+                <p :class="setGrayText(item)">{{ item.text }}</p>
             </div>
         </div>
         <div class="list-container" v-if="currentTab === 'unused'">
             <div v-for="item in tabData" :key="item.id" class="image-container">
                 <img src="../resource/storageBox/bg_reward.png" />
-                <img
-                    src="https://playar.syrup.co.kr/sodarimg/is/marketing/202308/17TZcrb5Q*38b3ed16b02bec43416b4a7dec923cb0.gif" />
+                <img :src="item.src" :class="setGrayscale(item)" />
+                <p>{{ item.text }}</p>
             </div>
         </div>
         <div class="list-container" v-if="currentTab === 'unacquired'">
             <div v-for="item in tabData" :key="item.id" class="image-container">
                 <img src="../resource/storageBox/bg_reward.png" />
-                <img
-                    src="https://playar.syrup.co.kr/sodarimg/is/marketing/202308/17TZcrb5Q*38b3ed16b02bec43416b4a7dec923cb0.gif" />
+                <img :src="item.src" :class="setGrayscale(item)" />
             </div>
         </div>
         <div class="list-container" v-if="currentTab === 'used'">
             <div v-for="item in tabData" :key="item.id" class="image-container">
                 <img src="../resource/storageBox/bg_reward.png" />
-                <img
-                    src="https://playar.syrup.co.kr/sodarimg/is/marketing/202308/17TZcrb5Q*38b3ed16b02bec43416b4a7dec923cb0.gif" />
+                <img :src="item.src" :class="setGrayscale(item)" />
             </div>
         </div>
         <div v-if="showModal" class="modal">
@@ -102,6 +101,14 @@ export default {
             showModal.value = true;
         };
 
+        const setGrayscale = (item) => {
+            return item.required === 'true' ? '' : 'grayscale';
+        };
+
+        const setGrayText = (item) => {
+            return item.required === 'true' ? '' : 'graytext';
+        };
+
         const setVH = () => {
             let vh = window.innerHeight * 0.01;
             document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -122,7 +129,9 @@ export default {
             closeModal,
             setTab,
             currentTab,
-            tabData
+            tabData,
+            setGrayscale,
+            setGrayText,
         };
     }
 }
@@ -299,5 +308,32 @@ export default {
     transform: translateX(-50%);
     width: auto;
     height: 50%;
+}
+
+.image-container p {
+    position: absolute;
+    color: black;
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 20px;
+    letter-spacing: -0.35px;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 14ch;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+}
+
+.grayscale {
+    filter: grayscale(100%);
+}
+
+.graytext {
+    color: gray !important
 }
 </style>
