@@ -11,6 +11,11 @@ export default {
   root: 'src/',
   publicDir: '../static/',
   base: './',
+  resolve: {
+    alias: {
+      '@views': '/views'
+    },
+  },
   server: {
     host: true,
     open: !isCodeSandbox, // Open if it's not a CodeSandbox
