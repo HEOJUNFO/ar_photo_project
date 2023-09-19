@@ -534,7 +534,8 @@ export default {
             imageObj.src = imgData.value;
             imageObj.onload = () => {
 
-                const imageHeight = window.innerHeight * 0.8;
+
+                const imageHeight = window.innerHeight * 0.64;
                 const imageWidth = imageHeight * 0.75
 
                 stage = new Konva.Stage({
@@ -629,7 +630,7 @@ export default {
 }
 
 .footer {
-    height: calc(10 * var(--vh));
+    height: calc(26 * var(--vh));
     width: 100%;
     background-color: #fff;
     color: #fff;

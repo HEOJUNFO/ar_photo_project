@@ -4,6 +4,7 @@ import Avocado from './Avocado.js'
 import BlueBerry from './BlueBerry.js'
 import Peach from './Peach.js'
 import Cauldron from './Cauldron.js'
+import Cauldron2 from './Cauldron2.js'
 import * as THREE from 'three'
 
 export default class World
@@ -15,7 +16,7 @@ export default class World
         this.resources = this.experience.resources
 
         this.wasIntersecting = false; 
-    
+     
 
         // Wait for resources
         this.resources.on('ready', () =>
@@ -26,52 +27,74 @@ export default class World
             this.peach = new Peach()
             this.environment = new Environment()
             this.cauldron = new Cauldron()
+            this.cauldron2 = new Cauldron2()
         })
     }
 
 
-    update()
-    {
-        if(this.avocado){
-            this.avocado.update()}
-       if(this.blueBerry){
-            this.blueBerry.update()}
-         if(this.peach){
-            this.peach.update()}
+    update() {
+        // 과일 상태 업데이트
+        this.updateFruitState(this.avocado);
+        this.updateFruitState(this.blueBerry);
+        this.updateFruitState(this.peach);
 
-        if(this.cauldron && this.avocado && this.blueBerry && this.peach){
-            const isCurrentlyIntersecting = 
-            this.isIntersecting(this.cauldron.model, this.avocado.model) ||
-            this.isIntersecting(this.cauldron.model, this.blueBerry.model) ||
-            this.isIntersecting(this.cauldron.model, this.peach.model);
-
+        if (this.cauldron2) {
+            this.cauldron2.update();
+        }
+     
        
-        if (this.wasIntersecting !== isCurrentlyIntersecting) {
-            this.cauldron.changeModel();
-            this.wasIntersecting = isCurrentlyIntersecting; 
+     
+        if (this.handleAvocadoVisibility() || this.handleBlueBerryVisibility() || this.handlePeachVisibility()) {
+            this.cauldron.model.visible = false;
+            this.cauldron2.model.visible = true;
+        } else if(this.cauldron2, this.cauldron) {
+            this.cauldron.model.visible = true;
+            this.cauldron2.model.visible = false;
         }
-        }
-     }
+       }
     
-    getBoundingBox(object) {
-        const boundingBox = new THREE.Box3().setFromObject(object);
-        return boundingBox;
+    
+    updateFruitState(fruit) {
+        if (fruit) {
+            fruit.update();
+        }
     }
-    intersects(box1, box2) {
-        return (
-          box1.max.x >= box2.min.x &&
-          box1.min.x <= box2.max.x &&
-          box1.max.y >= box2.min.y &&
-          box1.min.y <= box2.max.y &&
-          box1.max.z >= box2.min.z &&
-          box1.min.z <= box2.max.z
-        );
-      }
-    isIntersecting(obj1, obj2) {
-        const boundingBox1 = this.getBoundingBox(obj1);
-        const boundingBox2 = this.getBoundingBox(obj2);
     
-        return this.intersects(boundingBox1, boundingBox2); 
+
+    handleAvocadoVisibility() {
+        if (this.avocado && this.blueBerry && this.peach && this.cauldron2) {
+            if (this.avocado.model.position.y < 0 && this.avocado.model.position.x > -0.5 && this.avocado.model.position.x < 0.5) {
+               return true;
+            }
+        }
+        return false;
+    }
+    handleBlueBerryVisibility() {
+        if (this.avocado && this.blueBerry && this.peach && this.cauldron2) {
+            if (this.blueBerry.model.position.y < 0 && this.blueBerry.model.position.x > -0.5 && this.blueBerry.model.position.x < 0.5) {
+                return true
+            }
+        }
+        return false;
+    }
+    handlePeachVisibility() {
+        if (this.avocado && this.blueBerry && this.peach && this.cauldron2) {
+            if (this.peach.model.position.y < 0 && this.peach.model.position.x > -0.5 && this.peach.model.position.x < 0.5) { 
+                return true
+            }
+        }
+        return false;
+    }
+
+  
+    setVisible(){
+        if(this.cauldron) {
+            this.cauldron.setVisible();
+        }
+        if(this.cauldron2) {
+            this.cauldron2.setVisible();
+        }
+      
     }
    
 }

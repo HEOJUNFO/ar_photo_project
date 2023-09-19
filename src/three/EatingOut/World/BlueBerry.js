@@ -75,6 +75,10 @@ export default class BlueBerry
     onTouchEnd()
     {
         this.moving = false;
+        if (this.model.position.y < 0 && this.model.position.x > -0.5 && this.model.position.x < 0.5) {
+            this.scene.remove(this.model);
+            this.model.position.set(0, 2, 0);
+        }
     }
 
     update()
@@ -87,6 +91,5 @@ export default class BlueBerry
                 this.model.position.x = this.maxX;
             }
         }
-
     }
 }

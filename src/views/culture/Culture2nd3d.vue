@@ -138,7 +138,7 @@ export default {
             video.style.display = 'none';
             video.style.width = '80%'
             img.style.width = '80%'
-            image.style.height = 'calc(80 * var(--vh))';
+            image.style.height = 'calc(64 * var(--vh))';
             image.style.top = '0vh';
 
             webcamRunning = false;
@@ -396,7 +396,7 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    height: calc(10 * var(--vh));
+    height: calc(26 * var(--vh));
     align-items: center;
     padding-bottom: calc(0.25 * var(--vh));
 }

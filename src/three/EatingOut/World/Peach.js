@@ -75,6 +75,10 @@ export default class Peach
     onTouchEnd()
     {
         this.moving = false;
+        if (this.model.position.y < 0 && this.model.position.x > -0.5 && this.model.position.x < 0.5) {
+            this.scene.remove(this.model);
+            this.model.position.set(0, 2, 0);
+        }
     }
 
     update()

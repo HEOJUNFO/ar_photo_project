@@ -61,16 +61,27 @@ export default {
     margin: -1%;
 }
 
+.image-container img {
+    width: 100%;
+    height: auto;
+}
+
 .image-container2 {
     position: relative;
     margin: -1%;
+    width: 100%;
+    height: 100%;
+}
+
+.image-container2 img {
+    width: 100%;
+    height: auto;
 }
 
 
 .image-container img {
     width: 100%;
     height: auto;
-
 
 }
 

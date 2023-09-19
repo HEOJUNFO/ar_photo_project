@@ -20,6 +20,10 @@ export default class Cauldron
     
     }
 
+    setVisible(){
+        this.model.visible = !this.model.visible;
+    }
+
     setModel()
     {
         this.model = this.resource.scene
