@@ -44,8 +44,9 @@ export default class Camera
     
     captureScene() {
         const renderer = this.experience.renderer.instance;
-        const width = this.sizes.width;
-        const height = this.sizes.height;
+
+        const width = Math.floor(this.sizes.height * 0.75);
+    const height = this.sizes.height;
         
         const rt = new THREE.WebGLRenderTarget(width, height,{
             format: THREE.RGBAFormat,
@@ -82,7 +83,7 @@ export default class Camera
         const ctx = canvas.getContext('2d');
         ctx.putImageData(data, 0, 0);
         const image = canvas.toDataURL('image/png');
-
+  
         this.experience.saveImage(image)
 
         return image;

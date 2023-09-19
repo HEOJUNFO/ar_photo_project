@@ -9,66 +9,25 @@ export default class Fox
         this.scene = this.experience.scene
         this.resources = this.experience.resources
         this.time = this.experience.time
-        this.debug = this.experience.debug
-
-        // Debug
-        if(this.debug.active)
-        {
-            this.debugFolder = this.debug.ui.addFolder('fox')
-        }
-
+     
         // Resource
         this.resource = this.resources.items.foxModel
+
 
         this.setModel()
         this.setAnimation()
 
-        this.clockwise = true;
-        this.angle = 2;
-        this.array = [new THREE.Vector3(0,0,0), new THREE.Vector3(0.01,0,0)];
-
-        this.xRange = { min: -1.3, max: 1.3}; 
-        this.yRange = { min: -0.7, max: 4}; 
-
-
-        this._setupEventListeners();
-    }
-
-    move(angle) {
-        const a = this.array[this.array.length - 2];
-        const b = this.array[this.array.length - 1];
-        
-        const vectorx = b.x - a.x;
-        const vectory = b.y - a.y;
-    
-        const x = vectorx * Math.cos(angle) - vectory * Math.sin(angle);
-        const y = vectorx * Math.sin(angle) + vectory * Math.cos(angle);
-    
-        const new_x = b.x + x;
-        const new_y = b.y + y;
-    
-        this.array.push(new THREE.Vector3(new_x, new_y, b.z));
-        
-        this.model.position.set(new_x, new_y, b.z);
-    
-        // Make the model look in the direction of movement
-        let direction = new THREE.Vector3(x, y, 0);
-        let lookAtPosition = new THREE.Vector3().addVectors(this.model.position, direction.normalize());
-        this.model.up.set(0, 0, 1);
-        this.model.lookAt(lookAtPosition);
-    }
-
-    _setupEventListeners() {
-        window.addEventListener('touchstart', () => {
-            this.clockwise = !this.clockwise;
-        });
+        this.path = [];
+        this.isFollowingPath = false;
     }
 
     setModel()
     {
         this.model = this.resource.scene
         this.model.scale.set(0.005, 0.005, 0.005)
+        this.model.position.set(Math.random() * 3 - 1.5, 0, 0)
         this.scene.add(this.model)
+
       
         this.model.traverse((child) =>
         {
@@ -111,39 +70,26 @@ export default class Fox
             this.animation.actions.current = newAction
         }
 
-        // Debug
-        if(this.debug.active)
-        {
-            const debugObject = {
-                playIdle: () => { this.animation.play('idle') },
-                playWalking: () => { this.animation.play('walking') },
-                playRunning: () => { this.animation.play('running') }
-            }
-            this.debugFolder.add(debugObject, 'playIdle')
-            this.debugFolder.add(debugObject, 'playWalking')
-            this.debugFolder.add(debugObject, 'playRunning')
-        }
     }
 
-    end(){
-       this.experience.goToNextScene();
-       console.log("end")
+    followPath(path) {
+        this.path = path;
+        this.isFollowingPath = true;
     }
 
     update()
     {
         this.animation.mixer.update(this.time.delta * 0.001)
 
-        if (this.clockwise) {
-            this.move(-this.angle * Math.PI / 180);
-        } else {
-            this.move(this.angle * Math.PI / 180);
-        }
-
-        const currentPosition = this.model.position;
-        if (currentPosition.x < this.xRange.min || currentPosition.x > this.xRange.max ||
-            currentPosition.y < this.yRange.min || currentPosition.y > this.yRange.max) {
-            this.end();
+        if(this.isFollowingPath) {
+            if(this.path && this.path.length > 0) {
+                const nextPosition = this.path[this.path.length - 1]; 
+                this.model.position.lerp(nextPosition, 0.02); 
+        
+                if(this.model.position.distanceToSquared(nextPosition) < 0.01) {
+                    this.path.shift(); 
+                }
+            }
         }
     }
 }

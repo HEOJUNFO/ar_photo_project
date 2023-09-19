@@ -11,7 +11,7 @@
             <img :src="selectCharacterSrc" alt="Description" class="overlap-image" />
             <p class="character-name">{{ selectCharacterName }}</p>
             <hr class="character-line">
-            <p class="character-text">{{ characterContent.text }}</p>
+            <p class="character-text">{{ characterContent?.text }}</p>
         </div>
     </div>
 </template>

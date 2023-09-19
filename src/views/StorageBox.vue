@@ -27,14 +27,31 @@
         <div class="list-container" v-if="currentTab === 'all'">
             <div v-for="item in tabData" :key="item.id" class="image-container">
                 <img src="../resource/storageBox/bg_reward.png" />
-                <img
-                    src="https://playar.syrup.co.kr/sodarimg/is/marketing/202308/17TZcrb5Q*38b3ed16b02bec43416b4a7dec923cb0.gif" />
+                <img :src="item.src" :class="setGrayscale(item)" />
+                <p :class="setGrayText(item)">{{ item.text }}</p>
             </div>
         </div>
         <div class="list-container" v-if="currentTab === 'unused'">
+            <div v-for="item in tabData" :key="item.id" class="image-container">
+                <img src="../resource/storageBox/bg_reward.png" />
+                <img :src="item.src" :class="setGrayscale(item)" />
+                <p :class="setGrayText(item)">{{ item.text }}</p>
+            </div>
         </div>
-        <div class="list-container" v-if="currentTab === 'unacquired'"></div>
-        <div class="list-container" v-if="currentTab === 'used'"> </div>
+        <div class="list-container" v-if="currentTab === 'unacquired'">
+            <div v-for="item in tabData" :key="item.id" class="image-container">
+                <img src="../resource/storageBox/bg_reward.png" />
+                <img :src="item.src" :class="setGrayscale(item)" />
+                <p :class="setGrayText(item)">{{ item.text }}</p>
+            </div>
+        </div>
+        <div class="list-container" v-if="currentTab === 'used'">
+            <div v-for="item in tabData" :key="item.id" class="image-container">
+                <img src="../resource/storageBox/bg_reward.png" />
+                <img :src="item.src" :class="setGrayscale(item)" />
+                <p :class="setGrayText(item)">{{ item.text }}</p>
+            </div>
+        </div>
         <div v-if="showModal" class="modal">
             <p>뒤로 돌아갑니다.</p>
             <div class="modal-buttons">
@@ -46,48 +63,66 @@
 </template>
 
 <script>
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref } from 'vue';
 import router from '../router';
 import { useRewardsStore } from '../stores/reward.js';
-import { Image } from 'konva/lib/shapes/Image';
 
 export default {
     name: 'StorageBox',
     setup() {
         const showModal = ref(false);
         const currentTab = ref('all');
-        const tabData = ref({});
+        const tabData = ref([]);
+
         const rewardsStore = useRewardsStore();
+
         const setTab = (tabName) => {
             currentTab.value = tabName;
             fetchTabData(tabName);
         };
+
         const fetchTabData = (tabName) => {
-            const data = localStorage.getItem('rewardsData');
-            const parsedData = JSON.parse(data);
-            tabData.value = parsedData[tabName] || [];
+            rewardsStore.setRewardsData();
+            tabData.value = rewardsStore.fetchTabData(tabName);
         };
+
         const confirmBack = () => {
             showModal.value = false;
             router.go(-1);
         };
+
         const closeModal = () => {
             showModal.value = false;
         };
+
         const bgClick = () => {
+            // If there is any functionality you want when background is clicked, add here
         };
+
         const back = () => {
             showModal.value = true;
         };
+
+        const setGrayscale = (item) => {
+            return item.required === 'true' ? '' : 'grayscale';
+        };
+
+        const setGrayText = (item) => {
+            return item.required === 'true' ? '' : 'graytext';
+        };
+
         const setVH = () => {
             let vh = window.innerHeight * 0.01;
             document.documentElement.style.setProperty('--vh', `${vh}px`);
         };
+
         onMounted(() => {
             setVH();
             window.addEventListener('resize', setVH);
+
             fetchTabData('all');
         });
+
         return {
             back,
             bgClick,
@@ -96,17 +131,15 @@ export default {
             closeModal,
             setTab,
             currentTab,
-            tabData
+            tabData,
+            setGrayscale,
+            setGrayText,
         };
-    },
-    components: { Image }
+    }
 }
 </script>
 
 <style scoped>
-@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
-
-
 .top-section {
     display: flex;
     flex-direction: row;
@@ -228,6 +261,7 @@ export default {
     align-items: center;
     width: 100%;
     height: calc(5 * var(--vh));
+    margin-top: calc(1 * var(--vh));
     z-index: 1;
 }
 
@@ -271,9 +305,37 @@ export default {
 
 .image-container img:nth-child(2) {
     position: absolute;
-    top: 5%;
-    left: 0;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    height: 50%;
+}
+
+.image-container p {
+    position: absolute;
+    color: black;
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 20px;
+    letter-spacing: -0.35px;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
     width: 100%;
-    height: 60%;
+    max-width: 14ch;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+}
+
+.grayscale {
+    filter: grayscale(100%);
+}
+
+.graytext {
+    color: gray !important
 }
 </style>

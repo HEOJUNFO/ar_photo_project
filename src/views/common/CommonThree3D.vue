@@ -55,6 +55,20 @@ export default {
             window.addEventListener('resize', setVH);
 
             experience = new Experience(document.querySelector('canvas.webgl'), next);
+
+            console.log('characterID', localStorage.getItem('characterID'))
+
+
+            experience.resources.on('ready', () => {
+                if (localStorage.getItem('characterID') === '0') {
+                    experience.world.setBell()
+                } else if (localStorage.getItem('characterID') === '1') {
+                    experience.world.setUno()
+                } else if (localStorage.getItem('characterID') === '2') {
+                    experience.world.setSorina()
+                }
+            })
+
         });
 
         onBeforeRouteLeave(() => {

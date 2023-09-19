@@ -114,9 +114,6 @@ export default {
             dragging.value = false
         }
 
-        watch(index, (value) => {
-            console.log(value)
-        })
 
         return {
             index,
