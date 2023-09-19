@@ -26,5 +26,31 @@ export default [
         name: 'foxModel',
         type: 'gltfModel',
         path: '../models/Fox/glTF/Fox.gltf'
-    }
+    },
+    {
+        name: 'avocadoModel',
+        type: 'gltfModel',
+        path: '../models/EatingOut/Avocado.gltf'
+    },
+    {
+        name: 'blueBerryModel',
+        type: 'gltfModel',
+        path: '../models/EatingOut/BlueBerry.gltf'
+    },
+    {
+        name: 'peachModel',
+        type: 'gltfModel',
+        path: '../models/EatingOut/Peach.gltf'
+    },
+    {   name: 'cauldronCloseModel',
+        type: 'gltfModel',
+        path: '../models/EatingOut/Cauldron_Close.gltf'
+
+    }, {   name: 'cauldronOpenModel',
+            type: 'gltfModel',
+            path: '../models/EatingOut/Cauldron_Open.gltf'
+
+},
+    
+
 ]

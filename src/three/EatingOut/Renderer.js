@@ -21,7 +21,9 @@ export default class Renderer
             canvas: this.canvas,
             antialias: true
         })
-        this.instance.toneMapping = THREE.CineonToneMapping
+        this.instance.punctualLights = true
+        this.instance.toneMapping = THREE.LinearToneMapping
+        this.instance.colorSpace = THREE.SRGBColorSpace
         this.instance.toneMappingExposure = 1.75
         this.instance.shadowMap.enabled = true
         this.instance.shadowMap.type = THREE.PCFSoftShadowMap

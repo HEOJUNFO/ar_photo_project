@@ -14,6 +14,7 @@
   "dependencies": {
     "@ar-js-org/ar.js": "^3.4.5",
     "@ar-js-org/artoolkit5-js": "^0.3.0",
+    "@vue/cli-service": "^5.0.8",
     "ar.js": "^2.2.2",
     "konva": "^9.2.0",
     "lil-gui": "^0.18.1",

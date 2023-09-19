@@ -8,7 +8,7 @@
                 <img :src="currentCharacter.src" alt="Side Image" />
             </div>
         </div>
-        <div @click="next()" class="webgl-container">
+        <div class="webgl-container">
             <canvas class="webgl"></canvas>
         </div>
     </div>
@@ -27,7 +27,7 @@ export default {
         let experience;
         const characterStore = useCharacterStore()
         const index = ref(0)
-        const textIndex = ref(4)
+        const textIndex = ref(5)
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
