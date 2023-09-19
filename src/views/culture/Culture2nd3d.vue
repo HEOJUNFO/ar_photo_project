@@ -1,5 +1,13 @@
 <template>
     <div>
+        <div v-show="showCaptureButton" class=" top-section2">
+            <div class="text-container2">
+                <p>{{ characterContent?.text }}</p>
+            </div>
+            <div class="side-image-container3">
+                <img :src="characterContent?.src" alt="Side Image" />
+            </div>
+        </div>
         <div v-show="!showCaptureButton" class="top-section">
             <div class="side-image-container1">
                 <button @click="showModal = true"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -55,8 +63,9 @@
 <script>
 import vision from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0";
 import router from "../../router";
-
-import { onMounted } from "vue";
+import { useImageDataStore } from '../../stores/imageData.js'
+import { useCharacterStore } from '../../stores/characterStore.js'
+import { onMounted, computed, ref } from "vue";
 
 const { ImageSegmenter, SegmentationMask, FilesetResolver } = vision;
 let runningMode = "VIDEO"
@@ -129,7 +138,7 @@ export default {
             video.style.display = 'none';
             video.style.width = '80%'
             img.style.width = '80%'
-            image.style.height = 'calc(80 * var(--vh))';
+            image.style.height = 'calc(64 * var(--vh))';
             image.style.top = '0vh';
 
             webcamRunning = false;
@@ -196,6 +205,7 @@ export default {
                 }
                 canvasClick = document.getElementById("canvas1");
                 canvasClick.style.display = 'block';
+                canvasClick.style.width = '80%';
                 let img = document.getElementById("face");
 
                 const cxt = canvasClick.getContext("2d");
@@ -289,6 +299,18 @@ export default {
         }
     },
     setup() {
+        const imageDataStore = useImageDataStore()
+        const characterStore = useCharacterStore()
+        const textIndex = ref(6)
+
+        characterStore.setCharacterIndex(localStorage.getItem('characterID'))
+
+        const currentCharacterContent = computed(() => {
+            const char = characterStore.currentCharacter
+            return char?.culture2[textIndex.value] || {}
+        })
+
+
         const setVH = () => {
             let vh = window.innerHeight * 0.01;
             document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -297,7 +319,10 @@ export default {
         const saveImage = () => {
             let canvasElement = document.getElementById("canvas1");
             let imageData = canvasElement.toDataURL();
-            router.push({ path: '/capturepreview', query: { imgData: imageData, eventName: 'culture2' } });
+            imageDataStore.setImageData(imageData)
+            imageDataStore.setEventName('culture2')
+            router.push({ path: '/capturepreview' });
+
         }
 
         onMounted(() => {
@@ -305,7 +330,8 @@ export default {
             window.addEventListener('resize', setVH);
         })
         return {
-            saveImage
+            saveImage,
+            characterContent: currentCharacterContent,
         }
     },
 }
@@ -343,6 +369,7 @@ export default {
     width: 100%;
     height: calc(100 * var(--vh));
     overflow: hidden;
+    background-color: #565656;
 }
 
 .video {
@@ -370,7 +397,7 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    height: calc(10 * var(--vh));
+    height: calc(26 * var(--vh));
     align-items: center;
     padding-bottom: calc(0.25 * var(--vh));
 }
@@ -527,5 +554,82 @@ export default {
     font-weight: 700;
     line-height: 24px;
     letter-spacing: -0.4px;
+}
+
+.top-section2 {
+    overflow: visible;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: calc(10 * var(--vh));
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    margin-top: calc(5 * var(--vh));
+}
+
+
+.text-container2 {
+    overflow: visible;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    width: 75%;
+    position: relative;
+    border-radius: 16px;
+    margin-left: 5%;
+}
+
+.text-container2::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 15px solid #fff;
+    position: absolute;
+    right: -10px;
+    top: 30%;
+    transform: translateY(-50%);
+}
+
+.text-container2 p {
+    overflow: hidden;
+    padding: 15px;
+    color: #000;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+    margin: 0;
+    border-radius: 10px;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+}
+
+
+
+.side-image-container3 {
+    margin-top: calc(-5 * var(--vh));
+    margin-right: -10%;
+    position: relative;
+    overflow: hidden;
+    width: 20%;
+    display: flex;
+    align-items: center;
+}
+
+.side-image-container3 img {
+    background-color: #FFECD6;
+    overflow: hidden;
+    height: 70%;
+    width: 70%;
+    display: block;
+    clip-path: circle(50%);
+    object-fit: cover;
 }
 </style>

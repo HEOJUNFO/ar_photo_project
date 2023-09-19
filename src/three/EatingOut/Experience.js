@@ -42,6 +42,8 @@ export default class Experience
         this.raycaster = new THREE.Raycaster();
         this.mouse = new THREE.Vector2();
 
+        this.clickedObject = [];
+
         this.canvas.addEventListener('touchstart', this._checkForModelClick.bind(this), false);
 
         this.bindMethods()
@@ -137,16 +139,33 @@ export default class Experience
         this.raycaster.setFromCamera(this.mouse, this.camera.instance);
     
         const intersects = this.raycaster.intersectObjects(this.scene.children, true); // recursive search through all children
+
     
         for (let i = 0; i < intersects.length; i++) {
-            if (this._isObjectChildOf(intersects[i].object, this.clickedObject)) {
-                this.world.fox.isAutoMoving = false;
-                break;
+            for (let j = 0; j < this.clickedObject.length; j++) {
+                if (this._isObjectChildOf(intersects[i].object, this.clickedObject[j])) {
+                   if(intersects[i].object.name === "Peach"){
+                      this.world.peach.isAutoMoving = false;
+                      this.world.peach.moving = true;
+                      return;
+                   } else if(intersects[i].object.name === "Avocado"){
+                      this.world.avocado.isAutoMoving = false;
+                      this.world.avocado.moving = true;
+                      return;
+                   } else if(intersects[i].object.name === "BlueBerry"){
+                      this.world.blueBerry.isAutoMoving = false;
+                      this.world.blueBerry.moving = true;
+                      return;
+                   }
+
+                }
             }
         }
+    
     }
     
     _isObjectChildOf(child, parent) {
+    
         
         while (child) {
             if (child === parent) return true;

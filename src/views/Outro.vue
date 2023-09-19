@@ -1,13 +1,20 @@
 <template>
     <div @click.stop="next()">
-        <div class="loading-container">
-            <div class="image-container">
-                <img :src="currentImageSrc" alt="Loading..." />
+        <loading-container>
+        </loading-container>
+        <div class="loading-container" style="background-image: url('../resource/common/bg.png'); background-size: cover;">
+            <div class="image-container2">
+                <div class="reward-container">
+                    <img src="../resource/common/reward_success_bg.png" />
+                    <img :src="rewardSrc" />
+                    <p class="p">{{ rewardText }}</p>
+                </div>
             </div>
             <div class="text-container2">
-                <img :src="selectCharacterSrc" alt="Description" class="overlap-image" />
-                <p>{{ selectCharacterName }}</p>
-                <p>{{ characterContent.text }}</p>
+                <img :src="characterContent?.src" alt="Description" class="overlap-image" />
+                <p class="character-name">{{ selectCharacterName }}</p>
+                <hr class="character-line">
+                <p class="character-text">{{ characterContent?.text }}</p>
             </div>
         </div>
     </div>
@@ -15,58 +22,92 @@
 
 <script>
 import { useCharacterStore } from '../stores/characterStore.js'
+import { useImageDataStore } from '../stores/imageData'
+import { useRewardsStore } from '../stores/reward'
 import { ref, computed, watch, onMounted } from 'vue'
 import router from '../router'
-
-const IMAGES = [
-    'https://dt-static.syrup.co.kr/sodar/character/Thumbnail/Thumbnail_character(1).png',
-    'https://dt-static.syrup.co.kr/sodar/character/Thumbnail/Thumbnail_character(2).png',
-    'https://dt-static.syrup.co.kr/sodar/sticker/Thumbnail/Thumbnail_sticker (1).png'
-]
+import LoadingContainer from '../components/LoadingContainer.vue'
 
 export default {
-    name: 'Outro',
+    name: 'Culture2',
+    components: {
+        LoadingContainer
+    },
     setup() {
         const characterStore = useCharacterStore()
-        const index = ref(0)
-        const textIndex = ref(6)
+        const imageDataStore = useImageDataStore()
+        const rewardsStore = useRewardsStore()
+        const eventName = ref('')
 
-        const currentImageSrc = computed(() => IMAGES[0])
+        const index = ref(0)
+        const textIndex = ref(7)
+        const rewardSrc = ref('')
+        const rewardText = ref('')
 
         characterStore.setCharacterIndex(localStorage.getItem('characterID'))
 
         const currentCharacterContent = computed(() => {
             const char = characterStore.currentCharacter
+            if (eventName.value === 'shopping2Clear') {
+                return char?.shopping2[textIndex.value] || {}
+            } else if (eventName.value === 'culture2Clear') {
+                return char?.culture2[textIndex.value] || {}
+            } else if (eventName.value === 'eatingOut2Clear') {
+                return char?.eatingOut2[textIndex.value] || {}
+            }
 
-            if (router.currentRoute.value.query.eventName === 'shopping2') {
-                return char.shopping2[textIndex.value] || {}
-            }
-            else if (router.currentRoute.value.query.eventName === 'culture2') {
-                return char.culture2[textIndex.value] || {}
-            }
-            else if (router.currentRoute.value.query.eventName === 'eatingOut2') {
-                return char.eatingOut2[textIndex.value] || {}
-            }
         })
 
 
         const next = () => {
             if (index.value === 0) {
                 index.value = 1
-                textIndex.value = 7
+                textIndex.value = 8
 
             } else if (index.value === 1) {
-                // router.push('/shopping3')
+
+
+
+                router.push('/map')
             }
+
+
         }
+        const setVH = () => {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+
+
+        onMounted(() => {
+            document.body.style.overflow = 'hidden';
+
+            setVH();
+            window.addEventListener('resize', setVH);
+
+
+            eventName.value = imageDataStore.getEventName();
+
+            if (eventName.value === 'shopping2Clear') {
+                rewardSrc.value = '../resource/storageBox/02_Coupon_active.png'
+                rewardText.value = '패션·잡화 1만원 금액할인권'
+            } else if (eventName.value === 'culture2Clear') {
+                rewardSrc.value = '../resource/storageBox/04_Coupon_active.png'
+                rewardText.value = '몽드이기자 1만원 금액할인권'
+            } else if (eventName.value === 'eatingOut2Clear') {
+                rewardSrc.value = '../resource/storageBox/03_Coupon_active.png'
+                rewardText.value = 'F&B 5천원 금액할인권'
+            }
+        })
 
         return {
             index,
             next,
-            currentImageSrc,
             characterContent: currentCharacterContent,
-            selectCharacterSrc: characterStore.currentCharacter.src,
-            selectCharacterName: characterStore.currentCharacter.name,
+            selectCharacterSrc: characterStore.currentCharacter?.src,
+            selectCharacterName: characterStore.currentCharacter?.name,
+            rewardSrc: rewardSrc,
+            rewardText: rewardText
         }
     }
 }
@@ -82,56 +123,111 @@ export default {
     background-color: #fff;
 }
 
-.text-container2 p {
-    padding: 7.5px 15px 7.5px 15px;
-    font-size: 0.5rem;
-}
-
 .text-container2 {
-    position: relative;
+    bottom: 0%;
+    position: absolute;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    border: 1px solid black;
-    padding: 10px;
+    border: none;
     background-color: #fff;
     width: 100%;
-    height: 20vh;
+    height: calc(25 * var(--vh));
 }
 
-.image-container {
-    display: flex;
-    align-items: center;
-    margin-top: 7vh;
-    margin-bottom: 7vh;
+.text-container2 .character-name {
+    padding: 7.5px 15px 0 15px;
+    color: #000;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 34px;
+    letter-spacing: -0.6px;
+    align-self: flex-start;
 }
 
-.image-container img {
-    width: 100%;
-    height: 100%;
+.text-container2 .character-text {
+    padding: 7.5px 15px;
+    color: #767676;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 26px;
+    letter-spacing: -0.45px;
+    align-self: flex-start;
+    text-align: left;
+    max-width: 20ch;
+    overflow-wrap: break-word;
+    word-break: keep-all;
 }
 
-.image-container button {
-    background: rgba(0, 0, 0, 0.5);
-    color: #fff;
-    font-size: 1.5rem;
-    cursor: pointer;
-    border: none;
-    transition: background-color 0.3s;
+.character-line {
+    width: 90%;
+    border: 1px solid #D9D9D9;
+    margin: 5px 0 5px 0;
+    align-self: center
 }
 
-.image-container button:hover {
-    background: rgba(0, 0, 0, 0.7);
-}
 
 .overlap-image {
     position: absolute;
-    top: 50%;
-    right: -50px;
+    top: 30%;
+    right: -5%;
     width: 150px;
     height: auto;
     z-index: 1;
     transform: translateY(-50%);
+}
+
+.image-container2 {
+    width: 80%;
+    height: calc(40 * var(--vh));
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: calc(25 * var(--vh));
+}
+
+.reward-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    display: flex;
+}
+
+
+.reward-container img:first-child {
+    position: absolute;
+    top: calc(-10 * var(--vh));
+    left: 0;
+    width: 100%;
+    height: auto;
+}
+
+.reward-container img:nth-child(2) {
+    position: absolute;
+    top: -15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 80%;
+}
+
+.reward-container p {
+    position: absolute;
+    top: 50%;
+    color: var(--Text-Black, #111);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+
 }
 </style>

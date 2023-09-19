@@ -13,15 +13,13 @@ export default {
 </script>
 
 <style >
+@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
 * {
     margin: 0;
     padding: 0;
 }
 
-html,
-body {
-    overflow: hidden;
-}
 
 .fade-enter-active,
 .fade-leave-active {

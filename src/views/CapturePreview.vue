@@ -59,7 +59,7 @@
         </div>
         <div v-show="showFooter2" class="footer2">
             <p>공유 방법을 선택해 주세요.</p>
-            <button>방명록에 공유하기</button>
+            <button @click="editor()">방명록에 공유하기</button>
             <button @click="share()">다른 곳에 공유하기</button>
             <button @click="next()">참여하지 않고 나가기</button>
         </div>
@@ -235,18 +235,9 @@
                                 fill="#111111" />
                         </g>
                     </svg></button>
-                <img src="https://playar.syrup.co.kr/sodarimg/is/marketing/202308/17TZcrb5Q*38b3ed16b02bec43416b4a7dec923cb0.gif"
-                    alt="Loading..." />
-            </div>
-        </div>
-        <div v-if="premiumModal2" class="modal2">
-            <div class="image-container2">
-                <div class="reward-container">
-                    <img src="../resource/common/reward_success_bg.png" />
-                    <img
-                        src="https://playar.syrup.co.kr/sodarimg/is/marketing/202308/17TZcrb5Q*38b3ed16b02bec43416b4a7dec923cb0.gif" />
-                </div>
-                <button @click="premiumModal2 = false">상품 획득 성공!</button>
+                <img :src="premiumImageSrc" />
+                <p class="p1">{{ premiumText }}</p>
+                <p class="p2">획득기회!</p>
             </div>
         </div>
     </div>
@@ -255,17 +246,23 @@
 <script>
 import { onMounted, ref, watch } from 'vue';
 import router from '../router';
+import { useImageDataStore } from '../stores/imageData';
+import { useRewardsStore } from '../stores/reward';
 import Konva from 'konva';
+
 
 export default {
     name: 'CapturePreview',
     setup() {
         const index = ref(0)
         const imgData = ref('')
+        const eventName = ref('')
         const showFooter2 = ref(false);
         const showModal = ref(false);
         const premiumModal = ref(false);
         const premiumModal2 = ref(false);
+        const premiumImageSrc = ref('');
+        const premiumText = ref('');
 
         const showToolbox = ref(false);
         const currentTool = ref('draw');
@@ -276,6 +273,8 @@ export default {
 
         const line = ref(null);
         const isDrawing = ref(false);
+
+        const imageDataStore = useImageDataStore();
 
         const bgClick = () => {
             if (showFooter2.value) {
@@ -396,6 +395,10 @@ export default {
             router.push({ path: '/outro', query: { eventName: router.currentRoute.value.query.eventName } });
         }
 
+        const editor = () => {
+            router.push({ path: '/texteditor', query: { eventName: router.currentRoute.value.query.eventName } });
+        }
+
         const share = async () => {
             const blob = await (await fetch(imgData.value)).blob();
 
@@ -416,8 +419,13 @@ export default {
                 .share(shareData)
                 .then(() => {
                     console.log("Thanks for sharing!");
+                    onShareComplete();
                 })
                 .catch(console.error);
+        }
+
+        const onShareComplete = () => {
+            premiumModal2.value = true;
         }
 
         const startDrawing = () => {
@@ -505,23 +513,30 @@ export default {
             setVH();
             window.addEventListener('resize', setVH);
 
-            imgData.value = router.currentRoute.value.query.imgData;
+            imgData.value = imageDataStore.getImageData();
+            eventName.value = imageDataStore.getEventName();
 
-            if (router.currentRoute.value.query.eventName === 'shopping2') {
+            if (eventName.value === 'shopping2') {
                 premiumModal.value = true;
-            } else if (router.currentRoute.value.query.eventName === 'culture2') {
+                premiumImageSrc.value = '../resource/storageBox/02_Coupon_active.png'
+                premiumText.value = '패션·잡화 1만원 금액할인권'
+            } else if (eventName.value === 'culture2') {
                 premiumModal.value = true;
-            } else if (router.currentRoute.value.query.eventName === 'eatingOut2') {
+                premiumImageSrc.value = '../resource/storageBox/04_Coupon_active.png'
+                premiumText.value = '몽드이기자 1만원 금액할인권'
+            } else if (eventName.value === 'eatingOut2') {
                 premiumModal.value = true;
+                premiumImageSrc.value = '../resource/storageBox/03_Coupon_active.png'
+                premiumText.value = 'F&B 5천원 금액할인권'
             }
 
             const imageObj = new Image();
             imageObj.src = imgData.value;
             imageObj.onload = () => {
 
-                const imageHeight = window.innerHeight * 0.8;
-                const imageWidth = imageObj.width * (imageHeight / imageObj.height);
-                console.log(imageWidth)
+
+                const imageHeight = window.innerHeight * 0.64;
+                const imageWidth = imageHeight * 0.75
 
                 stage = new Konva.Stage({
                     container: konvaContainer.value,
@@ -593,7 +608,10 @@ export default {
             bgClick,
             currentDrawingTool,
             currentTextTool,
-            premiumModal2
+            premiumModal2,
+            premiumImageSrc,
+            premiumText,
+            editor,
         }
     }
 }
@@ -612,7 +630,7 @@ export default {
 }
 
 .footer {
-    height: calc(10 * var(--vh));
+    height: calc(26 * var(--vh));
     width: 100%;
     background-color: #fff;
     color: #fff;
@@ -729,6 +747,17 @@ export default {
     cursor: pointer;
 }
 
+.footer2 button:last-child {
+    width: 80%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 16px;
+    background: var(--Main-Pink, #d9d9d9);
+    border: none;
+    color: #000;
+    cursor: pointer;
+}
+
 .footer2 button p {
     color: var(--Text-Black, #111);
     text-align: center;
@@ -838,6 +867,41 @@ export default {
     z-index: 3;
     transform: translate(-50%, -50%);
 }
+
+.modal-content2 img {
+    pointer-events: none;
+    position: absolute;
+    top: calc(-5 * var(--vh));
+    width: 100%;
+    height: 100%;
+}
+
+.p1 {
+    position: absolute;
+    top: 65%;
+    color: var(--Text-Black, #111);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+}
+
+.p2 {
+    position: absolute;
+    top: 75%;
+    color: var(--Point-REd, var(--Point-Red, #D50F4A));
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+}
+
 
 .close-btn {
     position: absolute;
@@ -1002,8 +1066,23 @@ export default {
     position: relative;
     width: 100%;
     height: 100%;
+    justify-content: center;
+    display: flex;
 }
 
+.reward-container p {
+    position: absolute;
+    top: 60%;
+    color: var(--Text-Black, #111);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+
+}
 
 .reward-container img:first-child {
     position: absolute;
@@ -1015,11 +1094,11 @@ export default {
 
 .reward-container img:nth-child(2) {
     position: absolute;
-    top: 15%;
+    top: 0%;
     left: 50%;
     transform: translateX(-50%);
     width: 80%;
-    height: 50%;
+    height: 80%;
 }
 
 .image-container2 button {

@@ -1,13 +1,25 @@
 <template>
-    <div>
-        <div class="loading-container">
-            <img src="https://playar.syrup.co.kr/sodarimg/is/marketing/202308/17TZcrb5Q*38b3ed16b02bec43416b4a7dec923cb0.gif"
-                alt="Loading..." />
+    <div class="loading-container">
+        <!-- Image 1 and Button 1 -->
+        <div class="image-container">
+            <img src="../resource/landing/web-landing-page.jpg" alt="Image 1" />
+            <button @click="start()">신비의 숲 시작하기</button>
+
         </div>
-        <button @click="next()">신비의 숲 시작하기</button>
+
+        <!-- Image 2 and Button 2 -->
+        <div class="image-container2">
+            <img src="../resource/landing/web-landing-page-2.jpg" alt="Image 2" />
+            <button @click="start()">신비의 숲 시작하기</button>
+        </div>
+
+        <!-- Image 3 -->
+        <div class="image-container">
+            <img src="../resource/landing/web-landing-page-3.jpg" alt="Image 3" />
+        </div>
     </div>
 </template>
-  
+
 <script>
 import { ref, onMounted } from 'vue'
 import router from '../router'
@@ -16,36 +28,100 @@ export default {
     name: 'Landing',
     setup() {
 
-        const setVH = () => {
-            let vh = window.innerHeight * 0.01;
-            document.documentElement.style.setProperty('--vh', `${vh}px`);
+
+        const next1 = () => {
+            router.push('/next1')
         }
 
-        onMounted(() => {
-            setVH();
+        const next2 = () => {
+            router.push('/next2')
+        }
 
-            window.addEventListener('resize', setVH);
-        })
-
-        const next = () => {
+        const start = () => {
             router.push('/intro')
         }
 
-        return { next }
+
+
+        return { next1, next2, start }
     }
 }
 </script>
-  
+
 <style scoped>
 .loading-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: calc(90 * var(--vh));
 }
 
-.loading-container img {
-    width: 50%;
-    height: 50%;
+.image-container {
+    position: relative;
+    margin: -1%;
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+}
+
+.image-container2 {
+    position: relative;
+    margin: -1%;
+    width: 100%;
+    height: 100%;
+}
+
+.image-container2 img {
+    width: 100%;
+    height: auto;
+}
+
+
+.image-container img {
+    width: 100%;
+    height: auto;
+
+}
+
+.image-container button {
+    position: absolute;
+    width: 80%;
+    padding: 10px;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: none;
+    border-radius: 100px;
+    background: var(--Point-Red, #D50F4A);
+    color: var(--Text-White, #FFF);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+}
+
+.image-container2 button {
+    position: absolute;
+    width: 80%;
+    padding: 10px;
+    bottom: 4%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: none;
+    border-radius: 100px;
+    background: var(--Point-Red, #D50F4A);
+    color: var(--Text-White, #FFF);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
 }
 </style>

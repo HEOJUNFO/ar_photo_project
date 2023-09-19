@@ -1,11 +1,11 @@
 <template>
     <div class="main">
-        <div class="top-section">
-            <div class="text-container1">
-                <p>{{ characterContent.text }}</p>
+        <div class=" top-section2">
+            <div class="text-container2">
+                <p>{{ characterContent?.text }}</p>
             </div>
-            <div class="side-image-container2">
-                <img :src="currentCharacter.src" alt="Side Image" />
+            <div class="side-image-container3">
+                <img :src="characterContent?.src" alt="Side Image" />
             </div>
         </div>
         <div class="webgl-container">
@@ -28,13 +28,15 @@
                 </svg></button>
         </div>
         <div class="side-image-container">
-            <img :src="currentCharacter.src" alt="Side Image" />
+            <img :src="currentCharacter.src" :style="{ transform: `translate(${currentX}px, ${currentY}px)` }"
+                @touchstart="startDrag" @touchmove="drag" @touchend="endDrag" @touchcancel="endDrag" />
         </div>
     </div>
 </template>
 
 <script>
 import { useCharacterStore } from '../../stores/characterStore.js'
+import { useImageDataStore } from '../../stores/imageData.js'
 import Experience from '../../three/Experience/Experience.js'
 import { onMounted, computed, ref } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router'
@@ -49,6 +51,7 @@ export default {
         const eventName = ref('shopping2')
 
         const characterStore = useCharacterStore()
+        const imageDataStore = useImageDataStore()
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
@@ -56,19 +59,47 @@ export default {
             return currentCharacter.value.shopping2[textIndex.value] || {}
         })
 
+        const dragging = ref(false)
+        const currentX = ref(0)
+        const currentY = ref(0)
+        const lastX = ref(0)
+        const lastY = ref(0)
+
+        const startDrag = (event) => {
+            event.preventDefault()
+            dragging.value = true
+            lastX.value = event.touches[0].clientX
+            lastY.value = event.touches[0].clientY
+        }
+
+        const drag = (event) => {
+            if (!dragging.value) return
+            event.preventDefault()
+            const deltaX = event.touches[0].clientX - lastX.value
+            const deltaY = event.touches[0].clientY - lastY.value
+            currentX.value += deltaX
+            currentY.value += deltaY
+            lastX.value = event.touches[0].clientX
+            lastY.value = event.touches[0].clientY
+        }
+
+        const endDrag = () => {
+            dragging.value = false
+        }
+
         const saveImage = (image) => {
-            router.push({ path: '/capturepreview', query: { imgData: image, eventName: eventName.value } });
+            imageDataStore.setImageData(image)
+            imageDataStore.setEventName(eventName.value)
+            router.push({ path: '/capturepreview' });
         }
 
         const setVH = () => {
+            document.body.style.overflow = 'hidden';
             let vh = window.innerHeight * 0.01;
 
-            // 삼성 브라우저 감지
             const isSamsungBrowser = /SamsungBrowser/i.test(navigator.userAgent);
 
             if (isSamsungBrowser) {
-                // 삼성 브라우저의 경우 보정 값을 적용
-                // vh = vh * 0.;  // 예: 현재 값의 95%로 설정. 원하는 비율로 조정하세요.
             }
 
             document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -91,18 +122,18 @@ export default {
             index,
             currentCharacter,
             characterContent: currentCharacterContent,
+            startDrag,
+            drag,
+            endDrag,
+            currentX,
+            currentY,
+
         }
     }
 }
 </script>
 
 <style scoped>
-.main {
-    height: 100%;
-    width: 100%;
-    position: fixed;
-}
-
 .webgl-container {
     height: calc(100 * var(--vh));
     width: 100%;
@@ -119,7 +150,7 @@ export default {
 }
 
 .side-image-container {
-    overflow: hidden;
+    overflow: visible;
     position: absolute;
     top: calc(55 * var(--vh));
     right: -70%;
@@ -128,7 +159,7 @@ export default {
 }
 
 .side-image-container img {
-    overflow: hidden;
+
     height: 50%;
     width: 50%;
     display: block;
@@ -173,7 +204,8 @@ export default {
     outline: none;
 }
 
-.top-section {
+
+.top-section2 {
     overflow: visible;
     position: absolute;
     display: flex;
@@ -182,24 +214,24 @@ export default {
     height: calc(10 * var(--vh));
     justify-content: space-between;
     align-items: center;
-    z-index: 1;
+    z-index: 10;
     margin-top: calc(5 * var(--vh));
 }
 
 
-.text-container1 {
+.text-container2 {
     overflow: visible;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #fff;
-    width: 70%;
+    width: 75%;
     position: relative;
     border-radius: 16px;
     margin-left: 5%;
 }
 
-.text-container1::before {
+.text-container2::before {
     content: "";
     width: 0;
     height: 0;
@@ -207,36 +239,46 @@ export default {
     border-bottom: 10px solid transparent;
     border-left: 15px solid #fff;
     position: absolute;
-    right: -15px;
-    top: 50%;
+    right: -10px;
+    top: 30%;
     transform: translateY(-50%);
 }
 
-.text-container1 p {
+.text-container2 p {
     overflow: hidden;
     padding: 15px;
     color: #000;
     font-family: "NanumSquare", sans-serif;
-    font-size: 15px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 700;
     line-height: 24px;
     letter-spacing: -0.4px;
     margin: 0;
     border-radius: 10px;
+    overflow-wrap: break-word;
+    word-break: keep-all;
 }
 
-.side-image-container2 {
+
+
+.side-image-container3 {
+    margin-top: calc(-5 * var(--vh));
+    margin-right: -5%;
+    position: relative;
     overflow: hidden;
     width: 20%;
     display: flex;
     align-items: center;
 }
 
-.side-image-container2 img {
+.side-image-container3 img {
+    background-color: #FFECD6;
     overflow: hidden;
-    height: 100%;
-    width: 100%;
+    height: 70%;
+    width: 70%;
     display: block;
+    clip-path: circle(50%);
+    object-fit: cover;
 }
 </style>
