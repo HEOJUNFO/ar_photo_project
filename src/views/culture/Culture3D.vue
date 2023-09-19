@@ -1,11 +1,11 @@
 <template>
     <div @click.stop="percentage > 99.8 ? next() : null">
-        <div class=" top-section">
-            <div class="text-container1">
-                <p>{{ characterContent.text }}</p>
+        <div class=" top-section2">
+            <div class="text-container2">
+                <p>{{ characterContent?.text }}</p>
             </div>
-            <div class="side-image-container">
-                <img :src="currentCharacter.src" alt="Side Image" />
+            <div class="side-image-container3">
+                <img :src="characterContent?.src" alt="Side Image" />
             </div>
         </div>
         <div class="webgl-container">
@@ -44,7 +44,7 @@ export default {
         let experience2;
         const characterStore = useCharacterStore()
         const index = ref(0)
-        const textIndex = ref(4)
+        const textIndex = ref(5)
         const percentage = ref(0)
         const maxPercentage = ref(27)
         const visibleStone1 = ref(true)
@@ -211,77 +211,6 @@ export default {
 }
 
 
-.top-section {
-    overflow: visible;
-    position: absolute;
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: calc(10 * var(--vh));
-    justify-content: space-between;
-    align-items: center;
-    z-index: 10;
-    margin-top: calc(7.5 * var(--vh));
-}
-
-
-.text-container1 {
-    overflow: visible;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
-    width: 75%;
-    position: relative;
-    border-radius: 16px;
-    margin-left: 5%;
-}
-
-.text-container1::before {
-    content: "";
-    width: 0;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 15px solid #fff;
-    position: absolute;
-    right: -10px;
-    top: 30%;
-    transform: translateY(-50%);
-}
-
-.text-container1 p {
-    overflow: hidden;
-    padding: 15px;
-    color: #000;
-    font-family: "NanumSquare", sans-serif;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: -0.4px;
-    margin: 0;
-    border-radius: 10px;
-    overflow-wrap: break-word;
-    word-break: keep-all;
-}
-
-
-
-.side-image-container {
-    overflow: hidden;
-    width: 20%;
-    display: flex;
-    align-items: center;
-}
-
-.side-image-container img {
-    overflow: hidden;
-    height: 100%;
-    width: 100%;
-    display: block;
-}
-
 .image-container {
     position: absolute;
     width: 100%;
@@ -354,5 +283,82 @@ export default {
 
 .scaling {
     animation: scaleAnimation 0.5s;
+}
+
+.top-section2 {
+    overflow: visible;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: calc(10 * var(--vh));
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    margin-top: calc(5 * var(--vh));
+}
+
+
+.text-container2 {
+    overflow: visible;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    width: 75%;
+    position: relative;
+    border-radius: 16px;
+    margin-left: 5%;
+}
+
+.text-container2::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 15px solid #fff;
+    position: absolute;
+    right: -10px;
+    top: 30%;
+    transform: translateY(-50%);
+}
+
+.text-container2 p {
+    overflow: hidden;
+    padding: 15px;
+    color: #000;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+    margin: 0;
+    border-radius: 10px;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+}
+
+
+
+.side-image-container3 {
+    margin-top: calc(-5 * var(--vh));
+    margin-right: -5%;
+    position: relative;
+    overflow: hidden;
+    width: 20%;
+    display: flex;
+    align-items: center;
+}
+
+.side-image-container3 img {
+    background-color: #FFECD6;
+    overflow: hidden;
+    height: 70%;
+    width: 70%;
+    display: block;
+    clip-path: circle(50%);
+    object-fit: cover;
 }
 </style>

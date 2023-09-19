@@ -1,5 +1,5 @@
 <template>
-    <div @click.stop="next()" class="loading-container">
+    <div @click.stop="next()" class="loading-container" style="background-image: url('../resource/common/bg.png');">
         <div v-show="index < 2" class=" top-section">
             <div class="text-container1">
                 <p>마음에 드는 캐릭터 스티커를 골라주세요.</p>
@@ -38,8 +38,8 @@
         <div v-show="index >= 2" class="image-container2">
             <div class="reward-container">
                 <img src="../resource/common/sticker_reward_bg.png" />
-                <img
-                    src="https://playar.syrup.co.kr/sodarimg/is/marketing/202308/17TZcrb5Q*38b3ed16b02bec43416b4a7dec923cb0.gif" />
+                <img :src="currentImageSrc" />
+                <p class="p">{{ currentImageText }}</p>
             </div>
         </div>
         <div v-show="index === 1" class="button-container">
@@ -47,7 +47,7 @@
         </div>
 
         <div class="text-container2">
-            <img :src="selectCharacterSrc" alt="Description" class="overlap-image" />
+            <img :src="characterContent.src" alt="Description" class="overlap-image" />
             <p class="character-name">{{ selectCharacterName }}</p>
             <hr class="character-line">
             <p class="character-text">{{ characterContent.text }}</p>
@@ -62,9 +62,15 @@ import router from '../router'
 import { useCharacterStore } from '../stores/characterStore.js'
 
 const IMAGES = [
-    'https://dt-static.syrup.co.kr/sodar/character/Thumbnail/Thumbnail_character(1).png',
-    'https://dt-static.syrup.co.kr/sodar/character/Thumbnail/Thumbnail_character(2).png',
-    'https://dt-static.syrup.co.kr/sodar/sticker/Thumbnail/Thumbnail_sticker (1).png'
+    '../resource/storageBox/Bell_Reward.png',
+    '../resource/storageBox/Uno_Reward.png',
+    '../resource/storageBox/Sorina_Reward.png'
+]
+
+const TEXTS = [
+    '마법사 벨 스티커',
+    '웨어울프 우노 스티커',
+    '뱀파이어 소리나 스티커'
 ]
 
 export default {
@@ -73,9 +79,10 @@ export default {
         const imageIndex = ref(0)
         const characterStore = useCharacterStore()
         const index = ref(0)
-        const textIndex = ref(5)
+        const textIndex = ref(6)
 
         const currentImageSrc = computed(() => IMAGES[imageIndex.value])
+        const currentImageText = computed(() => TEXTS[imageIndex.value])
 
         characterStore.setCharacterIndex(localStorage.getItem('characterID'))
 
@@ -104,30 +111,33 @@ export default {
 
         const getReward = () => {
             index.value = 2
-            textIndex.value = 7
+            textIndex.value = 8
             switch (imageIndex.value) {
                 case 0:
-                    localStorage.setItem('characterSticker1', true)
+                    localStorage.setItem('item5', true)
+                    rewardsStore.setRewardsData();
                     break;
                 case 1:
-                    localStorage.setItem('characterSticker2', true)
+                    localStorage.setItem('item6', true)
+                    rewardsStore.setRewardsData();
                     break;
                 case 2:
-                    localStorage.setItem('characterSticker3', true)
+                    localStorage.setItem('item7', true)
+                    rewardsStore.setRewardsData();
                     break;
             }
         }
         const next = () => {
             if (index.value === 0) {
                 index.value = 1
-                textIndex.value = 6
+                textIndex.value = 7
             }
             if (index.value === 2) {
                 index.value = 3
-                textIndex.value = 8
+                textIndex.value = 9
             }
             if (index.value === 3) {
-                // router.push('/shopping')
+                router.push('/map')
             }
         }
         const setVH = () => {
@@ -143,6 +153,7 @@ export default {
 
         return {
             currentImageSrc,
+            currentImageText,
             navigateToNextImage,
             navigateToPreviousImage,
             getReward,
@@ -260,11 +271,63 @@ export default {
 }
 
 .image-container button {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0);
     color: #fff;
     cursor: pointer;
     border: none;
     transition: background-color 0.3s;
+}
+
+.image-container2 {
+    width: 80%;
+    height: calc(35 * var(--vh));
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: calc(25 * var(--vh));
+}
+
+.reward-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    display: flex;
+}
+
+
+.reward-container img:first-child {
+    position: absolute;
+    top: -10%;
+    left: 0;
+    width: 100%;
+    height: auto;
+}
+
+.reward-container img:nth-child(2) {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 55%;
+    height: 55%;
+}
+
+.reward-container p {
+    position: absolute;
+    top: 15%;
+    color: var(--Text-Black, #111);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+    max-width: 11ch;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+
 }
 
 .text-container2 {
@@ -274,10 +337,10 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    border: 1px solid black;
+    border: none;
     background-color: #fff;
     width: 100%;
-    height: calc(20 * var(--vh));
+    height: calc(25 * var(--vh));
 }
 
 .text-container2 .character-name {
@@ -303,7 +366,7 @@ export default {
     letter-spacing: -0.45px;
     align-self: flex-start;
     text-align: left;
-    max-width: 25ch;
+    max-width: 20ch;
     overflow-wrap: break-word;
     word-break: keep-all;
 }
@@ -315,47 +378,14 @@ export default {
     align-self: center
 }
 
+
 .overlap-image {
     position: absolute;
-    top: 50%;
-    right: -50px;
+    top: 30%;
+    right: -5%;
     width: 150px;
     height: auto;
     z-index: 1;
     transform: translateY(-50%);
-}
-
-.image-container2 {
-    width: 80%;
-    height: calc(35 * var(--vh));
-
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    margin-top: calc(25 * var(--vh));
-}
-
-.reward-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-
-
-.reward-container img:first-child {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.reward-container img:nth-child(2) {
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    height: 60%;
 }
 </style>

@@ -35,19 +35,21 @@
             <div v-for="item in tabData" :key="item.id" class="image-container">
                 <img src="../resource/storageBox/bg_reward.png" />
                 <img :src="item.src" :class="setGrayscale(item)" />
-                <p>{{ item.text }}</p>
+                <p :class="setGrayText(item)">{{ item.text }}</p>
             </div>
         </div>
         <div class="list-container" v-if="currentTab === 'unacquired'">
             <div v-for="item in tabData" :key="item.id" class="image-container">
                 <img src="../resource/storageBox/bg_reward.png" />
                 <img :src="item.src" :class="setGrayscale(item)" />
+                <p :class="setGrayText(item)">{{ item.text }}</p>
             </div>
         </div>
         <div class="list-container" v-if="currentTab === 'used'">
             <div v-for="item in tabData" :key="item.id" class="image-container">
                 <img src="../resource/storageBox/bg_reward.png" />
                 <img :src="item.src" :class="setGrayscale(item)" />
+                <p :class="setGrayText(item)">{{ item.text }}</p>
             </div>
         </div>
         <div v-if="showModal" class="modal">

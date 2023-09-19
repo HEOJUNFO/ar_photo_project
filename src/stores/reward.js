@@ -27,19 +27,19 @@ export const useRewardsStore = defineStore('rewards', {
                 id:5,
                 src: '../resource/storageBox/Bell_Reward.png',
                 required: "null",
-                text:"벨 감정표현 스티커 5종 세트",
+                text:"마법사 벨 스티커 5종 세트",
             }
             ,{
                 id:6,
                 src: '../resource/storageBox/Uno_Reward.png',
                 required: "null",
-                text:"우노 감정표현 스티커 5종 세트",
+                text:"웨어울프 우노 스티커 5종 세트",
             }
             ,{
                 id:7,
                 src: '../resource/storageBox/Sorina_Reward.png',
                 required: "null",
-                text:"소리나 감정표현 스티커 5종 세트",
+                text:"뱀파이어 소리나 스티커 5종 세트",
             }],
             unused: [],
             unacquired: [],

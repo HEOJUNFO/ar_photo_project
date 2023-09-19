@@ -103,6 +103,10 @@ export default {
                     localStorage.setItem('item2', "null")
                     localStorage.setItem('item3', "null")
                     localStorage.setItem('item4', "null")
+                    localStorage.setItem('item5', "null")
+                    localStorage.setItem('item6', "null")
+                    localStorage.setItem('item7', "null")
+
 
                     return
                 }
