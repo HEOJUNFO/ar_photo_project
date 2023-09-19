@@ -13,7 +13,7 @@ export default class Cauldron
 
         // Resource
         this.resource = this.resources.items.cauldronCloseModel
-        this.resource2 = this.resources.items.foxModel
+        this.resource2 = this.resources.items.cauldronOpenModel
 
         this.setModel()
 
@@ -42,8 +42,8 @@ export default class Cauldron
 
     setModel2()
     {
-        console.log("setModel2")
         this.model = this.resource2.scene
+        console.log(this.model)
         this.model.scale.set(1, 1, 1)
         this.model.position.set(0, -0.2, 0)
         this.scene.add(this.model)

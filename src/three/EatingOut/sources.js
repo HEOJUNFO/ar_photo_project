@@ -46,11 +46,12 @@ export default [
         type: 'gltfModel',
         path: '../models/EatingOut/Cauldron_Close.gltf'
 
-    }, {   name: 'cauldronOpenModel',
+    }, 
+    {   name: 'cauldronOpenModel',
             type: 'gltfModel',
             path: '../models/EatingOut/Cauldron_Open.gltf'
 
-},
+      },
     
 
 ]
