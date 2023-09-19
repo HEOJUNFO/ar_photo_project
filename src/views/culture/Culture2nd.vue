@@ -3,9 +3,13 @@
         <loading-container>
         </loading-container>
         <div class="loading-container" style="background-image: url('../resource/common/bg.png');">
-            <!-- <div class="image-container">
-                <img :src="currentImageSrc" alt="Loading..." />
-            </div> -->
+            <div class="image-container2">
+                <div class="reward-container">
+                    <img src="../../resource/common/unreward_bg.png" />
+                    <img src="../../resource/storageBox/04_Coupon_inactive.png" />
+                    <p class="p">몽드이기자 1만원 금액할인권</p>
+                </div>
+            </div>
             <div class="text-container2">
                 <img :src="characterContent.src" alt="Description" class="overlap-image" />
                 <p class="character-name">{{ selectCharacterName }}</p>
@@ -22,14 +26,6 @@ import { ref, computed, watch, onMounted } from 'vue'
 import router from '../../router'
 import LoadingContainer from '../../components/LoadingContainer.vue'
 
-const IMAGES = [
-    'https://dt-static.syrup.co.kr/sodar/character/Thumbnail/Thumbnail_character(1).png',
-    'https://dt-static.syrup.co.kr/sodar/character/Thumbnail/Thumbnail_character(2).png',
-    'https://dt-static.syrup.co.kr/sodar/sticker/Thumbnail/Thumbnail_sticker (1).png'
-]
-
-
-
 export default {
     name: 'Culture2',
     components: {
@@ -39,8 +35,6 @@ export default {
         const characterStore = useCharacterStore()
         const index = ref(0)
         const textIndex = ref(3)
-
-        const currentImageSrc = computed(() => IMAGES[0])
 
         characterStore.setCharacterIndex(localStorage.getItem('characterID'))
 
@@ -65,10 +59,24 @@ export default {
 
         }
 
+        const setVH = () => {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+
+
+        onMounted(() => {
+            document.body.style.overflow = 'hidden';
+
+            setVH();
+
+            window.addEventListener('resize', setVH);
+
+        })
+
         return {
             index,
             next,
-            currentImageSrc,
             characterContent: currentCharacterContent,
             selectCharacterSrc: characterStore.currentCharacter?.src,
             selectCharacterName: characterStore.currentCharacter?.name,
@@ -135,30 +143,6 @@ export default {
     align-self: center
 }
 
-.image-container {
-    display: flex;
-    align-items: center;
-    margin-top: 7vh;
-    margin-bottom: 7vh;
-}
-
-.image-container img {
-    width: 100%;
-    height: 100%;
-}
-
-.image-container button {
-    background: rgba(0, 0, 0, 0.5);
-    color: #fff;
-    font-size: 1.5rem;
-    cursor: pointer;
-    border: none;
-    transition: background-color 0.3s;
-}
-
-.image-container button:hover {
-    background: rgba(0, 0, 0, 0.7);
-}
 
 .overlap-image {
     position: absolute;
@@ -168,5 +152,54 @@ export default {
     height: auto;
     z-index: 1;
     transform: translateY(-50%);
+}
+
+.image-container2 {
+    width: 80%;
+    height: calc(40 * var(--vh));
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: calc(25 * var(--vh));
+}
+
+.reward-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    display: flex;
+}
+
+
+.reward-container img:first-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.reward-container img:nth-child(2) {
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 80%;
+}
+
+.reward-container p {
+    position: absolute;
+    top: 70%;
+    color: var(--Text-Black, #111);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+
 }
 </style>

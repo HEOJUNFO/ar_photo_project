@@ -123,11 +123,13 @@
 import { onMounted, ref, computed } from 'vue';
 import router from '../router';
 import { useImageDataStore } from '../stores/imageData.js'
+import { useRewardsStore } from '../stores/reward';
 
 export default {
     name: 'TextEditor',
     setup() {
         const imageDataStore = useImageDataStore()
+        const rewardsStore = useRewardsStore()
 
         const showModal = ref(false);
         const saveFailModal = ref(false);
@@ -145,7 +147,6 @@ export default {
         });
 
         const save = () => {
-
             if (isComplete.value === '') {
                 saveFailModal.value = true;
 
@@ -157,15 +158,20 @@ export default {
         const next = () => {
             eventName.value = imageDataStore.getEventName();
             if (eventName.value === 'shopping2') {
-                imageDataStore.setEventName('shoppingClear');
+                imageDataStore.setEventName('shopping2Clear');
+                localStorage.setItem('item2', 'true')
             } else if (eventName.value === 'culture2') {
-                imageDataStore.setEventName('cultureClear');
+                imageDataStore.setEventName('culture2Clear');
+                localStorage.setItem('item4', 'true')
             } else if (eventName.value === 'eatingOut2') {
-                imageDataStore.setEventName('eatingOutClear');
+                imageDataStore.setEventName('eatingOut2Clear');
+                localStorage.setItem('item3', 'true')
             }
 
-            router.push('/capturepreview');
+            rewardsStore.setRewardsData();
+            router.push('./outro');
         }
+
 
         const triggerFileInput = () => {
             fileInput.value.click();

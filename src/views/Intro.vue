@@ -58,9 +58,9 @@ import router from '../router'
 import LoadingContainer from '../components/LoadingContainer.vue'
 
 const IMAGES = [
-    '../resource/intro/test.png',
-    'https://dt-static.syrup.co.kr/sodar/character/Thumbnail/Thumbnail_character(2).png',
-    'https://dt-static.syrup.co.kr/sodar/sticker/Thumbnail/Thumbnail_sticker (1).png'
+    '../resource/intro/bell.png',
+    '../resource/intro/uno.png',
+    '../resource/intro/sorina.png',
 ]
 
 

@@ -240,17 +240,6 @@
                 <p class="p2">획득기회!</p>
             </div>
         </div>
-        <div v-if="premiumModal2" class="modal2">
-            <div class="image-container2">
-                <div class="reward-container">
-                    <img src="../resource/common/reward_success_bg.png" />
-                    <img :src="premiumImageSrc" />
-                    <p class="p">{{ premiumText }}</p>
-                </div>
-
-                <button @click="premiumModal2 = false, getReward()">상품 획득 성공!</button>
-            </div>
-        </div>
     </div>
 </template>
 
@@ -286,19 +275,6 @@ export default {
         const isDrawing = ref(false);
 
         const imageDataStore = useImageDataStore();
-        const rewardsStore = useRewardsStore();
-
-        const getReward = () => {
-            if (eventName.value === 'shoppingClear') {
-                localStorage.setItem('item2', 'true')
-            } else if (eventName.value === 'cultureClear') {
-                localStorage.setItem('item4', 'true')
-            } else if (eventName.value === 'eatingOutClear') {
-                localStorage.setItem('item3', 'true')
-            }
-            rewardsStore.setRewardsData();
-            router.push('./outro');
-        }
 
         const bgClick = () => {
             if (showFooter2.value) {
@@ -554,20 +530,6 @@ export default {
                 premiumText.value = 'F&B 5천원 금액할인권'
             }
 
-            if (eventName.value === 'shoppingClear') {
-                premiumModal2.value = true;
-                premiumImageSrc.value = '../resource/storageBox/02_Coupon_active.png'
-                premiumText.value = '패션·잡화 1만원 금액할인권'
-            } else if (eventName.value === 'cultureClear') {
-                premiumModal2.value = true;
-                premiumImageSrc.value = '../resource/storageBox/04_Coupon_active.png'
-                premiumText.value = '몽드이기자 1만원 금액할인권'
-            } else if (eventName.value === 'eatingOutClear') {
-                premiumModal2.value = true;
-                premiumImageSrc.value = '../resource/storageBox/03_Coupon_active.png'
-                premiumText.value = 'F&B 5천원 금액할인권'
-            }
-
             const imageObj = new Image();
             imageObj.src = imgData.value;
             imageObj.onload = () => {
@@ -649,7 +611,6 @@ export default {
             premiumImageSrc,
             premiumText,
             editor,
-            getReward
         }
     }
 }
