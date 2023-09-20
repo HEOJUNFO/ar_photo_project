@@ -39,6 +39,14 @@ export default class Experience
         this.renderer = new Renderer()
         this.world = new World()
 
+        this.raycaster = new THREE.Raycaster();
+        this.mouse = new THREE.Vector2();
+
+        this.clickedObject = [];
+        this.textureKeys = [];
+
+        this.canvas.addEventListener('touchstart', this._checkForModelClick.bind(this), false);
+
         this.bindMethods()
 
         this.saveImageCallback = saveImageCallback;
@@ -88,7 +96,9 @@ export default class Experience
     }
     dispose(){
         this.world.dispose();
+        if(this.camera.controls){
         this.camera.controls.dispose()
+        }
 
         this.scene.traverse((child) =>
         {
@@ -115,7 +125,7 @@ export default class Experience
     destroy()
     {
         this.sizes.off('resize')
-        this.time.off('tick')
+        // this.time.off('tick')
 
         // Traverse the whole scene
         this.scene.traverse((child) =>
@@ -139,10 +149,43 @@ export default class Experience
             }
         })
 
-        this.camera.controls.dispose()
+        // this.camera.controls.dispose()
         this.renderer.instance.dispose()
 
         if(this.debug.active)
             this.debug.ui.destroy()
+    }
+    _checkForModelClick(event) {
+        if(event.type === 'click') {
+            this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            this.mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+        } else if(event.type === 'touchstart' && event.touches.length > 0) {
+            this.mouse.x = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
+            this.mouse.y = - (event.touches[0].clientY / window.innerHeight) * 2 + 1;
+        }
+    
+        this.raycaster.setFromCamera(this.mouse, this.camera.instance);
+    
+        const intersects = this.raycaster.intersectObjects(this.scene.children, true); // recursive search through all children
+
+        
+        for (let i = 0; i < intersects.length; i++) {
+            for (let j = 0; j < this.clickedObject.length; j++) {
+                if (this._isObjectChildOf(intersects[i].object, this.clickedObject[j])) {
+                  this.world.sticker.isMoving = true;
+                }
+            }
+        }
+    
+    }
+    
+    _isObjectChildOf(child, parent) {
+    
+        
+        while (child) {
+            if (child === parent) return true;
+            child = child.parent;
+        }
+        return false;
     }
 }

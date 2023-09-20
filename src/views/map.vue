@@ -11,7 +11,7 @@
         </div>
         <div v-show="index <= 1">
             <div v-for="icon in icons" :key="icon.id" class="icon-container" :style="{ left: icon.x, top: icon.y }">
-                <img v-show="icon.id === iconId" :src="currentCharacter.maker"
+                <img v-show="(icon.id === iconId) || (icon.id === clearIcon)" :src="currentCharacter.maker"
                     style="position:absolute; width: 20%; height:auto; margin-top: -25%;" />
                 <img @click.stop="nextMap(icon)" :src="icon.active ? icon.imgSrcA : icon.imgSrcB"
                     style="width: 10; height: 10%; pointer-events: auto;" />
@@ -172,6 +172,7 @@ export default {
         const currentText = ref('')
         const currentLargeText = ref('')
         const previewicon = ref(null)
+        const clearIcon = ref(null)
 
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
@@ -286,6 +287,7 @@ export default {
                 textIndex.value = 0
                 iconId.value = icon.id
                 icon.active = false
+                clearIcon.value = 0
             }
             if (index.value === 1) {
                 index.value = 1
@@ -359,6 +361,10 @@ export default {
 
             window.addEventListener('resize', setVH);
 
+            if (router.currentRoute.value.query.eventName === 'common4Clear') {
+                clearIcon.value = 1
+            }
+
 
         });
 
@@ -383,7 +389,8 @@ export default {
             currentMap,
             currentMiniMap,
             currentText,
-            currentLargeText
+            currentLargeText,
+            clearIcon
         }
     }
 }

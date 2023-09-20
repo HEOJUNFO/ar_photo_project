@@ -6,7 +6,7 @@ import Grasshopper from './Grasshopper.js'
 import GreenBee from './GreenBee.js'
 import RedBee from './RedBee.js'
 import MagicCircle from './MagicCircle.js'
-import Ship from './Ship.js'
+import Sticker from './Sticker.js'
 import Floor from './Floor.js'
 import AudioClass from './AudioClass.js'
 
@@ -20,14 +20,35 @@ export default class World
         this.camera = this.experience.camera.instance
         this.renderer = this.experience.renderer.instance
 
+      
         // Wait for resources
         this.resources.on('ready', () =>
         {
-     
+            
            
      
             this.environment = new Environment()
         })
+    }
+
+    setSticker(name){
+        this.resources.on('ready', () =>
+        {
+        if(!this.sticker){
+        this.sticker = new Sticker()
+        }
+        console.log(name)
+        if(name === 'bell'){
+            this.sticker.pushBellTexture()
+        }
+        if(name ==='sorina'){
+            this.sticker.pushSorinaTexture()
+        }
+        if(name === 'uno'){
+            this.sticker.pushUnoTexture()
+        }
+        })
+    
     }
 
     setCommonFour(){
@@ -85,6 +106,9 @@ export default class World
     }
 
     update() {
+        if(this.sticker){
+            this.sticker.update()
+        }
         if(this.audioClass){
             this.audioClass.update()
         }
@@ -104,7 +128,7 @@ export default class World
             this.audioClass.dispose()
         }
         if(this.audioClass2){
-            this.audioClass2.dispose
+            this.audioClass2.dispose()
         }
         if(this.audioClass3){
             this.audioClass3.dispose()

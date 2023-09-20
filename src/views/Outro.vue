@@ -54,6 +54,9 @@ export default {
                 return char?.culture2[textIndex.value] || {}
             } else if (eventName.value === 'eatingOut2Clear') {
                 return char?.eatingOut2[textIndex.value] || {}
+            } else if (eventName.value === 'common4Clear') {
+
+                return char?.common4[textIndex.value] || {}
             }
 
         })
@@ -62,17 +65,26 @@ export default {
         const next = () => {
             if (index.value === 0) {
                 index.value = 1
-                textIndex.value = 8
+                textIndex.value += 1
+                console.log(textIndex.value)
+                return;
 
             } else if (index.value === 1) {
-
-
-
-                router.push('/map')
+                if (eventName.value === 'common4Clear') {
+                    router.push({ path: '/map', query: { eventName: eventName.value } });
+                    return;
+                } else {
+                    index.value = 2
+                    textIndex.value += 1
+                    return;
+                }
+            } else if (index.value === 2) {
+                router.push({ path: '/map', query: { eventName: eventName.value } });
+                return;
             }
 
-
         }
+
         const setVH = () => {
             let vh = window.innerHeight * 0.01;
             document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -87,6 +99,7 @@ export default {
 
 
             eventName.value = imageDataStore.getEventName();
+            console.log(eventName.value)
 
             if (eventName.value === 'shopping2Clear') {
                 rewardSrc.value = '../resource/storageBox/02_Coupon_active.png'
@@ -97,6 +110,10 @@ export default {
             } else if (eventName.value === 'eatingOut2Clear') {
                 rewardSrc.value = '../resource/storageBox/03_Coupon_active.png'
                 rewardText.value = 'F&B 5천원 금액할인권'
+            } else if (eventName.value === 'common4Clear') {
+                textIndex.value = 10
+                rewardSrc.value = '../resource/storageBox/IceCream_active.png'
+                rewardText.value = '백미당 아이스크림 1EA 쿠폰 교환권'
             }
         })
 
@@ -213,13 +230,13 @@ export default {
     top: -15%;
     left: 50%;
     transform: translateX(-50%);
-    width: 80%;
-    height: 80%;
+    width: auto;
+    height: 60%;
 }
 
 .reward-container p {
     position: absolute;
-    top: 50%;
+    top: calc(17 * var(--vh));
     color: var(--Text-Black, #111);
     text-align: center;
     font-family: "NanumSquare", sans-serif;
@@ -228,6 +245,9 @@ export default {
     font-weight: 800;
     line-height: 28px;
     letter-spacing: -0.5px;
+    max-width: 15ch;
+    overflow-wrap: break-word;
+    word-break: keep-all;
 
 }
 </style>

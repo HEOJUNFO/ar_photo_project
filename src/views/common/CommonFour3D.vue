@@ -25,7 +25,7 @@
                     <circle cx="35" cy="35" r="10.5" stroke="white" stroke-width="3" />
                 </svg></button>
         </div>
-        <div class="switch-container">
+        <div v-show="enableFilp" class="switch-container">
             <button onclick="switchCamera()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                     viewBox="0 0 24 24" fill="none">
                     <path
@@ -52,6 +52,7 @@ export default {
         const textIndex = ref(9)
         const eventName = ref('common4')
         const selectedImage = ref(null)
+        const enableFilp = ref(true)
 
         const characterStore = useCharacterStore()
         const imageDataStore = useImageDataStore()
@@ -97,10 +98,23 @@ export default {
                 selectedImage.value = img
             }
             if (img.id === 1) {
+                enableFilp.value = true
+                experience.dispose()
+
+            } else if (img.id === 2) {
+                enableFilp.value = true
+                experience.dispose()
+
+            } else if (img.id === 3) {
+                enableFilp.value = true
+                experience.dispose()
+
+            } else if (img.id === 4) {
+                enableFilp.value = true
                 experience.dispose()
 
             } else if (img.id === 5) {
-
+                enableFilp.value = false
                 experience.camera.setControls()
                 experience.world.setCommonFour()
 
@@ -127,21 +141,31 @@ export default {
 
             experience = new Experience(document.querySelector('canvas.webgl'), saveImage);
 
+
             if (localStorage.getItem('item8')) {
                 images.value[1].active = true
             }
-            else if (localStorage.getItem('item9')) {
+            if (localStorage.getItem('item9')) {
                 images.value[2].active = true
             }
-            else if (localStorage.getItem('item10')) {
+            if (localStorage.getItem('item10')) {
                 images.value[3].active = true
             }
-            else if (localStorage.getItem('item11')) {
+            if (localStorage.getItem('item11')) {
                 images.value[4].active = true
+            } if (localStorage.getItem('item5')) {
+                experience.world.setSticker('bell')
+            } if (localStorage.getItem('item7')) {
+                experience.world.setSticker('sorina')
+            } if (localStorage.getItem('item6')) {
+                experience.world.setSticker('uno')
             }
         });
 
         onBeforeRouteLeave(() => {
+
+            experience.dispose()
+
             experience.destroy()
             experience.init()
         });
@@ -153,6 +177,7 @@ export default {
             images,
             selectImage,
             selectedImage,
+            enableFilp
 
         }
     }

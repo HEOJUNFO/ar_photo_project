@@ -143,11 +143,12 @@ export default {
         const eventName = ref('')
 
         const isComplete = computed(() => {
+
             return authorInput.value && contentInput.value && selectTags.value.some(tag => tag);
         });
 
         const save = () => {
-            if (isComplete.value === '') {
+            if (isComplete.value === false) {
                 saveFailModal.value = true;
 
             } else {
@@ -166,6 +167,10 @@ export default {
             } else if (eventName.value === 'eatingOut2') {
                 imageDataStore.setEventName('eatingOut2Clear');
                 localStorage.setItem('item3', 'true')
+            } else if (eventName.value === 'common4') {
+                console.log('common4')
+                imageDataStore.setEventName('common4Clear');
+                localStorage.setItem('item1', 'true')
             }
 
             rewardsStore.setRewardsData();

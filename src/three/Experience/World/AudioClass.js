@@ -49,6 +49,7 @@ export default class AudioClass {
         this.sound.setVolume(volume);
     } 
     dispose(){
+      
         this.sound.disconnect()
     }
 
