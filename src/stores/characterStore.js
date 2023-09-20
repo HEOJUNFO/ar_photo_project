@@ -4,15 +4,15 @@ export const useCharacterStore = defineStore('character', {
 
     state: () => ({
         selectCharacterIndex: 0,
-        selectCharacter: [
-            { name: "벨", src: 'https://dt-static.syrup.co.kr/sodar/character/Thumbnail/Thumbnail_character(1).png' },
-            { name: "우노", src: 'https://dt-static.syrup.co.kr/sodar/character/Thumbnail/Thumbnail_character(2).png' },
-            { name: "소리나", src: 'https://dt-static.syrup.co.kr/sodar/sticker/Thumbnail/Thumbnail_sticker (1).png' },
-        ],
+        // selectCharacter: [
+        //     { name: "벨", src: 'https://dt-static.syrup.co.kr/sodar/character/Thumbnail/Thumbnail_character(1).png', },
+        //     { name: "우노", src: 'https://dt-static.syrup.co.kr/sodar/character/Thumbnail/Thumbnail_character(2).png' },
+        //     { name: "소리나", src: 'https://dt-static.syrup.co.kr/sodar/sticker/Thumbnail/Thumbnail_sticker (1).png' },
+        // ],
         characters: [
             {
                 name: "벨", 
-                src: 'https://dt-static.syrup.co.kr/sodar/character/Thumbnail/Thumbnail_character(1).png',
+                maker: '../resource/tutorial/map_point_bell.png',
                 intro: [
                     { text: "일어났어?" },
                     { text: "안녕, 난 마법사 벨이야" },
@@ -158,7 +158,7 @@ export const useCharacterStore = defineStore('character', {
             },
             {
                 name: "우노",
-                src: 'https://dt-static.syrup.co.kr/sodar/character/Thumbnail/Thumbnail_character(2).png',
+                maker: '../resource/tutorial/map_point_uno.png',
                 intro: [
                     { text: "눈 떳다, 눈 떴어!" },
                     { text: "안녕, 난 웨어울프 우노야" },
@@ -303,7 +303,7 @@ export const useCharacterStore = defineStore('character', {
             },
             {
                 name: "소리나",
-                src: 'https://dt-static.syrup.co.kr/sodar/sticker/Thumbnail/Thumbnail_sticker (1).png',
+                maker: '../resource/tutorial/map_point_sorina.png',
                 intro: [
                     { text: "죽은 줄 알았네." },
                     { text: "안녕, 난 뱀파이어 소리나야." },

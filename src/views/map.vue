@@ -9,32 +9,34 @@
                 <img :src="characterContent.src" alt="Side Image" />
             </div>
         </div>
-        <div v-show="index === 0">
+        <div v-show="index <= 1">
             <div v-for="icon in icons" :key="icon.id" class="icon-container" :style="{ left: icon.x, top: icon.y }">
-                <img @click.stop="nextMap(icon.id)" :src="icon.active ? icon.imgSrcA : icon.imgSrcB"
+                <img v-show="icon.id === iconId" :src="currentCharacter.maker"
+                    style="position:absolute; width: 20%; height:auto; margin-top: -25%;" />
+                <img @click.stop="nextMap(icon)" :src="icon.active ? icon.imgSrcA : icon.imgSrcB"
                     style="width: 10; height: 10%; pointer-events: auto;" />
                 <p
                     style="color: #111;font-size: 10px; font-style: normal;font-weight: 700;line-height: 34px;letter-spacing: -0.6px; position:absolute; font-family: 'NanumSquare', sans-serif; margin-top: 22%;">
                     {{ icon.text }}</p>
             </div>
         </div>
-        <div v-show="index === 1" class="icon-container2" :style="{ left: iconX, top: iconY }">
+        <div v-show="index === 2" class="icon-container2" :style="{ left: iconX, top: iconY }">
             <img v-show="iconId === 1" src="../resource/tutorial/Gemston_Green.png" />
             <img v-show="iconId !== 1" src="../resource/tutorial/Gemston_Pink.png" />
         </div>
         <div class="image-container">
-            <img v-show="index === 0" src="../resource/tutorial/story_tree_bg.png">
-            <img v-show="index === 1" src="../resource/tutorial/map.png">
+            <img v-show="index <= 1" src="../resource/tutorial/story_tree_bg.png">
+            <img v-show="index === 2" src="../resource/tutorial/map.png">
         </div>
-        <div v-show="index >= 2" class="image-container2">
+        <div v-show="index >= 3" class="image-container2">
             <img :src="currentMap" :style="{ transform: `scale(${zoom}) translate(${currentX}px, ${currentY}px)` }"
                 alt="Loading..." @touchstart="startDrag" @touchmove="drag" @touchend="endDrag" @touchcancel="endDrag" />
         </div>
-        <div v-show="index >= 2" class="button-container1">
+        <div v-show="index >= 3" class="button-container1">
             <button @click.stop="zoomIn">+</button>
             <button @click.stop="zoomOut">-</button>
         </div>
-        <div v-show="index >= 2" class="bottom-container2">
+        <div v-show="index >= 3" class="bottom-container2">
             <div class="text-content">
                 <p class="medium-text">{{ currentText }}</p>
                 <p class="large-text">{{ currentLargeText }}</p>
@@ -145,7 +147,7 @@ export default {
         for (let i = 1; i < 10; i++) {
             const itemValue = localStorage.getItem(`clear${i}`);
 
-            if (itemValue !== null) {
+            if (itemValue === 'true') {
                 this.icons[i - 1].active = false
             }
 
@@ -169,6 +171,7 @@ export default {
         const currentMiniMap = ref('')
         const currentText = ref('')
         const currentLargeText = ref('')
+        const previewicon = ref(null)
 
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
@@ -275,11 +278,26 @@ export default {
             }
         })
 
-        const nextMap = (id) => {
+        const nextMap = (icon) => {
+
             if (index.value === 0) {
+                previewicon.value = icon
                 index.value = 1
                 textIndex.value = 0
-                iconId.value = id
+                iconId.value = icon.id
+                icon.active = false
+            }
+            if (index.value === 1) {
+                index.value = 1
+                textIndex.value = 0
+                iconId.value = icon.id
+                if (localStorage.getItem(`clear${previewicon.value.id}`) === 'true') {
+                    previewicon.value.active = false;
+                } else {
+                    previewicon.value.active = true;
+                }
+                icon.active = false
+                previewicon.value = icon
             }
         }
 
@@ -287,6 +305,7 @@ export default {
             if (index.value === 1) {
                 index.value = 2
                 textIndex.value = 1
+                localStorage.setItem(`clear${iconId.value}`, true)
                 return;
             }
             if (index.value === 2) {

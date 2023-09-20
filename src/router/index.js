@@ -30,6 +30,7 @@ import StorageBox from "@views/StorageBox.vue"
 import Tutorial from "@views/Tutorial.vue"
 import Map from "@views/Map.vue"
 import TextEditor from "@views/TextEditor.vue"
+import CommonFour from "@views/common/CommonFour.vue"
 
 export const routes = [
     {path: '/', component: Landing, name: 'Landing'},
@@ -62,6 +63,7 @@ export const routes = [
     {path: '/tutorial', component: Tutorial, name: 'Tutorial'},
     {path: '/map', component: Map, name: 'Map'},
     {path: '/texteditor', component: TextEditor, name: 'TextEditor'},
+    {path: '/commonfour', component: CommonFour, name: 'CommonFour'},
 
 ]
 

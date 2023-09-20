@@ -40,7 +40,24 @@ export const useRewardsStore = defineStore('rewards', {
                 src: '../resource/storageBox/Sorina_Reward.png',
                 required: "null",
                 text:"뱀파이어 소리나 스티커 5종 세트",
+            } ,{
+                id:8,
+                src: '../resource/storageBox/Spring.png',
+                required: "null",
+                text:"봄 배경 프레임",
+            } ,{
+                id:9,
+                src: '../resource/storageBox/Summer.png',
+                required: "null",
+                text:"여름 배경 프레임",
+            }
+            ,{
+                id:10,
+                src: '../resource/storageBox/Winter.png',
+                required: "null",
+                text:"겨울 배경 프레임",
             }],
+            
             unused: [],
             unacquired: [],
             used: []

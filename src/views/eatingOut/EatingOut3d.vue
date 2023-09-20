@@ -5,7 +5,7 @@
                 <p>{{ characterContent.text }}</p>
             </div>
             <div class="side-image-container">
-                <img :src="currentCharacter.src" alt="Side Image" />
+                <img :src="characterContent.src" alt="Side Image" />
             </div>
         </div>
         <div class="webgl-container">
@@ -65,7 +65,6 @@ export default {
 
         return {
             index,
-            currentCharacter,
             characterContent: currentCharacterContent,
             next,
         }
