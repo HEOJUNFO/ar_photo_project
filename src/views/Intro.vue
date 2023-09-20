@@ -58,9 +58,9 @@ import router from '../router'
 import LoadingContainer from '../components/LoadingContainer.vue'
 
 const IMAGES = [
-    '../resource/intro/bell.png',
-    '../resource/intro/uno.png',
-    '../resource/intro/sorina.png',
+    '../resource/intro/Bell.png',
+    '../resource/intro/Uno.png',
+    '../resource/intro/Sorina.png',
 ]
 
 
@@ -283,8 +283,8 @@ export default {
 
 
 .image-container img {
-    width: 60%;
-    height: 100%;
+    width: 80%;
+    height: 80%;
 }
 
 .image-container button {

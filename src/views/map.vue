@@ -9,23 +9,38 @@
                 <img :src="characterContent.src" alt="Side Image" />
             </div>
         </div>
-        <div class="image-container">
-            <img v-show="index === 0" src="../resource/tutorial/story_tree.png">
-            <img v-show="index >= 1" src="../resource/tutorial/map_01.png"
-                :style="{ transform: `scale(${zoom}) translate(${currentX}px, ${currentY}px)` }" alt="Loading..."
-                @touchstart="startDrag" @touchmove="drag" @touchend="endDrag" @touchcancel="endDrag" />
+        <div v-show="index === 0">
+            <div v-for="icon in icons" :key="icon.id" class="icon-container" :style="{ left: icon.x, top: icon.y }">
+                <img @click.stop="nextMap(icon.id)" :src="icon.active ? icon.imgSrcA : icon.imgSrcB"
+                    style="width: 10; height: 10%; pointer-events: auto;" />
+                <p
+                    style="color: #111;font-size: 10px; font-style: normal;font-weight: 700;line-height: 34px;letter-spacing: -0.6px; position:absolute; font-family: 'NanumSquare', sans-serif; margin-top: 22%;">
+                    {{ icon.text }}</p>
+            </div>
         </div>
-        <div v-show="index >= 1" class="button-container1">
+        <div v-show="index === 1" class="icon-container2" :style="{ left: iconX, top: iconY }">
+            <img v-show="iconId === 1" src="../resource/tutorial/Gemston_Green.png" />
+            <img v-show="iconId !== 1" src="../resource/tutorial/Gemston_Pink.png" />
+        </div>
+        <div class="image-container">
+            <img v-show="index === 0" src="../resource/tutorial/story_tree_bg.png">
+            <img v-show="index === 1" src="../resource/tutorial/map.png">
+        </div>
+        <div v-show="index >= 2" class="image-container2">
+            <img :src="currentMap" :style="{ transform: `scale(${zoom}) translate(${currentX}px, ${currentY}px)` }"
+                alt="Loading..." @touchstart="startDrag" @touchmove="drag" @touchend="endDrag" @touchcancel="endDrag" />
+        </div>
+        <div v-show="index >= 2" class="button-container1">
             <button @click.stop="zoomIn">+</button>
             <button @click.stop="zoomOut">-</button>
         </div>
-        <div v-show="index >= 1" class="bottom-container2">
+        <div v-show="index >= 2" class="bottom-container2">
             <div class="text-content">
-                <p class="medium-text">1F 오렌지동 에스컬레이터 옆</p>
-                <p class="large-text">The Wave</p>
+                <p class="medium-text">{{ currentText }}</p>
+                <p class="large-text">{{ currentLargeText }}</p>
             </div>
             <div class="image-right">
-                <img src="../resource/tutorial/mini_map_01.png" alt="Description of Image">
+                <img :src="currentMiniMap" alt="Description of Image">
             </div>
         </div>
     </div>
@@ -33,46 +48,253 @@
 
 <script>
 
-import { onMounted, ref, computed, onBeforeUnmount } from 'vue';
+import { onMounted, ref, computed, onBeforeUnmount, hasInjectionContext } from 'vue';
 import router from '../router';
 import { useCharacterStore } from '../stores/characterStore.js'
 
-
 export default {
     name: 'Culture',
+    data() {
+        return {
+            icons: [
+                {
+                    id: 1,
+                    imgSrcA: '../resource/tutorial/map_icon_premium_active.png',
+                    imgSrcB: '../resource/tutorial/map_icon_premium_inactive.png',
+                    text: '신비의 숲',
+                    x: '-27%', y: 'calc(-21 * var(--vh))',
+                    active: true
+                },
+                {
+                    id: 2,
+                    imgSrcA: '../resource/tutorial/map_icon_normal_active.png',
+                    imgSrcB: '../resource/tutorial/map_icon_normal_inactive.png',
+                    text: '휴게공간',
+                    x: '15%', y: 'calc(-21 * var(--vh))',
+                    active: true
+                },
+                {
+                    id: 3,
+                    imgSrcA: '../resource/tutorial/map_icon_normal_active.png',
+                    imgSrcB: '../resource/tutorial/map_icon_normal_inactive.png',
+                    text: '부암동 가든',
+                    x: '-15%', y: 'calc(-7 * var(--vh))',
+                    active: true
+                },
+                {
+                    id: 4,
+                    imgSrcA: '../resource/tutorial/map_icon_normal_active.png',
+                    imgSrcB: '../resource/tutorial/map_icon_normal_inactive.png',
+                    text: '휴게 공간',
+                    x: '12%', y: 'calc(-7 * var(--vh))',
+                    active: true
+                },
+                {
+                    id: 5,
+                    imgSrcA: '../resource/tutorial/map_icon_premium_active.png',
+                    imgSrcB: '../resource/tutorial/map_icon_premium_inactive.png',
+                    text: '몽드 이기자',
+                    x: '-27%', y: 'calc(7 * var(--vh))',
+                    active: true
+                },
+                {
+                    id: 6,
+                    imgSrcA: '../resource/tutorial/map_icon_normal_active.png',
+                    imgSrcB: '../resource/tutorial/map_icon_normal_inactive.png',
+                    text: 'VP존',
+                    x: '-2%', y: 'calc(7 * var(--vh))',
+                    active: true
+                },
+                {
+                    id: 7,
+                    imgSrcA: '../resource/tutorial/map_icon_premium_active.png',
+                    imgSrcB: '../resource/tutorial/map_icon_premium_inactive.png',
+                    text: '휴게공간',
+                    x: '25%', y: 'calc(7 * var(--vh))',
+                    active: true
+                },
+                {
+                    id: 8,
+                    imgSrcA: '../resource/tutorial/map_icon_normal_active.png',
+                    imgSrcB: '../resource/tutorial/map_icon_normal_inactive.png',
+                    text: '더웨이브',
+                    x: '-2%', y: 'calc(21 * var(--vh))',
+                    active: true
+                },
+                {
+                    id: 9,
+                    imgSrcA: '../resource/tutorial/map_icon_premium_active.png',
+                    imgSrcB: '../resource/tutorial/map_icon_premium_inactive.png',
+                    text: 'F&B 중앙',
+                    x: '-16%', y: 'calc(33 * var(--vh))',
+                    active: true
+                },
+                {
+                    id: 10,
+                    imgSrcA: '../resource/tutorial/map_icon_normal_active.png',
+                    imgSrcB: '../resource/tutorial/map_icon_normal_inactive.png',
+                    text: '푸드에비뉴',
+                    x: '13%', y: 'calc(33 * var(--vh))',
+                    active: true
+                },
+
+            ]
+        }
+    },
+    mounted() {
+        for (let i = 1; i < 10; i++) {
+            const itemValue = localStorage.getItem(`clear${i}`);
+
+            if (itemValue !== null) {
+                this.icons[i - 1].active = false
+            }
+
+        }
+    },
     setup() {
 
         const characterStore = useCharacterStore()
         const index = ref(0)
         const textIndex = ref(10)
-        const zoom = ref(2)
+        const zoom = ref(1)
         const dragging = ref(false)
         const currentX = ref(0)
         const currentY = ref(0)
         const lastX = ref(0)
         const lastY = ref(0)
+        const iconId = ref(0)
+        const iconX = ref('')
+        const iconY = ref('')
+        const currentMap = ref('')
+        const currentMiniMap = ref('')
+        const currentText = ref('')
+        const currentLargeText = ref('')
 
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
         const currentCharacterContent = computed(() => {
-            return currentCharacter.value.intro[textIndex.value] || {}
+            if (index.value === 0) {
+                return currentCharacter.value.intro[textIndex.value] || {}
+            } else {
+                if (iconId.value === 1) {
+                    iconX.value = '-8%';
+                    iconY.value = 'calc(-17 * var(--vh))';
+                    currentMap.value = '../resource/tutorial/map_10.png'
+                    currentMiniMap.value = '../resource/tutorial/mini_map_10.png'
+                    currentText.value = '5F 남문 방면 휴게공간'
+                    currentLargeText.value = '신비의 숲'
+                    return currentCharacter.value.common4[textIndex.value]
+                } else if (iconId.value === 2) {
+                    iconX.value = '4%';
+                    iconY.value = 'calc(-8 * var(--vh))';
+                    currentMap.value = '../resource/tutorial/map_09.png'
+                    currentMiniMap.value = '../resource/tutorial/mini_map_09.png'
+                    currentX.value = -250
+                    currentY.value = -10
+                    currentText.value = '4F 북문 방면 중앙창문 앞'
+                    currentLargeText.value = '휴게공간'
+                    return currentCharacter.value.common3[textIndex.value]
+                } else if (iconId.value === 3) {
+                    iconX.value = '-4%';
+                    iconY.value = 'calc(5.5 * var(--vh))';
+                    currentMap.value = '../resource/tutorial/map_08.png'
+                    currentMiniMap.value = '../resource/tutorial/mini_map_08.png'
+                    currentY.value = -100
+                    currentText.value = '3F 그린동 남문 방면'
+                    currentLargeText.value = '부암동 가든'
+                    return currentCharacter.value.common2[textIndex.value]
+                } else if (iconId.value === 4) {
+                    iconX.value = '4%';
+                    iconY.value = 'calc(3 * var(--vh))';
+                    currentMap.value = '../resource/tutorial/map_07.png'
+                    currentMiniMap.value = '../resource/tutorial/mini_map_07.png'
+                    currentX.value = -250
+                    currentY.value = -10
+                    currentText.value = '3F 북문 방면 중앙창문 앞'
+                    currentLargeText.value = '휴게공간'
+                    return currentCharacter.value.common1[textIndex.value]
+                } else if (iconId.value === 5) {
+                    iconX.value = '-1%';
+                    iconY.value = 'calc(12 * var(--vh))';
+                    currentMap.value = '../resource/tutorial/map_06.png'
+                    currentMiniMap.value = '../resource/tutorial/mini_map_06.png'
+                    currentX.value = -330
+                    currentText.value = '2F 오렌지동 북문 방면'
+                    currentLargeText.value = '몽드 이기자'
+                    return currentCharacter.value.culture2[textIndex.value]
+                } else if (iconId.value === 6) {
+                    iconX.value = '-6%';
+                    iconY.value = 'calc(16 * var(--vh))';
+                    currentMap.value = '../resource/tutorial/map_05.png'
+                    currentMiniMap.value = '../resource/tutorial/mini_map_05.png'
+                    currentX.value = -250
+                    currentY.value = -80
+                    currentText.value = '2F 북문 방면 중앙창문 앞'
+                    currentLargeText.value = 'VP존'
+                    return currentCharacter.value.culture[textIndex.value]
+                } else if (iconId.value === 7) {
+                    iconX.value = '4%';
+                    iconY.value = 'calc(14 * var(--vh))';
+                    currentMap.value = '../resource/tutorial/map_02.png'
+                    currentMiniMap.value = '../resource/tutorial/mini_map_02.png'
+                    currentX.value = -60
+                    currentY.value = -70
+                    currentText.value = '2F 남문 방면 중앙창문 앞'
+                    currentLargeText.value = '휴게공간'
+                    return currentCharacter.value.shopping2[textIndex.value]
+                } else if (iconId.value === 8) {
+                    iconX.value = '-6%';
+                    iconY.value = 'calc(25.5 * var(--vh))';
+                    currentMap.value = '../resource/tutorial/map_01.png'
+                    currentMiniMap.value = '../resource/tutorial/mini_map_01.png'
+                    currentX.value = -180
+                    currentY.value = 40
+                    currentText.value = '1F 오렌지동 에스컬레이터 옆'
+                    currentLargeText.value = 'The Wave'
+                    return currentCharacter.value.shopping[textIndex.value]
+                } else if (iconId.value === 9) {
+                    iconX.value = '0%';
+                    iconY.value = 'calc(39 * var(--vh))';
+                    currentMap.value = '../resource/tutorial/map_04.png'
+                    currentMiniMap.value = '../resource/tutorial/mini_map_04.png'
+                    currentY.value = -100
+                    currentText.value = 'B1 중앙 에스컬레이터 앞'
+                    currentLargeText.value = 'F&B 중앙'
+                    return currentCharacter.value.eatingOut2[textIndex.value]
+                } else if (iconId.value === 10) {
+                    iconX.value = '5%';
+                    iconY.value = 'calc(36 * var(--vh))';
+                    currentX.value = -180
+                    currentMap.value = '../resource/tutorial/map_03.png'
+                    currentMiniMap.value = '../resource/tutorial/mini_map_03.png'
+                    currentText.value = 'B1 식품관 입구'
+                    currentLargeText.value = '푸드 애비뉴'
+                    return currentCharacter.value.eatingOut[textIndex.value]
+                }
+            }
         })
 
-
-        const next = () => {
+        const nextMap = (id) => {
             if (index.value === 0) {
                 index.value = 1
                 textIndex.value = 0
+                iconId.value = id
+            }
+        }
 
-            } else if (index.value === 1) {
+        const next = () => {
+            if (index.value === 1) {
                 index.value = 2
                 textIndex.value = 1
+                return;
             }
-            else if (index.value === 2) {
+            if (index.value === 2) {
                 index.value = 3
                 textIndex.value = 2
+                return;
             }
+
         }
 
         const zoomIn = () => {
@@ -80,7 +302,7 @@ export default {
         }
 
         const zoomOut = () => {
-            if (zoom.value > 1) {
+            if (zoom.value > 0) {
                 zoom.value -= 0.1;
             }
         }
@@ -104,6 +326,7 @@ export default {
         }
 
         const endDrag = () => {
+            console.log(currentX.value, currentY.value)
             dragging.value = false
         }
 
@@ -134,7 +357,14 @@ export default {
             endDrag,
             currentX,
             currentY,
-
+            nextMap,
+            iconX,
+            iconY,
+            iconId,
+            currentMap,
+            currentMiniMap,
+            currentText,
+            currentLargeText
         }
     }
 }
@@ -229,10 +459,25 @@ export default {
     height: calc(80 * var(--vh));
     position: absolute;
     bottom: 0;
+    z-index: 0;
 }
 
 .image-container img {
     width: 100%;
+    height: 100%;
+}
+
+.image-container2 {
+    overflow: hidden;
+    width: 100%;
+    height: calc(80 * var(--vh));
+    position: absolute;
+    bottom: 0;
+    z-index: 0;
+}
+
+.image-container2 img {
+    width: auto;
     height: 100%;
 }
 
@@ -314,6 +559,32 @@ export default {
     padding-left: 5%;
     padding-top: 5%;
     clip-path: circle(35%);
+
+}
+
+.icon-container {
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    height: calc(100 * var(--vh));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+
+}
+
+.icon-container2 {
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    height: calc(100 * var(--vh));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
 
 }
 </style>
