@@ -34,8 +34,7 @@ export default class Grasshopper
         })
     }
     dispose(){
-        this.mesh.material.dispose();
-        this.mesh.geometry.dispose();
+    
         this.scene.remove(this.model);
     }
     

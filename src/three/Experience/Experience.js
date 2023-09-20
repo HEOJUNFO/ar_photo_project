@@ -86,6 +86,31 @@ export default class Experience
             this.saveImageCallback(image);
         }
     }
+    dispose(){
+        this.world.dispose();
+        this.camera.controls.dispose()
+
+        this.scene.traverse((child) =>
+        {
+            // Test if it's a mesh
+            if(child instanceof THREE.Mesh)
+            {
+                child.geometry.dispose()
+
+                // Loop through the material properties
+                for(const key in child.material)
+                {
+                    const value = child.material[key]
+
+                    // Test if there is a dispose function
+                    if(value && typeof value.dispose === 'function')
+                    {
+                        value.dispose()
+                    }
+                }
+            }
+        })
+    }
 
     destroy()
     {

@@ -97,7 +97,7 @@ export default {
                 selectedImage.value = img
             }
             if (img.id === 1) {
-
+                experience.dispose()
 
             } else if (img.id === 5) {
 

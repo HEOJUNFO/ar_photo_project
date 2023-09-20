@@ -25,13 +25,6 @@ export default class Tree
         this.model.rotation.set(0, Math.PI/2, 0)
         this.scene.add(this.model)
 
-        this.mesh = this.model.children[0]
-      
-
-        this.mesh.material = new THREE.MeshBasicMaterial({
-            color: 0xff0000, // red color
-            wireframe: true
-        });
 
         this.model.traverse((child) =>
         {
@@ -43,8 +36,7 @@ export default class Tree
     }
 
     dispose(){
-        this.mesh.material.dispose();
-        this.mesh.geometry.dispose();
+    
         this.scene.remove(this.model);
     }
 

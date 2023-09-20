@@ -64,8 +64,7 @@ export default class GreenBee
     }
 
     dispose(){
-        this.mesh.material.dispose();
-        this.mesh.geometry.dispose();
+       
         this.scene.remove(this.model);
     }
 

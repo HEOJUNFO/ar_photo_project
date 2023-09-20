@@ -63,8 +63,7 @@ export default class MagicCircle
         }
     }
     dispose(){
-        this.mesh.material.dispose();
-        this.mesh.geometry.dispose();
+    
         this.scene.remove(this.model);
     }
 
