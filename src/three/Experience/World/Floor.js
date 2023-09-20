@@ -18,6 +18,7 @@ export default class Floor
     setGeometry()
     {
         this.geometry = new THREE.CircleGeometry(200, 64)
+        this.geometry2 = new THREE.CircleGeometry(200, 64)
     }
 
     setTextures()
@@ -42,6 +43,11 @@ export default class Floor
             map: this.textures.color,
             normalMap: this.textures.normal
         })
+        this.material2 = new THREE.MeshStandardMaterial({
+            map: this.textures.color,
+            normalMap: this.textures.normal
+        })
+
     }
 
     setMesh()
@@ -51,5 +57,12 @@ export default class Floor
         this.mesh.position.y = -50
         this.mesh.receiveShadow = true
         this.scene.add(this.mesh)
+     
+    }
+    
+    dispose(){
+        this.mesh.material.dispose();
+        this.mesh.geometry.dispose();
+        this.scene.remove(this.mesh);
     }
 }

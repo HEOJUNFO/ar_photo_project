@@ -23,7 +23,7 @@ export default class World
         // Wait for resources
         this.resources.on('ready', () =>
         {
-            this.setCommonFour()
+     
            
      
             this.environment = new Environment()
@@ -31,6 +31,7 @@ export default class World
     }
 
     setCommonFour(){
+        console.log('setCommonFour')
         this.tree = new Tree()
         this.floor  = new Floor()
         this.grasshopper = new Grasshopper()
@@ -42,13 +43,13 @@ export default class World
         this.audioClass.setVolume(2) 
         this.audioClass2 = new AudioClass('insect');
         this.audioClass2.play()
-        this.audioClass2.setVolume(0.1)
+        this.audioClass2.setVolume(0.2)
         this.audioClass3 = new AudioClass('bee');
         this.audioClass3.play()
-        this.audioClass3.setVolume(0.1)
+        this.audioClass3.setVolume(0.2)
         this.audioClass4 = new AudioClass('magicfigure');
         this.audioClass4.play()
-        this.audioClass4.setVolume(0.1)
+        this.audioClass4.setVolume(0.2)
     }
 
     
@@ -65,9 +66,9 @@ export default class World
         if(audio){
         if (angle < threshold) {
             audio.play();
-            audio.setVolume(2);
+            audio.fadeIn = true
         } else {
-            audio.setVolume(0.1);
+            audio.fadeOut = true
         }
     }
     }
@@ -84,6 +85,51 @@ export default class World
     }
 
     update() {
+        if(this.audioClass){
+            this.audioClass.update()
+        }
+        if(this.audioClass2){
+            this.audioClass2.update()
+        }
+        if(this.audioClass3){
+            this.audioClass3.update()
+        }
+        if(this.audioClass4){
+            this.audioClass4.update()
+        }
         this.checkCameraPosition();
+    }
+    dispose(){
+        if(this.audioClass){
+            this.audioClass.dispose()
+        }
+        if(this.audioClass2){
+            this.audioClass2.dispose
+        }
+        if(this.audioClass3){
+            this.audioClass3.dispose()
+        }
+        if(this.audioClass4){
+            this.audioClass4.dispose()
+        }
+        if(this.tree){
+            this.tree.dispose()
+        }
+        if(this.floor){
+            this.floor.dispose()
+        }
+        if(this.grasshopper){
+            this.grasshopper.dispose()
+        }
+        if(this.greenBee){
+            this.greenBee.dispose()
+        }
+        if(this.redBee){
+            this.redBee.dispose()
+        }
+        if(this.magicCircle){
+            this.magicCircle.dispose()
+        }
+        
     }
 }

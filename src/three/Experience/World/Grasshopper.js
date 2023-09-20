@@ -14,7 +14,6 @@ export default class Grasshopper
         this.resource = this.resources.items.grasshopper
 
         this.setModel()
-        this.setBoundingBoxMesh()
     }
 
     setModel()
@@ -33,20 +32,12 @@ export default class Grasshopper
                 child.castShadow = true
             }
         })
-    
     }
-    setBoundingBoxMesh()
-    {
-       
-        this.geometry = new THREE.BoxGeometry( 10, 10, 10 );
-        this.material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
-        this.mesh = new THREE.Mesh( this.geometry, this.material );
-        this.mesh.position.set(-100, 59, -40)
-        this.scene.add( this.mesh );
-
-
+    dispose(){
+        this.mesh.material.dispose();
+        this.mesh.geometry.dispose();
+        this.scene.remove(this.model);
     }
-
     
 
     update()

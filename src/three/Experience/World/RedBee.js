@@ -62,6 +62,11 @@ export default class RedBee
             this.animation.actions.current = newAction
         }
     }
+    dispose(){
+        this.mesh.material.dispose();
+        this.mesh.geometry.dispose();
+        this.scene.remove(this.model);
+    }
 
     update()
     {

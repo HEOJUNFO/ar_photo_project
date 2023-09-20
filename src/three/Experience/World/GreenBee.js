@@ -63,6 +63,12 @@ export default class GreenBee
         }
     }
 
+    dispose(){
+        this.mesh.material.dispose();
+        this.mesh.geometry.dispose();
+        this.scene.remove(this.model);
+    }
+
     update()
     {
         this.animation.mixer.update(this.time.delta * 0.001)

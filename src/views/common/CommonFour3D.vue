@@ -65,18 +65,23 @@ export default {
         const images = ref(
             [
                 {
+                    id: 1,
                     src: '../resource/filter/01_filter.png',
                     active: true
                 }, {
+                    id: 2,
                     src: '../resource/filter/02_filter.png',
                     active: false
                 }, {
+                    id: 3,
                     src: '../resource/filter/03_filter.png',
                     active: false
                 }, {
+                    id: 4,
                     src: '../resource/filter/04_filter.png',
                     active: false
                 }, {
+                    id: 5,
                     src: '../resource/filter/05_filter.png',
                     active: false
                 }
@@ -84,8 +89,21 @@ export default {
         );
 
         const selectImage = (img) => {
+            if (selectedImage.value === img) {
+                return
+            }
+
             if (img.active) {
                 selectedImage.value = img
+            }
+            if (img.id === 1) {
+
+
+            } else if (img.id === 5) {
+
+                experience.camera.setControls()
+                experience.world.setCommonFour()
+
             }
         }
 
