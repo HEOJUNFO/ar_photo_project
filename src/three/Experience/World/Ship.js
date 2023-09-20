@@ -15,24 +15,6 @@ export default class Ship
         this.setMaterial()
         this.setMesh()
 
-        this.t = 0;
-        this.deltaT = 0.15;
-        
-
-    this.path = new THREE.CatmullRomCurve3([
-      new THREE.Vector3(0.75, 3.8, 0),
-      new THREE.Vector3(0.75, 3.2, 0),
-      new THREE.Vector3(-0.3, 2.8, 0),
-      new THREE.Vector3(-0.3, 2.3, 0),
-      new THREE.Vector3(1, 1.7, 0),
-      new THREE.Vector3(0.75, 1.1, 0),
-      new THREE.Vector3(-0.8, 1.2, 0),
-      new THREE.Vector3(-1, 0.6, 0),
-      new THREE.Vector3(-0.8, 0.3, 0),
-      new THREE.Vector3(-0.3, 0.2, 0),
-        new THREE.Vector3(0.3, 0, 0),
-        new THREE.Vector3(1.1, -0.8, 0),
-    ]);
 
     }
 
@@ -67,12 +49,7 @@ export default class Ship
     }
 
     update() {
-            this.t += 0.0015; 
-            this.t = Math.min(this.t, this.deltaT); 
-    
-            const position = this.path.getPoint(this.t);
-            position.y += Math.sin(Date.now() * 0.002) * 0.025; 
-            this.mesh.position.copy(position);
+          
       }
     }
     

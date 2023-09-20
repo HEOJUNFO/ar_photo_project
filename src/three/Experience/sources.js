@@ -26,5 +26,10 @@ export default [
         name: 'foxModel',
         type: 'gltfModel',
         path: '../models/Fox/glTF/Fox.gltf'
+    },
+    {
+        name: 'paperBoat',
+        type: 'texture',
+        path: '../resource/culture/game_paperboat.png'
     }
 ]
