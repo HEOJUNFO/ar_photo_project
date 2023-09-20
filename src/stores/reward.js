@@ -42,20 +42,25 @@ export const useRewardsStore = defineStore('rewards', {
                 text:"뱀파이어 소리나 스티커 5종 세트",
             } ,{
                 id:8,
-                src: '../resource/storageBox/Spring.png',
+                src: '../resource/storageBox/02_filter.png',
                 required: "null",
                 text:"봄 배경 프레임",
             } ,{
                 id:9,
-                src: '../resource/storageBox/Summer.png',
+                src: '../resource/storageBox/03_filter.png',
                 required: "null",
                 text:"여름 배경 프레임",
             }
             ,{
                 id:10,
-                src: '../resource/storageBox/Winter.png',
+                src: '../resource/storageBox/04_filter.png',
                 required: "null",
                 text:"겨울 배경 프레임",
+            },{
+                id:11,
+                src: '../resource/storageBox/05_filter.png',
+                required: "null",
+                text:"신비의 숲 모델 프레임",
             }],
             
             unused: [],

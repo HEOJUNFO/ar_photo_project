@@ -13,14 +13,14 @@
         <div v-show="index === 0" class="image-container2">
             <div class="reward-container">
                 <img src="../../resource/common/unreward_bg.png" />
-                <img src="../../resource/storageBox/Sorina_Reward.png" />
-                <p class="p">캐릭터 감정표현 스티커 5종 세트</p>
+                <img src="../../resource/storageBox/Tree_Reward.png" />
+                <p class="p">신비의 숲 프레임 모델링</p>
             </div>
         </div>
         <div v-show="index >= 1" class="image-container">
-            <img :class="{ 'hidden': hideImage1 }" class="img1" src="../../resource/content/mini.png"
+            <img :class="{ 'hidden': hideImage1 }" class="img1" src="../../resource/content/mini2.png"
                 @touchstart="handleMouseDown" @touchend="handleMouseUp" />
-            <img :style="{ width: image2Width + '%' }" class="img2" src="../../resource/content/neon.png"
+            <img :style="{ width: image2Width + '%' }" class="img2" src="../../resource/content/neon2.png"
                 @touchstart="handleMouseDown" @touchend="handleMouseUp" @transitionend="handleTransitionEnd" />
             <img :style="{ width: image3Width + '%' }" class="img3" src="../../resource/content/brown.png"
                 @touchstart="handleMouseDown" @touchend="handleMouseUp" />
@@ -70,7 +70,6 @@ export default {
         const animateImage2 = ref(false)
         const image2Width = ref(0)
         const image3Width = ref(0)
-        const timeoutEnlarge = ref(null)
 
 
         const handleMouseDown = (event) => {
@@ -91,7 +90,7 @@ export default {
                 return;
             }
 
-            hideImage1.value = false;
+
             image3Width.value = 0;
             image2Width.value = 0;
         }
@@ -110,12 +109,14 @@ export default {
             }
         }
         const nextPage = () => {
-            console.log('next')
+            router.push({ path: '/framereward', query: { eventName: "common4" } });
         }
 
         const handleTransitionEnd = () => {
             if (image2Width.value === 100) {
                 nextPage();
+            } else {
+                hideImage1.value = false;
             }
         }
 
@@ -293,8 +294,6 @@ export default {
 
 }
 
-.image-container {}
-
 .img1,
 .img2,
 .img3 {
@@ -312,8 +311,9 @@ export default {
 .img1 {
     z-index: 2;
     top: calc(45 * var(--vh));
-    width: 20%;
-    transition: width 5s ease-in-out, opacity 1s ease-in-out;
+    width: 30%;
+    opacity: 0.8;
+
 }
 
 .img2 {
