@@ -1,6 +1,5 @@
 <template>
-    <div @click.stop="next()" class="loading-container"
-        style="background-image: url('../resource/common/bg.png'); background-size: cover;">
+    <div @click.stop="next()" class="loading-container" :style="bgStyle">
         <div v-show="index < 2" class=" top-section">
             <div class="text-container1">
                 <p>마음에 드는 캐릭터 스티커를 골라주세요.</p>
@@ -38,7 +37,7 @@
         </div>
         <div v-show="index >= 2" class="image-container2">
             <div class="reward-container">
-                <img src="../resource/common/sticker_reward_bg.png" />
+                <img src="@resource/common/sticker_reward_bg.png" />
                 <img :src="currentImageSrc" />
                 <p class="p">{{ currentImageText }}</p>
             </div>
@@ -64,9 +63,9 @@ import { useCharacterStore } from '../stores/characterStore.js'
 import { useRewardsStore } from '../stores/reward.js'
 
 const IMAGES = [
-    '../resource/storageBox/Bell_Reward.png',
-    '../resource/storageBox/Uno_Reward.png',
-    '../resource/storageBox/Sorina_Reward.png'
+    new URL('@resource/storageBox/Bell_Reward.png', import.meta.url).href,
+    new URL('@resource/storageBox/Uno_Reward.png', import.meta.url).href,
+    new URL('@resource/storageBox/Sorina_Reward.png', import.meta.url).href
 ]
 
 const TEXTS = [
@@ -83,6 +82,14 @@ export default {
         const rewardsStore = useRewardsStore()
         const index = ref(0)
         const textIndex = ref(6)
+
+        const bgImageUrl = new URL('@resource/common/bg.png', import.meta.url).href;
+
+        const bgStyle = computed(() => {
+            return {
+                backgroundImage: `url(${bgImageUrl})`,
+            }
+        })
 
         const currentImageSrc = computed(() => IMAGES[imageIndex.value])
         const currentImageText = computed(() => TEXTS[imageIndex.value])
@@ -164,7 +171,8 @@ export default {
             selectCharacterSrc: characterStore.currentCharacter.src,
             selectCharacterName: characterStore.currentCharacter.name,
             next,
-            index
+            index,
+            bgStyle
         }
     }
 }

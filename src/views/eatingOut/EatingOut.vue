@@ -2,11 +2,11 @@
     <div @click.stop="next()">
         <loading-container>
         </loading-container>
-        <div class="loading-container" style="background-image: url('../resource/common/bg.png'); background-size: cover;">
+        <div class="loading-container" :style="bgStyle">
             <div class="image-container2">
                 <div class="reward-container">
-                    <img src="../../resource/common/unreward_bg.png" />
-                    <img src="../../resource/storageBox/Uno_Reward.png" />
+                    <img src="@resource/common/unreward_bg.png" />
+                    <img src="@resource/storageBox/Uno_Reward.png" />
                     <p class="p">캐릭터 감정표현 스티커 5종 세트</p>
                 </div>
             </div>
@@ -35,6 +35,14 @@ export default {
         const characterStore = useCharacterStore()
         const index = ref(0)
         const textIndex = ref(3)
+
+        const bgImageUrl = new URL('@resource/common/bg.png', import.meta.url).href;
+
+        const bgStyle = computed(() => {
+            return {
+                backgroundImage: `url(${bgImageUrl})`,
+            }
+        })
 
         characterStore.setCharacterIndex(localStorage.getItem('characterID'))
 
@@ -74,6 +82,7 @@ export default {
             characterContent: currentCharacterContent,
             selectCharacterSrc: characterStore.currentCharacter?.src,
             selectCharacterName: characterStore.currentCharacter?.name,
+            bgStyle
         }
     }
 }
