@@ -60,7 +60,7 @@
         <div v-show="showFooter2" class="footer2">
             <p>공유 방법을 선택해 주세요.</p>
             <button @click="editor()">방명록에 공유하기</button>
-            <button @click="share()">다른 곳에 공유하기</button>
+            <button @click="share()">SNS에 공유하기</button>
             <button @click="next()">참여하지 않고 나가기</button>
         </div>
         <div v-if="showModal" class="modal">

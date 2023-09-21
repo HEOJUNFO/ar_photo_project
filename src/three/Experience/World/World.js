@@ -59,18 +59,18 @@ export default class World
         this.greenBee = new GreenBee()
         this.redBee = new RedBee()
         this.magicCircle = new MagicCircle()
-        // this.audioClass = new AudioClass('common4')
-        // this.audioClass.play() 
-        // this.audioClass.setVolume(2) 
-        // this.audioClass2 = new AudioClass('insect');
-        // this.audioClass2.play()
-        // this.audioClass2.setVolume(0.2)
-        // this.audioClass3 = new AudioClass('bee');
-        // this.audioClass3.play()
-        // this.audioClass3.setVolume(0.2)
-        // this.audioClass4 = new AudioClass('magicfigure');
-        // this.audioClass4.play()
-        // this.audioClass4.setVolume(0.2)
+        this.audioClass = new AudioClass('common4')
+        this.audioClass.play() 
+        this.audioClass.setVolume(2) 
+        this.audioClass2 = new AudioClass('insect');
+        this.audioClass2.play()
+        this.audioClass2.setVolume(0.2)
+        this.audioClass3 = new AudioClass('bee');
+        this.audioClass3.play()
+        this.audioClass3.setVolume(0.2)
+        this.audioClass4 = new AudioClass('magicfigure');
+        this.audioClass4.play()
+        this.audioClass4.setVolume(0.2)
     }
 
     

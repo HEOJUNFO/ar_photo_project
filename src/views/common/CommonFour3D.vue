@@ -139,6 +139,8 @@ export default {
 
             window.addEventListener('resize', setVH);
 
+            selectedImage.value = images.value[4]
+
             experience = new Experience(document.querySelector('canvas.webgl'), saveImage);
 
 

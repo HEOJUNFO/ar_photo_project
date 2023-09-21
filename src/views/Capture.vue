@@ -114,25 +114,35 @@ export default {
                 selectedImage.value = img
             }
             if (img.id === 1) {
-                enableFilp.value = true
-                experience.dispose()
+                if (img.active) {
+                    enableFilp.value = true
+                    experience.dispose()
+                }
 
             } else if (img.id === 2) {
-                enableFilp.value = true
-                experience.dispose()
+                if (img.active) {
+                    enableFilp.value = true
+                    experience.dispose()
+                }
 
             } else if (img.id === 3) {
-                enableFilp.value = true
-                experience.dispose()
+                if (img.active) {
+                    enableFilp.value = true
+                    experience.dispose()
+                }
 
             } else if (img.id === 4) {
-                enableFilp.value = true
-                experience.dispose()
+                if (img.active) {
+                    enableFilp.value = true
+                    experience.dispose()
+                }
 
             } else if (img.id === 5) {
-                enableFilp.value = false
-                experience.camera.setControls()
-                experience.world.setCommonFour()
+                if (img.active) {
+                    enableFilp.value = false
+                    experience.camera.setControls()
+                    experience.world.setCommonFour()
+                }
 
             }
         }

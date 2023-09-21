@@ -127,11 +127,11 @@ export default [
         type: 'gltfModel',
         path: '../models/content/Tree.gltf'
     },
-    // {
-    //     name: 'common4',
-    //     type: 'audio',
-    //     path: '../audios/common4.ogg'
-    // },
+    {
+        name: 'common4',
+        type: 'audio',
+        path: '../audios/common4.ogg'
+    },
     {
         name: 'bee',
         type: 'audio',

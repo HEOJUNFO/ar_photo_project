@@ -166,6 +166,7 @@ export default {
             window.scrollTo(0, 0);
             setVH();
             window.addEventListener('resize', setVH);
+
             document.body.style.overflow = 'hidden';
 
             if (localStorage.getItem('characterID') === null && router.currentRoute.value.path !== '/intro') {
