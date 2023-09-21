@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import Experience from './Experience.js'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { DeviceOrientationControls } from '../../js/DeviceOrientationControls.js'
+import loadImage from '../../js/loadImage.js'
 
 export default class Camera
 {
@@ -16,15 +17,14 @@ export default class Camera
 
     setInstance()
     {
-        this.instance = new THREE.PerspectiveCamera(35, this.sizes.width / this.sizes.height, 0.1, 100)
+        this.instance = new THREE.PerspectiveCamera(60, this.sizes.width / this.sizes.height, 0.1, 1000)
         this.instance.position.set(0, 2.3, 8)
         this.scene.add(this.instance)
     }
 
     setControls()
     {
-        this.controls = new OrbitControls(this.instance, this.canvas)
-        this.controls.enableDamping = true
+        this.controls = new DeviceOrientationControls(this.instance);
     }
 
     resize()
@@ -35,7 +35,9 @@ export default class Camera
 
     update()
     {
-        //this.controls.update()
+        if(this.controls){
+        this.controls.update();
+        }
     }
 
     bindMethods() {
@@ -75,13 +77,21 @@ export default class Camera
         return imageData;
     }
 
-    captureImage() {
+    async captureImage() {
         const data = this.captureScene();
         const canvas = document.createElement('canvas');
         canvas.width = data.width;
         canvas.height = data.height;
         const ctx = canvas.getContext('2d');
         ctx.putImageData(data, 0, 0);
+
+        // const sticker = document.querySelector('.side-image-container').style.backgroundImage.slice(5, -2);
+        // console.log(sticker);
+        // let stickerImg = null;
+        // stickerImg = await loadImage(sticker);
+
+        // ctx.drawImage(stickerImg, 0, 0, stickerImg.width, stickerImg.height, 0, 0, canvas.width/2, canvas.height/2);
+        
         const image = canvas.toDataURL('image/png');
   
         this.experience.saveImage(image)

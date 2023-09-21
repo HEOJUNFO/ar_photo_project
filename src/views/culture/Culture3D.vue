@@ -1,6 +1,6 @@
 <template>
     <div @click.stop="percentage > 99.8 ? next() : null">
-        <div v-if="showOverlay" class="overlay" @click="hideOverlay"><svg xmlns="http://www.w3.org/2000/svg" width="66"
+        <!-- <div v-if="showOverlay" class="overlay" @click="hideOverlay"><svg xmlns="http://www.w3.org/2000/svg" width="66"
                 height="74" viewBox="0 0 66 74" fill="none">
                 <g clip-path="url(#clip0_112_660)">
                     <mask id="mask0_112_660" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="66"
@@ -18,7 +18,7 @@
                         <rect width="66" height="74" fill="white" />
                     </clipPath>
                 </defs>
-            </svg> </div>
+            </svg> </div> -->
         <div class=" top-section2">
             <div class="text-container2">
                 <p>{{ characterContent?.text }}</p>
@@ -27,20 +27,31 @@
                 <img :src="characterContent?.src" alt="Side Image" />
             </div>
         </div>
-        <div class="webgl-container" style="background-image: url('../resource/common/bg.png'); background-size: cover;">
+        <div class="webgl-container">
             <canvas class="webgl2"></canvas>
         </div>
         <div class="image-container">
-            <img src="../../resource/culture/game_bg_water.png" alt="Below Image" class="image-below" :style="clipStyle">
-            <img src="../../resource/culture/game_bg_land.png" alt="Above Image" class="image-above">
-            <img v-show="visibleStone1" @click="stone1()" src="../../resource/culture/game_stone01.png" alt="Above Image"
+            <img src="@resource/culture/game_bg_water.png" class="image-below" :style="clipStyle">
+            <img src="@resource/culture/game_bg_land.png" class="image-above">
+            <img v-show="visibleStone1" @click="stone1()" src="@resource/culture/game_stone01.png" alt="Above Image"
                 class="image-stone1" style="left: 20vw;">
-            <img v-show="visibleStone2" @click="stone2()" src="../../resource/culture/game_stone02.png" alt="Above Image"
+            <img v-show="visibleStone2" @click="stone2()" src="@resource/culture/game_stone02.png" alt="Above Image"
                 class="image-stone2" style=" left: 60vw;">
-            <img v-show="visibleStone3" @click="stone3()" src="../../resource/culture/game_stone04.png" alt="Above Image"
+            <img v-show="visibleStone3" @click="stone3()" src="@resource/culture/game_stone04.png" alt="Above Image"
                 class="image-stone3" style="left: 17vw;">
-            <img v-show="visibleStone3" @click="stone3()" src="../../resource/culture/game_stone03.png" alt="Above Image"
+            <img v-show="visibleStone3" @click="stone3()" src="@resource/culture/game_stone03.png" alt="Above Image"
                 class="image-stone4" style=" left: 9vw;">
+        </div>
+        <div class="bg-container">
+
+            <img src="@resource/culture/water_road_01.png" :class="{ 'fade-out': isChanging }" />
+            <img v-if="isChanging" src="@resource/culture/water_road_02.png" class="fade-in"
+                :class="{ 'fade-out2': isChanging2 }" />
+            <img v-if="isChanging2" src="@resource/culture/water_road_03.png" class="fade-in2"
+                :class="{ 'fade-out3': isChanging3 }" />
+            <img v-if="isChanging3" src="@resource/culture/water_road_04.png" class="fade-in3" />
+
+
         </div>
     </div>
 </template>
@@ -56,7 +67,6 @@ export default {
     name: 'Culture',
     setup() {
         let experience;
-        let experience2;
         const characterStore = useCharacterStore()
         const index = ref(0)
         const textIndex = ref(5)
@@ -66,6 +76,9 @@ export default {
         const visibleStone2 = ref(true)
         const visibleStone3 = ref(true)
         const showOverlay = ref(true)
+        const isChanging = ref(false)
+        const isChanging2 = ref(false)
+        const isChanging3 = ref(false)
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
@@ -82,13 +95,17 @@ export default {
             if (visibleStone2.value === false && visibleStone3.value === false) {
                 maxPercentage.value = 99.8;
                 experience.world.ship.deltaT = 1
+
                 next()
             } else if (visibleStone2.value === false && visibleStone3.value === true) {
                 maxPercentage.value = 71;
                 experience.world.ship.deltaT = 0.6
+
             } else {
                 maxPercentage.value = 47;
                 experience.world.ship.deltaT = 0.32
+                isChanging.value = true
+
             }
         }
 
@@ -97,10 +114,13 @@ export default {
             if (visibleStone1.value === false && visibleStone3.value === false) {
                 maxPercentage.value = 99.8;
                 experience.world.ship.deltaT = 1
+
                 next()
             } else if (visibleStone1.value === false && visibleStone3.value === true) {
                 maxPercentage.value = 71;
                 experience.world.ship.deltaT = 0.6
+                isChanging2.value = true
+
             } else {
                 maxPercentage.value = 27;
             }
@@ -112,10 +132,13 @@ export default {
             if (visibleStone1.value === false && visibleStone2.value === false) {
                 maxPercentage.value = 99.8;
                 experience.world.ship.deltaT = 1
+                isChanging3.value = true
+
                 next()
             } else if (visibleStone1.value === false && visibleStone2.value === true) {
                 maxPercentage.value = 47;
                 experience.world.ship.deltaT = 0.32
+
             } else {
                 maxPercentage.value = 27;
             }
@@ -156,6 +179,9 @@ export default {
                 stoneElem2?.classList.toggle('scaling');
             }
         }
+
+
+
 
         const clipStyle = computed(() => {
             return `clip-path: inset(0 0 ${100 - percentage.value}% 0);`;
@@ -202,7 +228,11 @@ export default {
             visibleStone3,
             percentage,
             hideOverlay,
-            showOverlay
+            showOverlay,
+            isChanging,
+            isChanging2,
+            isChanging3
+
         }
     }
 }
@@ -236,7 +266,13 @@ export default {
     height: calc(100 * var(--vh));
 }
 
-.image-above,
+.bg-container {
+    position: absolute;
+    width: 100%;
+    height: calc(100 * var(--vh));
+}
+
+
 .image-below {
     position: absolute;
     top: 0vh;
@@ -395,5 +431,51 @@ export default {
     position: absolute;
     left: 25%;
     top: calc(22.5 * var(--vh));
+}
+
+.bg-container {
+    position: absolute;
+    width: 100%;
+    height: calc(100 * var(--vh));
+    z-index: -1;
+}
+
+.bg-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    transition: opacity 1s;
+}
+
+.bg-container img.fade-out {
+    opacity: 0;
+}
+
+.bg-container img.fade-in {
+    opacity: 1;
+    transition: opacity 1s;
+    z-index: -1;
+}
+
+.bg-container img.fade-out2 {
+    opacity: 0;
+}
+
+.bg-container img.fade-in2 {
+    opacity: 1;
+    transition: opacity 1s;
+    z-index: -2;
+}
+
+.bg-container img.fade-out3 {
+    opacity: 0;
+}
+
+.bg-container img.fade-in3 {
+    opacity: 1;
+    transition: opacity 1s;
+    z-index: -3;
 }
 </style>

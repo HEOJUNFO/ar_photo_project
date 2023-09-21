@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import Experience from '../Experience.js'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
+import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js';
 
 export default class Environment
 {
@@ -13,6 +14,7 @@ export default class Environment
         this.setSunLight()
         // this.setEnvironmentMap()
         this.setEnvironmentMap2()
+        // this.setEXREnvironmentMap()
     }
 
     setSunLight()
@@ -32,7 +34,7 @@ export default class Environment
     setEnvironmentMap()
     {
         this.environmentMap = {}
-        this.environmentMap.intensity = 0
+        this.environmentMap.intensity = 1
         this.environmentMap.texture = this.resources.items.environmentMapTexture
         this.environmentMap.texture.colorSpace = THREE.SRGBColorSpace
         
@@ -63,4 +65,18 @@ export default class Environment
         this.scene.environment = this.neutralEnvironment;
 
     }
+    // setEXREnvironmentMap() {
+      
+        
+    //         this.texture =this.resources.items.exr
+    
+    //         const pmremGenerator = new THREE.PMREMGenerator(this.experience.renderer.instance);
+    //         pmremGenerator.compileEquirectangularShader();
+    //         const exrEnvMap = pmremGenerator.fromEquirectangular(this.texture).texture;
+    //         this.scene.environment = exrEnvMap;
+            
+    //         pmremGenerator.dispose(); 
+    
+    // }
+    
 }

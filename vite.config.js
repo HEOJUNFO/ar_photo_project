@@ -13,8 +13,10 @@ export default {
   base: './',
   resolve: {
     alias: {
-      '@views': '/views'
+      '@views': '/views',
+      '@resource': '/../static/resource/',
     },
+  
   },
   server: {
     host: true,

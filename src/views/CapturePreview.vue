@@ -60,7 +60,7 @@
         <div v-show="showFooter2" class="footer2">
             <p>공유 방법을 선택해 주세요.</p>
             <button @click="editor()">방명록에 공유하기</button>
-            <button @click="share()">다른 곳에 공유하기</button>
+            <button @click="share()">SNS에 공유하기</button>
             <button @click="next()">참여하지 않고 나가기</button>
         </div>
         <div v-if="showModal" class="modal">
@@ -243,6 +243,8 @@
     </div>
 </template>
 
+
+
 <script>
 import { onMounted, ref, watch } from 'vue';
 import router from '../router';
@@ -250,6 +252,10 @@ import { useImageDataStore } from '../stores/imageData';
 import { useRewardsStore } from '../stores/reward';
 import Konva from 'konva';
 
+const coupon2 = new URL('@resource/storageBox/02_Coupon_active.png', import.meta.url).href;
+const coupon3 = new URL('@resource/storageBox/03_Coupon_active.png', import.meta.url).href;
+const coupon4 = new URL('@resource/storageBox/04_Coupon_active.png', import.meta.url).href;
+const iceCream = new URL('@resource/storageBox/IceCream_active.png', import.meta.url).href;
 
 export default {
     name: 'CapturePreview',
@@ -260,7 +266,6 @@ export default {
         const showFooter2 = ref(false);
         const showModal = ref(false);
         const premiumModal = ref(false);
-        const premiumModal2 = ref(false);
         const premiumImageSrc = ref('');
         const premiumText = ref('');
 
@@ -291,6 +296,10 @@ export default {
 
         const setColor = (color) => {
             currentColor.value = color;
+            if (currentTool.value === 'text') {
+                const input = document.querySelector('input');
+                input.focus();
+            }
         }
 
         const setDrawingTool = (tool) => {
@@ -299,6 +308,8 @@ export default {
 
         const setTextTool = (tool) => {
             currentTextTool.value = tool;
+            const input = document.querySelector('input');
+            input.focus();
         }
 
         const konvaContainer = ref(null);
@@ -387,7 +398,10 @@ export default {
         }
 
         const toggleFooter2 = () => {
-            premiumModal.value = true;
+            if (eventName.value === 'shopping2' || eventName.value === 'culture2' || eventName.value === 'eatingOut2' || eventName.value === 'common4') {
+                premiumModal.value = true;
+            }
+
             showFooter2.value = !showFooter2.value;
         }
 
@@ -425,7 +439,23 @@ export default {
         }
 
         const onShareComplete = () => {
-            premiumModal2.value = true;
+            eventName.value = imageDataStore.getEventName();
+            if (eventName.value === 'shopping2') {
+                imageDataStore.setEventName('shopping2Clear');
+                localStorage.setItem('item2', 'true')
+            } else if (eventName.value === 'culture2') {
+                imageDataStore.setEventName('culture2Clear');
+                localStorage.setItem('item4', 'true')
+            } else if (eventName.value === 'eatingOut2') {
+                imageDataStore.setEventName('eatingOut2Clear');
+                localStorage.setItem('item3', 'true')
+            } else if (eventName.value === 'common4') {
+                imageDataStore.setEventName('common4Clear');
+                localStorage.setItem('item1', 'true')
+            }
+
+            rewardsStore.setRewardsData();
+            router.push('./outro');
         }
 
         const startDrawing = () => {
@@ -471,6 +501,7 @@ export default {
             if (currentTool.value !== 'text') return;
 
 
+
             const input = document.createElement('input');
             input.style.position = 'absolute';
             input.style.top = '50%';
@@ -480,26 +511,29 @@ export default {
             document.body.appendChild(input);
             input.focus();
 
-            input.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter') {
-                    const text = new Konva.Text({
-                        x: 80,
-                        y: 160,
-                        text: input.value,
-                        fontFamily: 'Calibri',
-                        fontSize: 80,
-                        draggable: true,
-                        fill: currentColor.value,
-                        fontStyle: currentTextTool.value === 'bold' ? 'bold' : 'normal',
-                        textDecoration: currentTextTool.value === 'underline' ? 'underline' : 'none',
-                    });
-                    drawingLayer.add(text);
-                    layer.draw();
 
-                    addHistory();
+            input.addEventListener('touchend', function (e) {
 
-                    document.body.removeChild(input);
-                }
+                // Prevent the default action to stop scrolling in iOS
+                e.preventDefault();
+
+                const text = new Konva.Text({
+                    x: 0,
+                    y: 0,
+                    text: input.value,
+                    fontFamily: 'Calibri',
+                    fontSize: 30,
+                    draggable: true,
+                    fill: currentColor.value,
+                    fontStyle: currentTextTool.value === 'bold' ? 'bold' : 'normal',
+                    textDecoration: currentTextTool.value === 'underline' ? 'underline' : 'none',
+                });
+
+
+                drawingLayer.add(text);
+                layer.draw();
+                addHistory();
+                document.body.removeChild(input);
             });
 
         };
@@ -518,16 +552,20 @@ export default {
 
             if (eventName.value === 'shopping2') {
                 premiumModal.value = true;
-                premiumImageSrc.value = '../resource/storageBox/02_Coupon_active.png'
+                premiumImageSrc.value = coupon2
                 premiumText.value = '패션·잡화 1만원 금액할인권'
             } else if (eventName.value === 'culture2') {
                 premiumModal.value = true;
-                premiumImageSrc.value = '../resource/storageBox/04_Coupon_active.png'
+                premiumImageSrc.value = coupon4
                 premiumText.value = '몽드이기자 1만원 금액할인권'
             } else if (eventName.value === 'eatingOut2') {
                 premiumModal.value = true;
-                premiumImageSrc.value = '../resource/storageBox/03_Coupon_active.png'
+                premiumImageSrc.value = coupon3
                 premiumText.value = 'F&B 5천원 금액할인권'
+            } else if (eventName.value === 'common4') {
+                premiumModal.value = true;
+                premiumImageSrc.value = iceCream
+                premiumText.value = '백미당 아이스크림 1EA 쿠폰 교환권'
             }
 
             const imageObj = new Image();
@@ -608,7 +646,6 @@ export default {
             bgClick,
             currentDrawingTool,
             currentTextTool,
-            premiumModal2,
             premiumImageSrc,
             premiumText,
             editor,
@@ -871,14 +908,14 @@ export default {
 .modal-content2 img {
     pointer-events: none;
     position: absolute;
-    top: calc(-5 * var(--vh));
-    width: 100%;
-    height: 100%;
+    top: calc(1* var(--vh));
+    width: auto;
+    height: 70%;
 }
 
 .p1 {
     position: absolute;
-    top: 65%;
+    top: 70%;
     color: var(--Text-Black, #111);
     text-align: center;
     font-family: "NanumSquare", sans-serif;
@@ -891,7 +928,7 @@ export default {
 
 .p2 {
     position: absolute;
-    top: 75%;
+    top: 80%;
     color: var(--Point-REd, var(--Point-Red, #D50F4A));
     text-align: center;
     font-family: "NanumSquare", sans-serif;

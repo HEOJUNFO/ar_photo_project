@@ -1,21 +1,21 @@
 <template>
     <div class="loading-container">
-        <!-- Image 1 and Button 1 -->
+
         <div class="image-container">
-            <img src="../resource/landing/web-landing-page.jpg" alt="Image 1" />
+            <img src="@resource/landing/web-landing-page.jpg" alt="Image 1" />
             <button @click="start()">신비의 숲 시작하기</button>
 
         </div>
 
-        <!-- Image 2 and Button 2 -->
+
         <div class="image-container2">
-            <img src="../resource/landing/web-landing-page-2.jpg" alt="Image 2" />
+            <img src="@resource/landing/web-landing-page-2.jpg" alt="Image 2" />
             <button @click="start()">신비의 숲 시작하기</button>
         </div>
 
-        <!-- Image 3 -->
+
         <div class="image-container">
-            <img src="../resource/landing/web-landing-page-3.jpg" alt="Image 3" />
+            <img src="@resource/landing/web-landing-page-3.jpg" alt="Image 3" />
         </div>
     </div>
 </template>
@@ -37,9 +37,32 @@ export default {
             router.push('/next2')
         }
 
-        const start = () => {
-            router.push('/intro')
+        const scrollToTop = () => {
+            window.scrollTo(0, 0);
         }
+
+
+        const start = () => {
+            scrollToTop();
+            setTimeout(() => {
+                router.push('/intro');
+            }, 500);
+        }
+
+
+        const setVH = () => {
+
+            let vh = window.innerHeight * 0.01;
+
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+
+        onMounted(() => {
+            setVH();
+
+            window.addEventListener('resize', setVH);
+
+        });
 
 
 
@@ -89,7 +112,7 @@ export default {
     position: absolute;
     width: 80%;
     padding: 10px;
-    bottom: 5%;
+    bottom: calc(5 * var(--vh));
     left: 50%;
     transform: translateX(-50%);
     border: none;
@@ -109,7 +132,7 @@ export default {
     position: absolute;
     width: 80%;
     padding: 10px;
-    bottom: 4%;
+    bottom: calc(5 * var(--vh));
     left: 50%;
     transform: translateX(-50%);
     border: none;
