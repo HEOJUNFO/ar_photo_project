@@ -12,17 +12,17 @@
         </div>
         <div v-show="index === 0" class="image-container2">
             <div class="reward-container">
-                <img src="../../resource/common/unreward_bg.png" />
-                <img src="../../resource/storageBox/Tree_Reward.png" />
+                <img src="@resource/common/unreward_bg.png" />
+                <img src="@resource/storageBox/Tree_Reward.png" />
                 <p class="p">신비의 숲 프레임 모델링</p>
             </div>
         </div>
         <div v-show="index >= 1" class="image-container">
-            <img :class="{ 'hidden': hideImage1 }" class="img1" src="../../resource/content/mini2.png"
+            <img :class="{ 'hidden': hideImage1 }" class="img1" src="@resource/content/mini2.png"
                 @touchstart="handleMouseDown" @touchend="handleMouseUp" />
-            <img :style="{ width: image2Width + '%' }" class="img2" src="../../resource/content/neon2.png"
+            <img :style="{ width: image2Width + '%' }" class="img2" src="@resource/content/neon2.png"
                 @touchstart="handleMouseDown" @touchend="handleMouseUp" @transitionend="handleTransitionEnd" />
-            <img :style="{ width: image3Width + '%' }" class="img3" src="../../resource/content/brown.png"
+            <img :style="{ width: image3Width + '%' }" class="img3" src="@resource/content/brown.png"
                 @touchstart="handleMouseDown" @touchend="handleMouseUp" />
         </div>
 

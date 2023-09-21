@@ -42,32 +42,32 @@
                     <div class="tag" @click="toggleTagSelection(0)">
                         <span
                             :style="{ backgroundColor: selectTags[0] ? '#D50F4A' : 'white', color: selectTags[0] ? 'white' : 'black' }">인생
-                            한 컷<img src="../resource/gestBook/camera-with-flash.png" alt="Image 1"></span>
+                            한 컷<img src="@resource/gestBook/camera-with-flash.png" alt="Image 1"></span>
                     </div>
                     <div class="tag" @click="toggleTagSelection(1)">
                         <span
                             :style="{ backgroundColor: selectTags[1] ? '#D50F4A' : 'white', color: selectTags[1] ? 'white' : 'black' }">좋아요<img
-                                src="../resource/gestBook/sparkling-heart.png" alt="Image 1"></span>
+                                src="@resource/gestBook/sparkling-heart.png" alt="Image 1"></span>
                     </div>
                     <div class="tag" @click="toggleTagSelection(2)">
                         <span
                             :style="{ backgroundColor: selectTags[2] ? '#D50F4A' : 'white', color: selectTags[2] ? 'white' : 'black' }">멋져멋져<img
-                                src="../resource/gestBook/smiling-face-with-sunglasses.png" alt="Image 1"></span>
+                                src="@resource/gestBook/smiling-face-with-sunglasses.png" alt="Image 1"></span>
                     </div>
                     <div class="tag" @click="toggleTagSelection(3)">
                         <span
                             :style="{ backgroundColor: selectTags[3] ? '#D50F4A' : 'white', color: selectTags[3] ? 'white' : 'black' }">예뻐예뻐<img
-                                src="../resource/gestBook/blossom.png" alt="Image 1"></span>
+                                src="@resource/gestBook/blossom.png" alt="Image 1"></span>
                     </div>
                     <div class="tag" @click="toggleTagSelection(4)">
                         <span
                             :style="{ backgroundColor: selectTags[4] ? '#D50F4A' : 'white', color: selectTags[4] ? 'white' : 'black' }">재밌다<img
-                                src="../resource/gestBook/rolling-on-the-floor-laughing.png" alt="Image 1"></span>
+                                src="@resource/gestBook/rolling-on-the-floor-laughing.png" alt="Image 1"></span>
                     </div>
                     <div class="tag" @click="toggleTagSelection(5)">
                         <span
                             :style="{ backgroundColor: selectTags[5] ? '#D50F4A' : 'white', color: selectTags[5] ? 'white' : 'black' }">신선하다<img
-                                src="../resource/gestBook/iphonesparkles.png" alt="Image 1"></span>
+                                src="@resource/gestBook/iphonesparkles.png" alt="Image 1"></span>
                     </div>
                 </div>
             </div>

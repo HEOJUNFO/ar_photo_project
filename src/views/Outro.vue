@@ -2,10 +2,10 @@
     <div @click.stop="next()">
         <loading-container>
         </loading-container>
-        <div class="loading-container" style="background-image: url('../resource/common/bg.png'); background-size: cover;">
+        <div class="loading-container" :style="bgStyle">
             <div class="image-container2">
                 <div class="reward-container">
-                    <img src="../resource/common/reward_success_bg.png" />
+                    <img src="@resource/common/reward_success_bg.png" />
                     <img :src="rewardSrc" />
                     <p class="p">{{ rewardText }}</p>
                 </div>
@@ -28,6 +28,11 @@ import { ref, computed, watch, onMounted } from 'vue'
 import router from '../router'
 import LoadingContainer from '../components/LoadingContainer.vue'
 
+const coupon02 = new URL('@resource/storageBox/02_Coupon_active.png', import.meta.url).href;
+const coupon03 = new URL('@resource/storageBox/03_Coupon_active.png', import.meta.url).href;
+const coupon04 = new URL('@resource/storageBox/04_Coupon_active.png', import.meta.url).href;
+const iceCream = new URL('@resource/storageBox/IceCream_active.png', import.meta.url).href;
+
 export default {
     name: 'Culture2',
     components: {
@@ -36,13 +41,20 @@ export default {
     setup() {
         const characterStore = useCharacterStore()
         const imageDataStore = useImageDataStore()
-        const rewardsStore = useRewardsStore()
         const eventName = ref('')
 
         const index = ref(0)
         const textIndex = ref(7)
         const rewardSrc = ref('')
         const rewardText = ref('')
+
+        const bgImageUrl = new URL('@resource/common/bg.png', import.meta.url).href;
+
+        const bgStyle = computed(() => {
+            return {
+                backgroundImage: `url(${bgImageUrl})`,
+            }
+        })
 
         characterStore.setCharacterIndex(localStorage.getItem('characterID'))
 
@@ -102,17 +114,17 @@ export default {
             console.log(eventName.value)
 
             if (eventName.value === 'shopping2Clear') {
-                rewardSrc.value = '../resource/storageBox/02_Coupon_active.png'
+                rewardSrc.value = coupon02
                 rewardText.value = '패션·잡화 1만원 금액할인권'
             } else if (eventName.value === 'culture2Clear') {
-                rewardSrc.value = '../resource/storageBox/04_Coupon_active.png'
+                rewardSrc.value = coupon04
                 rewardText.value = '몽드이기자 1만원 금액할인권'
             } else if (eventName.value === 'eatingOut2Clear') {
-                rewardSrc.value = '../resource/storageBox/03_Coupon_active.png'
+                rewardSrc.value = coupon03
                 rewardText.value = 'F&B 5천원 금액할인권'
             } else if (eventName.value === 'common4Clear') {
                 textIndex.value = 10
-                rewardSrc.value = '../resource/storageBox/IceCream_active.png'
+                rewardSrc.value = iceCream
                 rewardText.value = '백미당 아이스크림 1EA 쿠폰 교환권'
             }
         })
@@ -124,7 +136,8 @@ export default {
             selectCharacterSrc: characterStore.currentCharacter?.src,
             selectCharacterName: characterStore.currentCharacter?.name,
             rewardSrc: rewardSrc,
-            rewardText: rewardText
+            rewardText: rewardText,
+            bgStyle
         }
     }
 }

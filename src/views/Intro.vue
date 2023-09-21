@@ -64,8 +64,6 @@ const IMAGES = [
 ];
 
 
-
-
 export default {
     name: 'Intro',
     components: {

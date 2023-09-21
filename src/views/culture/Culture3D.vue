@@ -31,25 +31,25 @@
             <canvas class="webgl2"></canvas>
         </div>
         <div class="image-container">
-            <img src="../../resource/culture/game_bg_water.png" class="image-below" :style="clipStyle">
-            <img src="../../resource/culture/game_bg_land.png" class="image-above">
-            <img v-show="visibleStone1" @click="stone1()" src="../../resource/culture/game_stone01.png" alt="Above Image"
+            <img src="@resource/culture/game_bg_water.png" class="image-below" :style="clipStyle">
+            <img src="@resource/culture/game_bg_land.png" class="image-above">
+            <img v-show="visibleStone1" @click="stone1()" src="@resource/culture/game_stone01.png" alt="Above Image"
                 class="image-stone1" style="left: 20vw;">
-            <img v-show="visibleStone2" @click="stone2()" src="../../resource/culture/game_stone02.png" alt="Above Image"
+            <img v-show="visibleStone2" @click="stone2()" src="@resource/culture/game_stone02.png" alt="Above Image"
                 class="image-stone2" style=" left: 60vw;">
-            <img v-show="visibleStone3" @click="stone3()" src="../../resource/culture/game_stone04.png" alt="Above Image"
+            <img v-show="visibleStone3" @click="stone3()" src="@resource/culture/game_stone04.png" alt="Above Image"
                 class="image-stone3" style="left: 17vw;">
-            <img v-show="visibleStone3" @click="stone3()" src="../../resource/culture/game_stone03.png" alt="Above Image"
+            <img v-show="visibleStone3" @click="stone3()" src="@resource/culture/game_stone03.png" alt="Above Image"
                 class="image-stone4" style=" left: 9vw;">
         </div>
         <div class="bg-container">
 
-            <img src="../../resource/culture/water_road_01.png" :class="{ 'fade-out': isChanging }" />
-            <img v-if="isChanging" src="../../resource/culture/water_road_02.png" class="fade-in"
+            <img src="@resource/culture/water_road_01.png" :class="{ 'fade-out': isChanging }" />
+            <img v-if="isChanging" src="@resource/culture/water_road_02.png" class="fade-in"
                 :class="{ 'fade-out2': isChanging2 }" />
-            <img v-if="isChanging2" src="../../resource/culture/water_road_03.png" class="fade-in2"
+            <img v-if="isChanging2" src="@resource/culture/water_road_03.png" class="fade-in2"
                 :class="{ 'fade-out3': isChanging3 }" />
-            <img v-if="isChanging3" src="../../resource/culture/water_road_04.png" class="fade-in3" />
+            <img v-if="isChanging3" src="@resource/culture/water_road_04.png" class="fade-in3" />
 
 
         </div>

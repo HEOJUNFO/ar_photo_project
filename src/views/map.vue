@@ -1,5 +1,5 @@
 <template>
-    <div class="loading-container" @click.stop="next()" style="background-image: url('../resource/common/bg.png'); ">
+    <div class="loading-container" @click.stop="next()" :style="bgStyle">
         <div class=" top-section">
             <div class="text-container1">
                 <p>{{ characterContent.text }}</p>
@@ -20,12 +20,12 @@
             </div>
         </div>
         <div v-show="index === 1 || index === 2" class="icon-container2" :style="{ left: iconX, top: iconY }">
-            <img v-show="iconId === 1" src="../resource/tutorial/Gemston_Green.png" />
-            <img v-show="iconId !== 1" src="../resource/tutorial/Gemston_Pink.png" />
+            <img v-show="iconId === 1" src="@resource/tutorial/Gemston_Green.png" />
+            <img v-show="iconId !== 1" src="@resource/tutorial/Gemston_Pink.png" />
         </div>
         <div class="image-container">
-            <img v-show="index <= 0" src="../resource/tutorial/story_tree_bg.png">
-            <img v-show="index === 1 || index === 2" src="../resource/tutorial/map.png">
+            <img v-show="index <= 0" src="@resource/tutorial/story_tree_bg.png">
+            <img v-show="index === 1 || index === 2" src="@resource/tutorial/map.png">
         </div>
         <div v-show="index >= 3" class="image-container2">
             <img :src="currentMap" :style="{ transform: `scale(${zoom}) translate(${currentX}px, ${currentY}px)` }"
@@ -87,6 +87,32 @@
 
 <script>
 
+const premium_active = new URL('@resource/tutorial/map_icon_premium_active.png', import.meta.url).href
+const premium_inactive = new URL('@resource/tutorial/map_icon_premium_inactive.png', import.meta.url).href
+const normal_active = new URL('@resource/tutorial/map_icon_normal_active.png', import.meta.url).href
+const normal_inactive = new URL('@resource/tutorial/map_icon_normal_inactive.png', import.meta.url).href
+const map10 = new URL('@resource/tutorial/map_10.png', import.meta.url).href
+const minmap10 = new URL('@resource/tutorial/mini_map_10.png', import.meta.url).href
+const map09 = new URL('@resource/tutorial/map_09.png', import.meta.url).href
+const minmap09 = new URL('@resource/tutorial/mini_map_09.png', import.meta.url).href
+const map08 = new URL('@resource/tutorial/map_08.png', import.meta.url).href
+const minmap08 = new URL('@resource/tutorial/mini_map_08.png', import.meta.url).href
+const map07 = new URL('@resource/tutorial/map_07.png', import.meta.url).href
+const minmap07 = new URL('@resource/tutorial/mini_map_07.png', import.meta.url).href
+const map06 = new URL('@resource/tutorial/map_06.png', import.meta.url).href
+const minmap06 = new URL('@resource/tutorial/mini_map_06.png', import.meta.url).href
+const map05 = new URL('@resource/tutorial/map_05.png', import.meta.url).href
+const minmap05 = new URL('@resource/tutorial/mini_map_05.png', import.meta.url).href
+const map02 = new URL('@resource/tutorial/map_02.png', import.meta.url).href
+const minmap02 = new URL('@resource/tutorial/mini_map_02.png', import.meta.url).href
+const map01 = new URL('@resource/tutorial/map_01.png', import.meta.url).href
+const minmap01 = new URL('@resource/tutorial/mini_map_01.png', import.meta.url).href
+const map04 = new URL('@resource/tutorial/map_04.png', import.meta.url).href
+const minmap04 = new URL('@resource/tutorial/mini_map_04.png', import.meta.url).href
+const map03 = new URL('@resource/tutorial/map_03.png', import.meta.url).href
+const minmap03 = new URL('@resource/tutorial/mini_map_03.png', import.meta.url).href
+
+
 import { onMounted, ref, computed, onBeforeUnmount, hasInjectionContext } from 'vue';
 import router from '../router';
 import { useCharacterStore } from '../stores/characterStore.js'
@@ -98,80 +124,80 @@ export default {
             icons: [
                 {
                     id: 1,
-                    imgSrcA: '../resource/tutorial/map_icon_premium_active.png',
-                    imgSrcB: '../resource/tutorial/map_icon_premium_inactive.png',
+                    imgSrcA: premium_active,
+                    imgSrcB: premium_inactive,
                     text: '신비의 숲',
                     x: '13%', y: 'calc(24 * var(--vh))',
                     active: true
                 },
                 {
                     id: 2,
-                    imgSrcA: '../resource/tutorial/map_icon_normal_active.png',
-                    imgSrcB: '../resource/tutorial/map_icon_normal_inactive.png',
+                    imgSrcA: normal_active,
+                    imgSrcB: normal_inactive,
                     text: '휴게공간',
                     x: '55%', y: 'calc(24 * var(--vh))',
                     active: true
                 },
                 {
                     id: 3,
-                    imgSrcA: '../resource/tutorial/map_icon_normal_active.png',
-                    imgSrcB: '../resource/tutorial/map_icon_normal_inactive.png',
+                    imgSrcA: normal_active,
+                    imgSrcB: normal_inactive,
                     text: '부암동 가든',
                     x: '25%', y: 'calc(38 * var(--vh))',
                     active: true
                 },
                 {
                     id: 4,
-                    imgSrcA: '../resource/tutorial/map_icon_normal_active.png',
-                    imgSrcB: '../resource/tutorial/map_icon_normal_inactive.png',
+                    imgSrcA: normal_active,
+                    imgSrcB: normal_inactive,
                     text: '휴게 공간',
                     x: '50%', y: 'calc(38 * var(--vh))',
                     active: true
                 },
                 {
                     id: 5,
-                    imgSrcA: '../resource/tutorial/map_icon_premium_active.png',
-                    imgSrcB: '../resource/tutorial/map_icon_premium_inactive.png',
+                    imgSrcA: premium_active,
+                    imgSrcB: premium_inactive,
                     text: '몽드 이기자',
                     x: '15%', y: 'calc(52 * var(--vh))',
                     active: true
                 },
                 {
                     id: 6,
-                    imgSrcA: '../resource/tutorial/map_icon_normal_active.png',
-                    imgSrcB: '../resource/tutorial/map_icon_normal_inactive.png',
+                    imgSrcA: normal_active,
+                    imgSrcB: normal_inactive,
                     text: 'VP존',
                     x: '39%', y: 'calc(52 * var(--vh))',
                     active: true
                 },
                 {
                     id: 7,
-                    imgSrcA: '../resource/tutorial/map_icon_premium_active.png',
-                    imgSrcB: '../resource/tutorial/map_icon_premium_inactive.png',
+                    imgSrcA: premium_active,
+                    imgSrcB: premium_inactive,
                     text: '휴게공간',
                     x: '63%', y: 'calc(52 * var(--vh))',
                     active: true
                 },
                 {
                     id: 8,
-                    imgSrcA: '../resource/tutorial/map_icon_normal_active.png',
-                    imgSrcB: '../resource/tutorial/map_icon_normal_inactive.png',
+                    imgSrcA: normal_active,
+                    imgSrcB: normal_inactive,
                     text: '더웨이브',
                     x: '39%', y: 'calc(65 * var(--vh))',
                     active: true
                 },
                 {
                     id: 9,
-                    imgSrcA: '../resource/tutorial/map_icon_premium_active.png',
-                    imgSrcB: '../resource/tutorial/map_icon_premium_inactive.png',
+                    imgSrcA: premium_active,
+                    imgSrcB: premium_inactive,
                     text: 'F&B 중앙',
                     x: '25%', y: 'calc( 77* var(--vh))',
                     active: true
                 },
                 {
                     id: 10,
-                    imgSrcA: '../resource/tutorial/map_icon_normal_active.png',
-                    imgSrcB: '../resource/tutorial/map_icon_normal_inactive.png',
+                    imgSrcA: normal_active,
+                    imgSrcB: normal_inactive,
                     text: '푸드에비뉴',
                     x: '50%', y: 'calc(77 * var(--vh))',
                     active: true
@@ -211,6 +237,14 @@ export default {
         const previewicon = ref(null)
         const clearIcon = ref(null)
 
+        const bgImageUrl = new URL('@resource/common/bg.png', import.meta.url).href;
+
+        const bgStyle = computed(() => {
+            return {
+                backgroundImage: `url(${bgImageUrl})`,
+            }
+        })
+
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
@@ -221,16 +255,16 @@ export default {
                 if (iconId.value === 1) {
                     iconX.value = '37%';
                     iconY.value = 'calc(28* var(--vh))';
-                    currentMap.value = '../resource/tutorial/map_10.png'
-                    currentMiniMap.value = '../resource/tutorial/mini_map_10.png'
+                    currentMap.value = map10
+                    currentMiniMap.value = minmap10
                     currentText.value = '5F 남문 방면 휴게공간'
                     currentLargeText.value = '신비의 숲'
                     return currentCharacter.value.common4[textIndex.value]
                 } else if (iconId.value === 2) {
                     iconX.value = '50%';
                     iconY.value = 'calc(36 * var(--vh))';
-                    currentMap.value = '../resource/tutorial/map_09.png'
-                    currentMiniMap.value = '../resource/tutorial/mini_map_09.png'
+                    currentMap.value = map09
+                    currentMiniMap.value = minmap09
                     currentX.value = -250
                     currentY.value = -10
                     currentText.value = '4F 북문 방면 중앙창문 앞'
@@ -239,8 +273,8 @@ export default {
                 } else if (iconId.value === 3) {
                     iconX.value = '40%';
                     iconY.value = 'calc(50 * var(--vh))';
-                    currentMap.value = '../resource/tutorial/map_08.png'
-                    currentMiniMap.value = '../resource/tutorial/mini_map_08.png'
+                    currentMap.value = map08
+                    currentMiniMap.value = minmap08
                     currentY.value = -100
                     currentText.value = '3F 그린동 남문 방면'
                     currentLargeText.value = '부암동 가든'
@@ -248,8 +282,8 @@ export default {
                 } else if (iconId.value === 4) {
                     iconX.value = '49%';
                     iconY.value = 'calc(48 * var(--vh))';
-                    currentMap.value = '../resource/tutorial/map_07.png'
-                    currentMiniMap.value = '../resource/tutorial/mini_map_07.png'
+                    currentMap.value = map07
+                    currentMiniMap.value = minmap07
                     currentX.value = -250
                     currentY.value = -10
                     currentText.value = '3F 북문 방면 중앙창문 앞'
@@ -258,8 +292,8 @@ export default {
                 } else if (iconId.value === 5) {
                     iconX.value = '44%';
                     iconY.value = 'calc(57 * var(--vh))';
-                    currentMap.value = '../resource/tutorial/map_06.png'
-                    currentMiniMap.value = '../resource/tutorial/mini_map_06.png'
+                    currentMap.value = map06
+                    currentMiniMap.value = minmap06
                     currentX.value = -330
                     currentText.value = '2F 오렌지동 북문 방면'
                     currentLargeText.value = '몽드 이기자'
@@ -267,8 +301,8 @@ export default {
                 } else if (iconId.value === 6) {
                     iconX.value = '41%';
                     iconY.value = 'calc(61 * var(--vh))';
-                    currentMap.value = '../resource/tutorial/map_05.png'
-                    currentMiniMap.value = '../resource/tutorial/mini_map_05.png'
+                    currentMap.value = map05
+                    currentMiniMap.value = minmap05
                     currentX.value = -250
                     currentY.value = -80
                     currentText.value = '2F 북문 방면 중앙창문 앞'
@@ -277,8 +311,8 @@ export default {
                 } else if (iconId.value === 7) {
                     iconX.value = '51%';
                     iconY.value = 'calc(59 * var(--vh))';
-                    currentMap.value = '../resource/tutorial/map_02.png'
-                    currentMiniMap.value = '../resource/tutorial/mini_map_02.png'
+                    currentMap.value = map02
+                    currentMiniMap.value = minmap02
                     currentX.value = -60
                     currentY.value = -70
                     currentText.value = '2F 남문 방면 중앙창문 앞'
@@ -287,8 +321,8 @@ export default {
                 } else if (iconId.value === 8) {
                     iconX.value = '39%';
                     iconY.value = 'calc(70 * var(--vh))';
-                    currentMap.value = '../resource/tutorial/map_01.png'
-                    currentMiniMap.value = '../resource/tutorial/mini_map_01.png'
+                    currentMap.value = map01
+                    currentMiniMap.value = minmap01
                     currentX.value = -180
                     currentY.value = 40
                     currentText.value = '1F 오렌지동 에스컬레이터 옆'
@@ -297,8 +331,8 @@ export default {
                 } else if (iconId.value === 9) {
                     iconX.value = '45%';
                     iconY.value = 'calc(84 * var(--vh))';
-                    currentMap.value = '../resource/tutorial/map_04.png'
-                    currentMiniMap.value = '../resource/tutorial/mini_map_04.png'
+                    currentMap.value = map04
+                    currentMiniMap.value = minmap04
                     currentY.value = -100
                     currentText.value = 'B1 중앙 에스컬레이터 앞'
                     currentLargeText.value = 'F&B 중앙'
@@ -307,8 +341,8 @@ export default {
                     iconX.value = '50%';
                     iconY.value = 'calc(81 * var(--vh))';
                     currentX.value = -180
-                    currentMap.value = '../resource/tutorial/map_03.png'
-                    currentMiniMap.value = '../resource/tutorial/mini_map_03.png'
+                    currentMap.value = map03
+                    currentMiniMap.value = minmap03
                     currentText.value = 'B1 식품관 입구'
                     currentLargeText.value = '푸드 애비뉴'
                     return currentCharacter.value.eatingOut[textIndex.value]
@@ -430,6 +464,7 @@ export default {
             storeBox,
             picture,
             guestBook,
+            bgStyle
         }
     }
 }
