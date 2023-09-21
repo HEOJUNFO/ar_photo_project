@@ -112,7 +112,7 @@ export default {
             else if (router.currentRoute.value.query.eventName === 'common4') {
                 currentImageText.value = '신비의 숲 프레임 모델링'
                 currentImageSrc.value = '../resource/filter/05_filter.png'
-                localStorage.setItem('item11', true)
+                localStorage.setItem('item11', 'used')
                 textIndex.value = 6
 
             }

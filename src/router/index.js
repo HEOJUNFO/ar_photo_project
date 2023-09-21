@@ -32,6 +32,7 @@ import Map from "@views/Map.vue"
 import TextEditor from "@views/TextEditor.vue"
 import CommonFour from "@views/common/CommonFour.vue"
 import CommonFour3D from "@views/common/CommonFour3D.vue"
+import GuestBook from "@views/GuestBook.vue"
 
 export const routes = [
     {path: '/', component: Landing, name: 'Landing'},
@@ -66,6 +67,7 @@ export const routes = [
     {path: '/texteditor', component: TextEditor, name: 'TextEditor'},
     {path: '/commonfour', component: CommonFour, name: 'CommonFour'},
     {path: '/commonfour3d', component: CommonFour3D, name: 'CommonFour3D'},
+    {path: '/guestbook', component: GuestBook, name: 'GuestBook'},
 
 
 ]

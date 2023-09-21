@@ -45,6 +45,44 @@
                 <img :src="currentMiniMap" alt="Description of Image">
             </div>
         </div>
+        <div v-show="index >= 3" class="footer">
+            <button @click.stop="storeBox()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none">
+                    <mask id="mask0_291_2249" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"
+                        height="24">
+                        <rect width="24" height="24" fill="#D9D9D9" />
+                    </mask>
+                    <g mask="url(#mask0_291_2249)">
+                        <path
+                            d="M5 20C4.45 20 3.97917 19.8042 3.5875 19.4125C3.19583 19.0208 3 18.55 3 18V4C3 3.45 3.19583 2.97917 3.5875 2.5875C3.97917 2.19583 4.45 2 5 2H19C19.55 2 20.0208 2.19583 20.4125 2.5875C20.8042 2.97917 21 3.45 21 4V18C21 18.55 20.8042 19.0208 20.4125 19.4125C20.0208 19.8042 19.55 20 19 20H5ZM5 18H19V15H16C15.5 15.6333 14.9042 16.125 14.2125 16.475C13.5208 16.825 12.7833 17 12 17C11.2167 17 10.4792 16.825 9.7875 16.475C9.09583 16.125 8.5 15.6333 8 15H5V18ZM12 15C12.6333 15 13.2083 14.8167 13.725 14.45C14.2417 14.0833 14.6 13.6 14.8 13H19V4H5V13H9.2C9.4 13.6 9.75833 14.0833 10.275 14.45C10.7917 14.8167 11.3667 15 12 15Z"
+                            fill="#111111" />
+                    </g>
+                </svg>보관함</button>
+            <button @click.stop="picture()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none">
+                    <mask id="mask0_291_2263" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"
+                        height="24">
+                        <rect width="24" height="24" fill="#D9D9D9" />
+                    </mask>
+                    <g mask="url(#mask0_291_2263)">
+                        <path
+                            d="M12 17.5C13.25 17.5 14.3125 17.0625 15.1875 16.1875C16.0625 15.3125 16.5 14.25 16.5 13C16.5 11.75 16.0625 10.6875 15.1875 9.8125C14.3125 8.9375 13.25 8.5 12 8.5C10.75 8.5 9.6875 8.9375 8.8125 9.8125C7.9375 10.6875 7.5 11.75 7.5 13C7.5 14.25 7.9375 15.3125 8.8125 16.1875C9.6875 17.0625 10.75 17.5 12 17.5ZM12 15.5C11.3 15.5 10.7083 15.2583 10.225 14.775C9.74167 14.2917 9.5 13.7 9.5 13C9.5 12.3 9.74167 11.7083 10.225 11.225C10.7083 10.7417 11.3 10.5 12 10.5C12.7 10.5 13.2917 10.7417 13.775 11.225C14.2583 11.7083 14.5 12.3 14.5 13C14.5 13.7 14.2583 14.2917 13.775 14.775C13.2917 15.2583 12.7 15.5 12 15.5ZM4 21C3.45 21 2.97917 20.8042 2.5875 20.4125C2.19583 20.0208 2 19.55 2 19V7C2 6.45 2.19583 5.97917 2.5875 5.5875C2.97917 5.19583 3.45 5 4 5H7.15L8.4 3.65C8.58333 3.45 8.80417 3.29167 9.0625 3.175C9.32083 3.05833 9.59167 3 9.875 3H14.125C14.4083 3 14.6792 3.05833 14.9375 3.175C15.1958 3.29167 15.4167 3.45 15.6 3.65L16.85 5H20C20.55 5 21.0208 5.19583 21.4125 5.5875C21.8042 5.97917 22 6.45 22 7V19C22 19.55 21.8042 20.0208 21.4125 20.4125C21.0208 20.8042 20.55 21 20 21H4ZM4 19H20V7H15.95L14.125 5H9.875L8.05 7H4V19Z"
+                            fill="#1C1B1F" />
+                    </g>
+                </svg>사진</button>
+            <button @click.stop="guestBook()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none">
+                    <mask id="mask0_291_2256" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"
+                        height="24">
+                        <rect width="24" height="24" fill="#D9D9D9" />
+                    </mask>
+                    <g mask="url(#mask0_291_2256)">
+                        <path
+                            d="M5 18H19V8.825L14.175 4H5V18ZM5 20C4.45 20 3.97917 19.8042 3.5875 19.4125C3.19583 19.0208 3 18.55 3 18V4C3 3.45 3.19583 2.97917 3.5875 2.5875C3.97917 2.19583 4.45 2 5 2H15L21 8V18C21 18.55 20.8042 19.0208 20.4125 19.4125C20.0208 19.8042 19.55 20 19 20H5ZM7 16H17V14H7V16ZM7 12H17V10H7V12ZM7 8H14V6H7V8Z"
+                            fill="#111111" />
+                    </g>
+                </svg>방명록</button>
+        </div>
     </div>
 </template>
 
@@ -279,6 +317,16 @@ export default {
             }
         })
 
+        const storeBox = () => {
+            router.push({ name: 'StorageBox' })
+        }
+        const picture = () => {
+            router.push({ name: 'Capture' })
+        }
+        const guestBook = () => {
+            router.push({ name: 'GuestBook' })
+        }
+
         const nextMap = (icon) => {
 
             if (index.value === 0) {
@@ -364,10 +412,7 @@ export default {
             if (router.currentRoute.value.query.eventName === 'common4Clear') {
                 clearIcon.value = 1
             }
-
-
         });
-
 
         return {
             index,
@@ -390,7 +435,10 @@ export default {
             currentMiniMap,
             currentText,
             currentLargeText,
-            clearIcon
+            clearIcon,
+            storeBox,
+            picture,
+            guestBook,
         }
     }
 }
@@ -512,7 +560,7 @@ export default {
     flex-direction: column;
     position: absolute;
     right: 0;
-    bottom: 10px;
+    bottom: calc(15 * var(--vh));
     z-index: 10;
 }
 
@@ -532,7 +580,7 @@ export default {
 
 .bottom-container2 {
     position: absolute;
-    bottom: 10px;
+    bottom: calc(15 * var(--vh));
     left: 20%;
     transform: translateX(-20%);
     display: flex;
@@ -611,6 +659,48 @@ export default {
     justify-content: center;
     align-items: center;
     z-index: 1;
+}
 
+.footer {
+    position: absolute;
+    bottom: 0%;
+    height: calc(10 * var(--vh));
+    width: 100%;
+    background-color: #fff;
+    color: #fff;
+    display: grid;
+    grid-template-columns: repeat(3, 2fr);
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px 16px 0px 0px;
+
+}
+
+.footer button {
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    color: var(--Text-Gray, #767676);
+    text-align: center;
+    font-family: NanumSquare;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 14px;
+    letter-spacing: -0.3px;
+    border-radius: 16px 16px 0px 0px;
+}
+
+.footer button:hover {
+    background-color: #777;
 }
 </style>

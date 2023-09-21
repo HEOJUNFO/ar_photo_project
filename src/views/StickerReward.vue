@@ -117,15 +117,15 @@ export default {
             textIndex.value = 8
             switch (imageIndex.value) {
                 case 0:
-                    localStorage.setItem('item5', true)
+                    localStorage.setItem('item5', 'used')
                     rewardsStore.setRewardsData();
                     break;
                 case 1:
-                    localStorage.setItem('item6', true)
+                    localStorage.setItem('item6', 'used')
                     rewardsStore.setRewardsData();
                     break;
                 case 2:
-                    localStorage.setItem('item7', true)
+                    localStorage.setItem('item7', 'used')
                     rewardsStore.setRewardsData();
                     break;
             }
