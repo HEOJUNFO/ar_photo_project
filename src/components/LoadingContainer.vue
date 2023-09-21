@@ -86,7 +86,7 @@ export default {
 
 
         onMounted(() => {
-            document.body.style.overflow = 'hidden';
+
             if (localStorage.getItem('consentGiven') === 'true') {
                 showModal.value = false
             }
