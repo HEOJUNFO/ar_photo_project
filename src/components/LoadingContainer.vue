@@ -95,7 +95,7 @@ export default {
             }
 
             setTimeout(() => {
-
+                document.body.style.overflow = 'hidden';
                 if (localStorage.getItem('characterID') === null && router.currentRoute.value.path !== '/intro') {
                     router.push('/intro')
 

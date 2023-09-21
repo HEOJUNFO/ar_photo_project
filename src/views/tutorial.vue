@@ -170,7 +170,7 @@ export default {
     justify-content: center;
     align-items: center;
     background-color: #fff;
-    width: 75%;
+    width: 70%;
     position: relative;
     border-radius: 16px;
     margin-left: 5%;
@@ -209,12 +209,12 @@ export default {
 
 .side-image-container {
     margin-top: calc(-5 * var(--vh));
-    margin-right: -4%;
-    position: relative;
+    position: absolute;
     overflow: hidden;
     width: 20%;
     display: flex;
     align-items: center;
+    right: 0%;
 }
 
 .side-image-container img {

@@ -1,6 +1,5 @@
 <template>
-    <div @click.stop="next()" style="background-image: url('../resource/common/bg.png'); background-size: cover;"
-        class="main">
+    <div class="loading-container" @click.stop="next()" style="background-image: url('../resource/common/bg.png'); ">
         <div class=" top-section">
             <div class="text-container1">
                 <p>{{ characterContent.text }}</p>
@@ -12,11 +11,11 @@
         <div v-show="index <= 1">
             <div v-for="icon in icons" :key="icon.id" class="icon-container" :style="{ left: icon.x, top: icon.y }">
                 <img v-show="(icon.id === iconId) || (icon.id === clearIcon)" :src="currentCharacter.maker"
-                    style="position:absolute; width: 20%; height:auto; margin-top: -25%;" />
+                    style="position:absolute; width: auto; height:100%; margin-top: -100%; " />
                 <img @click.stop="nextMap(icon)" :src="icon.active ? icon.imgSrcA : icon.imgSrcB"
-                    style="width: 10; height: 10%; pointer-events: auto;" />
+                    style="width: 100%; height: 100%; pointer-events: auto;" />
                 <p
-                    style="color: #111;font-size: 10px; font-style: normal;font-weight: 700;line-height: 34px;letter-spacing: -0.6px; position:absolute; font-family: 'NanumSquare', sans-serif; margin-top: 22%;">
+                    style="color: #111;font-size: 10px; font-style: normal;font-weight: 700;line-height: 34px;letter-spacing: -0.6px; position:absolute; font-family: 'NanumSquare', sans-serif; margin-top:100%;">
                     {{ icon.text }}</p>
             </div>
         </div>
@@ -102,7 +101,7 @@ export default {
                     imgSrcA: '../resource/tutorial/map_icon_premium_active.png',
                     imgSrcB: '../resource/tutorial/map_icon_premium_inactive.png',
                     text: '신비의 숲',
-                    x: '-27%', y: 'calc(-21 * var(--vh))',
+                    x: '13%', y: 'calc(24 * var(--vh))',
                     active: true
                 },
                 {
@@ -110,7 +109,7 @@ export default {
                     imgSrcA: '../resource/tutorial/map_icon_normal_active.png',
                     imgSrcB: '../resource/tutorial/map_icon_normal_inactive.png',
                     text: '휴게공간',
-                    x: '15%', y: 'calc(-21 * var(--vh))',
+                    x: '55%', y: 'calc(24 * var(--vh))',
                     active: true
                 },
                 {
@@ -118,7 +117,7 @@ export default {
                     imgSrcA: '../resource/tutorial/map_icon_normal_active.png',
                     imgSrcB: '../resource/tutorial/map_icon_normal_inactive.png',
                     text: '부암동 가든',
-                    x: '-15%', y: 'calc(-7 * var(--vh))',
+                    x: '25%', y: 'calc(38 * var(--vh))',
                     active: true
                 },
                 {
@@ -126,7 +125,7 @@ export default {
                     imgSrcA: '../resource/tutorial/map_icon_normal_active.png',
                     imgSrcB: '../resource/tutorial/map_icon_normal_inactive.png',
                     text: '휴게 공간',
-                    x: '12%', y: 'calc(-7 * var(--vh))',
+                    x: '50%', y: 'calc(38 * var(--vh))',
                     active: true
                 },
                 {
@@ -134,7 +133,7 @@ export default {
                     imgSrcA: '../resource/tutorial/map_icon_premium_active.png',
                     imgSrcB: '../resource/tutorial/map_icon_premium_inactive.png',
                     text: '몽드 이기자',
-                    x: '-27%', y: 'calc(7 * var(--vh))',
+                    x: '15%', y: 'calc(52 * var(--vh))',
                     active: true
                 },
                 {
@@ -142,7 +141,7 @@ export default {
                     imgSrcA: '../resource/tutorial/map_icon_normal_active.png',
                     imgSrcB: '../resource/tutorial/map_icon_normal_inactive.png',
                     text: 'VP존',
-                    x: '-2%', y: 'calc(7 * var(--vh))',
+                    x: '39%', y: 'calc(52 * var(--vh))',
                     active: true
                 },
                 {
@@ -150,7 +149,7 @@ export default {
                     imgSrcA: '../resource/tutorial/map_icon_premium_active.png',
                     imgSrcB: '../resource/tutorial/map_icon_premium_inactive.png',
                     text: '휴게공간',
-                    x: '25%', y: 'calc(7 * var(--vh))',
+                    x: '63%', y: 'calc(52 * var(--vh))',
                     active: true
                 },
                 {
@@ -158,7 +157,7 @@ export default {
                     imgSrcA: '../resource/tutorial/map_icon_normal_active.png',
                     imgSrcB: '../resource/tutorial/map_icon_normal_inactive.png',
                     text: '더웨이브',
-                    x: '-2%', y: 'calc(21 * var(--vh))',
+                    x: '39%', y: 'calc(65 * var(--vh))',
                     active: true
                 },
                 {
@@ -166,7 +165,7 @@ export default {
                     imgSrcA: '../resource/tutorial/map_icon_premium_active.png',
                     imgSrcB: '../resource/tutorial/map_icon_premium_inactive.png',
                     text: 'F&B 중앙',
-                    x: '-16%', y: 'calc(33 * var(--vh))',
+                    x: '25%', y: 'calc( 77* var(--vh))',
                     active: true
                 },
                 {
@@ -174,7 +173,7 @@ export default {
                     imgSrcA: '../resource/tutorial/map_icon_normal_active.png',
                     imgSrcB: '../resource/tutorial/map_icon_normal_inactive.png',
                     text: '푸드에비뉴',
-                    x: '13%', y: 'calc(33 * var(--vh))',
+                    x: '50%', y: 'calc(77 * var(--vh))',
                     active: true
                 },
 
@@ -220,16 +219,16 @@ export default {
                 return currentCharacter.value.intro[textIndex.value] || {}
             } else {
                 if (iconId.value === 1) {
-                    iconX.value = '-8%';
-                    iconY.value = 'calc(-17 * var(--vh))';
+                    iconX.value = '37%';
+                    iconY.value = 'calc(28* var(--vh))';
                     currentMap.value = '../resource/tutorial/map_10.png'
                     currentMiniMap.value = '../resource/tutorial/mini_map_10.png'
                     currentText.value = '5F 남문 방면 휴게공간'
                     currentLargeText.value = '신비의 숲'
                     return currentCharacter.value.common4[textIndex.value]
                 } else if (iconId.value === 2) {
-                    iconX.value = '4%';
-                    iconY.value = 'calc(-8 * var(--vh))';
+                    iconX.value = '50%';
+                    iconY.value = 'calc(36 * var(--vh))';
                     currentMap.value = '../resource/tutorial/map_09.png'
                     currentMiniMap.value = '../resource/tutorial/mini_map_09.png'
                     currentX.value = -250
@@ -238,8 +237,8 @@ export default {
                     currentLargeText.value = '휴게공간'
                     return currentCharacter.value.common3[textIndex.value]
                 } else if (iconId.value === 3) {
-                    iconX.value = '-4%';
-                    iconY.value = 'calc(5.5 * var(--vh))';
+                    iconX.value = '40%';
+                    iconY.value = 'calc(50 * var(--vh))';
                     currentMap.value = '../resource/tutorial/map_08.png'
                     currentMiniMap.value = '../resource/tutorial/mini_map_08.png'
                     currentY.value = -100
@@ -247,8 +246,8 @@ export default {
                     currentLargeText.value = '부암동 가든'
                     return currentCharacter.value.common2[textIndex.value]
                 } else if (iconId.value === 4) {
-                    iconX.value = '4%';
-                    iconY.value = 'calc(3 * var(--vh))';
+                    iconX.value = '49%';
+                    iconY.value = 'calc(48 * var(--vh))';
                     currentMap.value = '../resource/tutorial/map_07.png'
                     currentMiniMap.value = '../resource/tutorial/mini_map_07.png'
                     currentX.value = -250
@@ -257,8 +256,8 @@ export default {
                     currentLargeText.value = '휴게공간'
                     return currentCharacter.value.common1[textIndex.value]
                 } else if (iconId.value === 5) {
-                    iconX.value = '-1%';
-                    iconY.value = 'calc(12 * var(--vh))';
+                    iconX.value = '44%';
+                    iconY.value = 'calc(57 * var(--vh))';
                     currentMap.value = '../resource/tutorial/map_06.png'
                     currentMiniMap.value = '../resource/tutorial/mini_map_06.png'
                     currentX.value = -330
@@ -266,8 +265,8 @@ export default {
                     currentLargeText.value = '몽드 이기자'
                     return currentCharacter.value.culture2[textIndex.value]
                 } else if (iconId.value === 6) {
-                    iconX.value = '-6%';
-                    iconY.value = 'calc(16 * var(--vh))';
+                    iconX.value = '41%';
+                    iconY.value = 'calc(61 * var(--vh))';
                     currentMap.value = '../resource/tutorial/map_05.png'
                     currentMiniMap.value = '../resource/tutorial/mini_map_05.png'
                     currentX.value = -250
@@ -276,8 +275,8 @@ export default {
                     currentLargeText.value = 'VP존'
                     return currentCharacter.value.culture[textIndex.value]
                 } else if (iconId.value === 7) {
-                    iconX.value = '4%';
-                    iconY.value = 'calc(14 * var(--vh))';
+                    iconX.value = '51%';
+                    iconY.value = 'calc(59 * var(--vh))';
                     currentMap.value = '../resource/tutorial/map_02.png'
                     currentMiniMap.value = '../resource/tutorial/mini_map_02.png'
                     currentX.value = -60
@@ -286,8 +285,8 @@ export default {
                     currentLargeText.value = '휴게공간'
                     return currentCharacter.value.shopping2[textIndex.value]
                 } else if (iconId.value === 8) {
-                    iconX.value = '-6%';
-                    iconY.value = 'calc(25.5 * var(--vh))';
+                    iconX.value = '39%';
+                    iconY.value = 'calc(70 * var(--vh))';
                     currentMap.value = '../resource/tutorial/map_01.png'
                     currentMiniMap.value = '../resource/tutorial/mini_map_01.png'
                     currentX.value = -180
@@ -296,8 +295,8 @@ export default {
                     currentLargeText.value = 'The Wave'
                     return currentCharacter.value.shopping[textIndex.value]
                 } else if (iconId.value === 9) {
-                    iconX.value = '0%';
-                    iconY.value = 'calc(39 * var(--vh))';
+                    iconX.value = '45%';
+                    iconY.value = 'calc(84 * var(--vh))';
                     currentMap.value = '../resource/tutorial/map_04.png'
                     currentMiniMap.value = '../resource/tutorial/mini_map_04.png'
                     currentY.value = -100
@@ -305,8 +304,8 @@ export default {
                     currentLargeText.value = 'F&B 중앙'
                     return currentCharacter.value.eatingOut2[textIndex.value]
                 } else if (iconId.value === 10) {
-                    iconX.value = '5%';
-                    iconY.value = 'calc(36 * var(--vh))';
+                    iconX.value = '50%';
+                    iconY.value = 'calc(81 * var(--vh))';
                     currentX.value = -180
                     currentMap.value = '../resource/tutorial/map_03.png'
                     currentMiniMap.value = '../resource/tutorial/mini_map_03.png'
@@ -405,6 +404,7 @@ export default {
         }
 
         onMounted(() => {
+            document.body.style.overflowY = 'hidden';
             setVH();
 
             window.addEventListener('resize', setVH);
@@ -445,8 +445,11 @@ export default {
 </script>
 
 <style scoped>
-.main {
-    width: 100%;
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     height: calc(100 * var(--vh));
 }
 
@@ -470,7 +473,7 @@ export default {
     justify-content: center;
     align-items: center;
     background-color: #fff;
-    width: 75%;
+    width: 70%;
     position: relative;
     border-radius: 16px;
     margin-left: 5%;
@@ -509,12 +512,12 @@ export default {
 
 .side-image-container {
     margin-top: calc(-5 * var(--vh));
-    margin-right: -4%;
-    position: relative;
+    position: absolute;
     overflow: hidden;
     width: 20%;
     display: flex;
     align-items: center;
+    right: 0%;
 }
 
 .side-image-container img {
@@ -637,23 +640,26 @@ export default {
 }
 
 .icon-container {
+    overflow: visible;
     pointer-events: none;
     position: absolute;
-    width: 100%;
-    height: calc(100 * var(--vh));
+    width: auto;
+    height: calc(10 * var(--vh));
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 1;
+    z-index: 3;
+    bottom: 0;
 
 }
 
 .icon-container2 {
+    overflow: hidden;
     pointer-events: none;
     position: absolute;
-    width: 100%;
-    height: calc(100 * var(--vh));
+    width: 10%;
+    height: calc(10 * var(--vh));
     display: flex;
     flex-direction: column;
     justify-content: center;
