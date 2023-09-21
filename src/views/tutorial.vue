@@ -1,5 +1,5 @@
 <template>
-    <div @click="next()" :style="bgStyle">
+    <div @click="next()" style="background-image: url('../resource/common/bg.png'); background-size: cover;" class="main">
         <div class=" top-section">
             <div class="text-container1">
                 <p>{{ characterContent.text }}</p>
@@ -9,12 +9,12 @@
             </div>
         </div>
         <div class="image-container1">
-            <img v-show="index === 0" src="@resource/tutorial/story_tree.png">
+            <img v-show="index === 0" src="../resource/tutorial/story_tree.png">
 
         </div>
         <div class="image-container2">
 
-            <img v-show="index >= 1" src="@resource/tutorial/map_01.png"
+            <img v-show="index >= 1" src="../resource/tutorial/map_01.png"
                 :style="{ transform: `scale(${zoom}) translate(${currentX}px, ${currentY}px)` }" alt="Loading..."
                 @touchstart="startDrag" @touchmove="drag" @touchend="endDrag" @touchcancel="endDrag" />
         </div>
@@ -29,7 +29,7 @@
                 <p class="large-text">The Wave</p>
             </div>
             <div class="image-right">
-                <img src="@resource/tutorial/mini_map_01.png" alt="Description of Image">
+                <img src="../resource/tutorial/mini_map_01.png" alt="Description of Image">
             </div>
         </div>
     </div>
@@ -56,13 +56,6 @@ export default {
         const lastX = ref(0)
         const lastY = ref(0)
 
-        const bgImageUrl = new URL('@resource/common/bg.png', import.meta.url).href;
-
-        const bgStyle = computed(() => {
-            return {
-                backgroundImage: `url(${bgImageUrl})`,
-            }
-        })
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
@@ -155,7 +148,6 @@ export default {
             endDrag,
             currentX,
             currentY,
-            bgStyle
 
         }
     }
