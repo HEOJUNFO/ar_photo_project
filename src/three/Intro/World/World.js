@@ -5,6 +5,7 @@ import Fox from './Fox.js'
 import Bell from './Bell.js'
 import Sorina from './Sorina.js'
 import Uno from './Uno.js'
+import Tree from './Tree.js'
 
 export default class World
 {
@@ -27,6 +28,7 @@ export default class World
             this.bell = new Bell()
             this.sorina = new Sorina()
             this.uno = new Uno()
+            this.tree = new Tree()
 
             this.environment = new Environment()
         })

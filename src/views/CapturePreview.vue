@@ -290,6 +290,10 @@ export default {
 
         const setColor = (color) => {
             currentColor.value = color;
+            if (currentTool.value === 'text') {
+                const input = document.querySelector('input');
+                input.focus();
+            }
         }
 
         const setDrawingTool = (tool) => {
@@ -298,6 +302,8 @@ export default {
 
         const setTextTool = (tool) => {
             currentTextTool.value = tool;
+            const input = document.querySelector('input');
+            input.focus();
         }
 
         const konvaContainer = ref(null);
@@ -386,7 +392,10 @@ export default {
         }
 
         const toggleFooter2 = () => {
-            premiumModal.value = true;
+            if (eventName.value === 'shopping2' || eventName.value === 'culture2' || eventName.value === 'eatingOut2' || eventName.value === 'common4') {
+                premiumModal.value = true;
+            }
+
             showFooter2.value = !showFooter2.value;
         }
 
@@ -486,6 +495,7 @@ export default {
             if (currentTool.value !== 'text') return;
 
 
+
             const input = document.createElement('input');
             input.style.position = 'absolute';
             input.style.top = '50%';
@@ -495,26 +505,29 @@ export default {
             document.body.appendChild(input);
             input.focus();
 
-            input.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter') {
-                    const text = new Konva.Text({
-                        x: 80,
-                        y: 160,
-                        text: input.value,
-                        fontFamily: 'Calibri',
-                        fontSize: 80,
-                        draggable: true,
-                        fill: currentColor.value,
-                        fontStyle: currentTextTool.value === 'bold' ? 'bold' : 'normal',
-                        textDecoration: currentTextTool.value === 'underline' ? 'underline' : 'none',
-                    });
-                    drawingLayer.add(text);
-                    layer.draw();
 
-                    addHistory();
+            input.addEventListener('touchend', function (e) {
 
-                    document.body.removeChild(input);
-                }
+                // Prevent the default action to stop scrolling in iOS
+                e.preventDefault();
+
+                const text = new Konva.Text({
+                    x: 0,
+                    y: 0,
+                    text: input.value,
+                    fontFamily: 'Calibri',
+                    fontSize: 30,
+                    draggable: true,
+                    fill: currentColor.value,
+                    fontStyle: currentTextTool.value === 'bold' ? 'bold' : 'normal',
+                    textDecoration: currentTextTool.value === 'underline' ? 'underline' : 'none',
+                });
+
+
+                drawingLayer.add(text);
+                layer.draw();
+                addHistory();
+                document.body.removeChild(input);
             });
 
         };

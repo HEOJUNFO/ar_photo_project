@@ -50,7 +50,7 @@ export default class AudioClass {
     } 
     dispose(){
       
-        this.sound.disconnect()
+        this.sound.stop()
     }
 
     update() {

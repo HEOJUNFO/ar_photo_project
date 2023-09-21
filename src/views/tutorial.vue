@@ -1,6 +1,5 @@
 <template>
-    <div @click.stop="next()" style="background-image: url('../resource/common/bg.png'); background-size: cover;"
-        class="main">
+    <div @click="next()" style="background-image: url('../resource/common/bg.png'); background-size: cover;" class="main">
         <div class=" top-section">
             <div class="text-container1">
                 <p>{{ characterContent.text }}</p>
@@ -9,12 +8,17 @@
                 <img :src="characterContent.src" alt="Side Image" />
             </div>
         </div>
-        <div class="image-container">
+        <div class="image-container1">
             <img v-show="index === 0" src="../resource/tutorial/story_tree.png">
+
+        </div>
+        <div class="image-container2">
+
             <img v-show="index >= 1" src="../resource/tutorial/map_01.png"
                 :style="{ transform: `scale(${zoom}) translate(${currentX}px, ${currentY}px)` }" alt="Loading..."
                 @touchstart="startDrag" @touchmove="drag" @touchend="endDrag" @touchcancel="endDrag" />
         </div>
+
         <div v-show="index >= 1" class="button-container1">
             <button @click.stop="zoomIn">+</button>
             <button @click.stop="zoomOut">-</button>
@@ -53,7 +57,6 @@ export default {
         const lastY = ref(0)
 
 
-
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
         const currentCharacterContent = computed(() => {
@@ -89,11 +92,14 @@ export default {
             }
         }
 
+        let startTime;
+
         const startDrag = (event) => {
             event.preventDefault()
             dragging.value = true
             lastX.value = event.touches[0].clientX
             lastY.value = event.touches[0].clientY
+            startTime = Date.now();
         }
 
         const drag = (event) => {
@@ -109,6 +115,10 @@ export default {
 
         const endDrag = () => {
             dragging.value = false
+            const endTime = Date.now();  // 종료 시간 기록
+            if (endTime - startTime <= 500) {  // 1초 이내인지 확인
+                next();  // 1초 이내라면 next() 호출
+            }
         }
 
         const setVH = () => {
@@ -227,7 +237,20 @@ export default {
     object-fit: cover;
 }
 
-.image-container {
+.image-container1 {
+    overflow: auto;
+    width: 100%;
+    height: auto;
+    position: absolute;
+    bottom: 0;
+}
+
+.image-container1 img {
+    width: 100%;
+    height: 100%;
+}
+
+.image-container2 {
     overflow: hidden;
     width: 100%;
     height: calc(80 * var(--vh));
@@ -235,7 +258,7 @@ export default {
     bottom: 0;
 }
 
-.image-container img {
+.image-container2 img {
     width: 100%;
     height: 100%;
 }

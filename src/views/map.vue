@@ -8,7 +8,7 @@
                 <img :src="characterContent.src" alt="Side Image" />
             </div>
         </div>
-        <div v-show="index <= 1">
+        <div v-show="index <= 0">
             <div v-for="icon in icons" :key="icon.id" class="icon-container" :style="{ left: icon.x, top: icon.y }">
                 <img v-show="(icon.id === iconId) || (icon.id === clearIcon)" :src="currentCharacter.maker"
                     style="position:absolute; width: auto; height:100%; margin-top: -100%; " />
@@ -19,13 +19,13 @@
                     {{ icon.text }}</p>
             </div>
         </div>
-        <div v-show="index === 2" class="icon-container2" :style="{ left: iconX, top: iconY }">
+        <div v-show="index === 1 || index === 2" class="icon-container2" :style="{ left: iconX, top: iconY }">
             <img v-show="iconId === 1" src="../resource/tutorial/Gemston_Green.png" />
             <img v-show="iconId !== 1" src="../resource/tutorial/Gemston_Pink.png" />
         </div>
         <div class="image-container">
-            <img v-show="index <= 1" src="../resource/tutorial/story_tree_bg.png">
-            <img v-show="index === 2" src="../resource/tutorial/map.png">
+            <img v-show="index <= 0" src="../resource/tutorial/story_tree_bg.png">
+            <img v-show="index === 1 || index === 2" src="../resource/tutorial/map.png">
         </div>
         <div v-show="index >= 3" class="image-container2">
             <img :src="currentMap" :style="{ transform: `scale(${zoom}) translate(${currentX}px, ${currentY}px)` }"
@@ -333,24 +333,15 @@ export default {
                 index.value = 1
                 textIndex.value = 0
                 iconId.value = icon.id
-                icon.active = false
+
                 clearIcon.value = 0
+
             }
-            if (index.value === 1) {
-                index.value = 1
-                textIndex.value = 0
-                iconId.value = icon.id
-                if (localStorage.getItem(`clear${previewicon.value.id}`) === 'true') {
-                    previewicon.value.active = false;
-                } else {
-                    previewicon.value.active = true;
-                }
-                icon.active = false
-                previewicon.value = icon
-            }
+
         }
 
         const next = () => {
+            console.log(index.value)
             if (index.value === 1) {
                 index.value = 2
                 textIndex.value = 1

@@ -67,7 +67,7 @@ export default {
         let experience;
         const showModal = ref(false);
         const eventName = ref('capture')
-        const selectedImage = ref(null)
+        const selectedImage = ref()
         const enableFilp = ref(true)
 
         const characterStore = useCharacterStore()
@@ -137,6 +137,7 @@ export default {
             }
         }
 
+
         const saveImage = (image) => {
             imageDataStore.setImageData(image)
             imageDataStore.setEventName(eventName.value)
@@ -168,6 +169,8 @@ export default {
             setVH();
 
             window.addEventListener('resize', setVH);
+
+            selectedImage.value = images.value[0]
 
             experience = new Experience(document.querySelector('canvas.webgl'), saveImage);
 

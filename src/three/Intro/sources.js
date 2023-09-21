@@ -39,5 +39,14 @@ export default [
         name: 'unoModel1',
         type: 'gltfModel',
         path: '../models/Uno/TheFlash_Uno_SD_03-001.gltf'
-    }
+    },{
+        name: 'treeModel',
+        type: 'gltfModel',
+        path: '../models/intro/Tree.gltf'
+    },
+    // {
+    //     name:'exr',
+    //     type:'exrTexture',
+    //     path:'https://storage.googleapis.com/donmccurdy-static/footprint_court_2k.exr'
+    // }
 ]
