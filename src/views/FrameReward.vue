@@ -1,9 +1,8 @@
 <template>
-    <div @click.stop="next()" class="loading-container"
-        style="background-image: url('../resource/common/bg.png'); background-size: cover;">
+    <div @click.stop="next()" class="loading-container" :style="bgStyle">
         <div class="image-container2">
             <div class="reward-container">
-                <img src="../resource/common/sticker_reward_bg.png" />
+                <img src="@resource/common/sticker_reward_bg.png" />
                 <img :src="currentImageSrc" />
                 <p class="p">{{ currentImageText }}</p>
             </div>
@@ -22,6 +21,11 @@ import { ref, computed, watch, onMounted } from 'vue'
 import router from '../router'
 import { useCharacterStore } from '../stores/characterStore.js'
 
+
+const filter2 = new URL('@resource/filter/02_filter.png', import.meta.url).href;
+const filter3 = new URL('@resource/filter/03_filter.png', import.meta.url).href;
+const filter4 = new URL('@resource/filter/04_filter.png', import.meta.url).href;
+const filter5 = new URL('@resource/filter/05_filter.png', import.meta.url).href;
 export default {
     name: 'FrameReward',
     setup() {
@@ -30,6 +34,13 @@ export default {
         const index = ref(0)
         const textIndex = ref(5)
         const commonIndex = ref(0)
+        const bgImageUrl = new URL('@resource/common/bg.png', import.meta.url).href;
+
+        const bgStyle = computed(() => {
+            return {
+                backgroundImage: `url(${bgImageUrl})`,
+            }
+        })
 
         const currentImageSrc = ref('')
         const currentImageText = ref('')
@@ -99,19 +110,19 @@ export default {
         onMounted(() => {
             if (router.currentRoute.value.query.eventName === 'common1') {
                 currentImageText.value = '여름의 숲 프레임 모델링'
-                currentImageSrc.value = '../resource/filter/03_filter.png'
+                currentImageSrc.value = filter3
             }
             else if (router.currentRoute.value.query.eventName === 'common2') {
                 currentImageText.value = '봄의 숲 프레임 모델링'
-                currentImageSrc.value = '../resource/filter/02_filter.png'
+                currentImageSrc.value = filter2
             }
             else if (router.currentRoute.value.query.eventName === 'common3') {
                 currentImageText.value = '겨울의 숲 프레임 모델링'
-                currentImageSrc.value = '../resource/filter/04_filter.png'
+                currentImageSrc.value = filter4
             }
             else if (router.currentRoute.value.query.eventName === 'common4') {
                 currentImageText.value = '신비의 숲 프레임 모델링'
-                currentImageSrc.value = '../resource/filter/05_filter.png'
+                currentImageSrc.value = filter5
                 localStorage.setItem('item11', 'used')
                 textIndex.value = 6
 
@@ -132,6 +143,7 @@ export default {
             currentImageSrc,
             currentImageText,
             index,
+            bgStyle
         }
     }
 }

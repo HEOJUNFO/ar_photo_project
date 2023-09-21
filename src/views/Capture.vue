@@ -53,6 +53,7 @@
     </div>
 </template>
 
+
 <script>
 import { useCharacterStore } from '../stores/characterStore.js'
 import { useImageDataStore } from '../stores/imageData.js'
@@ -60,6 +61,12 @@ import Experience from '../three/Experience/Experience.js'
 import { onMounted, computed, ref } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router'
 import router from '../router';
+
+const filter01 = new URL('@resource/filter/01_filter.png', import.meta.url).href;
+const filter02 = new URL('@resource/filter/02_filter.png', import.meta.url).href;
+const filter03 = new URL('@resource/filter/03_filter.png', import.meta.url).href;
+const filter04 = new URL('@resource/filter/04_filter.png', import.meta.url).href;
+const filter05 = new URL('@resource/filter/05_filter.png', import.meta.url).href;
 
 export default {
     name: 'capture',
@@ -83,23 +90,23 @@ export default {
             [
                 {
                     id: 1,
-                    src: '../resource/filter/01_filter.png',
+                    src: filter01,
                     active: true
                 }, {
                     id: 2,
-                    src: '../resource/filter/02_filter.png',
+                    src: filter02,
                     active: false
                 }, {
                     id: 3,
-                    src: '../resource/filter/03_filter.png',
+                    src: filter03,
                     active: false
                 }, {
                     id: 4,
-                    src: '../resource/filter/04_filter.png',
+                    src: filter04,
                     active: false
                 }, {
                     id: 5,
-                    src: '../resource/filter/05_filter.png',
+                    src: filter05,
                     active: false
                 }
             ]

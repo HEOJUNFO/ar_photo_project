@@ -2,7 +2,7 @@
     <div>
         <loading-container>
         </loading-container>
-        <div class="loading-container" style="background-image: url('../resource/common/bg.png');">
+        <div class="loading-container" :style="bgStyle">
             <div class=" top-section">
                 <div class="text-container1">
                     <p>숲에 동행할 요정을 골라주세요</p>
@@ -58,10 +58,12 @@ import router from '../router'
 import LoadingContainer from '../components/LoadingContainer.vue'
 
 const IMAGES = [
-    '../resource/intro/Bell.png',
-    '../resource/intro/Uno.png',
-    '../resource/intro/Sorina.png',
-]
+    new URL('@resource/intro/Bell.png', import.meta.url).href,
+    new URL('@resource/intro/Uno.png', import.meta.url).href,
+    new URL('@resource/intro/Sorina.png', import.meta.url).href,
+];
+
+
 
 
 export default {
@@ -73,6 +75,13 @@ export default {
         const characterStore = useCharacterStore()
         const index = ref(0)
         const imageIndex = ref(0)
+        const bgImageUrl = new URL('@resource/common/bg.png', import.meta.url).href;
+
+        const bgStyle = computed(() => {
+            return {
+                backgroundImage: `url(${bgImageUrl})`,
+            }
+        })
 
         const currentImageSrc = computed(() => IMAGES[imageIndex.value])
 
@@ -129,7 +138,8 @@ export default {
             characterName: characterName,
             characterContent: currentCharacterContent,
             selectCharacterSrc: characterStore.currentCharacter?.src,
-            handleScroll
+            handleScroll,
+            bgStyle
         }
     }
 }

@@ -2,20 +2,20 @@
     <div class="loading-container">
 
         <div class="image-container">
-            <img src="../resource/landing/web-landing-page.jpg" alt="Image 1" />
+            <img src="@resource/landing/web-landing-page.jpg" alt="Image 1" />
             <button @click="start()">신비의 숲 시작하기</button>
 
         </div>
 
 
         <div class="image-container2">
-            <img src="../resource/landing/web-landing-page-2.jpg" alt="Image 2" />
+            <img src="@resource/landing/web-landing-page-2.jpg" alt="Image 2" />
             <button @click="start()">신비의 숲 시작하기</button>
         </div>
 
 
         <div class="image-container">
-            <img src="../resource/landing/web-landing-page-3.jpg" alt="Image 3" />
+            <img src="@resource/landing/web-landing-page-3.jpg" alt="Image 3" />
         </div>
     </div>
 </template>

@@ -243,6 +243,8 @@
     </div>
 </template>
 
+
+
 <script>
 import { onMounted, ref, watch } from 'vue';
 import router from '../router';
@@ -250,6 +252,10 @@ import { useImageDataStore } from '../stores/imageData';
 import { useRewardsStore } from '../stores/reward';
 import Konva from 'konva';
 
+const coupon2 = new URL('@resource/storageBox/02_Coupon_active.png', import.meta.url).href;
+const coupon3 = new URL('@resource/storageBox/03_Coupon_active.png', import.meta.url).href;
+const coupon4 = new URL('@resource/storageBox/04_Coupon_active.png', import.meta.url).href;
+const iceCream = new URL('@resource/storageBox/IceCream_active.png', import.meta.url).href;
 
 export default {
     name: 'CapturePreview',
@@ -546,19 +552,19 @@ export default {
 
             if (eventName.value === 'shopping2') {
                 premiumModal.value = true;
-                premiumImageSrc.value = '../resource/storageBox/02_Coupon_active.png'
+                premiumImageSrc.value = coupon2
                 premiumText.value = '패션·잡화 1만원 금액할인권'
             } else if (eventName.value === 'culture2') {
                 premiumModal.value = true;
-                premiumImageSrc.value = '../resource/storageBox/04_Coupon_active.png'
+                premiumImageSrc.value = coupon4
                 premiumText.value = '몽드이기자 1만원 금액할인권'
             } else if (eventName.value === 'eatingOut2') {
                 premiumModal.value = true;
-                premiumImageSrc.value = '../resource/storageBox/03_Coupon_active.png'
+                premiumImageSrc.value = coupon3
                 premiumText.value = 'F&B 5천원 금액할인권'
             } else if (eventName.value === 'common4') {
                 premiumModal.value = true;
-                premiumImageSrc.value = '../resource/storageBox/IceCream_active.png'
+                premiumImageSrc.value = iceCream
                 premiumText.value = '백미당 아이스크림 1EA 쿠폰 교환권'
             }
 

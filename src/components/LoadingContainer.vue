@@ -2,8 +2,8 @@
     <div>
         <transition name="fade">
             <div v-if="systemCheck" class="loading-container">
-                <img src="../resource/common/bg.png" alt="Loading..." />
-                <img id="spinner" src="../resource/common/Spinner.png" />
+                <img src="@resource/common/bg.png" alt="Loading..." />
+                <img id="spinner" src="@resource/common/Spinner.png" />
                 <div v-if="showModal" class="text-container2">
                     <p class="character-name">푸짐한 상품과 콘텐츠를</p>
                     <p class="character-name">제공해드리기 위해</p>
