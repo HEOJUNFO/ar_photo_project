@@ -29,7 +29,7 @@
                 <p class="large-text">The Wave</p>
             </div>
             <div class="image-right">
-                <img src="../resource/tutorial/mini_map_01.png" alt="Description of Image">
+                <img src="@resource/tutorial/mini_map_01.png" alt="Description of Image">
             </div>
         </div>
     </div>
