@@ -1,12 +1,13 @@
 <template>
     <div>
         <div v-show="showCaptureButton" class=" top-section2">
-            <div class="text-container2">
+            <!-- <div class="text-container2">
                 <p id="typed-text"></p>
             </div>
             <div class="side-image-container3">
                 <img :src="characterContent?.src" alt="Side Image" />
-            </div>
+            </div> -->
+            <img id="logo" src="@resource/common/logo.png" style="width: 80%; height: auto; " />
         </div>
         <div v-show="!showCaptureButton" class="top-section">
             <div class="side-image-container1">
@@ -126,6 +127,7 @@ export default {
             let video = document.getElementById("webcam");
             let image = document.getElementById("image");
             let img = document.getElementById("face");
+            let logo = document.getElementById("logo");
 
             let canvas = document.createElement('canvas');
             canvas.width = video.videoWidth;
@@ -133,6 +135,11 @@ export default {
             let ctx = canvas.getContext('2d');
 
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            let logoXPosition = (canvas.width - logo.width) / 2;
+
+            ctx.drawImage(logo, logoXPosition, 0, logo.width, logo.height);
+
+
             img.src = canvas.toDataURL();
 
             video.style.display = 'none';
@@ -349,11 +356,11 @@ export default {
         onMounted(() => {
             setVH();
             window.addEventListener('resize', setVH);
-            setTimeout(typeText, 1000);
+            // setTimeout(typeText, 1000);
         })
-        watch(() => currentCharacterContent.value.text, () => {
-            setTimeout(typeText, 200);
-        });
+        // watch(() => currentCharacterContent.value.text, () => {
+        //     setTimeout(typeText, 200);
+        // });
         return {
             saveImage,
             characterContent: currentCharacterContent,
@@ -588,10 +595,11 @@ export default {
     flex-direction: row;
     width: 100%;
     height: calc(10 * var(--vh));
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     z-index: 10;
     margin-top: calc(5 * var(--vh));
+
 }
 
 
