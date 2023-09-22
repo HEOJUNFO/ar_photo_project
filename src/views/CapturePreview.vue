@@ -59,7 +59,7 @@
         </div>
         <div v-show="showFooter2" class="footer2">
             <p>공유 방법을 선택해 주세요.</p>
-            <button @click="editor()">방명록에 공유하기</button>
+            <!-- <button @click="editor()">방명록에 공유하기</button> -->
             <button @click="share()">SNS에 공유하기</button>
             <button @click="next()">참여하지 않고 나가기</button>
         </div>
@@ -221,7 +221,7 @@
                     </svg></button>
             </div>
         </div>
-        <div v-if="premiumModal" class="modal2">
+        <div v-if="premiumModal" class="modal2" @click="premiumModal = false">
             <div class="modal-content2">
                 <button @click="premiumModal = false" class="close-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                         height="25" viewBox="0 0 24 25" fill="none">
@@ -280,6 +280,7 @@ export default {
         const isDrawing = ref(false);
 
         const imageDataStore = useImageDataStore();
+        const rewardsStore = useRewardsStore();
 
         const bgClick = () => {
             if (showFooter2.value) {

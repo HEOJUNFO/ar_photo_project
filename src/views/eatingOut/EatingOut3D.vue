@@ -67,7 +67,6 @@ export default {
 
             clearTimeout(inactivityTimeout);
 
-
             inactivityTimeout = setTimeout(() => {
                 showOverlay.value = true;
             }, 5000);

@@ -35,6 +35,8 @@ import CommonFour3D from "@views/common/CommonFour3D.vue"
 import GuestBook from "@views/GuestBook.vue"
 import Mission1 from "@views/test/Mission1.vue"
 import MissionOut from "@views/test/MissionOut.vue"
+import Mission2 from "@views/test/Mission2.vue"
+import Mission3 from "@views/test/Mission3.vue"
 
 
 export const routes = [
@@ -72,7 +74,10 @@ export const routes = [
     {path: '/commonfour3d', component: CommonFour3D, name: 'CommonFour3D'},
     {path: '/guestbook', component: GuestBook, name: 'GuestBook'},
     {path: '/mission1', component: Mission1, name: 'Mission1'},
-    {path: '/missionout', component: MissionOut, name: 'MissionOut'}
+    {path: '/missionout', component: MissionOut, name: 'MissionOut'},
+    {path: '/mission2', component: Mission2, name: 'Mission2'},
+    {path: '/mission3', component: Mission3, name: 'Mission3'},
+
     
 
 

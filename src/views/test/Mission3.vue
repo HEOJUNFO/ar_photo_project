@@ -3,8 +3,8 @@
 
         <div class="image-container">
             <img src="@resource/mission/web-landing-page-1.jpg" alt="Image 1" />
-            <button @click="start()">다시하기
-            </button>
+            <button @click="start()">염색 추천 이벤트</button>
+
         </div>
         <div class="image-container2">
             <img src="@resource/mission/web-landing-page-2.jpg" alt="Image 2" />
@@ -20,7 +20,6 @@ import router from '../../router'
 export default {
     name: 'Landing',
     setup() {
-        const eventName = ref('')
 
 
         const next1 = () => {
@@ -39,13 +38,7 @@ export default {
         const start = () => {
             scrollToTop();
             setTimeout(() => {
-                if (eventName.value === 'culture') {
-                    router.push('/culture3d');
-                } else if (eventName.value === 'eatingOut') {
-                    router.push('/eatingout3d');
-                } else if (eventName.value === 'culture2Clear') {
-                    router.push('/culture3');
-                }
+                router.push('/culture3');
             }, 500);
         }
 
@@ -59,8 +52,6 @@ export default {
             setVH();
 
             window.addEventListener('resize', setVH);
-
-            eventName.value = router.currentRoute.value.query.eventName;
 
         });
 

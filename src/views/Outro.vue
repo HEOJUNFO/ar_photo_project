@@ -91,7 +91,7 @@ export default {
                     return;
                 }
             } else if (index.value === 2) {
-                router.push({ path: '/map', query: { eventName: eventName.value } });
+                router.push({ path: '/missionout', query: { eventName: eventName.value } });
                 return;
             }
 
