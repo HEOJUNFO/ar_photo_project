@@ -12,14 +12,15 @@ export default class Renderer
         this.camera = this.experience.camera
 
         this.setInstance()
-        this.setWebcamBackground()
+  
     }
 
     setInstance()
     {
         this.instance = new THREE.WebGLRenderer({
             canvas: this.canvas,
-            antialias: true
+            antialias: true,
+            alpha: true
         })
         this.instance.toneMapping = THREE.CineonToneMapping
         this.instance.toneMappingExposure = 1.75
@@ -29,23 +30,7 @@ export default class Renderer
         this.instance.setPixelRatio(this.sizes.pixelRatio)
     }
 
-    async setWebcamBackground() {
-        const video = document.createElement('video');
 
-        const stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: 'environment' }
-        });
-        video.srcObject = stream;
-        video.play();
-
-        const videoTexture = new THREE.VideoTexture(video);
-        videoTexture.minFilter = THREE.LinearFilter;
-        videoTexture.magFilter = THREE.LinearFilter;
-        videoTexture.format = THREE.RGBAFormat;
-        videoTexture.colorSpace = THREE.SRGBColorSpace;
-
-        this.scene.background = videoTexture;
-    }
 
     resize()
     {

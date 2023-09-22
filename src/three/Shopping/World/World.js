@@ -2,6 +2,7 @@ import Experience from '../Experience.js'
 import Environment from './Environment.js'
 import Floor from './Floor.js'
 import Fox from './Fox.js'
+import BroomStick from './BroomStick.js'
 
 export default class World
 {
@@ -15,7 +16,7 @@ export default class World
         this.resources.on('ready', () =>
         {
             // Setup
-            this.fox = new Fox()
+            this.broomStick = new BroomStick()
             this.environment = new Environment()
         })
     }
@@ -23,7 +24,7 @@ export default class World
 
     update()
     {
-        if(this.fox)
-            this.fox.update()
+        if(this.broomStick)
+            this.broomStick.update()
     }
 }

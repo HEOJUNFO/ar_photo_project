@@ -82,6 +82,7 @@ export default {
         const rewardsStore = useRewardsStore()
         const index = ref(0)
         const textIndex = ref(6)
+        const eventName = ref('')
 
         const bgImageUrl = new URL('@resource/common/bg.png', import.meta.url).href;
 
@@ -147,7 +148,7 @@ export default {
                 textIndex.value = 9
             }
             if (index.value === 3) {
-                router.push('/map')
+                router.push({ path: '/missionout', query: { eventName: eventName.value } });
             }
         }
         const setVH = () => {
@@ -159,6 +160,8 @@ export default {
             setVH();
 
             window.addEventListener('resize', setVH);
+
+            eventName.value = router.currentRoute.value.query.eventName;
         })
 
         return {

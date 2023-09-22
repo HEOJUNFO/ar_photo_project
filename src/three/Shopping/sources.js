@@ -26,5 +26,9 @@ export default [
         name: 'foxModel',
         type: 'gltfModel',
         path: '../models/Fox/glTF/Fox.gltf'
+    },{
+        name: 'stickModel',
+        type: 'gltfModel',
+        path: '../models/Shopping/BroomStick.gltf'
     }
 ]

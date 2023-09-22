@@ -33,6 +33,9 @@ import TextEditor from "@views/TextEditor.vue"
 import CommonFour from "@views/common/CommonFour.vue"
 import CommonFour3D from "@views/common/CommonFour3D.vue"
 import GuestBook from "@views/GuestBook.vue"
+import Mission1 from "@views/test/Mission1.vue"
+import MissionOut from "@views/test/MissionOut.vue"
+
 
 export const routes = [
     {path: '/', component: Landing, name: 'Landing'},
@@ -68,6 +71,9 @@ export const routes = [
     {path: '/commonfour', component: CommonFour, name: 'CommonFour'},
     {path: '/commonfour3d', component: CommonFour3D, name: 'CommonFour3D'},
     {path: '/guestbook', component: GuestBook, name: 'GuestBook'},
+    {path: '/mission1', component: Mission1, name: 'Mission1'},
+    {path: '/missionout', component: MissionOut, name: 'MissionOut'}
+    
 
 
 ]
