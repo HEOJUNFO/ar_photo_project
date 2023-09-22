@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject } from 'vue'
 import router from '../../router'
 
 export default {

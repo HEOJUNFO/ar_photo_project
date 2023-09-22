@@ -140,8 +140,12 @@ export default {
             let index = 0;
 
             clearTimeout(typingTimeout);
+            try {
+                textContainer.textContent = "";
+            } catch (error) {
+                console.error("Error occurred:", error);
+            }
 
-            textContainer.textContent = "";
 
             function typing() {
                 if (index < content.length) {
@@ -232,12 +236,12 @@ export default {
             console.log(index.value)
             if (index.value === 0) {
                 setTimeout(() => {
-                    playAudio2()
+                    playAudio()
                     finishModal.value = true
                 }, 1000);
 
                 setTimeout(() => {
-                    playAudio3()
+                    playAudio2()
                     router.push({ path: '/stickerreward', query: { eventName: "culture" } });
                 }, 3500);
             }

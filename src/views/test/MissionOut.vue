@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject } from 'vue'
 import router from '../../router'
 
 export default {
@@ -48,8 +48,7 @@ export default {
 
 
         const start = () => {
-            playAudio();
-            playAudio2();
+
             scrollToTop();
             setTimeout(() => {
                 if (eventName.value === 'culture') {
@@ -60,6 +59,8 @@ export default {
                     router.push('/culture3');
                 }
             }, 500);
+            playAudio();
+            playAudio2();
         }
 
 

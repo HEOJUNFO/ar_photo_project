@@ -170,11 +170,11 @@ export default {
 
         const next = () => {
             if (count.value < 2) {
-
+                playAudio3()
                 count.value++
 
             } else {
-                playAudio3()
+
                 playAudio()
                 finishModal.value = true
                 playAudio2()

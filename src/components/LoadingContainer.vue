@@ -154,7 +154,7 @@ export default {
 
 
         const close = () => {
-            router.go(-1)
+            // router.go(-1)
         }
 
         const setVH = () => {
