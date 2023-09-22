@@ -1,5 +1,7 @@
 <template>
     <div>
+        <loading-container>
+        </loading-container>
         <div v-if="showOverlay" class="overlay" @click="hideOverlay"><svg :class="{ 'dragging-guide': showOverlay }"
                 xmlns=" http://www.w3.org/2000/svg" width="66" height="74" viewBox="0 0 66 74" fill="none">
                 <g clip-path="url(#clip0_112_660)">
@@ -21,7 +23,7 @@
             </svg> </div>
         <div class="top-section">
             <div class="text-container1">
-                <p>{{ characterContent.text }}</p>
+                <p id="typed-text"></p>
             </div>
             <div class="side-image-container">
                 <img :src="characterContent.src" alt="Side Image" />
@@ -39,9 +41,13 @@ import { onMounted, ref, computed } from 'vue';
 import router from '../../router';
 import { useCharacterStore } from '../../stores/characterStore.js'
 import { onBeforeRouteLeave } from 'vue-router'
+import LoadingContainer from '../../components/LoadingContainer.vue'
 
 export default {
     name: 'EatingOut3d',
+    components: {
+        LoadingContainer
+    },
     setup() {
         let experience;
         const characterStore = useCharacterStore()
@@ -94,11 +100,22 @@ export default {
             experience = new Experience(document.querySelector('canvas.webgl'), next);
 
             resetInactivityTimeout();
-
-
             document.addEventListener('touchstart', resetInactivityTimeout);
             document.addEventListener('mousedown', resetInactivityTimeout);
 
+            const content = currentCharacterContent.value.text;
+            const textContainer = document.getElementById("typed-text");
+            let index = 0;
+
+            function typeText() {
+                if (index < content.length) {
+                    textContainer.textContent += content.charAt(index);
+                    index++;
+                    setTimeout(typeText, 50);
+                }
+            }
+
+            setTimeout(typeText, 1500);
 
         });
 
@@ -188,6 +205,7 @@ export default {
     border-radius: 10px;
     overflow-wrap: break-word;
     word-break: keep-all;
+    text-align: center;
 }
 
 .side-image-container {

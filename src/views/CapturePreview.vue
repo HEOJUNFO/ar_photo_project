@@ -519,8 +519,8 @@ export default {
                 e.preventDefault();
 
                 const text = new Konva.Text({
-                    x: 0,
-                    y: 0,
+                    x: 150,
+                    y: 250,
                     text: input.value,
                     fontFamily: 'Calibri',
                     fontSize: 30,

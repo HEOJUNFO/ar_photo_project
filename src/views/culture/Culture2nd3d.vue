@@ -2,7 +2,7 @@
     <div>
         <div v-show="showCaptureButton" class=" top-section2">
             <div class="text-container2">
-                <p>{{ characterContent?.text }}</p>
+                <p id="typed-text"></p>
             </div>
             <div class="side-image-container3">
                 <img :src="characterContent?.src" alt="Side Image" />
@@ -65,7 +65,7 @@ import vision from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0"
 import router from "../../router";
 import { useImageDataStore } from '../../stores/imageData.js'
 import { useCharacterStore } from '../../stores/characterStore.js'
-import { onMounted, computed, ref } from "vue";
+import { onMounted, computed, ref, watch } from "vue";
 
 const { ImageSegmenter, SegmentationMask, FilesetResolver } = vision;
 let runningMode = "VIDEO"
@@ -310,6 +310,27 @@ export default {
             return char?.culture2[textIndex.value] || {}
         })
 
+        let typingTimeout;
+
+        const typeText = () => {
+            const content = currentCharacterContent.value.text;
+            const textContainer = document.getElementById("typed-text");
+            let index = 0;
+
+            clearTimeout(typingTimeout);
+
+            textContainer.textContent = "";
+
+            function typing() {
+                if (index < content.length) {
+                    textContainer.textContent += content.charAt(index);
+                    index++;
+                    typingTimeout = setTimeout(typing, 50);
+                }
+            }
+            typing();
+        };
+
 
         const setVH = () => {
             let vh = window.innerHeight * 0.01;
@@ -328,7 +349,11 @@ export default {
         onMounted(() => {
             setVH();
             window.addEventListener('resize', setVH);
+            setTimeout(typeText, 1000);
         })
+        watch(() => currentCharacterContent.value.text, () => {
+            setTimeout(typeText, 200);
+        });
         return {
             saveImage,
             characterContent: currentCharacterContent,
@@ -609,6 +634,7 @@ export default {
     border-radius: 10px;
     overflow-wrap: break-word;
     word-break: keep-all;
+    text-align: center;
 }
 
 

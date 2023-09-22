@@ -4,7 +4,7 @@
         </loading-container>
         <div class=" top-section2">
             <div class="text-container2">
-                <p>{{ characterContent?.text }}</p>
+                <p id="typed-text"></p>
             </div>
             <div class="side-image-container3">
                 <img :src="characterContent?.src" alt="Side Image" />
@@ -72,7 +72,6 @@ export default {
         const currentCharacterContent = computed(() => {
             return currentCharacter.value.culture[textIndex.value] || {}
         })
-
 
         const stone1 = () => {
             visibleStone1.value = false
@@ -178,11 +177,28 @@ export default {
             document.documentElement.style.setProperty('--vh', `${vh}px`);
         }
 
+
+
         onMounted(() => {
             setVH();
 
             window.addEventListener('resize', setVH);
             experience = new Experience(document.querySelector('canvas.webgl2'), next);
+
+            const content = currentCharacterContent.value.text;
+            const textContainer = document.getElementById("typed-text");
+            let index = 0;
+
+            function typeText() {
+                if (index < content.length) {
+                    textContainer.textContent += content.charAt(index);
+                    index++;
+                    setTimeout(typeText, 50); // 타이핑 속도 조절
+                }
+            }
+
+            setTimeout(typeText, 1500);
+
             const interval = setInterval(updatePercentage, 1);
 
             setTimeout(() => {
@@ -378,6 +394,7 @@ export default {
     border-radius: 10px;
     overflow-wrap: break-word;
     word-break: keep-all;
+    text-align: center;
 }
 
 

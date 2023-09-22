@@ -1,7 +1,5 @@
 <template>
     <div @click.stop="next()">
-        <loading-container>
-        </loading-container>
         <div class="loading-container" :style="bgStyle">
             <div class="image-container2">
                 <div class="reward-container">
@@ -14,7 +12,7 @@
                 <img :src="characterContent?.src" alt="Description" class="overlap-image" />
                 <p class="character-name">{{ selectCharacterName }}</p>
                 <hr class="character-line">
-                <p class="character-text">{{ characterContent?.text }}</p>
+                <p class="character-text" id="typed-text"></p>
             </div>
         </div>
     </div>
@@ -26,7 +24,6 @@ import { useImageDataStore } from '../stores/imageData'
 import { useRewardsStore } from '../stores/reward'
 import { ref, computed, watch, onMounted } from 'vue'
 import router from '../router'
-import LoadingContainer from '../components/LoadingContainer.vue'
 
 const coupon02 = new URL('@resource/storageBox/02_Coupon_active.png', import.meta.url).href;
 const coupon03 = new URL('@resource/storageBox/03_Coupon_active.png', import.meta.url).href;
@@ -35,9 +32,6 @@ const iceCream = new URL('@resource/storageBox/IceCream_active.png', import.meta
 
 export default {
     name: 'Culture2',
-    components: {
-        LoadingContainer
-    },
     setup() {
         const characterStore = useCharacterStore()
         const imageDataStore = useImageDataStore()
@@ -72,7 +66,26 @@ export default {
             }
 
         })
+        let typingTimeout;
 
+        const typeText = () => {
+            const content = currentCharacterContent.value.text;
+            const textContainer = document.getElementById("typed-text");
+            let index = 0;
+
+            clearTimeout(typingTimeout);
+
+            textContainer.textContent = "";
+
+            function typing() {
+                if (index < content.length) {
+                    textContainer.textContent += content.charAt(index);
+                    index++;
+                    typingTimeout = setTimeout(typing, 50);
+                }
+            }
+            typing();
+        };
 
         const next = () => {
             if (index.value === 0) {
@@ -111,7 +124,7 @@ export default {
 
 
             eventName.value = imageDataStore.getEventName();
-            console.log(eventName.value)
+
 
             if (eventName.value === 'shopping2Clear') {
                 rewardSrc.value = coupon02
@@ -127,7 +140,12 @@ export default {
                 rewardSrc.value = iceCream
                 rewardText.value = '백미당 아이스크림 1EA 쿠폰 교환권'
             }
+
+            setTimeout(typeText, 1000);
         })
+        watch(() => textIndex.value, () => {
+            setTimeout(typeText, 200);
+        });
 
         return {
             index,
@@ -179,7 +197,7 @@ export default {
 }
 
 .text-container2 .character-text {
-    padding: 7.5px 15px;
+    padding: 7.5px 150px 7.5px 15px;
     color: #767676;
     font-family: "NanumSquare", sans-serif;
     font-size: 18px;
@@ -187,11 +205,11 @@ export default {
     font-weight: 700;
     line-height: 26px;
     letter-spacing: -0.45px;
-    align-self: flex-start;
     text-align: left;
     max-width: 20ch;
     overflow-wrap: break-word;
     word-break: keep-all;
+    text-align: center;
 }
 
 .character-line {

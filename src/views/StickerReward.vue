@@ -50,7 +50,7 @@
             <img :src="characterContent.src" alt="Description" class="overlap-image" />
             <p class="character-name">{{ selectCharacterName }}</p>
             <hr class="character-line">
-            <p class="character-text">{{ characterContent.text }}</p>
+            <p class="character-text" id="typed-text"></p>
         </div>
 
     </div>
@@ -111,6 +111,27 @@ export default {
             }
         })
 
+        let typingTimeout;
+
+        const typeText = () => {
+            const content = currentCharacterContent.value.text;
+            const textContainer = document.getElementById("typed-text");
+            let index = 0;
+
+            clearTimeout(typingTimeout);
+
+            textContainer.textContent = "";
+
+            function typing() {
+                if (index < content.length) {
+                    textContainer.textContent += content.charAt(index);
+                    index++;
+                    typingTimeout = setTimeout(typing, 50);
+                }
+            }
+            typing();
+        };
+
 
         const navigateToNextImage = () => {
             imageIndex.value = (imageIndex.value + 1) % IMAGES.length;
@@ -142,13 +163,16 @@ export default {
             if (index.value === 0) {
                 index.value = 1
                 textIndex.value = 7
+                return;
             }
             if (index.value === 2) {
                 index.value = 3
                 textIndex.value = 9
+                return;
             }
             if (index.value === 3) {
                 router.push({ path: '/missionout', query: { eventName: eventName.value } });
+                return;
             }
         }
         const setVH = () => {
@@ -162,8 +186,12 @@ export default {
             window.addEventListener('resize', setVH);
 
             eventName.value = router.currentRoute.value.query.eventName;
-        })
 
+            setTimeout(typeText, 1000);
+        })
+        watch(() => currentCharacterContent.value.text, () => {
+            setTimeout(typeText, 200);
+        });
         return {
             currentImageSrc,
             currentImageText,
@@ -370,7 +398,7 @@ export default {
 }
 
 .text-container2 .character-text {
-    padding: 7.5px 15px;
+    padding: 7.5px 150px 7.5px 15px;
     color: #767676;
     font-family: "NanumSquare", sans-serif;
     font-size: 18px;
@@ -378,11 +406,11 @@ export default {
     font-weight: 700;
     line-height: 26px;
     letter-spacing: -0.45px;
-    align-self: flex-start;
     text-align: left;
     max-width: 20ch;
     overflow-wrap: break-word;
     word-break: keep-all;
+    text-align: center;
 }
 
 .character-line {
