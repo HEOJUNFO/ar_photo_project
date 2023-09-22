@@ -26,15 +26,19 @@
                 class="image-stone4" style=" left: 9vw;">
         </div>
         <div class="bg-container">
-
             <img src="@resource/culture/water_road_01.png" :class="{ 'fade-out': isChanging }" />
             <img v-if="isChanging" src="@resource/culture/water_road_02.png" class="fade-in"
                 :class="{ 'fade-out2': isChanging2 }" />
             <img v-if="isChanging2" src="@resource/culture/water_road_03.png" class="fade-in2"
                 :class="{ 'fade-out3': isChanging3 }" />
             <img v-if="isChanging3" src="@resource/culture/water_road_04.png" class="fade-in3" />
-
-
+        </div>
+        <div v-if="finishModal" class="image-container2">
+            <div class="reward-container">
+                <img src="@resource/common/success.png" />
+                <img src="@resource/culture/boat.png" />
+                <p>물길 만들기</p>
+            </div>
         </div>
     </div>
 </template>
@@ -53,10 +57,63 @@ export default {
         LoadingContainer
     },
     setup() {
+        const audio = ref(null);
+        const audio2 = ref(null);
+        const audio3 = ref(null);
+
+        import('@resource/sounds/acquired.wav')
+            .then(src => {
+                audio.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio = () => {
+            if (audio.value) {
+                audio.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
+        import('@resource/sounds/success.wav')
+            .then(src => {
+                audio2.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio2 = () => {
+            if (audio2.value) {
+                audio2.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
+        import('@resource/sounds/water.wav')
+            .then(src => {
+                audio3.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio3 = () => {
+            if (audio3.value) {
+                audio3.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
         let experience;
         const characterStore = useCharacterStore()
         const index = ref(0)
         const textIndex = ref(5)
+        const finishModal = ref(false)
+
         const percentage = ref(0)
         const maxPercentage = ref(27)
         const visibleStone1 = ref(true)
@@ -110,17 +167,20 @@ export default {
                 isChanging.value = true
                 isChanging2.value = true
                 isChanging3.value = true
+                playAudio3()
                 next()
             } else if (visibleStone2.value === false && visibleStone3.value === true) {
                 maxPercentage.value = 71;
                 experience.world.ship.deltaT = 0.6
                 isChanging.value = true
                 isChanging2.value = true
+                playAudio3()
 
             } else {
                 maxPercentage.value = 47;
                 experience.world.ship.deltaT = 0.32
                 isChanging.value = true
+                playAudio3()
 
             }
         }
@@ -133,12 +193,14 @@ export default {
                 isChanging.value = true
                 isChanging2.value = true
                 isChanging3.value = true
+                playAudio3()
                 next()
             } else if (visibleStone1.value === false && visibleStone3.value === true) {
                 maxPercentage.value = 71;
                 experience.world.ship.deltaT = 0.6
                 isChanging.value = true
                 isChanging2.value = true
+                playAudio3()
 
             } else {
                 maxPercentage.value = 27;
@@ -154,29 +216,30 @@ export default {
                 isChanging.value = true
                 isChanging2.value = true
                 isChanging3.value = true
-
+                playAudio3()
                 next()
             } else if (visibleStone1.value === false && visibleStone2.value === true) {
                 maxPercentage.value = 47;
                 experience.world.ship.deltaT = 0.32
                 isChanging.value = true
-
+                playAudio3()
             } else {
                 maxPercentage.value = 27;
             }
         }
 
         const next = () => {
+            console.log(index.value)
             if (index.value === 0) {
-                index.value = 1
-                textIndex.value = 5
+                setTimeout(() => {
+                    playAudio2()
+                    finishModal.value = true
+                }, 1000);
 
-            } else if (index.value === 1) {
-                index.value = 2
-            }
-            else if (index.value === 2) {
-                router.push({ path: '/stickerreward', query: { eventName: "culture" } });
-
+                setTimeout(() => {
+                    playAudio3()
+                    router.push({ path: '/stickerreward', query: { eventName: "culture" } });
+                }, 3500);
             }
         }
 
@@ -202,9 +265,6 @@ export default {
             }
         }
 
-
-
-
         const clipStyle = computed(() => {
             return `clip-path: inset(0 0 ${100 - percentage.value}% 0);`;
         });
@@ -214,17 +274,12 @@ export default {
         }
 
 
-
         onMounted(() => {
             setVH();
 
             window.addEventListener('resize', setVH);
 
             experience = new Experience(document.querySelector('canvas.webgl2'), next);
-
-            console.log(loading.value.systemCheck)
-
-
 
             const interval = setInterval(updatePercentage, 1);
 
@@ -260,7 +315,8 @@ export default {
             isChanging2,
             isChanging3,
             loading,
-            handleClose
+            handleClose,
+            finishModal
 
         }
     }
@@ -413,10 +469,10 @@ export default {
     padding: 15px;
     color: #000;
     font-family: "NanumSquare", sans-serif;
-    font-size: 16px;
+    font-size: 12px;
     font-style: normal;
     font-weight: 700;
-    line-height: 24px;
+    line-height: 20px;
     letter-spacing: -0.4px;
     margin: 0;
     border-radius: 10px;
@@ -491,5 +547,60 @@ export default {
     opacity: 1;
     transition: opacity 1s;
     z-index: -3;
+}
+
+
+.image-container2 {
+    position: fixed;
+    width: 100%;
+    height: calc(100 * var(--vh));
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    top: calc(25 * var(--vh));
+    z-index: 10;
+}
+
+.reward-container {
+    position: relative;
+    width: 100%;
+    height: calc(100 * var(--vh));
+    justify-content: center;
+    display: flex;
+}
+
+
+.reward-container img:first-child {
+    position: absolute;
+    width: 80%;
+    height: auto;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.reward-container img:nth-child(2) {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    height: auto;
+    top: calc(15 * var(--vh));
+}
+
+.reward-container p {
+    position: absolute;
+    top: calc(10 * var(--vh));
+    color: var(--Text-Black, #111);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+    max-width: 11ch;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+
 }
 </style>

@@ -14,21 +14,32 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject } from 'vue'
 import router from '../../router'
 
 export default {
     name: 'Landing',
     setup() {
+        const audio = ref(null);
 
+        const playAudio2 = inject('playAudio');
 
-        const next1 = () => {
-            router.push('/next1')
-        }
+        import('@resource/sounds/generaltap.wav')
+            .then(src => {
+                audio.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
 
-        const next2 = () => {
-            router.push('/next2')
-        }
+        const playAudio = () => {
+            if (audio.value) {
+                audio.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
 
         const scrollToTop = () => {
             window.scrollTo(0, 0);
@@ -36,6 +47,8 @@ export default {
 
 
         const start = () => {
+            playAudio();
+            playAudio2();
             scrollToTop();
             setTimeout(() => {
                 router.push('/culture3d');
@@ -57,7 +70,7 @@ export default {
 
 
 
-        return { next1, next2, start }
+        return { start }
     }
 }
 </script>

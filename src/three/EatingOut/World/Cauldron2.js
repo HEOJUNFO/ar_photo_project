@@ -29,6 +29,7 @@ export default class Cauldron2
         this.model = this.resource.scene
         this.model.scale.set(1, 1, 1)
         this.model.position.set(0, -0.2, 0)
+        this.model.rotation.set(0, Math.PI, 0)
         this.scene.add(this.model)
     
         this.model.visible = false;

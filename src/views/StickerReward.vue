@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch, onMounted, inject } from 'vue'
 import router from '../router'
 import { useCharacterStore } from '../stores/characterStore.js'
 import { useRewardsStore } from '../stores/reward.js'
@@ -77,6 +77,23 @@ const TEXTS = [
 export default {
     name: 'StickerReward',
     setup() {
+        const audio = ref(null);
+
+        import('@resource/sounds/generaltap.wav')
+            .then(src => {
+                audio.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio = () => {
+            if (audio.value) {
+                audio.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
         const imageIndex = ref(0)
         const characterStore = useCharacterStore()
         const rewardsStore = useRewardsStore()
@@ -132,16 +149,20 @@ export default {
             typing();
         };
 
+        const stopAudio = inject('stopAudio');
 
         const navigateToNextImage = () => {
+            playAudio();
             imageIndex.value = (imageIndex.value + 1) % IMAGES.length;
         }
 
         const navigateToPreviousImage = () => {
+            playAudio();
             imageIndex.value = (imageIndex.value - 1 + IMAGES.length) % IMAGES.length;
         }
 
         const getReward = () => {
+            playAudio();
             index.value = 2
             textIndex.value = 8
             switch (imageIndex.value) {
@@ -158,6 +179,7 @@ export default {
                     rewardsStore.setRewardsData();
                     break;
             }
+            setTimeout(next, 5000);
         }
         const next = () => {
             if (index.value === 0) {
@@ -166,14 +188,11 @@ export default {
                 return;
             }
             if (index.value === 2) {
-                index.value = 3
-                textIndex.value = 9
-                return;
-            }
-            if (index.value === 3) {
+                stopAudio();
                 router.push({ path: '/missionout', query: { eventName: eventName.value } });
                 return;
             }
+
         }
         const setVH = () => {
             let vh = window.innerHeight * 0.01;
@@ -188,10 +207,12 @@ export default {
             eventName.value = router.currentRoute.value.query.eventName;
 
             setTimeout(typeText, 1000);
+            setTimeout(next, 5000)
         })
         watch(() => currentCharacterContent.value.text, () => {
             setTimeout(typeText, 200);
         });
+
         return {
             currentImageSrc,
             currentImageText,
@@ -309,7 +330,7 @@ export default {
 
 .image-container img {
     width: 60%;
-    height: 100%;
+    height: auto;
 }
 
 .image-container button {
@@ -348,11 +369,11 @@ export default {
 
 .reward-container img:nth-child(2) {
     position: absolute;
-    top: 35%;
+    top: 30%;
     left: 50%;
     transform: translateX(-50%);
     width: 55%;
-    height: 55%;
+    height: auto;
 }
 
 .reward-container p {
@@ -378,7 +399,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     border: none;
     background-color: #fff;
     width: 100%;
@@ -401,16 +422,16 @@ export default {
     padding: 7.5px 150px 7.5px 15px;
     color: #767676;
     font-family: "NanumSquare", sans-serif;
-    font-size: 18px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 700;
-    line-height: 26px;
+    line-height: 22px;
     letter-spacing: -0.45px;
     text-align: left;
     max-width: 20ch;
     overflow-wrap: break-word;
     word-break: keep-all;
-    text-align: center;
+    text-align: left;
 }
 
 .character-line {

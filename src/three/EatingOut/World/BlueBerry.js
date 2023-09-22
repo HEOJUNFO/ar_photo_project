@@ -66,19 +66,31 @@ export default class BlueBerry
         const currentY = event.touches[0].clientY;
         const deltaY = currentY - this.startY;
 
+        let newY = this.model.position.y - deltaY * 0.01;
+        const minY = -0.5;
+    
+        if (newY < minY) {
+            newY = minY;
+        }
+
         this.model.position.x += deltaX * 0.01;  
-        this.model.position.y -= deltaY * 0.01;
+        this.model.position.y = newY;
 
         this.startX = currentX;
         this.startY = currentY;
     }
+
     onTouchEnd()
     {
         this.moving = false;
+       
         if (this.model.position.y < 0 && this.model.position.x > -0.5 && this.model.position.x < 0.5) {
             this.scene.remove(this.model);
             this.model.position.set(0, 2, 0);
             this.experience.goToNextScene();
+        }else{
+            this.model.position.set(this.model.position.x, 2, 0);
+            this.isAutoMoving = true;
         }
     }
 

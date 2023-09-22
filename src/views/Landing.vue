@@ -28,15 +28,6 @@ export default {
     name: 'Landing',
     setup() {
 
-
-        const next1 = () => {
-            router.push('/next1')
-        }
-
-        const next2 = () => {
-            router.push('/next2')
-        }
-
         const scrollToTop = () => {
             window.scrollTo(0, 0);
         }
@@ -66,7 +57,7 @@ export default {
 
 
 
-        return { next1, next2, start }
+        return { start }
     }
 }
 </script>

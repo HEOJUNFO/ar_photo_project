@@ -1,8 +1,8 @@
 <template>
     <div>
-        <loading-container ref="loading" @closed="handleClose()">
+        <loading-container ref="loading" @closed="handleClose(), resetInactivityTimeout()">
         </loading-container>
-        <div v-if="showOverlay" class="overlay" @click="hideOverlay"><svg :class="{ 'dragging-guide': showOverlay }"
+        <div v-if="showOverlay" class="overlay" @touchstart="hideOverlay"><svg :class="{ 'dragging-guide': showOverlay }"
                 xmlns=" http://www.w3.org/2000/svg" width="66" height="74" viewBox="0 0 66 74" fill="none">
                 <g clip-path="url(#clip0_112_660)">
                     <mask id="mask0_112_660" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="66"
@@ -32,6 +32,13 @@
         <div class="webgl-container">
             <canvas class="webgl"></canvas>
         </div>
+        <div v-show="finishModal" class="image-container2">
+            <div class="reward-container">
+                <img src="@resource/common/success.png" />
+                <img src="@resource/eatingout/seed.png" />
+                <p>신비의 씨앗 획득</p>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -43,18 +50,74 @@ import { useCharacterStore } from '../../stores/characterStore.js'
 import { onBeforeRouteLeave } from 'vue-router'
 import LoadingContainer from '../../components/LoadingContainer.vue'
 
+
 export default {
     name: 'EatingOut3d',
     components: {
-        LoadingContainer
+        LoadingContainer,
+
     },
     setup() {
+        const audio = ref(null);
+        const audio2 = ref(null);
+        const audio3 = ref(null);
+
+        import('@resource/sounds/acquired.wav')
+            .then(src => {
+                audio.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio = () => {
+            if (audio.value) {
+                audio.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
+        import('@resource/sounds/success.wav')
+            .then(src => {
+                audio2.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio2 = () => {
+            if (audio2.value) {
+                audio2.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
+        import('@resource/sounds/water.wav')
+            .then(src => {
+                audio3.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio3 = () => {
+            if (audio3.value) {
+                audio3.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
         let experience;
         const characterStore = useCharacterStore()
         const index = ref(0)
         const textIndex = ref(5)
         const count = ref(0)
         const showOverlay = ref(false)
+        const finishModal = ref(false)
+
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
@@ -102,15 +165,24 @@ export default {
 
             inactivityTimeout = setTimeout(() => {
                 showOverlay.value = true;
-            }, 5000);
+            }, 7000);
         }
 
         const next = () => {
             if (count.value < 2) {
+
                 count.value++
 
             } else {
-                router.push({ path: '/stickerreward', query: { eventName: "eatingOut" } });
+                playAudio3()
+                playAudio()
+                finishModal.value = true
+                playAudio2()
+                setTimeout(() => {
+
+                    router.push({ path: '/stickerreward', query: { eventName: "eatingOut" } });
+                }, 1500);
+
             }
         }
 
@@ -130,8 +202,6 @@ export default {
             document.addEventListener('touchstart', resetInactivityTimeout);
             document.addEventListener('mousedown', resetInactivityTimeout);
 
-
-
         });
 
         onBeforeRouteLeave(() => {
@@ -148,7 +218,9 @@ export default {
             next,
             hideOverlay,
             showOverlay,
-            handleClose
+            handleClose,
+            resetInactivityTimeout,
+            finishModal,
         }
     }
 }
@@ -212,10 +284,10 @@ export default {
     padding: 15px;
     color: #000;
     font-family: "NanumSquare", sans-serif;
-    font-size: 15px;
+    font-size: 12px;
     font-style: normal;
     font-weight: 700;
-    line-height: 24px;
+    line-height: 20px;
     letter-spacing: -0.4px;
     margin: 0;
     border-radius: 10px;
@@ -243,7 +315,7 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0);
     z-index: 1000;
 }
 
@@ -278,5 +350,60 @@ export default {
 
 .dragging-guide {
     animation: dragDropGuide 2s infinite;
+}
+
+
+.image-container2 {
+    position: fixed;
+    width: 100%;
+    height: calc(100 * var(--vh));
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    top: calc(25 * var(--vh));
+    z-index: 10;
+}
+
+.reward-container {
+    position: relative;
+    width: 100%;
+    height: calc(100 * var(--vh));
+    justify-content: center;
+    display: flex;
+}
+
+
+.reward-container img:first-child {
+    position: absolute;
+    width: 80%;
+    height: auto;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.reward-container img:nth-child(2) {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    height: auto;
+    top: calc(10 * var(--vh));
+}
+
+.reward-container p {
+    position: absolute;
+    top: calc(10 * var(--vh));
+    color: var(--Text-Black, #111);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+    max-width: 11ch;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+
 }
 </style>

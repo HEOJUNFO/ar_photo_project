@@ -7,8 +7,43 @@
 </template>
 
 <script>
+import { ref, onMounted, provide } from 'vue'
+
 export default {
     name: 'App',
+    setup() {
+        const audio = ref(null);
+
+        import('@resource/sounds/bgm.wav')
+            .then(src => {
+                audio.value = new Audio(src.default);
+                audio.value.loop = true;
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio = () => {
+            if (audio.value) {
+                audio.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
+        const stopAudio = () => {
+            if (audio.value) {
+                audio.value.pause();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
+        provide('playAudio', playAudio);
+        provide('stopAudio', stopAudio);
+
+        return {}
+    }
 }
 </script>
 
@@ -55,4 +90,5 @@ export default {
 
 .fade-enter-to {
     opacity: 1;
-}</style>
+}
+</style>

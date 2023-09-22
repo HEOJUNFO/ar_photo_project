@@ -75,8 +75,8 @@ export const useCharacterStore = defineStore('character', {
                     { text: "화면에 열매가 나타나면 손가락으로 누른 후 끌어 와 마녀의 솥에 넣어 줘." , src: bellNormalUrl},
                     { text: "우와, 황금 씨앗이네. 덕분에 아주 큰 보호수가 태어날 것 같아!", src: bellWelcomeUrl },
                     { text: "스티커 골라 봐, 선물로 줄게. 사진 촬영 할 때 사용할 수 있어." , src: bellHappyUrl},
-                    { text: "귀엽지?", src: bellHappyUrl },
-                    { text: "획득한 스티커는 보관함에서 확인할 수 있어. 다른 스티커도 얻고 싶다면, '더 웨이브'나 'VP존'으로 와!" , src: bellNormalUrl},
+                    { text: "귀엽지? 획득한 스티커는 보관함에서 확인할 수 있어. 다른 스티커도 얻고 싶다면, '더 웨이브'나 'VP존'으로 와!", src: bellHappyUrl },
+                    // { text: "획득한 스티커는 보관함에서 확인할 수 있어. 다른 스티커도 얻고 싶다면, '더 웨이브'나 'VP존'으로 와!" , src: bellNormalUrl},
                     { text: "자, 다음은 어디로 갈래?" , src: bellNormalUrl},
                 ],
                 eatingOut2: [
@@ -100,8 +100,8 @@ export const useCharacterStore = defineStore('character', {
                     { text: "움직이던 종이배가 멈추면 손가락으로 화면을 두드려서 돌덩이를 치워줘.",src: bellNormalUrl },
                     { text: "물길이 열렸어! 남쪽마을 주민들이 좋아하겠다.",src: bellWelcomeUrl },
                     { text: "스티커 골라 봐, 선물로 줄게. 사진 촬영 할 때 사용할 수 있어." ,src: bellHappyUrl},
-                    { text: "귀엽지?" ,src: bellHappyUrl},
-                    { text: "획득한 스티커는 보관함에서 확인할 수 있어. 다른 스티커도 얻고 싶다면, ‘더 웨이브'나 '푸드 애비뉴’로 와!",src: bellNormalUrl},
+                    { text: "귀엽지? 획득한 스티커는 보관함에서 확인할 수 있어. 다른 스티커도 얻고 싶다면, ‘더 웨이브'나 '푸드 애비뉴’로 와!" ,src: bellHappyUrl},
+                    // { text: "획득한 스티커는 보관함에서 확인할 수 있어. 다른 스티커도 얻고 싶다면, ‘더 웨이브'나 '푸드 애비뉴’로 와!",src: bellNormalUrl},
                     { text: "자, 다음은 어디로 갈래?" ,src: bellNormalUrl},
                 ],
                 culture2: [

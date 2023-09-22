@@ -27,6 +27,7 @@ export default class Cauldron
         this.model = this.resource.scene
         this.model.scale.set(1, 1, 1)
         this.model.position.set(0, -0.2, 0)
+        this.model.rotation.set(0, Math.PI, 0)
         this.scene.add(this.model)
         console.log(this.model)
 
