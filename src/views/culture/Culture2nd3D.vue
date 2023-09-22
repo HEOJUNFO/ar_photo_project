@@ -1,5 +1,7 @@
 <template>
     <div>
+        <loading-container>
+        </loading-container>
         <div v-show="showCaptureButton" class=" top-section2">
             <!-- <div class="text-container2">
                 <p id="typed-text"></p>
@@ -67,6 +69,7 @@ import router from "../../router";
 import { useImageDataStore } from '../../stores/imageData.js'
 import { useCharacterStore } from '../../stores/characterStore.js'
 import { onMounted, computed, ref, watch } from "vue";
+import LoadingContainer from '../../components/LoadingContainer.vue'
 
 const { ImageSegmenter, SegmentationMask, FilesetResolver } = vision;
 let runningMode = "VIDEO"
@@ -304,6 +307,9 @@ export default {
                 console.warn("getUserMedia() is not supported by your browser");
             }
         }
+    },
+    components: {
+        LoadingContainer
     },
     setup() {
         const imageDataStore = useImageDataStore()
