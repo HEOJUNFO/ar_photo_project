@@ -1,6 +1,6 @@
 <template>
     <div @click.stop="percentage > 99.8 ? next() : null">
-        <loading-container>
+        <loading-container ref="loading" @closed="handleClose()">
         </loading-container>
         <div class=" top-section2">
             <div class="text-container2">
@@ -41,7 +41,7 @@
 
 <script>
 import Experience from '../../three/Culture/Experience.js'
-import { onMounted, ref, computed, onBeforeUnmount } from 'vue';
+import { onMounted, ref, computed, onBeforeUnmount, watch } from 'vue';
 import router from '../../router';
 import { useCharacterStore } from '../../stores/characterStore.js'
 import { onBeforeRouteLeave } from 'vue-router'
@@ -67,22 +67,54 @@ export default {
         const isChanging2 = ref(false)
         const isChanging3 = ref(false)
 
+        const loading = ref()
+
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
         const currentCharacterContent = computed(() => {
             return currentCharacter.value.culture[textIndex.value] || {}
         })
 
+        let typingTimeout;
+
+        const typeText = () => {
+            const content = currentCharacterContent.value.text;
+            const textContainer = document.getElementById("typed-text");
+            let index = 0;
+
+            clearTimeout(typingTimeout);
+
+            textContainer.textContent = "";
+
+            function typing() {
+                if (index < content.length) {
+                    textContainer.textContent += content.charAt(index);
+                    index++;
+                    typingTimeout = setTimeout(typing, 50);
+                }
+            }
+            typing();
+        };
+
+        const handleClose = () => {
+            setTimeout(() => {
+                typeText()
+            }, 1000);
+        }
+
         const stone1 = () => {
             visibleStone1.value = false
             if (visibleStone2.value === false && visibleStone3.value === false) {
                 maxPercentage.value = 99.8;
                 experience.world.ship.deltaT = 1
-
+                isChanging.value = true
+                isChanging2.value = true
+                isChanging3.value = true
                 next()
             } else if (visibleStone2.value === false && visibleStone3.value === true) {
                 maxPercentage.value = 71;
                 experience.world.ship.deltaT = 0.6
+                isChanging.value = true
                 isChanging2.value = true
 
             } else {
@@ -98,12 +130,14 @@ export default {
             if (visibleStone1.value === false && visibleStone3.value === false) {
                 maxPercentage.value = 99.8;
                 experience.world.ship.deltaT = 1
+                isChanging.value = true
+                isChanging2.value = true
                 isChanging3.value = true
-
                 next()
             } else if (visibleStone1.value === false && visibleStone3.value === true) {
                 maxPercentage.value = 71;
                 experience.world.ship.deltaT = 0.6
+                isChanging.value = true
                 isChanging2.value = true
 
             } else {
@@ -117,6 +151,8 @@ export default {
             if (visibleStone1.value === false && visibleStone2.value === false) {
                 maxPercentage.value = 99.8;
                 experience.world.ship.deltaT = 1
+                isChanging.value = true
+                isChanging2.value = true
                 isChanging3.value = true
 
                 next()
@@ -183,21 +219,12 @@ export default {
             setVH();
 
             window.addEventListener('resize', setVH);
+
             experience = new Experience(document.querySelector('canvas.webgl2'), next);
 
-            const content = currentCharacterContent.value.text;
-            const textContainer = document.getElementById("typed-text");
-            let index = 0;
+            console.log(loading.value.systemCheck)
 
-            function typeText() {
-                if (index < content.length) {
-                    textContainer.textContent += content.charAt(index);
-                    index++;
-                    setTimeout(typeText, 50); // 타이핑 속도 조절
-                }
-            }
 
-            setTimeout(typeText, 1500);
 
             const interval = setInterval(updatePercentage, 1);
 
@@ -213,9 +240,8 @@ export default {
         onBeforeRouteLeave(() => {
             experience.destroy()
             experience.init()
-
-
         });
+
 
         return {
             index,
@@ -232,7 +258,9 @@ export default {
             percentage,
             isChanging,
             isChanging2,
-            isChanging3
+            isChanging3,
+            loading,
+            handleClose
 
         }
     }

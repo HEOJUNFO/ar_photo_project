@@ -1,6 +1,6 @@
 <template>
     <div>
-        <loading-container>
+        <loading-container ref="loading" @closed="handleClose()">
         </loading-container>
         <div v-if="showOverlay" class="overlay" @click="hideOverlay"><svg :class="{ 'dragging-guide': showOverlay }"
                 xmlns=" http://www.w3.org/2000/svg" width="66" height="74" viewBox="0 0 66 74" fill="none">
@@ -62,6 +62,33 @@ export default {
             return currentCharacter.value.eatingOut[textIndex.value] || {}
         })
 
+        let typingTimeout;
+
+        const typeText = () => {
+            const content = currentCharacterContent.value.text;
+            const textContainer = document.getElementById("typed-text");
+            let index = 0;
+
+            clearTimeout(typingTimeout);
+
+            textContainer.textContent = "";
+
+            function typing() {
+                if (index < content.length) {
+                    textContainer.textContent += content.charAt(index);
+                    index++;
+                    typingTimeout = setTimeout(typing, 50);
+                }
+            }
+            typing();
+        };
+
+        const handleClose = () => {
+            setTimeout(() => {
+                typeText()
+            }, 1000);
+        }
+
         const hideOverlay = () => {
             showOverlay.value = false
         }
@@ -103,19 +130,7 @@ export default {
             document.addEventListener('touchstart', resetInactivityTimeout);
             document.addEventListener('mousedown', resetInactivityTimeout);
 
-            const content = currentCharacterContent.value.text;
-            const textContainer = document.getElementById("typed-text");
-            let index = 0;
 
-            function typeText() {
-                if (index < content.length) {
-                    textContainer.textContent += content.charAt(index);
-                    index++;
-                    setTimeout(typeText, 50);
-                }
-            }
-
-            setTimeout(typeText, 1500);
 
         });
 
@@ -133,6 +148,7 @@ export default {
             next,
             hideOverlay,
             showOverlay,
+            handleClose
         }
     }
 }

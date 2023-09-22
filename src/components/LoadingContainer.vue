@@ -118,7 +118,7 @@ import { createRouterMatcher } from 'vue-router'
 
 export default {
     name: 'LoadingContainer',
-    setup() {
+    setup(props, { emit }) {
 
         const systemCheck = ref(true)
         const showModal = ref(false);
@@ -149,6 +149,7 @@ export default {
             } catch (err) {
                 console.error("Error accessing the camera: ", err);
             }
+            emit('closed');
         }
 
 
@@ -197,6 +198,7 @@ export default {
 
             setTimeout(() => {
                 systemCheck.value = false
+                emit('closed');
             }, 1000);
         })
         return { systemCheck, showModal, start, close, buttonCheck1, buttonCheck2, check1, check2, check1Modal, check2Modal }
