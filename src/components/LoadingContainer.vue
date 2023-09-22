@@ -169,19 +169,22 @@ export default {
 
             document.body.style.overflow = 'hidden';
 
-            if (localStorage.getItem('characterID') === null && router.currentRoute.value.path !== '/intro') {
-                router.push('/intro')
+            localStorage.setItem('characterID', 0);
 
-                localStorage.setItem('item1', "null")
-                localStorage.setItem('item2', "null")
-                localStorage.setItem('item3', "null")
-                localStorage.setItem('item4', "null")
-                localStorage.setItem('item5', "null")
-                localStorage.setItem('item6', "null")
-                localStorage.setItem('item7', "null")
+            // if (localStorage.getItem('characterID') === null && router.currentRoute.value.path !== '/intro') {
+            //     router.push('/intro')
 
-                return
-            }
+
+            //     localStorage.setItem('item1', "null")
+            //     localStorage.setItem('item2', "null")
+            //     localStorage.setItem('item3', "null")
+            //     localStorage.setItem('item4', "null")
+            //     localStorage.setItem('item5', "null")
+            //     localStorage.setItem('item6', "null")
+            //     localStorage.setItem('item7', "null")
+
+            //     return
+            // }
 
             if (localStorage.getItem('consentGiven') === 'true') {
                 showModal.value = false
