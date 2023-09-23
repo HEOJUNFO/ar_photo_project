@@ -1,8 +1,8 @@
 <template>
-    <div @click="next()">
+    <div>
         <loading-container>
         </loading-container>
-        <div v-show="index >= 2" class="top-section">
+        <div class="top-section">
             <div class="text-container1">
                 <p>{{ characterContent.text }}</p>
             </div>
@@ -10,31 +10,19 @@
                 <img :src="characterContent.src" alt="Side Image" />
             </div>
         </div>
-        <div v-show="index === 0" class="image-container2">
-            <div class="reward-container">
-                <img src="@resource/common/unreward_bg.png" />
-                <img src="@resource/storageBox/Tree_Reward.png" />
-                <p class="p">신비의 숲 프레임 모델링</p>
-            </div>
-        </div>
-        <div v-show="index >= 1" class="image-container">
+        <div class="image-container">
             <img :class="{ 'hidden': hideImage1 }" class="img1" src="@resource/content/mini2.png"
                 @touchstart="handleMouseDown" @touchend="handleMouseUp" />
-            <img :style="{ width: image2Width + '%' }" class="img2" src="@resource/content/neon2.png"
+            <img :style="{ width: image2Width + '%' }" class="img2" src="@resource/magicCircle/p_01.png"
                 @touchstart="handleMouseDown" @touchend="handleMouseUp" @transitionend="handleTransitionEnd" />
-            <img :style="{ width: image3Width + '%' }" class="img3" src="@resource/content/brown.png"
+            <img :style="{ width: image3Width + '%' }" class="img3" src="@resource/magicCircle/p_02.png"
+                @touchstart="handleMouseDown" @touchend="handleMouseUp" />
+            <img :style="{ width: image3Width + '%' }" class="img4" src="@resource/magicCircle/p_03.png"
                 @touchstart="handleMouseDown" @touchend="handleMouseUp" />
         </div>
-
         <div class="loading-container">
             <div class="webgl-container">
                 <canvas class="webgl"></canvas>
-            </div>
-            <div v-show="index < 2" class="text-container2">
-                <img :src="characterContent.src" alt="Description" class="overlap-image" />
-                <p class="character-name">{{ selectCharacterName }}</p>
-                <hr class="character-line">
-                <p class="character-text">{{ characterContent.text }}</p>
             </div>
         </div>
     </div>
@@ -56,7 +44,6 @@ export default {
     setup() {
         let experience;
         const characterStore = useCharacterStore()
-        const index = ref(0)
         const textIndex = ref(3)
 
         characterStore.setCharacterIndex(localStorage.getItem('characterID'))
@@ -75,39 +62,19 @@ export default {
         const handleMouseDown = (event) => {
             event.preventDefault();
 
-            if (index.value !== 2) {
-                index.value = 2
-                return;
-            }
+
             hideImage1.value = true;
             image3Width.value = 100;
             image2Width.value = 100;
         }
 
         const handleMouseUp = () => {
-            if (index.value !== 2) {
-                index.value = 2
-                return;
-            }
-
 
             image3Width.value = 0;
             image2Width.value = 0;
         }
 
 
-        const next = () => {
-            if (index.value === 0) {
-                index.value = 1
-                textIndex.value = 4
-                return;
-
-            } else if (index.value === 1) {
-                index.value = 2
-                textIndex.value = 5
-                return;
-            }
-        }
         const nextPage = () => {
             router.push({ path: '/framereward', query: { eventName: "common4" } });
         }
@@ -129,7 +96,7 @@ export default {
             setVH();
 
             window.addEventListener('resize', setVH);
-            experience = new Experience(document.querySelector('canvas.webgl'), next);
+            experience = new Experience(document.querySelector('canvas.webgl'));
         })
 
         onBeforeRouteLeave(() => {
@@ -138,8 +105,6 @@ export default {
         });
 
         return {
-            index,
-            next,
             characterContent: currentCharacterContent,
             selectCharacterSrc: characterStore.currentCharacter?.src,
             selectCharacterName: characterStore.currentCharacter?.name,
@@ -178,125 +143,13 @@ export default {
     background-color: #fff;
 }
 
-.text-container2 {
-    bottom: 0%;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    border: none;
-    background-color: #fff;
-    width: 100%;
-    height: calc(25 * var(--vh));
-}
-
-.text-container2 .character-name {
-    padding: 7.5px 15px 0 15px;
-    color: #000;
-    font-family: "NanumSquare", sans-serif;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: 34px;
-    letter-spacing: -0.6px;
-    align-self: flex-start;
-}
-
-.text-container2 .character-text {
-    padding: 7.5px 15px;
-    color: #767676;
-    font-family: "NanumSquare", sans-serif;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 26px;
-    letter-spacing: -0.45px;
-    align-self: flex-start;
-    text-align: left;
-    max-width: 20ch;
-    overflow-wrap: break-word;
-    word-break: keep-all;
-}
-
-.character-line {
-    width: 90%;
-    border: 1px solid #D9D9D9;
-    margin: 5px 0 5px 0;
-    align-self: center
-}
 
 
-.overlap-image {
-    position: absolute;
-    top: 30%;
-    right: -5%;
-    width: 150px;
-    height: auto;
-    z-index: 1;
-    transform: translateY(-50%);
-}
-
-.image-container2 {
-    z-index: 2;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    height: calc(40 * var(--vh));
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0);
-    margin-top: calc(25 * var(--vh));
-}
-
-.reward-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    display: flex;
-}
-
-
-.reward-container img:first-child {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.reward-container img:nth-child(2) {
-    position: absolute;
-    top: 15%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50%;
-    height: 50%;
-}
-
-.reward-container p {
-    position: absolute;
-    top: 70%;
-    color: var(--Text-Black, #111);
-    text-align: center;
-    font-family: "NanumSquare", sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: 28px;
-    letter-spacing: -0.5px;
-    max-width: 11ch;
-    overflow-wrap: break-word;
-    word-break: keep-all;
-
-}
 
 .img1,
 .img2,
-.img3 {
+.img3,
+.img4 {
     transform-origin: center center;
     height: auto;
     background-color: rgba(0, 0, 0, 0);
@@ -304,8 +157,6 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     opacity: 1;
-
-
 }
 
 .img1 {
@@ -320,9 +171,8 @@ export default {
     z-index: 3;
     top: calc(45 * var(--vh));
     width: 0%;
-    opacity: 0.5;
-    transition: width 5s ease-in-out, opacity 5s ease-in-out;
-    animation: rotate2 5s linear infinite;
+    transition: width 3s ease-in-out;
+    animation: rotate1 3s linear infinite;
 }
 
 
@@ -348,11 +198,19 @@ export default {
 }
 
 .img3 {
-    z-index: 4;
+    z-index: 3;
     top: calc(45 * var(--vh));
     width: 0%;
-    transition: width 4s ease-in-out, opacity 5s ease-in-out;
-    animation: rotate1 5s linear infinite;
+    transition: width 3s ease-in-out;
+    animation: rotate2 3s linear infinite;
+}
+
+.img4 {
+    z-index: 3;
+    top: calc(45 * var(--vh));
+    width: 0%;
+    transition: width 3s ease-in-out;
+    animation: rotate1 3s linear infinite;
 }
 
 
