@@ -55,9 +55,9 @@
                 <button @click="confirmBack">확인</button>
             </div>
         </div>
-        <!-- <div class="frame">
+        <div class="frame">
             <img src="@resource/frame/spring.png" alt="봄" />
-        </div> -->
+        </div>
     </div>
 </template>
 
@@ -68,9 +68,6 @@ import Experience from '../ar/capture/Experience.js'
 import { onMounted, computed, ref } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router'
 import router from '../router';
-
-
-
 
 export default {
     name: 'capture',
@@ -94,14 +91,14 @@ export default {
         })
 
         const FRAMES = [
-            { src: new URL('@resource/frame/spring.png', import.meta.url).href, text: '봄' },
+            // { src: new URL('@resource/frame/spring.png', import.meta.url).href, text: '봄' },
             // { src: new URL('@resource/frame/summer.png', import.meta.url).href, text: '여름' },
             // { src: new URL('@resource/frame/fall.png', import.meta.url).href, text: '가을' },
             // { src: new URL('@resource/frame/winter.png', import.meta.url).href, text: '겨울' },
         ];
 
         const STICKERS = [
-            { src: new URL('@resource/character/Bell_EntireBody.png', import.meta.url).href },
+            // { src: new URL('@resource/character/Bell_EntireBody.png', import.meta.url).href },
             // { src: new URL('@resource/character/Bell_Normal.png', import.meta.url).href },
             // { src: new URL('@resource/character/Bell_Happy.png', import.meta.url).href },
             // { src: new URL('@resource/character/Bell_Sad.png', import.meta.url).href },
@@ -190,21 +187,29 @@ export default {
 </script>
 
 <style scoped>
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .webgl-container {
     height: calc(70 * var(--vh));
-    width: 100%;
+    width: calc((4/6) * 70 * var(--vh));
     top: calc(10 * var(--vh));
     position: absolute;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
 }
 
 .webgl {
-    position: fixed;
-    left: 0;
+    position: relative;
     outline: none;
-    overflow: hidden;
 }
-
 
 .top-section {
     display: grid;

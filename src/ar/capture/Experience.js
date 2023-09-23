@@ -173,6 +173,7 @@ export default class Experience
             for (let j = 0; j < this.clickedObject.length; j++) {
                 if (this._isObjectChildOf(intersects[i].object, this.clickedObject[j])) {
                   this.world.sticker.isMoving = true;
+                  console.log(this.world.sticker.isMoving)
                 }
             }
         }

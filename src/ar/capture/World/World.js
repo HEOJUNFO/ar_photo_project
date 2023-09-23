@@ -51,9 +51,7 @@ export default class World
     }
 
     update() {
-        if(this.sticker){
-            this.sticker.update()
-        }
+       
   
     }
     dispose(){
