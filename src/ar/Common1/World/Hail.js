@@ -17,7 +17,7 @@ export default class Hail {
     }
 
     update() {
-        this.mesh.position.y -= 0.02
+        this.mesh.position.y -= 0.03
 
         if (this.mesh.position.y < -10) {
             this.scene.remove(this.mesh);

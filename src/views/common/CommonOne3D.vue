@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="main">
         <div class="top-section">
             <div class="text-container1">
                 <p>{{ characterContent.text }}</p>
@@ -10,6 +10,9 @@
         </div>
         <div class="webgl-container">
             <canvas class="webgl"></canvas>
+        </div>
+        <div class="image-container">
+            <img v-for="n in itemValue" :key="n" src="@resource/common/hail.png" />
         </div>
     </div>
 </template>
@@ -75,12 +78,20 @@ export default {
             index,
             characterContent: currentCharacterContent,
             next,
+            itemValue,
         }
     }
 }
 </script>
 
 <style scoped>
+.main {
+    display: flex;
+
+    justify-content: center;
+
+}
+
 .webgl-container {
     height: calc(100 * var(--vh));
     width: 100%;
@@ -160,5 +171,23 @@ export default {
     height: 100%;
     width: 100%;
     display: block;
+}
+
+.image-container {
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    width: 100%;
+    height: calc(10 * var(--vh));
+    position: absolute;
+    z-index: 2;
+    top: calc(15 * var(--vh));
+}
+
+.image-container img {
+    width: 20%;
+    height: auto;
 }
 </style>
