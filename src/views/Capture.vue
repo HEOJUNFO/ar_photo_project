@@ -25,60 +25,29 @@
             <canvas class="webgl"></canvas>
         </div>
 
-        <transition name="bottom-section">
-            <div v-if="!frameList && !stickerList" class="bottom-section">
-                <button @click="frameToggle()">프레임</button>
-                <button onclick="captureImage()"><svg xmlns="http://www.w3.org/2000/svg" width="70" height="70"
-                        viewBox="0 0 70 70" fill="none">
-                        <circle cx="35" cy="35" r="28" fill="#D50F4A" />
-                        <circle cx="35" cy="35" r="33.5" stroke="white" stroke-opacity="0.8" stroke-width="3" />
-                        <circle cx="35" cy="35" r="10.5" stroke="white" stroke-width="3" />
-                    </svg></button>
-                <button @click="stickerToggle()">스티커</button>
-            </div>
-        </transition>
+        <div class="bottom-section">
+            <button @click="frameToggle()">프레임</button>
+            <button onclick="captureImage()"><svg xmlns="http://www.w3.org/2000/svg" width="70" height="70"
+                    viewBox="0 0 70 70" fill="none">
+                    <circle cx="35" cy="35" r="28" fill="#D50F4A" />
+                    <circle cx="35" cy="35" r="33.5" stroke="white" stroke-opacity="0.8" stroke-width="3" />
+                    <circle cx="35" cy="35" r="10.5" stroke="white" stroke-width="3" />
+                </svg></button>
+            <button @click="stickerToggle()">스티커</button>
+        </div>
 
-        <transition name="fade2">
-            <div v-if="frameList" class="bottom-section2">
-                <div class="image-container">
-                    <div v-for="imageObj in FRAMES" :key="imageObj.text">
-                        <img :src="imageObj.src" :alt="imageObj.text" />
-                        <p>{{ imageObj.text }}</p>
-                    </div>
-                </div>
-                <div class="button-container">
-                    <button @click="frameList = false">뒤로</button>
-                    <button onclick="captureImage()"><svg xmlns="http://www.w3.org/2000/svg" width="70" height="70"
-                            viewBox="0 0 70 70" fill="none">
-                            <circle cx="35" cy="35" r="28" fill="#D50F4A" />
-                            <circle cx="35" cy="35" r="33.5" stroke="white" stroke-opacity="0.8" stroke-width="3" />
-                            <circle cx="35" cy="35" r="10.5" stroke="white" stroke-width="3" />
-                        </svg></button>
-                    <button @click="stickerToggle()">스티커</button>
-                </div>
+        <div v-if="frameList">
+            <div class="image-container">
+                <img v-for="imageObj in FRAMES" :src="imageObj.src" :alt="imageObj.text" />
             </div>
-        </transition>
+        </div>
 
-        <transition name="fade2">
-            <div v-if="stickerList" class="bottom-section2">
-                <div class="image-container">
-                    <div v-for="imageObj in IMAGES" :key="imageObj.text">
-                        <img :src="imageObj.src" :alt="imageObj.text" />
-                        <p>{{ imageObj.text }}</p>
-                    </div>
-                </div>
-                <div class="button-container">
-                    <button @click="stickerList = false">뒤로</button>
-                    <button onclick="captureImage()"><svg xmlns="http://www.w3.org/2000/svg" width="70" height="70"
-                            viewBox="0 0 70 70" fill="none">
-                            <circle cx="35" cy="35" r="28" fill="#D50F4A" />
-                            <circle cx="35" cy="35" r="33.5" stroke="white" stroke-opacity="0.8" stroke-width="3" />
-                            <circle cx="35" cy="35" r="10.5" stroke="white" stroke-width="3" />
-                        </svg></button>
-                    <button @click="frameToggle()">프레임</button>
-                </div>
+        <div v-if="stickerList">
+            <div class="image-container">
+                <img v-for="imageObj in STICKERS" :src="imageObj.src" :alt="imageObj.text" />
             </div>
-        </transition>
+        </div>
+
         <div v-if="showModal" class="modal">
             <p>뒤로 돌아갑니다.</p>
             <div class="modal-buttons">
@@ -86,9 +55,9 @@
                 <button @click="confirmBack">확인</button>
             </div>
         </div>
-        <div class="frame">
+        <!-- <div class="frame">
             <img src="@resource/frame/spring.png" alt="봄" />
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -126,31 +95,37 @@ export default {
 
         const FRAMES = [
             { src: new URL('@resource/frame/spring.png', import.meta.url).href, text: '봄' },
-            { src: new URL('@resource/frame/summer.png', import.meta.url).href, text: '여름' },
-            { src: new URL('@resource/frame/fall.png', import.meta.url).href, text: '가을' },
-            { src: new URL('@resource/frame/winter.png', import.meta.url).href, text: '겨울' },
+            // { src: new URL('@resource/frame/summer.png', import.meta.url).href, text: '여름' },
+            // { src: new URL('@resource/frame/fall.png', import.meta.url).href, text: '가을' },
+            // { src: new URL('@resource/frame/winter.png', import.meta.url).href, text: '겨울' },
         ];
 
         const STICKERS = [
             { src: new URL('@resource/character/Bell_EntireBody.png', import.meta.url).href },
-            { src: new URL('@resource/character/Bell_Normal.png', import.meta.url).href },
-            { src: new URL('@resource/character/Bell_Happy.png', import.meta.url).href },
-            { src: new URL('@resource/character/Bell_Sad.png', import.meta.url).href },
-            { src: new URL('@resource/character/Bell_Welcome.png', import.meta.url).href },
-            { src: new URL('@resource/character/Uno_EnitreBody.png', import.meta.url).href },
-
-
-
+            // { src: new URL('@resource/character/Bell_Normal.png', import.meta.url).href },
+            // { src: new URL('@resource/character/Bell_Happy.png', import.meta.url).href },
+            // { src: new URL('@resource/character/Bell_Sad.png', import.meta.url).href },
+            // { src: new URL('@resource/character/Bell_Welcome.png', import.meta.url).href },
+            // { src: new URL('@resource/character/Uno_EntireBody.png', import.meta.url).href },
+            // { src: new URL('@resource/character/Uno_Normal.png', import.meta.url).href },
+            // { src: new URL('@resource/character/Uno_Happy.png', import.meta.url).href },
+            // { src: new URL('@resource/character/Uno_Sad.png', import.meta.url).href },
+            // { src: new URL('@resource/character/Uno_Welcome.png', import.meta.url).href },
+            // { src: new URL('@resource/character/Sorina_EntireBody.png', import.meta.url).href },
+            // { src: new URL('@resource/character/Sorina_Normal.png', import.meta.url).href },
+            // { src: new URL('@resource/character/Sorina_Happy.png', import.meta.url).href },
+            // { src: new URL('@resource/character/Sorina_Sad.png', import.meta.url).href },
+            // { src: new URL('@resource/character/Sorina_Welcome.png', import.meta.url).href },
         ]
 
         const stickerToggle = () => {
-            stickerList.value = true
+            stickerList.value = !stickerList.value
             frameList.value = false
         }
 
         const frameToggle = () => {
             stickerList.value = false
-            frameList.value = true
+            frameList.value = !frameList.value
         }
 
         const saveImage = (image) => {
@@ -207,7 +182,8 @@ export default {
             FRAMES,
             stickerList,
             stickerToggle,
-            frameToggle
+            frameToggle,
+            STICKERS
         }
     }
 }
@@ -282,60 +258,27 @@ export default {
 
 }
 
-.bottom-section2 {
-    width: 100%;
-    height: calc(30 * var(--vh));
-    z-index: 1;
-    background: var(--Main-Pink, #F0D7CA);
-    position: absolute;
-    bottom: 0;
-}
-
 
 
 .image-container {
     overflow-x: scroll;
     display: flex;
     flex-direction: row;
-    /* Change from column to row */
-    justify-content: center;
+    justify-content: left;
     align-items: center;
     width: 100%;
-    height: calc(25 * var(--vh));
+    height: calc(10 * var(--vh));
+    position: absolute;
+    z-index: 2;
+    top: calc(70 * var(--vh));
+    margin-left: 5%;
+
 }
 
 .image-container img {
     width: auto;
-    height: calc(20 * var(--vh));
-
-}
-
-.image-container p {
-    width: auto;
-    height: calc(4 * var(--vh));
-
-}
-
-.button-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    width: 100%;
-    height: calc(5 * var(--vh));
-    justify-content: space-between;
-    align-items: center;
-    z-index: 1;
-}
-
-.button-container button {
-    background-color: rgba(0, 0, 0, 0);
-    border: none;
-    width: 100%;
     height: 100%;
-}
-
-.button-container button svg {
-    width: auto;
-    height: calc(5* var(--vh));
+    margin-right: 5%;
 }
 
 .modal {
@@ -406,39 +349,6 @@ export default {
     font-weight: 700;
     line-height: 24px;
     letter-spacing: -0.4px;
-}
-
-.fade2-enter-from,
-.fade2-leave-to {
-    transform: translateY(100%);
-    transform-origin: bottom;
-}
-
-.fade2-enter-active,
-.fade2-leave-active {
-    transition: transform 0.5s ease-in-out;
-}
-
-.fade2-enter-to,
-.fade2-leave-from {
-    transform: translateY(0%);
-    transform-origin: bottom;
-}
-
-.bottom-section-enter-active,
-.bottom-section-leave-active {
-    transition: height 0.5s;
-}
-
-.bottom-section-enter-from,
-.bottom-section-leave-to {
-    height: 0;
-}
-
-.bottom-section-enter-to,
-.bottom-section-leave-from {
-    height: [desired height];
-    /* Set this to the height you want when the element is visible */
 }
 
 .overlay {

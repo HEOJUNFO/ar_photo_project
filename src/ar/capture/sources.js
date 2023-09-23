@@ -114,18 +114,6 @@ export default [
         name: 'beeRed',
         type: 'gltfModel',
         path: '../models/content/Bee_Red.gltf'
-    },{
-        name: 'grasshopper',
-        type: 'gltfModel',
-        path: '../models/content/Grasshopper.gltf'
-    },{
-        name: 'magicCircle',
-        type: 'gltfModel',
-        path: '../models/content/MagicCircle.gltf'
-    },{
-        name: 'Tree',
-        type: 'gltfModel',
-        path: '../models/content/Tree.gltf'
     },
   
 ]
