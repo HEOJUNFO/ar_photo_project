@@ -127,5 +127,5 @@ export default [
         type: 'gltfModel',
         path: '../models/content/Tree.gltf'
     },
-
+  
 ]
