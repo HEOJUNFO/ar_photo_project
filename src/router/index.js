@@ -37,6 +37,7 @@ import Mission1 from "@views/test/Mission1.vue"
 import MissionOut from "@views/test/MissionOut.vue"
 import Mission2 from "@views/test/Mission2.vue"
 import Mission3 from "@views/test/Mission3.vue"
+import CaptureReview from "@views/CaptureReview.vue"
 
 
 export const routes = [
@@ -77,6 +78,7 @@ export const routes = [
     {path: '/missionout', component: MissionOut, name: 'MissionOut'},
     {path: '/mission2', component: Mission2, name: 'Mission2'},
     {path: '/mission3', component: Mission3, name: 'Mission3'},
+    {path: '/capturereview', component: CaptureReview, name: 'CaptureReview'},
 
     
 

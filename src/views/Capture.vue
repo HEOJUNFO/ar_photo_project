@@ -128,7 +128,7 @@ export default {
         const saveImage = (image) => {
             imageDataStore.setImageData(image)
             imageDataStore.setEventName(eventName.value)
-            router.push({ path: '/capturepreview' });
+            router.push({ path: '/capturereview' });
         }
 
         const confirmBack = () => {

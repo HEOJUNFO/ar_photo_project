@@ -5,7 +5,7 @@
                 <p>{{ characterContent.text }}</p>
             </div>
             <div class="side-image-container">
-                <img :src="currentCharacter.src" alt="Side Image" />
+                <img :src="characterContent.src" alt="Side Image" />
             </div>
         </div>
         <div class="webgl-container">
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Experience from '../../three/Common1/Experience.js'
+import Experience from '../../ar/Common1/Experience.js'
 import { onMounted, ref, computed } from 'vue';
 import router from '../../router';
 import { useCharacterStore } from '../../stores/characterStore.js'
@@ -27,7 +27,7 @@ export default {
         let experience;
         const characterStore = useCharacterStore()
         const index = ref(0)
-        const textIndex = ref(4)
+        const textIndex = ref(5)
         const itemValue = ref(0)
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
@@ -46,12 +46,11 @@ export default {
         const nextScene = () => {
             if (itemValue.value < 5) {
                 itemValue.value += 1
-                console.log(itemValue.value)
                 return;
             }
             experience.destroy()
             experience.init()
-            router.push({ path: '/framereward', query: { eventName: "common1" } });
+            // router.push({ path: '/framereward', query: { eventName: "common1" } });
         }
 
         const setVH = () => {
@@ -74,7 +73,6 @@ export default {
 
         return {
             index,
-            currentCharacter,
             characterContent: currentCharacterContent,
             next,
         }
@@ -96,8 +94,8 @@ export default {
     outline: none;
 }
 
-
 .top-section {
+    overflow: visible;
     position: absolute;
     display: flex;
     flex-direction: row;
@@ -106,22 +104,50 @@ export default {
     justify-content: space-between;
     align-items: center;
     z-index: 1;
+    margin-top: calc(2.5 * var(--vh));
 }
 
 
 .text-container1 {
+    overflow: visible;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid black;
-    padding: 10px;
     background-color: #fff;
-    width: 80%;
+    width: 75%;
+    position: relative;
+    border-radius: 16px;
+    margin-left: 5%;
+}
+
+.text-container1::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 15px solid #fff;
+    position: absolute;
+    right: -10px;
+    top: 30%;
+    transform: translateY(-50%);
 }
 
 .text-container1 p {
-    padding: 7.5px 15px 7.5px 15px;
-    font-size: 1rem;
+    overflow: hidden;
+    padding: 15px;
+    color: #000;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: -0.4px;
+    margin: 0;
+    border-radius: 10px;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+    text-align: center;
 }
 
 .side-image-container {
