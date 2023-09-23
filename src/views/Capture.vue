@@ -1,5 +1,16 @@
 <template>
     <div class="main">
+        <div v-show="showOverlay" @click="showOverlay = false" class="overlay">
+            <div class="bottom-section3">
+                <button>프레임</button>
+                <button><svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 70 70" fill="none">
+                        <circle cx="35" cy="35" r="28" fill="#D50F4A" />
+                        <circle cx="35" cy="35" r="33.5" stroke="white" stroke-opacity="0.8" stroke-width="3" />
+                        <circle cx="35" cy="35" r="10.5" stroke="white" stroke-width="3" />
+                    </svg></button>
+                <button>스티커</button>
+            </div>
+        </div>
         <div class="top-section">
             <button>홈버튼</button>
             <button onclick="switchCamera()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -13,16 +24,61 @@
         <div class="webgl-container">
             <canvas class="webgl"></canvas>
         </div>
-        <div class="bottom-section">
-            <button>프레임</button>
-            <button onclick="captureImage()"><svg xmlns="http://www.w3.org/2000/svg" width="70" height="70"
-                    viewBox="0 0 70 70" fill="none">
-                    <circle cx="35" cy="35" r="28" fill="#D50F4A" />
-                    <circle cx="35" cy="35" r="33.5" stroke="white" stroke-opacity="0.8" stroke-width="3" />
-                    <circle cx="35" cy="35" r="10.5" stroke="white" stroke-width="3" />
-                </svg></button>
-            <button>스티커</button>
-        </div>
+
+        <transition name="bottom-section">
+            <div v-if="!frameList && !stickerList" class="bottom-section">
+                <button @click="frameToggle()">프레임</button>
+                <button onclick="captureImage()"><svg xmlns="http://www.w3.org/2000/svg" width="70" height="70"
+                        viewBox="0 0 70 70" fill="none">
+                        <circle cx="35" cy="35" r="28" fill="#D50F4A" />
+                        <circle cx="35" cy="35" r="33.5" stroke="white" stroke-opacity="0.8" stroke-width="3" />
+                        <circle cx="35" cy="35" r="10.5" stroke="white" stroke-width="3" />
+                    </svg></button>
+                <button @click="stickerToggle()">스티커</button>
+            </div>
+        </transition>
+
+        <transition name="fade2">
+            <div v-if="frameList" class="bottom-section2">
+                <div class="image-container">
+                    <div v-for="imageObj in FRAMES" :key="imageObj.text">
+                        <img :src="imageObj.src" :alt="imageObj.text" />
+                        <p>{{ imageObj.text }}</p>
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button @click="frameList = false">뒤로</button>
+                    <button onclick="captureImage()"><svg xmlns="http://www.w3.org/2000/svg" width="70" height="70"
+                            viewBox="0 0 70 70" fill="none">
+                            <circle cx="35" cy="35" r="28" fill="#D50F4A" />
+                            <circle cx="35" cy="35" r="33.5" stroke="white" stroke-opacity="0.8" stroke-width="3" />
+                            <circle cx="35" cy="35" r="10.5" stroke="white" stroke-width="3" />
+                        </svg></button>
+                    <button @click="stickerToggle()">스티커</button>
+                </div>
+            </div>
+        </transition>
+
+        <transition name="fade2">
+            <div v-if="stickerList" class="bottom-section2">
+                <div class="image-container">
+                    <div v-for="imageObj in IMAGES" :key="imageObj.text">
+                        <img :src="imageObj.src" :alt="imageObj.text" />
+                        <p>{{ imageObj.text }}</p>
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button @click="stickerList = false">뒤로</button>
+                    <button onclick="captureImage()"><svg xmlns="http://www.w3.org/2000/svg" width="70" height="70"
+                            viewBox="0 0 70 70" fill="none">
+                            <circle cx="35" cy="35" r="28" fill="#D50F4A" />
+                            <circle cx="35" cy="35" r="33.5" stroke="white" stroke-opacity="0.8" stroke-width="3" />
+                            <circle cx="35" cy="35" r="10.5" stroke="white" stroke-width="3" />
+                        </svg></button>
+                    <button @click="frameToggle()">프레임</button>
+                </div>
+            </div>
+        </transition>
         <div v-if="showModal" class="modal">
             <p>뒤로 돌아갑니다.</p>
             <div class="modal-buttons">
@@ -30,17 +86,22 @@
                 <button @click="confirmBack">확인</button>
             </div>
         </div>
+        <div class="frame">
+            <img src="@resource/frame/spring.png" alt="봄" />
+        </div>
     </div>
 </template>
-
 
 <script>
 import { useCharacterStore } from '../stores/characterStore.js'
 import { useImageDataStore } from '../stores/imageData.js'
-import Experience from '../three/Experience/Experience.js'
+import Experience from '../ar/capture/Experience.js'
 import { onMounted, computed, ref } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router'
 import router from '../router';
+
+
+
 
 export default {
     name: 'capture',
@@ -48,6 +109,9 @@ export default {
         let experience;
         const showModal = ref(false);
         const eventName = ref('capture')
+        const frameList = ref(false)
+        const showOverlay = ref(true)
+        const stickerList = ref(false)
 
         const enableFilp = ref(true)
 
@@ -60,6 +124,34 @@ export default {
             return currentCharacter.value.common4[textIndex.value] || {}
         })
 
+        const FRAMES = [
+            { src: new URL('@resource/frame/spring.png', import.meta.url).href, text: '봄' },
+            { src: new URL('@resource/frame/summer.png', import.meta.url).href, text: '여름' },
+            { src: new URL('@resource/frame/fall.png', import.meta.url).href, text: '가을' },
+            { src: new URL('@resource/frame/winter.png', import.meta.url).href, text: '겨울' },
+        ];
+
+        const STICKERS = [
+            { src: new URL('@resource/character/Bell_EntireBody.png', import.meta.url).href },
+            { src: new URL('@resource/character/Bell_Normal.png', import.meta.url).href },
+            { src: new URL('@resource/character/Bell_Happy.png', import.meta.url).href },
+            { src: new URL('@resource/character/Bell_Sad.png', import.meta.url).href },
+            { src: new URL('@resource/character/Bell_Welcome.png', import.meta.url).href },
+            { src: new URL('@resource/character/Uno_EnitreBody.png', import.meta.url).href },
+
+
+
+        ]
+
+        const stickerToggle = () => {
+            stickerList.value = true
+            frameList.value = false
+        }
+
+        const frameToggle = () => {
+            stickerList.value = false
+            frameList.value = true
+        }
 
         const saveImage = (image) => {
             imageDataStore.setImageData(image)
@@ -110,6 +202,12 @@ export default {
             showModal,
             confirmBack,
             closeModal,
+            frameList,
+            showOverlay,
+            FRAMES,
+            stickerList,
+            stickerToggle,
+            frameToggle
         }
     }
 }
@@ -157,7 +255,6 @@ export default {
 
 }
 
-
 .bottom-section {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -165,11 +262,12 @@ export default {
     height: calc(20 * var(--vh));
     justify-content: space-between;
     align-items: center;
-    z-index: 1;
+    z-index: 2;
     background: var(--Main-Pink, #F0D7CA);
     position: absolute;
     bottom: 0;
 }
+
 
 .bottom-section button {
     background-color: rgba(0, 0, 0, 0);
@@ -184,6 +282,61 @@ export default {
 
 }
 
+.bottom-section2 {
+    width: 100%;
+    height: calc(30 * var(--vh));
+    z-index: 1;
+    background: var(--Main-Pink, #F0D7CA);
+    position: absolute;
+    bottom: 0;
+}
+
+
+
+.image-container {
+    overflow-x: scroll;
+    display: flex;
+    flex-direction: row;
+    /* Change from column to row */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: calc(25 * var(--vh));
+}
+
+.image-container img {
+    width: auto;
+    height: calc(20 * var(--vh));
+
+}
+
+.image-container p {
+    width: auto;
+    height: calc(4 * var(--vh));
+
+}
+
+.button-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 100%;
+    height: calc(5 * var(--vh));
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+}
+
+.button-container button {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+
+.button-container button svg {
+    width: auto;
+    height: calc(5* var(--vh));
+}
 
 .modal {
     position: fixed;
@@ -253,5 +406,88 @@ export default {
     font-weight: 700;
     line-height: 24px;
     letter-spacing: -0.4px;
+}
+
+.fade2-enter-from,
+.fade2-leave-to {
+    transform: translateY(100%);
+    transform-origin: bottom;
+}
+
+.fade2-enter-active,
+.fade2-leave-active {
+    transition: transform 0.5s ease-in-out;
+}
+
+.fade2-enter-to,
+.fade2-leave-from {
+    transform: translateY(0%);
+    transform-origin: bottom;
+}
+
+.bottom-section-enter-active,
+.bottom-section-leave-active {
+    transition: height 0.5s;
+}
+
+.bottom-section-enter-from,
+.bottom-section-leave-to {
+    height: 0;
+}
+
+.bottom-section-enter-to,
+.bottom-section-leave-from {
+    height: [desired height];
+    /* Set this to the height you want when the element is visible */
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 3;
+}
+
+
+.bottom-section3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 100%;
+    height: calc(20 * var(--vh));
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    bottom: 0;
+}
+
+
+.bottom-section3 button {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+
+.bottom-section3 button svg {
+    width: auto;
+    height: calc(10* var(--vh));
+
+}
+
+.frame {
+    position: absolute;
+    top: calc(10* var(--vh));
+    width: 100%;
+    height: auto;
+}
+
+.frame img {
+    width: 100%;
+    height: 100%;
 }
 </style>
