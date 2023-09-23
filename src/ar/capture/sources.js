@@ -13,29 +13,9 @@ export default [
         ]
     },
     {
-        name: 'grassColorTexture',
-        type: 'texture',
-        path: '../textures/dirt/color.jpg'
-    },
-    {
-        name: 'grassNormalTexture',
-        type: 'texture',
-        path: '../textures/dirt/normal.jpg'
-    },
-    {
         name: 'foxModel',
         type: 'gltfModel',
         path: '../models/Fox/glTF/Fox.gltf'
-    },
-    {
-        name: 'paperBoat',
-        type: 'texture',
-        path: '../resource/culture/game_paperboat.png'
-    },
-    {
-        name: 'bellBody',
-        type: 'texture',
-        path: '../resource/character/Bell_EntireBody.png'
     },
     {
         name: 'bellNormal',
@@ -53,20 +33,6 @@ export default [
         path: '../resource/character/Bell_Welcome.png'
     },
     {
-        name: 'bellSad',
-        type: 'texture',
-        path: '../resource/character/Bell_Sad.png'
-    },
-    {
-        name: 'sorinaBody',
-        type: 'texture',
-        path: '../resource/character/Sorina_EntireBody.png'
-    },{
-        name: 'sorinaNormal',
-        type: 'texture',
-        path: '../resource/character/Sorina_Normal.png'
-    }, 
-    {
         name: 'sorinaHappy',
         type: 'texture',
         path: '../resource/character/Sorina_Happy.png'
@@ -77,15 +43,6 @@ export default [
         path: '../resource/character/Sorina_Welcome.png'
     },
     {
-        name: 'sorinaSad',
-        type: 'texture',
-        path: '../resource/character/Sorina_Sad.png'
-    },
-    {
-        name: 'unoBody',
-        type: 'texture',
-        path: '../resource/character/Uno_EntireBody.png'
-    },{
         name: 'unoNormal',
         type: 'texture',
         path: '../resource/character/Uno_Normal.png'
@@ -101,19 +58,18 @@ export default [
         path: '../resource/character/Uno_Welcome.png'
     },
     {
-        name: 'unoSad',
-        type: 'texture',
-        path: '../resource/character/Uno_Sad.png'
-    },
-    {
-        name: 'beeGreen',
+        name: 'bellModel',
         type: 'gltfModel',
-        path: '../models/content/Bee_Green.gltf'
+        path: '../models/Bell/TheFlash_BELL_SD_03-001.gltf'
+    },{
+        name: 'sorinaModel',
+        type: 'gltfModel',
+        path: '../models/Sorina/TheFlash_Sorina_SD_03-001.gltf'
+    },{
+        name: 'unoModel',
+        type: 'gltfModel',
+        path: '../models/Uno/TheFlash_Uno_SD_03-001.gltf'
     }
-    ,{
-        name: 'beeRed',
-        type: 'gltfModel',
-        path: '../models/content/Bee_Red.gltf'
-    },
+  
   
 ]

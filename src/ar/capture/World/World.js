@@ -1,12 +1,11 @@
 import * as THREE from 'three'; 
 import Experience from '../Experience.js'
 import Environment from './Environment.js'
+import Model from './Model.js'
 
-import GreenBee from './GreenBee.js'
-import RedBee from './RedBee.js'
 
 import Sticker from './Sticker.js'
-import Floor from './Floor.js'
+
 
 
 export default class World
@@ -24,7 +23,7 @@ export default class World
         this.resources.on('ready', () =>
         {
             
-           
+            this.model  = new Model('unoModel')
             this.sticker = new Sticker()
             this.environment = new Environment()
         })
@@ -51,7 +50,9 @@ export default class World
     }
 
     update() {
-       
+       if(this.model){
+        this.model.update()
+       }
   
     }
     dispose(){

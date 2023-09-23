@@ -172,8 +172,13 @@ export default class Experience
         for (let i = 0; i < intersects.length; i++) {
             for (let j = 0; j < this.clickedObject.length; j++) {
                 if (this._isObjectChildOf(intersects[i].object, this.clickedObject[j])) {
-                  this.world.sticker.isMoving = true;
-                  console.log(this.world.sticker.isMoving)
+                    if(intersects[i].object.name === 'stickers'){
+                        this.world.sticker.isMoving = true;
+                    }
+                    if(intersects[i].object.name === 'model'){
+                        this.world.model.isMoving = true;
+                        console.log(this.world.model.isMoving)
+                    }
                 }
             }
         }

@@ -11,7 +11,7 @@ export default class Sticker
 
         this.isMoving = false
         
-        this.setTextures('bellBody')
+        this.setTextures('bellHappy')
 
         this.onTouchStart = this.onTouchStart.bind(this);
         this.onTouchMove = this.onTouchMove.bind(this);
@@ -55,6 +55,7 @@ export default class Sticker
         this.mesh.scale.set(2, 2, 0.1)
         this.mesh.position.set(0.75, 1.5, 0)
         this.scene.add(this.mesh)
+        this.mesh.name = 'stickers'
         this.experience.clickedObject.push(this.mesh);
         
     }

@@ -399,6 +399,7 @@ export default {
     top: calc(10* var(--vh));
     width: 100%;
     height: auto;
+    pointer-events: none;
 }
 
 .frame img {
