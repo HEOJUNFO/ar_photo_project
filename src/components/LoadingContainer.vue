@@ -154,7 +154,7 @@ export default {
 
 
         const close = () => {
-            // router.go(-1)
+            router.go(-1)
         }
 
         const setVH = () => {
@@ -168,38 +168,19 @@ export default {
             setVH();
             window.addEventListener('resize', setVH);
 
-            document.body.style.overflow = 'hidden';
-
-            localStorage.setItem('characterID', 0);
-
-            // if (localStorage.getItem('characterID') === null && router.currentRoute.value.path !== '/intro') {
-            //     router.push('/intro')
-
-
-            //     localStorage.setItem('item1', "null")
-            //     localStorage.setItem('item2', "null")
-            //     localStorage.setItem('item3', "null")
-            //     localStorage.setItem('item4', "null")
-            //     localStorage.setItem('item5', "null")
-            //     localStorage.setItem('item6', "null")
-            //     localStorage.setItem('item7', "null")
-
-            //     return
-            // }
-
             if (localStorage.getItem('consentGiven') === 'true') {
                 showModal.value = false
+                setTimeout(() => {
+                    systemCheck.value = false
+                    emit('closed');
+                }, 1000);
             }
             else {
                 showModal.value = true
-                return
 
             }
 
-            setTimeout(() => {
-                systemCheck.value = false
-                emit('closed');
-            }, 1000);
+
         })
         return { systemCheck, showModal, start, close, buttonCheck1, buttonCheck2, check1, check2, check1Modal, check2Modal }
     }

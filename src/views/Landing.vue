@@ -1,19 +1,23 @@
 <template>
     <div class="loading-container">
+        <div class="image-container">
+            <img src="@resource/mission/web-landing-page-1.jpg" alt="Image 1" />
+        </div>
+        <div class="button-container1">
+            <button @click="start()">신비의 숲 시작하기</button>
+            <div></div>
+        </div>
+        <div class="image-container">
+            <img src="@resource/mission/web-landing-page-2.jpg" alt="Image 1" />
+        </div>
 
         <div class="image-container">
-            <img src="@resource/landing/web-landing-page.jpg" alt="Image 1" />
-            <button @click="start()">신비의 숲 시작하기</button>
-
+            <img src="@resource/landing/landing_02.jpg" alt="Image 2" />
         </div>
-
-
-        <div class="image-container2">
-            <img src="@resource/landing/web-landing-page-2.jpg" alt="Image 2" />
+        <div class="button-container1">
             <button @click="start()">신비의 숲 시작하기</button>
+            <div></div>
         </div>
-
-
         <div class="image-container">
             <img src="@resource/landing/web-landing-page-3.jpg" alt="Image 3" />
         </div>
@@ -68,11 +72,25 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background: var(--Main-Pink, #F0D7CA);
+    overflow-y: scroll;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
 }
+
+.loading-container::-webkit-scrollbar {
+    display: none !important;
+}
+
 
 .image-container {
     position: relative;
+    width: 100%;
     margin: -1%;
+}
+
+.image-container::-webkit-scrollbar {
+    display: none !important;
 }
 
 .image-container img {
@@ -80,34 +98,21 @@ export default {
     height: auto;
 }
 
-.image-container2 {
+
+.button-container1 {
     position: relative;
-    margin: -1%;
-    width: 100%;
-    height: 100%;
-}
-
-.image-container2 img {
-    width: 100%;
-    height: auto;
-}
-
-
-.image-container img {
-    width: 100%;
-    height: auto;
-
-}
-
-.image-container button {
-    position: absolute;
     width: 80%;
+    background: var(--Main-Pink, #F0D7CA);
+    margin-bottom: calc(1 * var(--vh));
+
+
+}
+
+.button-container1 button {
+    width: 100%;
     padding: 10px;
-    bottom: calc(5 * var(--vh));
-    left: 50%;
-    transform: translateX(-50%);
-    border: none;
     border-radius: 100px;
+    border: 2px solid var(--Point-Red-Dark, #922142);
     background: var(--Point-Red, #D50F4A);
     color: var(--Text-White, #FFF);
     text-align: center;
@@ -117,25 +122,45 @@ export default {
     font-weight: 700;
     line-height: 24px;
     letter-spacing: -0.4px;
+    text-align: center;
+    z-index: 1;
+    position: relative;
 }
 
-.image-container2 button {
+.button-container1 div {
+    width: 100%;
+    border-radius: 100px;
+    background: var(--Dark-Red, #922142);
+    height: calc(6 * var(--vh));
+    position: absolute;
+    bottom: calc(-0.25 * var(--vh));
+    z-index: 0;
+}
+
+
+
+
+.buttonborder {
+    border-radius: 100px;
+    background: var(--Dark-Red, #922142);
     position: absolute;
     width: 80%;
-    padding: 10px;
-    bottom: calc(5 * var(--vh));
+    height: calc(6 * var(--vh));
+    top: calc(56 * var(--vh));
     left: 50%;
     transform: translateX(-50%);
-    border: none;
+
+}
+
+.buttonborder2 {
     border-radius: 100px;
-    background: var(--Point-Red, #D50F4A);
-    color: var(--Text-White, #FFF);
-    text-align: center;
-    font-family: "NanumSquare", sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: -0.4px;
+    background: var(--Dark-Red, #922142);
+    position: absolute;
+    width: 80%;
+    height: calc(6 * var(--vh));
+    bottom: calc(6 * var(--vh));
+    left: 50%;
+    transform: translateX(-50%);
+
 }
 </style>

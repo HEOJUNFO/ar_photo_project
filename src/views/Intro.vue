@@ -4,9 +4,7 @@
         </loading-container>
         <div class="loading-container" :style="bgStyle">
             <div class=" top-section">
-                <div class="text-container1">
-                    <p>숲에 동행할 요정을 골라주세요</p>
-                </div>
+                <img src="@resource/common/AR_Logo_02.png" alt="logo" />
             </div>
             <div class="image-container">
                 <button @click.stop="navigateToPreviousImage()">
@@ -162,47 +160,12 @@ export default {
     justify-content: space-between;
     align-items: center;
     z-index: 10;
+    top: calc(7 * var(--vh));
 }
 
-
-.text-container1 {
-    overflow: visible;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
-    width: 85%;
-    position: relative;
-    border-radius: 16px;
-    margin-left: 5%;
-    margin-top: calc(2.5 * var(--vh));
-}
-
-.text-container1::before {
-    content: "";
-    width: 0;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 15px solid #fff;
-    position: absolute;
-    right: -15px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.text-container1 p {
-    overflow: hidden;
-    padding: 15px;
-    color: #000;
-    font-family: "NanumSquare", sans-serif;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: -0.4px;
-    margin: 0;
-    border-radius: 10px;
+.top-section img {
+    width: 100%;
+    height: auto;
 }
 
 .text-container2 {
