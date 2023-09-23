@@ -5,7 +5,7 @@
         </div>
         <div class="button-container1">
             <button @click="start()">신비의 숲 시작하기</button>
-            <div></div>
+            <img src="@resource/common/tap.png" alt="Image 1" />
         </div>
         <div class="image-container">
             <img src="@resource/mission/web-landing-page-2.jpg" alt="Image 1" />
@@ -14,9 +14,8 @@
         <div class="image-container">
             <img src="@resource/landing/landing_02.jpg" alt="Image 2" />
         </div>
-        <div class="button-container1">
+        <div class="button-container2">
             <button @click="start()">신비의 숲 시작하기</button>
-            <div></div>
         </div>
         <div class="image-container">
             <img src="@resource/landing/web-landing-page-3.jpg" alt="Image 3" />
@@ -100,6 +99,7 @@ export default {
 
 
 .button-container1 {
+    overflow: visible;
     position: relative;
     width: 80%;
     background: var(--Main-Pink, #F0D7CA);
@@ -125,42 +125,47 @@ export default {
     text-align: center;
     z-index: 1;
     position: relative;
+    box-shadow: 0px 3px #922142
 }
 
-.button-container1 div {
+.button-container1 img {
+    width: auto;
+    height: 100%;
+    position: absolute;
+    top: 40%;
+    left: 80%;
+    transform: translateX(-50%);
+    z-index: 3;
+}
+
+
+.button-container2 {
+    position: relative;
+    width: 80%;
+    background: var(--Main-Pink, #F0D7CA);
+    margin-top: calc(1 * var(--vh));
+    margin-bottom: calc(5 * var(--vh));
+
+
+}
+
+.button-container2 button {
     width: 100%;
+    padding: 10px;
     border-radius: 100px;
-    background: var(--Dark-Red, #922142);
-    height: calc(6 * var(--vh));
-    position: absolute;
-    bottom: calc(-0.25 * var(--vh));
-    z-index: 0;
-}
-
-
-
-
-.buttonborder {
-    border-radius: 100px;
-    background: var(--Dark-Red, #922142);
-    position: absolute;
-    width: 80%;
-    height: calc(6 * var(--vh));
-    top: calc(56 * var(--vh));
-    left: 50%;
-    transform: translateX(-50%);
-
-}
-
-.buttonborder2 {
-    border-radius: 100px;
-    background: var(--Dark-Red, #922142);
-    position: absolute;
-    width: 80%;
-    height: calc(6 * var(--vh));
-    bottom: calc(6 * var(--vh));
-    left: 50%;
-    transform: translateX(-50%);
-
+    border: 2px solid var(--Point-Red-Dark, #922142);
+    background: var(--Point-Red, #D50F4A);
+    color: var(--Text-White, #FFF);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+    text-align: center;
+    z-index: 1;
+    position: relative;
+    box-shadow: 0px 3px #922142
 }
 </style>

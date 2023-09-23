@@ -1,11 +1,12 @@
 <template>
     <div>
-        <loading-container>
+        <loading-container @closed="handleClose()">
         </loading-container>
         <div class="loading-container" :style="bgStyle">
             <div class=" top-section">
                 <img src="@resource/common/AR_Logo_02.png" alt="logo" />
             </div>
+            <p class="name">{{ characterName }}</p>
             <div class="image-container">
                 <button @click.stop="navigateToPreviousImage()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 42 42" fill="none">
@@ -35,15 +36,18 @@
                         </g>
                     </svg></button>
             </div>
-            <div class="text-container2">
-                <p class="character-name">{{ characterName }}</p>
-                <hr class="character-line">
-                <p class="character-text">{{ characterContent.text }}</p>
-                <div class="button-container">
-                    <button v-show="index === 0" @click.stop="next()">
-                        선택하기
-                    </button>
-                </div>
+            <div id="dialog-box">
+                <p id="typed-text"></p>
+                <button><svg xmlns="http://www.w3.org/2000/svg" width="44" height="47" viewBox="0 0 44 47" fill="none">
+                        <circle cx="22" cy="25" r="22" fill="#922142" />
+                        <circle cx="22" cy="22" r="21" fill="#D50F4A" stroke="#922142" stroke-width="2" />
+                        <path
+                            d="M32.75 20.701C33.75 21.2783 33.75 22.7217 32.75 23.299L17.75 31.9593C16.75 32.5366 15.5 31.815 15.5 30.6603L15.5 13.3397C15.5 12.185 16.75 11.4634 17.75 12.0407L32.75 20.701Z"
+                            fill="white" stroke="#D50F4A" />
+                    </svg></button>
+            </div>
+            <div class="button-container2">
+                <button @click="selectCharacter()">선택하기</button>
             </div>
         </div>
     </div>
@@ -57,8 +61,8 @@ import LoadingContainer from '../components/LoadingContainer.vue'
 
 const IMAGES = [
     new URL('@resource/intro/Bell.png', import.meta.url).href,
-    new URL('@resource/intro/Uno.png', import.meta.url).href,
     new URL('@resource/intro/Sorina.png', import.meta.url).href,
+    new URL('@resource/intro/Uno.png', import.meta.url).href,
 ];
 
 
@@ -76,6 +80,7 @@ export default {
         const bgStyle = computed(() => {
             return {
                 backgroundImage: `url(${bgImageUrl})`,
+                backgroundSize: 'cover',
             }
         })
 
@@ -89,28 +94,55 @@ export default {
         const characterName = computed(() => characterStore.currentCharacter?.name)
 
 
-        const handleScroll = () => {
-            preventDefault()
-            stopPropagation()
+        const next = () => {
+
+
         }
 
-
-        const next = () => {
+        const selectCharacter = () => {
             localStorage.setItem('characterID', imageIndex.value)
-            setTimeout(() => {
-                router.push('/intro3d')
-            }, 1000);
-
+            // setTimeout(() => {
+            //     router.push('/intro3d')
+            // }, 1000);
         }
 
         const navigateToNextImage = () => {
             imageIndex.value = (imageIndex.value + 1) % IMAGES.length;
             characterStore.setCharacterIndex(imageIndex.value)
+            typeText()
         }
 
         const navigateToPreviousImage = () => {
             imageIndex.value = (imageIndex.value - 1 + IMAGES.length) % IMAGES.length;
             characterStore.setCharacterIndex(imageIndex.value)
+            typeText()
+        }
+
+        let typingTimeout;
+
+        const typeText = () => {
+            const content = currentCharacterContent.value.text;
+            const textContainer = document.getElementById("typed-text");
+            let index = 0;
+
+            clearTimeout(typingTimeout);
+
+            textContainer.textContent = "";
+
+            function typing() {
+                if (index < content.length) {
+                    textContainer.textContent += content.charAt(index);
+                    index++;
+                    typingTimeout = setTimeout(typing, 50);
+                }
+            }
+            typing();
+        };
+
+        const handleClose = () => {
+            setTimeout(() => {
+                typeText()
+            }, 1000);
         }
 
         const setVH = () => {
@@ -134,8 +166,9 @@ export default {
             characterName: characterName,
             characterContent: currentCharacterContent,
             selectCharacterSrc: characterStore.currentCharacter?.src,
-            handleScroll,
-            bgStyle
+            bgStyle,
+            handleClose,
+            selectCharacter
         }
     }
 }
@@ -152,15 +185,14 @@ export default {
 
 .top-section {
     overflow: visible;
-    position: absolute;
+    position: relative;
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: calc(10 * var(--vh));
+    height: calc(25 * var(--vh));
     justify-content: space-between;
     align-items: center;
     z-index: 10;
-    top: calc(7 * var(--vh));
 }
 
 .top-section img {
@@ -168,94 +200,30 @@ export default {
     height: auto;
 }
 
-.text-container2 {
-    bottom: 0%;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    border: none;
-    border-radius: 0px;
-    background-color: #fff;
-    width: 100%;
-    height: calc(30 * var(--vh));
-    padding-top: 5%
-}
-
-.text-container2 .character-name {
-    padding: 2.5px 21.5px;
-    color: var(--Text-Black, #111);
-    font-family: "NanumSquare", sans-serif;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 28px;
-    letter-spacing: -0.5px;
-    align-self: flex-start;
-    text-align: left;
-}
-
-.text-container2 .character-text {
-    padding: 7.5px 15px 7.5px 15px;
-    color: #767676;
-    font-family: "NanumSquare", sans-serif;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 26px;
-    letter-spacing: -0.45px;
-    align-self: flex-start;
-    text-align: left;
-    max-width: 25ch;
-    overflow-wrap: break-word;
-    word-break: keep-all;
-}
-
-.character-line {
-    width: 90%;
-    border: 1px solid #D9D9D9;
-    margin: 2% 0 2% 0;
-    align-self: center
-}
-
-.button-container {
-    margin-top: 5%;
-    display: flex;
-    flex-direction: rows;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    gap: 2.5%
-}
-
-.button-container button:first-child {
-    width: 80%;
-    border-radius: 100px;
-    background: var(--Main-Pink, #F0D7CA);
-    padding: 15px 15px;
-    border: none;
-    color: var(--Text-Black, #111);
+.name {
+    color: var(--Point-Red, #D50F4A);
     text-align: center;
     font-family: "NanumSquare", sans-serif;
-    font-size: 16px;
+    font-size: 24px;
     font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: -0.4px;
+    font-weight: 800;
+    line-height: 34px;
+    letter-spacing: -0.6px;
+    position: relative
 }
 
 .image-container {
+    width: 60%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    margin-top: calc(20 * var(--vh));
+    position: relative
 }
 
 
 .image-container img {
-    width: 80%;
-    height: 80%;
+    width: 100%;
+    height: auto;
 }
 
 .image-container button {
@@ -264,5 +232,68 @@ export default {
     cursor: pointer;
     border: none;
     transition: background-color 0.3s;
+}
+
+#dialog-box {
+    border-radius: 16px;
+    border: 2px dashed #D50F4A;
+    background: #FFF;
+    padding: 10px;
+    width: 80%;
+    height: calc(20 * var(--vh));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end
+}
+
+#dialog-box p {
+    font-family: "NanumSquare", sans-serif;
+    color: #000;
+    text-align: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+    margin-bottom: 15%;
+    max-width: 18ch;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+
+}
+
+#dialog-box button {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+}
+
+.button-container2 {
+    position: relative;
+    width: 80%;
+    background: var(--Main-Pink, #F0D7CA);
+    margin-top: calc(5 * var(--vh));
+
+
+}
+
+.button-container2 button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 100px;
+    border: 2px solid var(--Point-Red-Dark, #922142);
+    background: var(--Point-Red, #D50F4A);
+    color: var(--Text-White, #FFF);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+    text-align: center;
+    z-index: 1;
+    position: relative;
+    box-shadow: 0px 3px #922142
 }
 </style>

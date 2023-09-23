@@ -3,10 +3,12 @@
 
         <div class="image-container">
             <img src="@resource/mission/web-landing-page-1.jpg" alt="Image 1" />
-            <button @click="start()">물길 만들기 이벤트</button>
-
         </div>
-        <div class="image-container2">
+        <div class="button-container2">
+            <button class="button1" v-if="!clear" @click="start()">이벤트 시작하기</button>
+            <button class="button2" v-if="clear" @click="start()">이벤트 참여 완료</button>
+        </div>
+        <div class="image-container">
             <img src="@resource/mission/web-landing-page-2.jpg" alt="Image 2" />
         </div>
 
@@ -40,6 +42,8 @@ export default {
             }
         };
 
+        const clear = ref(false);
+
 
         const scrollToTop = () => {
             window.scrollTo(0, 0);
@@ -70,7 +74,7 @@ export default {
 
 
 
-        return { start }
+        return { start, clear }
     }
 }
 </script>
@@ -85,8 +89,8 @@ export default {
 }
 
 .image-container {
+    width: 100%;
     position: relative;
-    margin-bottom: 10%;
 }
 
 .image-container img {
@@ -94,24 +98,17 @@ export default {
     height: auto;
 }
 
-.image-container2 {
+.button-container2 {
     position: relative;
-}
-
-.image-container2 img {
-    width: 100%;
-    height: auto;
-}
-
-.image-container button {
-    position: absolute;
     width: 80%;
+    background: var(--Main-Pink, #F0D7CA);
+}
+
+.button1 {
+    width: 100%;
     padding: 10px;
-    bottom: calc(-5 * var(--vh));
-    left: 50%;
-    transform: translateX(-50%);
-    border: none;
     border-radius: 100px;
+    border: 2px solid var(--Point-Red-Dark, #922142);
     background: var(--Point-Red, #D50F4A);
     color: var(--Text-White, #FFF);
     text-align: center;
@@ -121,6 +118,30 @@ export default {
     font-weight: 700;
     line-height: 24px;
     letter-spacing: -0.4px;
-    z-index: 2;
+    text-align: center;
+    z-index: 1;
+    position: relative;
+    box-shadow: 0px 3px #922142
+}
+
+.button2 {
+    width: 100%;
+    padding: 10px;
+    border-radius: 100px;
+    background: var(--Main-Green, #06734C);
+    border: none;
+    color: var(--Text-White, #FFF);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+    text-align: center;
+    z-index: 1;
+    position: relative;
+    outline: 1px solid #06734C;
+    outline-offset: 2px;
 }
 </style>
