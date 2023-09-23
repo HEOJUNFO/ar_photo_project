@@ -1,14 +1,52 @@
 <template>
     <div class="main">
         <div v-show="showOverlay" @click="showOverlay = false" class="overlay">
+            <img src="@resource/common/AR_Logo_02.png" alt="overlay" />
+            <div class="tutorial-inner">
+                <p>안녕! 반가워</p>
+                <p>마음 드는 <span style="color:#FFFF80">사진프레임</span>과</p>
+                <p><span style="color:#FFFF80">스티커</span>를 선택해서</p>
+                <p>지금부터 사진 촬영을 시작해볼까?</p>
+                <br>
+                <br>
+                <p><span style="color:#FFFF80">#드래그</span>로 캐릭터 이동 가능</p>
+                <p><span style="color:#FFFF80">#핀치줌</span>으로 크기 변경도 가능</p>
+            </div>
             <div class="bottom-section3">
-                <button>프레임</button>
-                <button><svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 70 70" fill="none">
-                        <circle cx="35" cy="35" r="28" fill="#D50F4A" />
-                        <circle cx="35" cy="35" r="33.5" stroke="white" stroke-opacity="0.8" stroke-width="3" />
-                        <circle cx="35" cy="35" r="10.5" stroke="white" stroke-width="3" />
-                    </svg></button>
-                <button>스티커</button>
+                <button><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
+                        <mask id="mask0_541_2068" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="28"
+                            height="28">
+                            <rect width="28" height="28" fill="#D9D9D9" />
+                        </mask>
+                        <g mask="url(#mask0_541_2068)">
+                            <path
+                                d="M3.5 15.1667V12.8333H5.83333V15.1667H3.5ZM3.5 10.5V8.16667H5.83333V10.5H3.5ZM8.16667 5.83333V3.5H10.5V5.83333H8.16667ZM12.8333 24.5V22.1667H15.1667V24.5H12.8333ZM12.8333 5.83333V3.5H15.1667V5.83333H12.8333ZM17.5 24.5V22.1667H19.8333V24.5H17.5ZM22.1667 19.8333V17.5H24.5V19.8333H22.1667ZM22.1667 15.1667V12.8333H24.5V15.1667H22.1667ZM23.3333 10.5C23.0028 10.5 22.7257 10.3882 22.5021 10.1646C22.2785 9.94097 22.1667 9.66389 22.1667 9.33333V5.83333H18.6667C18.3361 5.83333 18.059 5.72153 17.8354 5.49792C17.6118 5.27431 17.5 4.99722 17.5 4.66667C17.5 4.33611 17.6118 4.05903 17.8354 3.83542C18.059 3.61181 18.3361 3.5 18.6667 3.5H22.1667C22.8083 3.5 23.3576 3.72847 23.8146 4.18542C24.2715 4.64236 24.5 5.19167 24.5 5.83333V9.33333C24.5 9.66389 24.3882 9.94097 24.1646 10.1646C23.941 10.3882 23.6639 10.5 23.3333 10.5ZM5.83333 24.5C5.19167 24.5 4.64236 24.2715 4.18542 23.8146C3.72847 23.3576 3.5 22.8083 3.5 22.1667V18.6667C3.5 18.3361 3.61181 18.059 3.83542 17.8354C4.05903 17.6118 4.33611 17.5 4.66667 17.5C4.99722 17.5 5.27431 17.6118 5.49792 17.8354C5.72153 18.059 5.83333 18.3361 5.83333 18.6667V22.1667H9.33333C9.66389 22.1667 9.94097 22.2785 10.1646 22.5021C10.3882 22.7257 10.5 23.0028 10.5 23.3333C10.5 23.6639 10.3882 23.941 10.1646 24.1646C9.94097 24.3882 9.66389 24.5 9.33333 24.5H5.83333ZM22.1667 24.5V22.1667H24.5C24.5 22.8083 24.2715 23.3576 23.8146 23.8146C23.3576 24.2715 22.8083 24.5 22.1667 24.5ZM3.5 5.83333C3.5 5.19167 3.72847 4.64236 4.18542 4.18542C4.64236 3.72847 5.19167 3.5 5.83333 3.5V5.83333H3.5Z"
+                                fill="white" />
+                        </g>
+                    </svg>프레임 <div class="icon-tutorial-skin">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="50" r="35" fill="none" stroke-width="2" stroke="#ffffff"></circle>
+                            <circle cx="50" cy="50" r="30" fill="none" stroke-width="2" stroke="#ffffff"></circle>
+                        </svg>
+                    </div></button>
+
+                <button></button>
+                <button><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
+                        <mask id="mask0_541_2073" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="28"
+                            height="28">
+                            <rect width="28" height="28" fill="#D9D9D9" />
+                        </mask>
+                        <g mask="url(#mask0_541_2073)">
+                            <path
+                                d="M14 14C12.7167 14 11.6181 13.543 10.7042 12.6292C9.7903 11.7153 9.33335 10.6167 9.33335 9.33332C9.33335 8.04999 9.7903 6.95138 10.7042 6.03749C11.6181 5.1236 12.7167 4.66666 14 4.66666C15.2834 4.66666 16.382 5.1236 17.2959 6.03749C18.2097 6.95138 18.6667 8.04999 18.6667 9.33332C18.6667 10.6167 18.2097 11.7153 17.2959 12.6292C16.382 13.543 15.2834 14 14 14ZM4.66669 21V20.0667C4.66669 19.4055 4.83683 18.7979 5.1771 18.2437C5.51738 17.6896 5.96946 17.2667 6.53335 16.975C7.73891 16.3722 8.96391 15.9201 10.2084 15.6187C11.4528 15.3174 12.7167 15.1667 14 15.1667C15.2834 15.1667 16.5472 15.3174 17.7917 15.6187C19.0361 15.9201 20.2611 16.3722 21.4667 16.975C22.0306 17.2667 22.4827 17.6896 22.8229 18.2437C23.1632 18.7979 23.3334 19.4055 23.3334 20.0667V21C23.3334 21.6417 23.1049 22.191 22.6479 22.6479C22.191 23.1049 21.6417 23.3333 21 23.3333H7.00002C6.35835 23.3333 5.80905 23.1049 5.3521 22.6479C4.89516 22.191 4.66669 21.6417 4.66669 21ZM7.00002 21H21V20.0667C21 19.8528 20.9465 19.6583 20.8396 19.4833C20.7327 19.3083 20.5917 19.1722 20.4167 19.075C19.3667 18.55 18.307 18.1562 17.2375 17.8937C16.1681 17.6312 15.0889 17.5 14 17.5C12.9111 17.5 11.832 17.6312 10.7625 17.8937C9.69308 18.1562 8.63335 18.55 7.58335 19.075C7.40835 19.1722 7.26738 19.3083 7.16044 19.4833C7.05349 19.6583 7.00002 19.8528 7.00002 20.0667V21ZM14 11.6667C14.6417 11.6667 15.191 11.4382 15.6479 10.9812C16.1049 10.5243 16.3334 9.97499 16.3334 9.33332C16.3334 8.69166 16.1049 8.14235 15.6479 7.68541C15.191 7.22846 14.6417 6.99999 14 6.99999C13.3584 6.99999 12.809 7.22846 12.3521 7.68541C11.8952 8.14235 11.6667 8.69166 11.6667 9.33332C11.6667 9.97499 11.8952 10.5243 12.3521 10.9812C12.809 11.4382 13.3584 11.6667 14 11.6667Z"
+                                fill="white" />
+                        </g>
+                    </svg>스티커<div class="icon-tutorial-skin">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="50" r="35" fill="none" stroke-width="2" stroke="#ffffff"></circle>
+                            <circle cx="50" cy="50" r="30" fill="none" stroke-width="2" stroke="#ffffff"></circle>
+                        </svg>
+                    </div></button>
             </div>
         </div>
         <div class="top-section">
@@ -385,6 +423,35 @@ export default {
     z-index: 3;
 }
 
+.overlay img {
+    position: absolute;
+    top: calc(30 * var(--vh));
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: auto;
+}
+
+.tutorial-inner {
+    position: absolute;
+    top: calc(50 * var(--vh));
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: auto;
+}
+
+.tutorial-inner p {
+    color: var(--Text-White, #FFF);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+}
+
 
 .bottom-section3 {
     display: grid;
@@ -405,11 +472,23 @@ export default {
     border: none;
     width: 100%;
     height: 100%;
+    color: var(--Text-White, #FFF);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 22px;
+    letter-spacing: -0.35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .bottom-section3 button svg {
     width: auto;
-    height: calc(10* var(--vh));
+    height: calc(5* var(--vh));
 
 }
 
@@ -424,5 +503,24 @@ export default {
 .frame img {
     width: 100%;
     height: 100%;
+}
+
+.icon-tutorial-skin {
+    position: absolute;
+    width: 100%;
+    animation: beat .35s infinite alternate;
+    transform-origin: center;
+    opacity: 0.5;
+    margin-top: 5%;
+}
+
+@keyframes beat {
+    from {
+        transform: scale(2);
+    }
+
+    to {
+        transform: scale(3);
+    }
 }
 </style>

@@ -15,8 +15,12 @@ export default class Model
         
         this.isMoving = false
 
+        this.initialPinchDistance = 0;
+        this.initialScale = new THREE.Vector3();
+
         this.onTouchStart = this.onTouchStart.bind(this);
         this.onTouchMove = this.onTouchMove.bind(this);
+        this.onTouchEnd = this.onTouchEnd.bind(this);
 
         // Add event listeners
         window.addEventListener('touchstart', this.onTouchStart.bind(this));
@@ -91,30 +95,40 @@ export default class Model
         if (this.isMoving) {
             this.touchStartPosition.set(event.touches[0].clientX, event.touches[0].clientY);
         }
+        if (event.touches.length === 2&& this.isMoving) {
+            const dx = event.touches[0].clientX - event.touches[1].clientX;
+            const dy = event.touches[0].clientY - event.touches[1].clientY;
+            this.initialPinchDistance = Math.sqrt(dx * dx + dy * dy);
+            this.initialScale.copy(this.model.scale);
+          }
     }
 
     onTouchMove(event) {
         if (this.isMoving) {
-            // Calculate touch move delta
+
             const deltaX = event.touches[0].clientX - this.touchStartPosition.x;
             const deltaY = event.touches[0].clientY - this.touchStartPosition.y;
 
-            // Convert screen movement to world units (This may need adjustment based on your camera setup)
-            const factor = 0.01;  // Adjust this based on the sensitivity you want.
+            const factor = 0.01;  
             this.model.position.x += deltaX * factor;
-            this.model.position.y -= deltaY * factor; // Y is inverted in the screen coordinates.
+            this.model.position.y -= deltaY * factor; 
 
-            // Update the starting position
             this.touchStartPosition.set(event.touches[0].clientX, event.touches[0].clientY);
-            this.totalMoveDistance += Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
+            if (event.touches.length === 2 && this.isMoving) {
+                const dx = event.touches[0].clientX - event.touches[1].clientX;
+                const dy = event.touches[0].clientY - event.touches[1].clientY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                const scale = distance / this.initialPinchDistance;
+                this.model.scale.copy(this.initialScale).multiplyScalar(scale);
+        }
         }
     }
 
     onTouchEnd() {
       
         this.isMoving = false;
-        this.totalMoveDistance = 0;
+
     }
 
     update()
