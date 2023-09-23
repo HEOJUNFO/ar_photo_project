@@ -47,6 +47,7 @@ export default class Sticker
     {
         this.material = new THREE.MeshBasicMaterial({
             map: this.texture,
+            toneMapped: false,
         })
         this.material.transparent = true
     }
