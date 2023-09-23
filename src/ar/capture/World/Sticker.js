@@ -11,7 +11,6 @@ export default class Sticker
 
         this.isMoving = false
         
-        this.setTextures('bellHappy')
 
         this.onTouchStart = this.onTouchStart.bind(this);
         this.onTouchMove = this.onTouchMove.bind(this);
@@ -32,6 +31,7 @@ export default class Sticker
     setTextures(name) {
         
         this.texture =  this.resources.items[name]
+        console.log(this.texture)
         this.texture.wrapS = THREE.RepeatWrapping;
         this.texture.wrapT = THREE.RepeatWrapping;
         this.texture.colorSpace = THREE.SRGBColorSpace;

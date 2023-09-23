@@ -22,31 +22,25 @@ export default class World
         // Wait for resources
         this.resources.on('ready', () =>
         {
-            
-            this.model  = new Model('unoModel')
             this.sticker = new Sticker()
             this.environment = new Environment()
         })
     }
 
     setSticker(name){
-        this.resources.on('ready', () =>
-        {
-        if(!this.sticker){
-        this.sticker = new Sticker()
-        }
-        console.log(name)
-        if(name === 'bell'){
-            this.sticker.pushBellTexture()
-        }
-        if(name ==='sorina'){
-            this.sticker.pushSorinaTexture()
-        }
-        if(name === 'uno'){
-            this.sticker.pushUnoTexture()
-        }
-        })
     
+        if(!this.sticker){
+         this.sticker.setTextures(name)
+
+        }else{
+            this.sticker.scene.remove(this.sticker.mesh)
+            this.sticker.setTextures(name)
+           
+        }
+    }
+
+    setCharacter(){
+        this.model  = new Model('unoModel')
     }
 
     update() {

@@ -44,7 +44,9 @@
 
         <div v-if="stickerList">
             <div class="image-container">
-                <img v-for="imageObj in STICKERS" :src="imageObj.src" :alt="imageObj.text" />
+                <img @click="setCharacter()" src="@resource/icon/bell_model.png" alt="모델링" />
+                <img @click="setSticker(imageObj.name)" v-for="imageObj in STICKERS" :src="imageObj.src"
+                    :alt="imageObj.text" />
             </div>
         </div>
 
@@ -91,28 +93,26 @@ export default {
         })
 
         const FRAMES = [
-            // { src: new URL('@resource/frame/spring.png', import.meta.url).href, text: '봄' },
-            // { src: new URL('@resource/frame/summer.png', import.meta.url).href, text: '여름' },
-            // { src: new URL('@resource/frame/fall.png', import.meta.url).href, text: '가을' },
-            // { src: new URL('@resource/frame/winter.png', import.meta.url).href, text: '겨울' },
+            { id: 0, src: new URL('@resource/icon/frame_01.png', import.meta.url).href, text: '봄' },
+            { id: 1, src: new URL('@resource/icon/frame_02.png', import.meta.url).href, text: '여름' },
+            { id: 2, src: new URL('@resource/icon/frame_03.png', import.meta.url).href, text: '가을' },
+            { id: 3, src: new URL('@resource/icon/frame_04.png', import.meta.url).href, text: '겨울' },
         ];
 
         const STICKERS = [
-            // { src: new URL('@resource/character/Bell_EntireBody.png', import.meta.url).href },
-            // { src: new URL('@resource/character/Bell_Normal.png', import.meta.url).href },
-            // { src: new URL('@resource/character/Bell_Happy.png', import.meta.url).href },
-            // { src: new URL('@resource/character/Bell_Sad.png', import.meta.url).href },
-            // { src: new URL('@resource/character/Bell_Welcome.png', import.meta.url).href },
-            // { src: new URL('@resource/character/Uno_EntireBody.png', import.meta.url).href },
-            // { src: new URL('@resource/character/Uno_Normal.png', import.meta.url).href },
-            // { src: new URL('@resource/character/Uno_Happy.png', import.meta.url).href },
-            // { src: new URL('@resource/character/Uno_Sad.png', import.meta.url).href },
-            // { src: new URL('@resource/character/Uno_Welcome.png', import.meta.url).href },
-            // { src: new URL('@resource/character/Sorina_EntireBody.png', import.meta.url).href },
-            // { src: new URL('@resource/character/Sorina_Normal.png', import.meta.url).href },
-            // { src: new URL('@resource/character/Sorina_Happy.png', import.meta.url).href },
-            // { src: new URL('@resource/character/Sorina_Sad.png', import.meta.url).href },
-            // { src: new URL('@resource/character/Sorina_Welcome.png', import.meta.url).href },
+            { id: 0, src: new URL('@resource/icon/Bell_01.png', import.meta.url).href, name: 'bellNormal' },
+            { id: 1, src: new URL('@resource/icon/Bell_02.png', import.meta.url).href, name: 'bellHappy' },
+            { id: 2, src: new URL('@resource/icon/Bell_03.png', import.meta.url).href, name: 'bellWelcome' },
+            { id: 3, src: new URL('@resource/icon/uno_01.png', import.meta.url).href, name: 'sorinaNormal' },
+            { id: 4, src: new URL('@resource/icon/uno_02.png', import.meta.url).href, name: 'sorinaHappy' },
+            { id: 5, src: new URL('@resource/icon/uno_03.png', import.meta.url).href, name: 'sorinaWelcome' },
+            { id: 6, src: new URL('@resource/icon/sorina_01.png', import.meta.url).href, name: 'unoNormal' },
+            { id: 7, src: new URL('@resource/icon/sorina_02.png', import.meta.url).href, name: 'unoHappy' },
+            { id: 8, src: new URL('@resource/icon/sorina_03.png', import.meta.url).href, name: 'unoWelcome' },
+
+
+
+
         ]
 
         const stickerToggle = () => {
@@ -123,6 +123,13 @@ export default {
         const frameToggle = () => {
             stickerList.value = false
             frameList.value = !frameList.value
+        }
+
+        const setSticker = (name) => {
+            experience.world.setSticker(name)
+        }
+        const setCharacter = () => {
+            experience.world.setCharacter()
         }
 
         const saveImage = (image) => {
@@ -158,6 +165,9 @@ export default {
             window.addEventListener('resize', setVH);
 
             experience = new Experience(document.querySelector('canvas.webgl'), saveImage);
+            experience.resources.on('ready', () => {
+                console.log('ready')
+            })
         });
 
         onBeforeRouteLeave(() => {
@@ -180,7 +190,9 @@ export default {
             stickerList,
             stickerToggle,
             frameToggle,
-            STICKERS
+            STICKERS,
+            setSticker,
+            setCharacter,
         }
     }
 }
@@ -263,8 +275,6 @@ export default {
 
 }
 
-
-
 .image-container {
     overflow-x: scroll;
     display: flex;
@@ -275,15 +285,24 @@ export default {
     height: calc(10 * var(--vh));
     position: absolute;
     z-index: 2;
-    top: calc(70 * var(--vh));
-    margin-left: 5%;
+    top: calc(68 * var(--vh));
+    left: 3%;
 
 }
 
 .image-container img {
-    width: auto;
-    height: 100%;
-    margin-right: 5%;
+    width: calc(10 * var(--vh));
+    height: calc(10 * var(--vh));
+    margin-right: 3%;
+}
+
+.image-container {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
+
+.image-container::-webkit-scrollbar {
+    display: none !important;
 }
 
 .modal {

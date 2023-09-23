@@ -60,15 +60,15 @@ export default [
     {
         name: 'bellModel',
         type: 'gltfModel',
-        path: '../models/Bell/TheFlash_BELL_SD_03-001.gltf'
+        path: '../models/Bell/TheFlash_BELL_SD_02-001.gltf'
     },{
         name: 'sorinaModel',
         type: 'gltfModel',
-        path: '../models/Sorina/TheFlash_Sorina_SD_03-001.gltf'
+        path: '../models/Sorina/TheFlash_Sorina_SD_02-001.gltf'
     },{
         name: 'unoModel',
         type: 'gltfModel',
-        path: '../models/Uno/TheFlash_Uno_SD_03-001.gltf'
+        path: '../models/Uno/TheFlash_Uno_SD_02-001.gltf'
     }
   
   
