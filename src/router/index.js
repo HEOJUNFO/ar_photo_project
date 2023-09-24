@@ -13,9 +13,9 @@ import Mission2 from "@views/test/Mission2.vue"
 import Mission3 from "@views/test/Mission3.vue"
 import CaptureReview from "@views/CaptureReview.vue"
 import StorageBox2 from "@views/StorageBox2.vue"
-import CommonFour3D from "@views/common/CommonFour3D.vue"
 import Stage from "@views/Stage.vue"
 import ImageTraking from "@views/ImageTraking.vue"
+import CommonFour from "@views/common/CommonFour.vue"
 
 
 export const routes = [
@@ -26,7 +26,6 @@ export const routes = [
     {path : '/framereward', component: FrameReward, name: 'FrameReward'},
     {path: '/commonone3d', component: CommoneOne3D, name: 'CommoneOne3D'},
     {path: '/storagebox', component: StorageBox, name: 'StorageBox'},
-    {path: '/commonfour3d', component: CommonFour3D, name: 'CommonFour3D'},
     {path: '/mission1', component: Mission1, name: 'Mission1'},
     {path: '/missionout', component: MissionOut, name: 'MissionOut'},
     {path: '/mission2', component: Mission2, name: 'Mission2'},
@@ -35,6 +34,7 @@ export const routes = [
     {path: '/storagebox2',component:StorageBox2, name:'StorageBox2'},
     {path: '/stage',component:Stage, name:'Stage'},
     {path: '/imagetraking',component:ImageTraking, name:'ImageTraking'},
+    {path: '/commonfour',component:CommonFour, name:'CommonFour'},
 ]
 
 const router = createRouter({

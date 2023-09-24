@@ -1,12 +1,14 @@
 <template>
     <div class="main">
+        <loading-container @closed="handleClose()">
+        </loading-container>
         <div class="top-section">
             <div class="text-container1">
-                <p>{{ characterContent.text }}</p>
+                <p id="typed-text"></p>
             </div>
-            <div class="side-image-container">
-                <img :src="characterContent.src" alt="Side Image" />
-            </div>
+        </div>
+        <div class="side-image-container">
+            <img :src="characterContent.src" alt="Side Image" />
         </div>
         <div class="webgl-container">
             <canvas class="webgl"></canvas>
@@ -24,9 +26,13 @@ import { onMounted, ref, computed } from 'vue';
 import router from '../../router';
 import { useCharacterStore } from '../../stores/characterStore.js'
 import { onBeforeRouteLeave } from 'vue-router'
+import LoadingContainer from '../../components/LoadingContainer.vue'
 
 export default {
     name: 'CommonOne3d',
+    components: {
+        LoadingContainer
+    },
     setup() {
         let experience;
         const characterStore = useCharacterStore()
@@ -39,6 +45,33 @@ export default {
         const currentCharacterContent = computed(() => {
             return currentCharacter.value.common1[textIndex.value] || {}
         })
+
+        let typingTimeout;
+
+        const typeText = () => {
+            const content = currentCharacterContent.value.text;
+            const textContainer = document.getElementById("typed-text");
+            let index = 0;
+
+            clearTimeout(typingTimeout);
+
+            textContainer.textContent = "";
+
+            function typing() {
+                if (index < content.length) {
+                    textContainer.textContent += content.charAt(index);
+                    index++;
+                    typingTimeout = setTimeout(typing, 50);
+                }
+            }
+            typing();
+        };
+
+        const handleClose = () => {
+            setTimeout(() => {
+                typeText()
+            }, 1000);
+        }
 
         const next = () => {
             if (index.value === 0) {
@@ -80,6 +113,7 @@ export default {
             characterContent: currentCharacterContent,
             next,
             itemValue,
+            handleClose,
         }
     }
 }
@@ -88,7 +122,6 @@ export default {
 <style scoped>
 .main {
     display: flex;
-
     justify-content: center;
 
 }
@@ -106,6 +139,7 @@ export default {
     outline: none;
 }
 
+
 .top-section {
     overflow: visible;
     position: absolute;
@@ -113,65 +147,62 @@ export default {
     flex-direction: row;
     width: 100%;
     height: calc(10 * var(--vh));
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     z-index: 1;
-    margin-top: calc(2.5 * var(--vh));
+    margin-top: calc(5 * var(--vh));
 }
 
 
 .text-container1 {
     overflow: visible;
     display: flex;
-    justify-content: center;
     align-items: center;
     background-color: #fff;
-    width: 75%;
+    width: 90%;
     position: relative;
+    border: 2px dashed #D50F4A;
     border-radius: 16px;
-    margin-left: 5%;
-}
-
-.text-container1::before {
-    content: "";
-    width: 0;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 15px solid #fff;
-    position: absolute;
-    right: -10px;
-    top: 30%;
-    transform: translateY(-50%);
 }
 
 .text-container1 p {
     overflow: hidden;
-    padding: 15px;
+    padding: 20px 10px 20px 10px;
     color: #000;
     font-family: "NanumSquare", sans-serif;
-    font-size: 12px;
+    font-size: 15px;
     font-style: normal;
     font-weight: 700;
-    line-height: 20px;
+    line-height: 24px;
     letter-spacing: -0.4px;
     margin: 0;
     border-radius: 10px;
+    max-width: 30ch;
     overflow-wrap: break-word;
     word-break: keep-all;
-    text-align: center;
+    text-align: left;
 }
 
 .side-image-container {
     width: 20%;
     display: flex;
     align-items: center;
+    position: absolute;
+    right: 2.5%;
+    top: calc(2.5 * var(--vh));
+    z-index: 2;
 }
 
 .side-image-container img {
-    height: 100%;
-    width: 100%;
+    background-color: #fff;
+    overflow: hidden;
+    height: 70%;
+    width: 70%;
     display: block;
+    clip-path: circle(50%);
+    object-fit: cover;
+    border: 1px solid #D50F4A;
+    border-radius: 100px;
 }
 
 .image-container {

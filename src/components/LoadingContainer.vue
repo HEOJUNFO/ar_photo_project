@@ -194,6 +194,7 @@ export default {
     justify-content: center;
     align-items: center;
     height: calc(100 * var(--vh));
+    width: 100vw;
     z-index: 5;
 }
 
