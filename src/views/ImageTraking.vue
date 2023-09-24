@@ -12,6 +12,11 @@
         </div>
         <video class="video" ref="videoRef" autoplay></video>
         <canvas class="canvas" ref="canvasRef"></canvas>
+        <div class="image-container">
+            <img src="@resource/common/red_bee.png" :style="{ filter: isBlue ? 'grayscale(0%)' : '' }" />
+            <img src="@resource/common/green_bee.png" :style="{ filter: isGreen ? 'grayscale(0%)' : '' }" />
+            <img src="@resource/common/blue_bee.png" :style="{ filter: isRed ? 'grayscale(0%)' : '' }" />
+        </div>
     </div>
 </template>
 
@@ -27,6 +32,9 @@ export default {
         LoadingContainer
     },
     setup() {
+        const isBlue = ref(false)
+        const isGreen = ref(false)
+        const isRed = ref(false)
         const textIndex = ref(5)
         const characterStore = useCharacterStore()
 
@@ -123,6 +131,9 @@ export default {
             canvasRef,
             characterContent: currentCharacterContent,
             handleClose,
+            isBlue,
+            isGreen,
+            isRed
         }
     }
 };
@@ -209,6 +220,29 @@ export default {
     object-fit: cover;
     border: 1px solid #D50F4A;
     border-radius: 100px;
+}
+
+.image-container {
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: calc(10 * var(--vh));
+    position: absolute;
+    z-index: 2;
+    top: calc(15 * var(--vh));
+}
+
+.image-container img {
+    width: auto;
+    height: calc(5 * var(--vh));
+    background-color: #57A3E5;
+    border: 2px solid #fff;
+    border-radius: 100px;
+    padding: 10px;
+    filter: grayscale(100%);
 }
 </style>
 

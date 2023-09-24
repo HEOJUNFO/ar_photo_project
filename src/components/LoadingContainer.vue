@@ -164,9 +164,9 @@ export default {
 
 
         onMounted(() => {
-            window.scrollTo(0, 0);
-            setVH();
-            window.addEventListener('resize', setVH);
+            // window.scrollTo(0, 0);
+            // setVH();
+            // window.addEventListener('resize', setVH);
 
             if (localStorage.getItem('consentGiven') === 'true') {
                 showModal.value = false
@@ -189,12 +189,12 @@ export default {
   
 <style scoped>
 .loading-container {
-    position: relative;
+    position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: calc(100 * var(--vh));
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     z-index: 5;
 }
 
