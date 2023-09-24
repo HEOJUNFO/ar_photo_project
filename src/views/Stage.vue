@@ -1,5 +1,5 @@
 <template>
-    <div :style="bgStyle">
+    <div class="main" :style="bgStyle">
         <div class="top-section">
             <div class="text-container1">
                 <p id="typed-text"></p>
@@ -10,10 +10,11 @@
         </div>
         <div class="list-container">
             <div v-for="item in eventData" :key="item.id">
-                <img :src="item.icon" :class="setGrayscale(item)" />
+                <img :src="item.icon" :class="{ 'grayscale': setGrayscale(item), 'odd-background': isOdd(item.id) }"
+                    :key="item.id" />
                 <div class="text-conainer2">
-                    <p :class="setGrayText(item)">{{ item.title1 }}</p>
-                    <p :class="setGrayText(item)">{{ item.title2 }}</p>
+                    <p class="p1" :class="setGrayText(item)">{{ item.title1 }}</p>
+                    <p class="p2" :class="setGrayText(item)">{{ item.title2 }}</p>
                 </div>
                 <p :class="setGrayText(item)">{{ item.title3 }}</p>
             </div>
@@ -101,6 +102,10 @@ export default {
             return item.required === 'true' ? 'graytext' : '';
         };
 
+        const isOdd = (id) => {
+            return id !== 7 && id % 2 === 1;
+        }
+
         const nextPage = () => {
             router.push({ path: '/framereward', query: { eventName: "common4" } });
         }
@@ -135,13 +140,20 @@ export default {
             eventData,
             setGrayscale,
             setGrayText,
-            bgStyle
+            bgStyle,
+            isOdd,
         }
     }
 }
 </script>
 
 <style scoped>
+.main {
+    position: fixed;
+    width: 100%;
+    height: calc(100 * var(--vh));
+}
+
 .top-section {
     display: flex;
     flex-direction: row;
@@ -178,7 +190,7 @@ export default {
     letter-spacing: -0.4px;
     margin: 0;
     border-radius: 10px;
-    max-width: 30ch;
+    max-width: 25ch;
     overflow-wrap: break-word;
     word-break: keep-all;
     text-align: left;
@@ -209,7 +221,7 @@ export default {
 .list-container {
     position: fixed;
     width: 100%;
-    height: calc(100 * var(--vh));
+    height: calc(70 * var(--vh));
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -235,7 +247,8 @@ export default {
     height: calc(5 * var(--vh));
     margin-right: 10px;
     border-radius: 100px;
-    background-color: #000;
+    background-color: #F0D7CA;
+    padding: 10px;
 }
 
 .text-conainer2 {
@@ -250,6 +263,14 @@ export default {
 
 .list-container>div>p {
     margin-left: 10px;
+    color: var(--text_lightgray, #9F9F9F);
+    text-align: right;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 22px;
+    letter-spacing: -0.35px;
 }
 
 .grayscale {
@@ -258,6 +279,10 @@ export default {
 
 .graytext {
     color: gray !important
+}
+
+.odd-background {
+    background-color: #f9e2b7 !important;
 }
 
 .button-container2 {
@@ -324,5 +349,26 @@ export default {
     z-index: 1;
     background-color: #D50F4A;
     bottom: 0;
+}
+
+.p1 {
+    color: var(--Point-REd, var(--Point-Red, #D50F4A));
+    font-family: "NanumSquare", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+}
+
+.p2 {
+    color: var(--Text-Black, #111);
+    font-family: "NanumSquare", sans-serif;
+    font-size: 20px;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 22px;
+    letter-spacing: -0.35px;
 }
 </style>
