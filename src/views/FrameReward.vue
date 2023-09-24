@@ -39,6 +39,7 @@ export default {
         const bgStyle = computed(() => {
             return {
                 backgroundImage: `url(${bgImageUrl})`,
+                backgroundSize: 'cover',
             }
         })
 

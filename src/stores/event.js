@@ -11,6 +11,8 @@ const Filter1 = new URL('@resource/icon/frame_01.png', import.meta.url).href;
 const Filter2 = new URL('@resource/icon/frame_02.png', import.meta.url).href;
 const Filter3 = new URL('@resource/icon/frame_03.png', import.meta.url).href;
 const Filter4 = new URL('@resource/icon/frame_04.png', import.meta.url).href;
+const normal = new URL('@resource/reward/reward_active.png', import.meta.url).href;
+const premium = new URL('@resource/reward/premium_active.png',import.meta.url).href;
 
 export const useEventStore = defineStore('events', {
     state: () => ({
@@ -18,6 +20,7 @@ export const useEventStore = defineStore('events', {
             event: [{
                 id:0,
                 src: Bell,
+                icon: normal,
                 required: "null",
                 title1:'봄의 능력',
                 title2:'탄생의 에너지 모으기',
@@ -31,6 +34,7 @@ export const useEventStore = defineStore('events', {
             ,{
                 id:1,
                 src: Coupon,
+                icon:premium,
                 required: "null",
                 title1:'옷가게',
                 title2:'맘에드는 옷 촬영하기',
@@ -43,6 +47,7 @@ export const useEventStore = defineStore('events', {
             },{
                 id:2,
                 src: Uno,
+                icon: normal,
                 required: "null",
                 title1:'여름의 능력',
                 title2:'생기의 에너지 모으기',
@@ -55,6 +60,7 @@ export const useEventStore = defineStore('events', {
             },{
                 id:3,
                 src: Coupon2,
+                icon:premium,
                 required: "null",
                 title1:'시간공방',
                 title2:'음식 촬영하기',
@@ -67,6 +73,7 @@ export const useEventStore = defineStore('events', {
             },{
                 id:4,
                 src: Sorina,
+                icon: normal,
                 required: "null",
                 title1:'겨울의 능력',
                 title2:'냉기의 에너지 모으기',
@@ -79,6 +86,7 @@ export const useEventStore = defineStore('events', {
             },{
                 id:5,
                 src: Coupon3,
+                icon:premium,
                 required: "null",
                 title1:'남쪽마을',
                 title2:'가상 염색 촬영하기',
@@ -92,6 +100,7 @@ export const useEventStore = defineStore('events', {
             {
                 id:6,
                 src: Filter1,
+                icon: normal,
                 required: "null",
                 title1:'여름의 숲',
                 title2:'물길 만들기',
@@ -105,6 +114,7 @@ export const useEventStore = defineStore('events', {
             {
                 id:7,
                 src: Filter2,
+                icon: normal,
                 required: "null",
                 title1:'봄의 숲',
                 title2:'꿀벌 찾기',
@@ -118,6 +128,7 @@ export const useEventStore = defineStore('events', {
             {
                 id:8,
                 src: Filter3,
+                icon: normal,
                 required: "null",
                 title1:'겨울의 숲',
                 title2:'우박 모으기',
@@ -130,7 +141,8 @@ export const useEventStore = defineStore('events', {
             },
             {
                 id:9,
-                src: Filter4,
+                src: IceCream,
+                icon:premium,
                 required: "null",
                 title1:'가을의 숲',
                 title2:'가을의 숲 촬영하기',
@@ -146,16 +158,17 @@ export const useEventStore = defineStore('events', {
         }
     }),
     actions: {
-        fetchTabData(tabName) {
-            return this.rewardsData[tabName] || [];
+        fetchData() {
+            return this.eventData.event || [];
         },
-        setRewardsData() {
+        setEventsData() {
             this.eventData.event.forEach((event,index) => {
             const itemValue = localStorage.getItem(`eventId${index}`);
     
             if (itemValue) {
                 event.required = itemValue;
             }
+
            })
 
    

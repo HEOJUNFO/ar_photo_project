@@ -14,6 +14,7 @@ import Mission3 from "@views/test/Mission3.vue"
 import CaptureReview from "@views/CaptureReview.vue"
 import StorageBox2 from "@views/StorageBox2.vue"
 import CommonFour3D from "@views/common/CommonFour3D.vue"
+import Stage from "@views/Stage.vue"
 
 
 export const routes = [
@@ -30,7 +31,8 @@ export const routes = [
     {path: '/mission2', component: Mission2, name: 'Mission2'},
     {path: '/mission3', component: Mission3, name: 'Mission3'},
     {path: '/capturereview', component: CaptureReview, name: 'CaptureReview'},
-    {path: '/storagebox2',component:StorageBox2, name:'StorageBox2'}
+    {path: '/storagebox2',component:StorageBox2, name:'StorageBox2'},
+    {path: '/stage',component:Stage, name:'Stage'},
 ]
 
 const router = createRouter({
