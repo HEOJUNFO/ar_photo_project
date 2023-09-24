@@ -12,7 +12,8 @@
             <canvas class="webgl"></canvas>
         </div>
         <div class="image-container">
-            <img v-for="n in itemValue" :key="n" src="@resource/common/hail.png" />
+            <img v-for="n in 5" :key="n" src="@resource/common/hail.png"
+                :style="{ filter: n <= itemValue ? 'grayscale(0%)' : '' }" />
         </div>
     </div>
 </template>
@@ -177,7 +178,7 @@ export default {
     overflow: hidden;
     display: flex;
     flex-direction: row;
-    justify-content: left;
+    justify-content: space-around;
     align-items: center;
     width: 100%;
     height: calc(10 * var(--vh));
@@ -187,7 +188,12 @@ export default {
 }
 
 .image-container img {
-    width: 20%;
-    height: auto;
+    width: auto;
+    height: calc(5 * var(--vh));
+    background-color: #57A3E5;
+    border: 2px solid #fff;
+    border-radius: 100px;
+    padding: 10px;
+    filter: grayscale(100%);
 }
 </style>

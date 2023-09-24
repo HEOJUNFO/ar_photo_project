@@ -42,7 +42,7 @@ export default class Experience
         this.raycaster = new THREE.Raycaster();
         this.mouse = new THREE.Vector2();
 
-        this.canvas.addEventListener('click', this._checkForModelClick.bind(this), false);
+        // this.canvas.addEventListener('click', this._checkForModelClick.bind(this), false);
 
         this.bindMethods()
 

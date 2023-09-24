@@ -169,7 +169,7 @@
             </div>
         </div>
         <div class="frame">
-            <img src="@resource/frame/spring.png" alt="봄" />
+            <img src="@resource/frame/frame_01.png" alt="봄" />
         </div>
     </div>
 </template>
@@ -602,8 +602,8 @@ export default {
 .frame {
     position: absolute;
     top: calc(10* var(--vh));
-    width: 100%;
-    height: auto;
+    height: calc(70 * var(--vh));
+    width: calc((4/6) * 70 * var(--vh));
     pointer-events: none;
 }
 

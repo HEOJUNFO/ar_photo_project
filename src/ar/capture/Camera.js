@@ -85,15 +85,23 @@ export default class Camera
         const ctx = canvas.getContext('2d');
         ctx.putImageData(data, 0, 0);
 
-        // const sticker = document.querySelector('.side-image-container').style.backgroundImage.slice(5, -2);
-        // console.log(sticker);
-        // let stickerImg = null;
-        // stickerImg = await loadImage(sticker);
+        const frameImageElement = document.querySelector('.frame img');
 
-        // ctx.drawImage(stickerImg, 0, 0, stickerImg.width, stickerImg.height, 0, 0, canvas.width/2, canvas.height/2);
+        // Ensure the image is loaded
+        if (frameImageElement.complete) {
+            // Draw the frame image onto the canvas
+            ctx.drawImage(frameImageElement, 0, 0, canvas.width, canvas.height);
+        } else {
+            // If the frame image has not loaded yet, wait for it to load and then draw it
+            await new Promise((resolve) => {
+                frameImageElement.onload = () => {
+                    ctx.drawImage(frameImageElement, 0, 0, canvas.width, canvas.height);
+                    resolve();
+                };
+            });
+        }
         
         const image = canvas.toDataURL('image/png');
-  
         this.experience.saveImage(image)
 
         return image;
