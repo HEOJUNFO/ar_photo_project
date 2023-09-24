@@ -8,15 +8,16 @@
         <div class="side-image-container">
             <img :src="characterContent.src" alt="Side Image" />
         </div>
-        <div class="list-container">
-            <div v-for="item in eventData" :key="item.id">
+        <div v-show="!eventModal" class="list-container">
+            <div v-for="item in eventData" :key="item.id" @click="setEvent(item)">
                 <img :src="item.icon" :class="{ 'grayscale': setGrayscale(item), 'odd-background': isOdd(item.id) }"
                     :key="item.id" />
-                <div class="text-conainer2">
+                <div class="text-conainer2" :class="{ 'grayscale': setGrayscale(item) }">
                     <p class="p1" :class="setGrayText(item)">{{ item.title1 }}</p>
                     <p class="p2" :class="setGrayText(item)">{{ item.title2 }}</p>
                 </div>
                 <p :class="setGrayText(item)">{{ item.title3 }}</p>
+                <button v-if="item.required === 'true'" class="used-button">참여완료</button>
             </div>
         </div>
         <div class="button-container2">
@@ -40,6 +41,36 @@
         </div>
         <div class="bottom-section">
         </div>
+        <div v-if="eventModal" class="event-modal">
+            <button @click="eventModal = false" class="close-button"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="25" viewBox="0 0 24 25" fill="none">
+                    <mask id="mask0_541_1012" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"
+                        height="25">
+                        <rect width="24" height="24.2118" fill="#D9D9D9"
+                            :class="{ 'grayscale': setGrayscale(selectEvent) }" />
+                    </mask>
+                    <g mask="url(#mask0_541_1012)">
+                        <path
+                            d="M12 13.5182L7.10005 18.4614C6.91672 18.6464 6.68338 18.7389 6.40005 18.7389C6.11672 18.7389 5.88338 18.6464 5.70005 18.4614C5.51672 18.2765 5.42505 18.0411 5.42505 17.7553C5.42505 17.4694 5.51672 17.234 5.70005 17.0491L10.6 12.1059L5.70005 7.16262C5.51672 6.97767 5.42505 6.74228 5.42505 6.45644C5.42505 6.17061 5.51672 5.93522 5.70005 5.75027C5.88338 5.56531 6.11672 5.47284 6.40005 5.47284C6.68338 5.47284 6.91672 5.56531 7.10005 5.75027L12 10.6935L16.9 5.75027C17.0834 5.56531 17.3167 5.47284 17.6 5.47284C17.8834 5.47284 18.1167 5.56531 18.3 5.75027C18.4834 5.93522 18.575 6.17061 18.575 6.45644C18.575 6.74228 18.4834 6.97767 18.3 7.16262L13.4 12.1059L18.3 17.0491C18.4834 17.234 18.575 17.4694 18.575 17.7553C18.575 18.0411 18.4834 18.2765 18.3 18.4614C18.1167 18.6464 17.8834 18.7389 17.6 18.7389C17.3167 18.7389 17.0834 18.6464 16.9 18.4614L12 13.5182Z"
+                            fill="#D50F4A" />
+                    </g>
+                </svg></button>
+            <div class="top-area" :class="{ 'grayscale': setGrayscale(selectEvent) }">
+                <img :src="selectEvent.icon" class="top-image" :class="{ 'odd-background': isOdd(selectEvent.id) }" />
+                <div class="text-area">
+                    <p class="p_1">{{ selectEvent.content1 }}</p>
+                    <p class="p_2">{{ selectEvent.content2 }}</p>
+                    <p class="p_3">{{ selectEvent.content3 }}</p>
+                </div>
+            </div>
+            <div class="grey-area" :class="{ 'grayscale': setGrayscale(selectEvent) }">
+                <img src="@resource/common/event_logo.png" class="image_1" />
+                <img :src="selectEvent.src" alt="Image 2" class="image_2" />
+                <p class="p_4">{{ selectEvent.content4 }}</p>
+                <p class="p_5">{{ selectEvent.content5 }}</p>
+            </div>
+            <button v-if="selectEvent.required === 'true'" class="used-button2">참여완료</button>
+        </div>
     </div>
 </template>
 
@@ -48,12 +79,13 @@ import { useCharacterStore } from '../stores/characterStore.js'
 import { useEventStore } from '../stores/event.js'
 import { ref, computed, watch, onMounted } from 'vue'
 import router from '../router'
-import LoadingContainer from '../components/LoadingContainer.vue'
 
 
 export default {
     name: 'Stage',
     setup() {
+        const eventModal = ref(false)
+        const selectEvent = ref(null)
         const eventData = ref([])
         const characterStore = useCharacterStore()
         const eventStore = useEventStore();
@@ -106,6 +138,11 @@ export default {
             return id !== 7 && id % 2 === 1;
         }
 
+        const setEvent = (item) => {
+            selectEvent.value = item;
+            eventModal.value = true;
+        }
+
         const nextPage = () => {
             router.push({ path: '/framereward', query: { eventName: "common4" } });
         }
@@ -142,6 +179,9 @@ export default {
             setGrayText,
             bgStyle,
             isOdd,
+            eventModal,
+            setEvent,
+            selectEvent,
         }
     }
 }
@@ -152,6 +192,10 @@ export default {
     position: fixed;
     width: 100%;
     height: calc(100 * var(--vh));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
 }
 
 .top-section {
@@ -216,6 +260,125 @@ export default {
     object-fit: cover;
     border: 1px solid #D50F4A;
     border-radius: 100px;
+}
+
+.event-modal {
+    position: fixed;
+    width: 90%;
+    height: calc(65 * var(--vh));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: calc(17.5* var(--vh));
+    border-radius: 16px;
+    border: 2px solid var(--Point-REd, #D50F4A);
+    background: #FFF;
+    z-index: 90;
+}
+
+.grey-area {
+    width: 90%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    background: rgba(217, 217, 217, 0.20);
+
+}
+
+.image_1 {
+    width: 80%;
+    height: auto;
+
+}
+
+.image_2 {
+    width: 65%;
+    height: auto;
+
+}
+
+
+.top-area {
+    width: 100%;
+    height: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.top-image {
+    width: 15%;
+    height: auto;
+    border-radius: 100px;
+    background-color: #F0D7CA;
+    padding: 10px;
+
+
+}
+
+.text-area {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: 15%;
+}
+
+.p_1 {
+    color: var(--Point-REd, var(--Point-Red, #D50F4A));
+    font-family: "NanumSquare", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+    text-align: left;
+}
+
+.p_2 {
+    color: var(--Text-Gray, #767676);
+    font-family: "NanumSquare", sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 22px;
+    letter-spacing: -0.35px;
+    text-align: left;
+}
+
+.p_3 {
+    color: var(--Text-Black, #111);
+    font-family: "NanumSquare", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+    text-align: left;
+}
+
+.p_4 {
+    color: var(--Text-Black, #111);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+}
+
+.p_5 {
+    color: var(--Text-Gray, #767676);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: -0.3px;
 }
 
 .list-container {
@@ -370,5 +533,62 @@ export default {
     font-weight: 700;
     line-height: 22px;
     letter-spacing: -0.35px;
+}
+
+.close-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #FFF;
+    border: NONE;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.used-button {
+    width: 35%;
+    padding: 10px;
+    border-radius: 100px;
+    background: var(--Main-Green, #06734C);
+    border: none;
+    color: var(--Text-White, #FFF);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+    text-align: center;
+    z-index: 1;
+    position: fixed;
+    outline: 1px solid #06734C;
+    outline-offset: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.used-button2 {
+    width: 60%;
+    padding: 20px;
+    border-radius: 100px;
+    background: var(--Main-Green, #06734C);
+    border: none;
+    color: var(--Text-White, #FFF);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+    text-align: center;
+    z-index: 1;
+    position: fixed;
+    outline: 1px solid #06734C;
+    outline-offset: 2px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 </style>
