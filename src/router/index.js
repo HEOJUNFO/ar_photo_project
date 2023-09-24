@@ -15,6 +15,7 @@ import CaptureReview from "@views/CaptureReview.vue"
 import StorageBox2 from "@views/StorageBox2.vue"
 import CommonFour3D from "@views/common/CommonFour3D.vue"
 import Stage from "@views/Stage.vue"
+import ImageTraking from "@views/ImageTraking.vue"
 
 
 export const routes = [
@@ -33,6 +34,7 @@ export const routes = [
     {path: '/capturereview', component: CaptureReview, name: 'CaptureReview'},
     {path: '/storagebox2',component:StorageBox2, name:'StorageBox2'},
     {path: '/stage',component:Stage, name:'Stage'},
+    {path: '/imagetraking',component:ImageTraking, name:'ImageTraking'},
 ]
 
 const router = createRouter({
