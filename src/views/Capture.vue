@@ -169,7 +169,7 @@
                 <button @click="confirmBack">확인</button>
             </div>
         </div>
-        <div v-if="setFrameSrc" class="frame">
+        <div v-show="setFrameSrc" class="frame">
             <img :src="setFrameSrc" alt="봄" />
         </div>
     </div>

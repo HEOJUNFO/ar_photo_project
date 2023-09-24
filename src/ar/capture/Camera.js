@@ -87,12 +87,12 @@ export default class Camera
 
         const frameImageElement = document.querySelector('.frame img');
 
-        // Ensure the image is loaded
+    
         if (frameImageElement.complete) {
-            // Draw the frame image onto the canvas
+          
             ctx.drawImage(frameImageElement, 0, 0, canvas.width, canvas.height);
         } else {
-            // If the frame image has not loaded yet, wait for it to load and then draw it
+            
             await new Promise((resolve) => {
                 frameImageElement.onload = () => {
                     ctx.drawImage(frameImageElement, 0, 0, canvas.width, canvas.height);
