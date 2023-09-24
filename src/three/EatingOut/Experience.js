@@ -122,7 +122,6 @@ export default class Experience
 
     goToNextScene(){
         if(this.goToNextSceneCallback){
-            console.log("goToNextSceneCallback")
             this.goToNextSceneCallback();
         }
     }

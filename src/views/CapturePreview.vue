@@ -433,7 +433,6 @@ export default {
             navigator
                 .share(shareData)
                 .then(() => {
-                    console.log("Thanks for sharing!");
                     onShareComplete();
                 })
                 .catch(console.error);

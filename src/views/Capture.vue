@@ -135,7 +135,8 @@
                                 fill="#9F9F9F" />
                         </g>
                     </svg></button>
-                <img v-for="(imageObj, index) in FRAMES" :src="imageObj.src" :alt="imageObj.text" />
+                <img @click="setFrame(imageObj)" v-for="(imageObj, index) in FRAMES" :key="index" :src="imageObj.src"
+                    :alt="imageObj.text" />
             </div>
         </div>
 
@@ -168,8 +169,8 @@
                 <button @click="confirmBack">확인</button>
             </div>
         </div>
-        <div class="frame">
-            <img src="@resource/frame/frame_01.png" alt="봄" />
+        <div v-if="setFrameSrc" class="frame">
+            <img :src="setFrameSrc" alt="봄" />
         </div>
     </div>
 </template>
@@ -193,6 +194,7 @@ export default {
         const stickerList = ref(false)
         const selectedSticker = ref(null)
         const selectedCharacter = ref(false)
+        const setFrameSrc = ref(null)
 
         const enableFilp = ref(true)
 
@@ -206,10 +208,10 @@ export default {
         })
 
         const FRAMES = [
-            { id: 0, src: new URL('@resource/icon/frame_01.png', import.meta.url).href, text: '봄' },
-            { id: 1, src: new URL('@resource/icon/frame_02.png', import.meta.url).href, text: '여름' },
-            { id: 2, src: new URL('@resource/icon/frame_03.png', import.meta.url).href, text: '가을' },
-            { id: 3, src: new URL('@resource/icon/frame_04.png', import.meta.url).href, text: '겨울' },
+            { id: 0, src: new URL('@resource/frame/frame_01.png', import.meta.url).href, text: '봄' },
+            { id: 1, src: new URL('@resource/frame/frame_02.png', import.meta.url).href, text: '여름' },
+            { id: 2, src: new URL('@resource/frame/frame_03.png', import.meta.url).href, text: '가을' },
+            { id: 3, src: new URL('@resource/frame/frame_04.png', import.meta.url).href, text: '겨울' },
         ];
 
         const STICKERS = [
@@ -241,7 +243,10 @@ export default {
         const setCharacter = () => {
             experience.world.setCharacter()
             selectedCharacter.value = true
+        }
 
+        const setFrame = (image) => {
+            setFrameSrc.value = image.src
         }
 
         const saveImage = (image) => {
@@ -278,7 +283,6 @@ export default {
 
             experience = new Experience(document.querySelector('canvas.webgl'), saveImage);
             experience.resources.on('ready', () => {
-                console.log('ready')
             })
         });
 
@@ -307,6 +311,8 @@ export default {
             setCharacter,
             selectedSticker,
             selectedCharacter,
+            setFrame,
+            setFrameSrc,
         }
     }
 }

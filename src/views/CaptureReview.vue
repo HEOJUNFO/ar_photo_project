@@ -114,7 +114,6 @@ export default {
 
         const characterStore = useCharacterStore()
         const imageDataStore = useImageDataStore()
-        console.log(imageDataStore.imageData)
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
@@ -173,7 +172,6 @@ export default {
             navigator
                 .share(shareData)
                 .then(() => {
-                    console.log("Thanks for sharing!");
                 })
                 .catch(console.error);
         }

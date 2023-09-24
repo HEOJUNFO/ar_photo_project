@@ -84,13 +84,6 @@ export default class Camera
         canvas.height = data.height;
         const ctx = canvas.getContext('2d');
         ctx.putImageData(data, 0, 0);
-
-        // const sticker = document.querySelector('.side-image-container').style.backgroundImage.slice(5, -2);
-        // console.log(sticker);
-        // let stickerImg = null;
-        // stickerImg = await loadImage(sticker);
-
-        // ctx.drawImage(stickerImg, 0, 0, stickerImg.width, stickerImg.height, 0, 0, canvas.width/2, canvas.height/2);
         
         const image = canvas.toDataURL('image/png');
   

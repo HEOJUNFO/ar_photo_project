@@ -37,7 +37,6 @@ export default class World
         if(!this.sticker){
         this.sticker = new Sticker()
         }
-        console.log(name)
         if(name === 'bell'){
             this.sticker.pushBellTexture()
         }
@@ -52,7 +51,6 @@ export default class World
     }
 
     setCommonFour(){
-        console.log('setCommonFour')
         this.tree = new Tree()
         this.floor  = new Floor()
         this.grasshopper = new Grasshopper()

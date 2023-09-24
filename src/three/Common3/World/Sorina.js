@@ -106,7 +106,6 @@ export default class Sorina
 
     end(){
        this.experience.goToNextScene();
-       console.log("end")
     }
 
     update()

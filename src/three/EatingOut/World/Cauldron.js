@@ -29,7 +29,6 @@ export default class Cauldron
         this.model.position.set(0, -0.2, 0)
         this.model.rotation.set(0, Math.PI, 0)
         this.scene.add(this.model)
-        console.log(this.model)
 
         this.model.traverse((child) =>
         {

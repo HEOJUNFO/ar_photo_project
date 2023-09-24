@@ -110,7 +110,6 @@ export default class Bell
 
     end(){
        this.experience.goToNextScene();
-       console.log("end")
     }
 
     update()

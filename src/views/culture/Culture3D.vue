@@ -233,7 +233,6 @@ export default {
         }
 
         const next = () => {
-            console.log(index.value)
             if (index.value === 0) {
                 setTimeout(() => {
                     playAudio()

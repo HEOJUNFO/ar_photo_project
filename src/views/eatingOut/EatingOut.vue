@@ -53,7 +53,6 @@ export default {
 
 
         const next = () => {
-            console.log(index.value)
             if (index.value === 0) {
                 index.value = 1
                 textIndex.value = 4

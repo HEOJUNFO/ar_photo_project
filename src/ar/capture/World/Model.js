@@ -38,7 +38,6 @@ export default class Model
     setModel()
     {
         this.model = this.resource.scene
-        console.log(this.model)
         this.model.scale.set(2, 2, 2)
         this.scene.add(this.model)
 

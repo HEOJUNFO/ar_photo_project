@@ -96,7 +96,6 @@ export const useRewardsStore = defineStore('rewards', {
     
                 if (itemValue) {
                     reward.required = itemValue;
-                    console.log(reward.required)
                 }
                 
                 switch(reward.required) {
@@ -124,7 +123,6 @@ export const useRewardsStore = defineStore('rewards', {
             });
         },
         fetchTabData(tabName) {
-            console.log(this.rewardsData[tabName])
             return this.rewardsData[tabName] || [];
         }
     }

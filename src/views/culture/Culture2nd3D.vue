@@ -97,7 +97,6 @@ export default {
             await this.createImageSegmenter();
         }
         catch (e) {
-            console.log(e)
         }
         this.init();
     },
@@ -117,7 +116,6 @@ export default {
                     .substring(1).match(/.{2}/g)
                     .map(x => parseInt(x, 16))
 
-            console.log(d)
             let hex = hexToRgb(d);
             hex[3] = 255;
             hex[0] -= 10;

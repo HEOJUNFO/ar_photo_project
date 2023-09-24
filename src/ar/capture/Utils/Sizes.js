@@ -8,7 +8,6 @@ export default class Sizes extends EventEmitter
 
         // Setup
         this.container = document.querySelector('.webgl-container');
-        console.log(this.container.clientHeight, this.container.clientWidth)
         this.width = this.container.clientWidth;
         this.height = this.container.clientHeight;
         this.pixelRatio = Math.min(window.devicePixelRatio, 2)

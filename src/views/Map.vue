@@ -375,7 +375,6 @@ export default {
         }
 
         const next = () => {
-            console.log(index.value)
             if (index.value === 1) {
                 index.value = 2
                 textIndex.value = 1
@@ -419,7 +418,6 @@ export default {
         }
 
         const endDrag = () => {
-            console.log(currentX.value, currentY.value)
             dragging.value = false
         }
 

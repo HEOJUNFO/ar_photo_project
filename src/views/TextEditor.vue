@@ -182,7 +182,6 @@ export default {
                 imageDataStore.setEventName('eatingOut2Clear');
                 localStorage.setItem('item3', 'true')
             } else if (eventName.value === 'common4') {
-                console.log('common4')
                 imageDataStore.setEventName('common4Clear');
                 localStorage.setItem('item1', 'true')
             }

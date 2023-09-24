@@ -101,7 +101,6 @@ export default class Sticker
 
     setMesh()
     {
-        console.log('setMesh')
         this.mesh = new THREE.Mesh(this.geometry, this.material)
         this.mesh.receiveShadow = true
         this.mesh.scale.set(1, 2, 0.1)

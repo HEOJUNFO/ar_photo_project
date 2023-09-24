@@ -34,7 +34,6 @@ export default class Sticker
     setTextures(name) {
         
         this.texture =  this.resources.items[name]
-        console.log(this.texture)
         this.texture.wrapS = THREE.RepeatWrapping;
         this.texture.wrapT = THREE.RepeatWrapping;
         this.texture.colorSpace = THREE.SRGBColorSpace;

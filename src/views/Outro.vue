@@ -91,7 +91,6 @@ export default {
             if (index.value === 0) {
                 index.value = 1
                 textIndex.value += 1
-                console.log(textIndex.value)
                 return;
 
             } else if (index.value === 1) {

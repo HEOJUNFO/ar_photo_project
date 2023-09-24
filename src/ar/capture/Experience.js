@@ -177,8 +177,7 @@ export default class Experience
                     }
                     if(intersects[i].object.name === 'model'){
                         this.world.model.isMoving = true;
-                        console.log(this.world.model.isMoving)
-                    }
+\                    }
                 }
             }
         }
