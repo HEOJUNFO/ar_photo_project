@@ -18,7 +18,7 @@ export default class World
         // Wait for resources
         this.resources.on('ready', () =>
         {
-            this.model = new Model('unoModel')
+            this.model = new Model('sorinaModel')
             this.hailInterval = setInterval(() => { 
                 if (this.collisions < 5) { 
                     const hail = new Hail();
