@@ -38,6 +38,7 @@ export default class Renderer
             video: { facingMode: 'environment' }
         });
         video.srcObject = stream;
+        video.muted = true;
         video.play();
 
         const videoTexture = new THREE.VideoTexture(video);

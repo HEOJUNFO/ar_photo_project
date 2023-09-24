@@ -10,7 +10,7 @@
         <div class="side-image-container">
             <img :src="characterContent.src" alt="Side Image" />
         </div>
-        <video class="video" ref="videoRef" autoplay></video>
+        <video class="video" ref="videoRef" autoplay muted playsinline></video>
         <canvas class="canvas" ref="canvasRef"></canvas>
         <div class="image-container">
             <img src="@resource/common/red_bee.png" :style="{ filter: isBlue ? 'grayscale(0%)' : '' }" />
@@ -103,8 +103,18 @@ export default {
                 video.addEventListener('loadedmetadata', () => {
                     canvas.width = video.videoWidth;
                     canvas.height = video.videoHeight;
+                    video.mute = true;
                     video.play().catch(error => console.error('Play error:', error));
                 });
+
+                const gridX = canvas.width / 3.5;
+                const gridY = canvas.height * 1.5;
+                const gridWidth = canvas.width;
+                const gridHeight = canvas.height * 2;
+
+                // 격자 그리기
+                context.strokeStyle = '#FFFFFF'; // 격자의 색상 설정
+                context.strokeRect(gridX, gridY, gridWidth, gridHeight);
 
                 const colors = new tracking.ColorTracker(['yellow']);
 
@@ -112,13 +122,22 @@ export default {
 
                 colors.on('track', event => {
                     context.clearRect(0, 0, canvas.width, canvas.height);
+
+                    // 격자 다시 그리기
+                    context.strokeStyle = '#FFFFFF';
+                    context.strokeRect(gridX, gridY, gridWidth, gridHeight);
+
                     event.data.forEach(rect => {
-                        context.strokeStyle = '#a64ceb';
-                        context.strokeRect(rect.x, rect.y, rect.width, rect.height);
-                        context.font = '11px Helvetica';
-                        context.fillStyle = "#fff";
-                        context.fillText('x: ' + rect.x + 'px', rect.x + rect.width + 5, rect.y + 11);
-                        context.fillText('y: ' + rect.y + 'px', rect.x + rect.width + 5, rect.y + 22);
+                        // 격자 내에 있는지 확인
+                        if (rect.x > gridX && rect.y > gridY && rect.x + rect.width < gridX + gridWidth && rect.y + rect.height < gridY + gridHeight) {
+                            // 격자 내의 오브젝트만 그리기
+                            context.strokeStyle = '#a64ceb';
+                            context.strokeRect(rect.x, rect.y, rect.width, rect.height);
+                            context.font = '11px Helvetica';
+                            context.fillStyle = "#fff";
+                            context.fillText('x: ' + rect.x + 'px', rect.x + rect.width + 5, rect.y + 11);
+                            context.fillText('y: ' + rect.y + 'px', rect.x + rect.width + 5, rect.y + 22);
+                        }
                     });
                 });
             } catch (err) {
