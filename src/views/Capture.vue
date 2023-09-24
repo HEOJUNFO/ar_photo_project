@@ -244,7 +244,7 @@ export default {
 
         }
 
-        const saveImage = () => {
+        const saveImage = (image) => {
             imageDataStore.setImageData(image)
             imageDataStore.setEventName(eventName.value)
             router.push({ path: '/capturereview' });
@@ -361,13 +361,7 @@ export default {
 
 }
 
-.top-section button:first-child {
-    justify-self: start;
-}
 
-.top-section button:last-child {
-    justify-self: end;
-}
 
 .bottom-section {
     display: grid;
@@ -381,7 +375,6 @@ export default {
     position: absolute;
     bottom: 0;
 }
-
 
 .bottom-section button {
     background-color: rgba(0, 0, 0, 0);
@@ -459,16 +452,17 @@ export default {
     top: 50%;
     left: 50%;
     width: 60%;
-    height: calc(10 * var(--vh));
+    height: calc(15 * var(--vh));
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     border: none;
     background-color: #fff;
     border-radius: 16px;
     flex-direction: column;
     z-index: 3;
-    padding-top: 10%;
+    padding-top: 20px;
+    padding-bottom: 10px;
     transform: translate(-50%, -50%);
 }
 
@@ -484,24 +478,22 @@ export default {
 }
 
 .modal-buttons {
-    margin-top: 10%;
     display: flex;
     justify-content: center;
     width: 100%;
 }
 
 .modal button {
-    width: 50%;
+    width: 40%;
     padding: 10px;
-    border: none;
-    cursor: pointer;
 }
 
 
 .modal button:first-child {
-    border-radius: 0px 0px 0px 16px;
-    background: var(--Background_Grey, #D9D9D9);
-    color: var(--Text-Gray, #767676);
+    border-radius: 100px;
+    border: 2px solid var(--Text-Gray, #767676);
+    background: #D9D9D9;
+    color: var(--Text-Gray, #545454);
     text-align: center;
     font-family: "NanumSquare", sans-serif;
     font-size: 16px;
@@ -509,12 +501,15 @@ export default {
     font-weight: 700;
     line-height: 24px;
     letter-spacing: -0.4px;
+    margin-right: 2%;
+    box-shadow: 0px 3px #767676
 }
 
 .modal button:last-child {
-    border-radius: 0px 0px 16px 0px;
-    background: #fff;
-    color: var(--Text-Black, #111);
+    border-radius: 100px;
+    border: 2px solid var(--Dark-Red, #922142);
+    background: var(--Point-Red, #D50F4A);
+    color: var(--Text-Black, #fff);
     text-align: center;
     font-family: "NanumSquare", sans-serif;
     font-size: 16px;
@@ -522,6 +517,7 @@ export default {
     font-weight: 700;
     line-height: 24px;
     letter-spacing: -0.4px;
+    box-shadow: 0px 3px #922142
 }
 
 .overlay {
