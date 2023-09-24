@@ -86,6 +86,7 @@ export default {
     position: relative;
     width: 100%;
     margin: -1%;
+    overflow: scroll;
 }
 
 .image-container::-webkit-scrollbar {

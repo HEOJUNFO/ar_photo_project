@@ -23,7 +23,7 @@
                     </svg></button>
             </div>
             <div class="text-container1">
-                <p>프리미엄 보상 보관함</p>
+                <p>일반 보상 보관함</p>
             </div>
             <div class="side-image-container">
                 <button @click="showHelp = true, showOverlay = true"><svg xmlns="http://www.w3.org/2000/svg" width="40"
@@ -42,41 +42,13 @@
             </div>
         </div>
         <div class="list-container">
-            <div v-for="item in tabData" :key="item.id" class="image-container" @click="useItem(item)">
+            <div v-for="item in tabData" :key="item.id" class="image-container">
                 <img src="@resource/storageBox/bg_reward3.png" :class="setGrayscale(item)" />
                 <img :src="item.src" :class="setGrayscale(item)" />
                 <p :class="setGrayText(item)">{{ item.text }}</p>
-                <button v-if="item.required === 'used'" class="used-button">사용완료</button>
             </div>
         </div>
-        <div v-if="useModal" class="image-container2">
-            <img :src="useItemSrc" />
-            <hr class="character-line">
-            <p>유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이
-                입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이
-                입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다.유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이
-                입력됩니다.유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이
-                입력됩니다. 유의사항이
-                입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이
-                입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다.유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이
-                입력됩니다.유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이
-                입력됩니다. 유의사항이
-                입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이
-                입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다.유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이
-                입력됩니다.</p>
-            <button @click="useModal2 = true, showOverlay = true">사용하기</button>
-        </div>
-        <div v-if="useModal2" class="text-container2">
-            <p class="character-name">쿠폰을 서비스 라운지를 통해</p>
-            <p class="character-name">사용처리 해주세요.</p>
-            <hr class="character-line">
-            <p class="character-text">서비스라운지 직원분 께서는</p>
-            <p class="character-text"><span style="color:#d50f4a">[사용하기]]</span>버튼을 눌러주시기 바랍니다.</p>
-            <div class="button-container">
-                <button @click="useModal = false, useModal2 = false, showOverlay = false">닫기</button>
-                <button @click="showModal2 = true, useModal2 = false">사용하기</button>
-            </div>
-        </div>
+
         <div class="button-container2">
             <button><img src="@resource/reward/reward_active.png" />일반보상</button>
             <button><svg xmlns="http://www.w3.org/2000/svg" width="29" height="24" viewBox="0 0 29 24" fill="none">
@@ -98,13 +70,6 @@
         </div>
         <div class="bottom-section">
         </div>
-        <div v-if="showModal2" class="modal2">
-            <p>쿠폰이 정상적으로</p>
-            <p>사용되었습니다.</p>
-            <div class="modal-buttons">
-                <button @click="showModal2 = false, useModal = false, showOverlay = false">확인</button>
-            </div>
-        </div>
     </div>
 </template>
 
@@ -116,11 +81,7 @@ import { useRewardsStore } from '../stores/reward.js';
 export default {
     name: 'StorageBox',
     setup() {
-        const showModal2 = ref(false);
-        const useModal = ref(false);
-        const useModal2 = ref(false);
         const tabData = ref([]);
-        const useItemSrc = ref('');
         const showOverlay = ref(false);
         const showHelp = ref(false)
 
@@ -132,12 +93,6 @@ export default {
 
         const back = () => {
             router.go(-1);
-        };
-
-        const useItem = (item) => {
-            console.log(item);
-            useItemSrc.value = item.src;
-            useModal.value = true;
         };
 
         const setGrayscale = (item) => {
@@ -157,7 +112,7 @@ export default {
             setVH();
             window.addEventListener('resize', setVH);
             rewardsStore.setRewardsData();
-            fetchTabData('premium');
+            fetchTabData('normal');
         });
 
         return {
@@ -165,12 +120,7 @@ export default {
             tabData,
             setGrayscale,
             setGrayText,
-            useItem,
-            useItemSrc,
-            useModal,
-            useModal2,
             showOverlay,
-            showModal2,
             showHelp
         };
     }
@@ -227,6 +177,7 @@ export default {
     display: grid;
     grid-template-columns: 1fr 1fr;
     overflow-y: scroll;
+    margin-bottom: calc(15 * var(--vh));
 }
 
 .list-container::-webkit-scrollbar {
@@ -275,179 +226,17 @@ export default {
     word-break: keep-all;
 }
 
-.image-container2 {
-    position: absolute;
-    width: 96%;
-    height: calc(73 * var(--vh));
-    top: calc(11 * var(--vh));
-    z-index: 5;
-    border-radius: 16px;
-    border: 1px solid #D9D9D9;
-    background: #FFF;
-    box-shadow: 4px 4px 16px 0px rgba(0, 0, 0, 0.05);
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.image-container2 img {
-    width: 65%;
-    height: auto;
-    margin-bottom: -5%;
-    margin-top: -15%;
-}
-
-.image-container2 p {
-    color: black;
-    text-align: center;
-    font-family: "NanumSquare", sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: 20px;
-    letter-spacing: -0.35px;
-    width: 100%;
-    max-width: 40ch;
-    overflow-wrap: break-word;
-    word-break: keep-all;
-    overflow-y: scroll;
-    max-height: calc(35 * var(--vh));
-}
-
-.image-container2 button {
-    margin-top: calc(1 * var(--vh));
-    width: 80%;
-    padding: 5px;
-    border-radius: 100px;
-    border: 2px solid var(--Point-Red-Dark, #922142);
-    background: var(--Point-Red, #D50F4A);
-    color: var(--Text-White, #FFF);
-    text-align: center;
-    font-family: "NanumSquare", sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: -0.4px;
-    text-align: center;
-    z-index: 1;
-    position: relative;
-    box-shadow: 0px 3px #922142
-}
-
-
-.character-line {
-    width: 90%;
-    border: 1px solid #D9D9D9;
-    margin: 2% 0 2% 0;
-    align-self: center
-}
 
 
 
 .grayscale {
-    filter: grayscale(100%);
+    opacity: 0.5;
 }
 
 .graytext {
     color: gray !important
 }
 
-.text-container2 {
-    bottom: 0%;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    border: none;
-    border-radius: 16px 16px 0px 0px;
-    background-color: #fff;
-    width: 100%;
-    height: calc(30 * var(--vh));
-    padding-top: calc(2 * var(--vh));
-    z-index: 10;
-}
-
-.text-container2 .character-name {
-    padding: 2.5px 21.5px;
-    color: var(--Text-Black, #111);
-    font-family: "NanumSquare", sans-serif;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 28px;
-    letter-spacing: -0.5px;
-    align-self: flex-start;
-    text-align: left;
-}
-
-.text-container2 .character-text {
-    padding: 5px 12.5px 5px 12.5px;
-    color: var(--Text-Black, #111);
-    font-family: "NanumSquare", sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: -0.4px;
-    align-self: flex-start;
-    text-align: left;
-    max-width: 30ch;
-    overflow-wrap: break-word;
-    word-break: keep-all;
-}
-
-.button-container {
-    margin-top: calc(0 * var(--vh));
-    ;
-    display: flex;
-    flex-direction: rows;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    gap: 2.5%;
-    border: none;
-    background-color: #fff
-}
-
-.button-container button:first-child {
-    width: 40%;
-    padding: 7.5px;
-    border-radius: 100px;
-    border: 2px solid var(--Text-Gray, #767676);
-    background: #D9D9D9;
-    color: var(--Text-Gray, #545454);
-    text-align: center;
-    font-family: "NanumSquare", sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: -0.4px;
-    margin-right: 2%;
-    box-shadow: 0px 3px #767676
-}
-
-.button-container button:last-child {
-    width: 40%;
-    padding: 7.5px;
-    border-radius: 100px;
-    border: 2px solid var(--Dark-Red, #922142);
-    background: var(--Point-Red, #D50F4A);
-    color: var(--Text-Black, #fff);
-    text-align: center;
-    font-family: "NanumSquare", sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: -0.4px;
-    box-shadow: 0px 3px #922142
-}
 
 .overlay {
     position: fixed;
@@ -461,7 +250,7 @@ export default {
 }
 
 .button-container2 {
-    position: absolute;
+    position: fixed;
     bottom: calc(4 * var(--vh));
     width: 100%;
     display: flex;
@@ -514,7 +303,7 @@ export default {
 
 .bottom-section {
     overflow: visible;
-    position: absolute;
+    position: fixed;
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -524,60 +313,6 @@ export default {
     z-index: 1;
     background-color: #D50F4A;
     bottom: 0;
-}
-
-.modal2 {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 60%;
-    height: calc(15 * var(--vh));
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    border: none;
-    background-color: #fff;
-    border-radius: 16px;
-    flex-direction: column;
-    z-index: 8;
-    padding-top: 20px;
-    padding-bottom: 10px;
-    transform: translate(-50%, -50%);
-
-}
-
-.modal2 p {
-    color: #111;
-    text-align: center;
-    font-family: "NanumSquare", sans-serif;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: 28px;
-    letter-spacing: -0.5px;
-}
-
-.modal-buttons {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-
-.modal2 button {
-    width: 40%;
-    padding: 10px;
-    border-radius: 100px;
-    border: 2px solid var(--Dark-Red, #922142);
-    background: var(--Point-Red, #D50F4A);
-    color: var(--Text-Black, #fff);
-    text-align: center;
-    font-family: "NanumSquare", sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: -0.4px;
-    box-shadow: 0px 3px #922142
 }
 
 
@@ -634,29 +369,5 @@ export default {
     border-radius: 10px;
     overflow-wrap: break-word;
     word-break: keep-all;
-}
-
-.used-button {
-    width: 30%;
-    padding: 10px;
-    border-radius: 100px;
-    background: var(--Main-Green, #06734C);
-    border: none;
-    color: var(--Text-White, #FFF);
-    text-align: center;
-    font-family: "NanumSquare", sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: -0.4px;
-    text-align: center;
-    z-index: 1;
-    position: fixed;
-    outline: 1px solid #06734C;
-    outline-offset: 2px;
-    transform: rotate(45deg);
-    margin-top: 25%;
-    margin-left: 10%;
 }
 </style>

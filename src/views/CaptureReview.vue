@@ -163,6 +163,7 @@ export default {
 
             const shareData = {
                 files: filesArray,
+                text: '이미지를 공유합니다!'
             };
 
             if (!navigator.share) {

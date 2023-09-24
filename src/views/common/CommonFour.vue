@@ -42,7 +42,7 @@
                         </clipPath>
                     </defs>
                 </svg></button>
-            <button><img src="@resource/reward/premium_active.png" />일반보상</button>
+            <button><img src="@resource/reward/premium_active.png" />프리미엄보상</button>
         </div>
         <div class="bottom-section">
         </div>
