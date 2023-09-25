@@ -183,6 +183,20 @@ import { onMounted, computed, ref } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router'
 import router from '../router';
 
+const bell01 = new URL('@resource/icon/bell_01.png', import.meta.url).href
+const bell02 = new URL('@resource/icon/bell_02.png', import.meta.url).href
+const bell03 = new URL('@resource/icon/bell_03.png', import.meta.url).href
+const uno01 = new URL('@resource/icon/uno_01.png', import.meta.url).href
+const uno02 = new URL('@resource/icon/uno_02.png', import.meta.url).href
+const uno03 = new URL('@resource/icon/uno_03.png', import.meta.url).href
+const sorina01 = new URL('@resource/icon/sorina_01.png', import.meta.url).href
+const sorina02 = new URL('@resource/icon/sorina_02.png', import.meta.url).href
+const sorina03 = new URL('@resource/icon/sorina_03.png', import.meta.url).href
+const frame = new URL('@resource/frame/frame_01.png', import.meta.url).href
+const frame2 = new URL('@resource/frame/frame_02.png', import.meta.url).href
+const frame3 = new URL('@resource/frame/frame_03.png', import.meta.url).href
+const frame4 = new URL('@resource/frame/frame_04.png', import.meta.url).href
+
 export default {
     name: 'capture',
     setup() {
@@ -251,22 +265,22 @@ export default {
         })
 
         const FRAMES = [
-            { id: 0, src: new URL('@resource/frame/frame_01.png', import.meta.url).href, text: '봄' },
-            { id: 1, src: new URL('@resource/frame/frame_02.png', import.meta.url).href, text: '여름' },
-            { id: 2, src: new URL('@resource/frame/frame_03.png', import.meta.url).href, text: '가을' },
-            { id: 3, src: new URL('@resource/frame/frame_04.png', import.meta.url).href, text: '겨울' },
+            { id: 0, src: frame, text: '봄' },
+            { id: 1, src: frame2, text: '여름' },
+            { id: 2, src: frame3, text: '가을' },
+            { id: 3, src: frame4, text: '겨울' },
         ];
 
         const STICKERSTORE = [
-            { id: 0, src: new URL('@resource/icon/Bell_01.png', import.meta.url).href, name: 'bellNormal' },
-            { id: 1, src: new URL('@resource/icon/Bell_02.png', import.meta.url).href, name: 'bellHappy' },
-            { id: 2, src: new URL('@resource/icon/Bell_03.png', import.meta.url).href, name: 'bellWelcome' },
-            { id: 3, src: new URL('@resource/icon/uno_01.png', import.meta.url).href, name: 'unoNormal' },
-            { id: 4, src: new URL('@resource/icon/uno_02.png', import.meta.url).href, name: 'unoHappy' },
-            { id: 5, src: new URL('@resource/icon/uno_03.png', import.meta.url).href, name: 'unoWelcome' },
-            { id: 6, src: new URL('@resource/icon/sorina_01.png', import.meta.url).href, name: 'sorinaNormal' },
-            { id: 7, src: new URL('@resource/icon/sorina_02.png', import.meta.url).href, name: 'sorinaHappy' },
-            { id: 8, src: new URL('@resource/icon/sorina_03.png', import.meta.url).href, name: 'sorinaWelcome' },
+            { id: 0, src: bell01, name: 'bellNormal' },
+            { id: 1, src: bell02, name: 'bellHappy' },
+            { id: 2, src: bell03, name: 'bellWelcome' },
+            { id: 3, src: uno01, name: 'unoNormal' },
+            { id: 4, src: uno02, name: 'unoHappy' },
+            { id: 5, src: uno03, name: 'unoWelcome' },
+            { id: 6, src: sorina01, name: 'sorinaNormal' },
+            { id: 7, src: sorina02, name: 'sorinaHappy' },
+            { id: 8, src: sorina03, name: 'sorinaWelcome' },
         ]
 
         const STICKERS = ref([])
