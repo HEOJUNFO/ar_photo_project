@@ -341,12 +341,12 @@ export default {
 
             window.addEventListener('resize', setVH);
 
-            window.addEventListener('DOMContentLoaded', (event) => {
-                STICKERSTORE.forEach(sticker => {
-                    const img = new Image();
-                    img.src = sticker.src;
-                });
+
+            STICKERSTORE.forEach(sticker => {
+                const img = new Image();
+                img.src = sticker.src;
             });
+
 
             if (localStorage.getItem('characterID') !== null) {
                 characterID.value = localStorage.getItem('characterID')
