@@ -147,10 +147,10 @@ export default {
                 }
 
                 localStorage.setItem('consentGiven', 'true');
-                setTimeout(() => {
-                    next();
 
-                }, 500);
+                next();
+
+
 
             } catch (err) {
                 console.error("Error accessing the camera: ", err);
