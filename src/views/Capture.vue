@@ -195,6 +195,7 @@ export default {
         const selectedSticker = ref(null)
         const selectedCharacter = ref(false)
         const setFrameSrc = ref(null)
+        const characterID = ref(0)
 
         const enableFilp = ref(true)
 
@@ -214,7 +215,7 @@ export default {
             { id: 3, src: new URL('@resource/frame/frame_04.png', import.meta.url).href, text: '겨울' },
         ];
 
-        const STICKERS = [
+        const STICKERSTORE = [
             { id: 0, src: new URL('@resource/icon/Bell_01.png', import.meta.url).href, name: 'bellNormal' },
             { id: 1, src: new URL('@resource/icon/Bell_02.png', import.meta.url).href, name: 'bellHappy' },
             { id: 2, src: new URL('@resource/icon/Bell_03.png', import.meta.url).href, name: 'bellWelcome' },
@@ -225,6 +226,8 @@ export default {
             { id: 7, src: new URL('@resource/icon/sorina_02.png', import.meta.url).href, name: 'unoHappy' },
             { id: 8, src: new URL('@resource/icon/sorina_03.png', import.meta.url).href, name: 'unoWelcome' },
         ]
+
+        const STICKERS = ref([])
 
         const stickerToggle = () => {
             stickerList.value = !stickerList.value
@@ -241,7 +244,12 @@ export default {
             selectedSticker.value = image.id
         }
         const setCharacter = () => {
-            experience.world.setCharacter()
+            if (selectedCharacter.value) {
+                experience.world.removeCharacter()
+                selectedCharacter.value = false
+                return
+            }
+            experience.world.setCharacter(characterID.value)
             selectedCharacter.value = true
         }
 
@@ -280,6 +288,27 @@ export default {
             setVH();
 
             window.addEventListener('resize', setVH);
+
+            if (localStorage.getItem('characterID') !== null) {
+                characterID.value = localStorage.getItem('characterID')
+            }
+            if (localStorage.getItem('clearId1') === 'true') {
+                STICKERS.value.push(STICKERSTORE[0])
+                STICKERS.value.push(STICKERSTORE[1])
+                STICKERS.value.push(STICKERSTORE[2])
+            }
+            if (localStorage.getItem('clearId3') === 'true') {
+                STICKERS.value.push(STICKERSTORE[3])
+                STICKERS.value.push(STICKERSTORE[4])
+                STICKERS.value.push(STICKERSTORE[5])
+            }
+            if (localStorage.getItem('clearId5') === 'true') {
+                STICKERS.value.push(STICKERSTORE[6])
+                STICKERS.value.push(STICKERSTORE[7])
+                STICKERS.value.push(STICKERSTORE[8])
+            }
+
+
 
             experience = new Experience(document.querySelector('canvas.webgl'), saveImage);
             experience.resources.on('ready', () => {

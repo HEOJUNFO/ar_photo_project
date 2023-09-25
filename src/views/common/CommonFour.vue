@@ -10,7 +10,27 @@
         <div class="side-image-container">
             <img :src="characterContent.src" alt="Side Image" />
         </div>
-        <div class="image-container">
+        <div v-if="eventId === '1'" class="image-container">
+            <img :class="{ 'hidden': hideImage1 }" class="img1" src="@resource/content/mini2.png"
+                @touchstart="handleMouseDown" @touchend="handleMouseUp" />
+            <img :style="{ width: image2Width + '%' }" class="img2" src="@resource/magicCircle/r_01.png"
+                @touchstart="handleMouseDown" @touchend="handleMouseUp" @transitionend="handleTransitionEnd" />
+            <img :style="{ width: image3Width + '%' }" class="img3" src="@resource/magicCircle/r_02.png"
+                @touchstart="handleMouseDown" @touchend="handleMouseUp" />
+            <img :style="{ width: image3Width + '%' }" class="img4" src="@resource/magicCircle/r_03.png"
+                @touchstart="handleMouseDown" @touchend="handleMouseUp" />
+        </div>
+        <div v-if="eventId === '3'" class="image-container">
+            <img :class="{ 'hidden': hideImage1 }" class="img1" src="@resource/content/mini2.png"
+                @touchstart="handleMouseDown" @touchend="handleMouseUp" />
+            <img :style="{ width: image2Width + '%' }" class="img2" src="@resource/magicCircle/g_01.png"
+                @touchstart="handleMouseDown" @touchend="handleMouseUp" @transitionend="handleTransitionEnd" />
+            <img :style="{ width: image3Width + '%' }" class="img3" src="@resource/magicCircle/g_02.png"
+                @touchstart="handleMouseDown" @touchend="handleMouseUp" />
+            <img :style="{ width: image3Width + '%' }" class="img4" src="@resource/magicCircle/g_03.png"
+                @touchstart="handleMouseDown" @touchend="handleMouseUp" />
+        </div>
+        <div v-if="eventId === '5'" class="image-container">
             <img :class="{ 'hidden': hideImage1 }" class="img1" src="@resource/content/mini2.png"
                 @touchstart="handleMouseDown" @touchend="handleMouseUp" />
             <img :style="{ width: image2Width + '%' }" class="img2" src="@resource/magicCircle/p_01.png"
@@ -26,8 +46,9 @@
             </div>
         </div>
         <div class="button-container">
-            <button><img src="@resource/reward/reward_active.png" />일반보상</button>
-            <button><svg xmlns="http://www.w3.org/2000/svg" width="29" height="24" viewBox="0 0 29 24" fill="none">
+            <button @click="normalReward()"><img src="@resource/reward/reward_active.png" />일반보상</button>
+            <button @click="home()"><svg xmlns="http://www.w3.org/2000/svg" width="29" height="24" viewBox="0 0 29 24"
+                    fill="none">
                     <g clip-path="url(#clip0_541_2147)">
                         <path
                             d="M17.2484 23.9912C17.2484 23.9176 17.2484 23.8577 17.2484 23.7982C17.2484 21.5947 17.2359 19.3909 17.2559 17.1874C17.2621 16.5041 16.7792 16.0095 16.1148 16.0247C15.0577 16.049 13.9992 16.0548 12.9424 16.0229C12.2393 16.0016 11.7427 16.4883 11.7516 17.2294C11.7775 19.3973 11.7608 21.5655 11.7608 23.7337C11.7608 23.814 11.7608 23.8942 11.7608 23.9906C11.6989 23.9936 11.6464 23.9985 11.594 23.9985C9.58325 23.9988 7.57221 24.0003 5.56148 23.9982C4.71804 23.9973 4.08791 23.4744 3.94401 22.6604C3.92316 22.5419 3.92167 22.4184 3.92167 22.2972C3.92047 19.6022 3.92137 16.9071 3.91809 14.2121C3.91809 14.1024 3.95623 14.0395 4.03786 13.975C7.49237 11.2563 10.9454 8.5358 14.3966 5.81283C14.4777 5.74899 14.5256 5.74261 14.6108 5.80979C18.0698 8.53914 21.5312 11.2651 24.9893 13.9954C25.0411 14.0364 25.0846 14.1261 25.0846 14.193C25.0894 16.9084 25.0914 19.6234 25.0876 22.3388C25.0861 23.3097 24.4241 23.9939 23.4814 23.9967C21.4457 24.0024 19.4102 23.9985 17.3744 23.9982C17.3399 23.9982 17.3056 23.9945 17.249 23.9912H17.2484Z"
@@ -42,7 +63,7 @@
                         </clipPath>
                     </defs>
                 </svg></button>
-            <button><img src="@resource/reward/premium_active.png" />프리미엄보상</button>
+            <button @click="premiumReward()"><img src="@resource/reward/premium_active.png" />프리미엄보상</button>
         </div>
         <div class="bottom-section">
         </div>
@@ -51,11 +72,10 @@
                 <img class="image1" src="@resource/common/label.png" />
                 <p class="p1">‘벨’ 웹스티커 1세트</p>
                 <p class="p2">(서비스 내 사진촬영에서 확인 및 사용가능)</p>
-                <img class="image2" src="@resource/intro/bell.png" />
-                <button>상품획득 성공</button>
+                <img class="image2" :src="rewardImage" />
+                <button @click="next()">상품획득 성공</button>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -67,6 +87,11 @@ import LoadingContainer from '../../components/LoadingContainer.vue'
 import Experience from '../../three/Common4/Experience.js'
 import { onBeforeRouteLeave } from 'vue-router'
 
+const Bell = new URL('@resource/intro/bell.png', import.meta.url).href;
+const Uno = new URL('@resource/intro/uno.png', import.meta.url).href;
+const Sorina = new URL('@resource/intro/sorina.png', import.meta.url).href;
+
+
 export default {
     name: 'Common4',
     components: {
@@ -76,9 +101,12 @@ export default {
         let experience;
         const characterStore = useCharacterStore()
         const textIndex = ref(3)
-        const finishModal = ref(true)
+        const finishModal = ref(false)
+        const eventId = ref(0)
+        const rewardImage = ref('')
 
-        characterStore.setCharacterIndex(localStorage.getItem('characterID'))
+
+
 
         const currentCharacterContent = computed(() => {
             const char = characterStore.currentCharacter
@@ -130,13 +158,32 @@ export default {
         }
 
 
-        const nextPage = () => {
-            router.push({ path: '/framereward', query: { eventName: "common4" } });
+        const normalReward = () => {
+            router.push('/storagebox2')
+        }
+        const premiumReward = () => {
+            router.push('/storagebox')
+        }
+
+        const home = () => {
+            router.push('/stage')
+        }
+
+
+        const next = () => {
+            if (eventId.value === '1') {
+                localStorage.setItem('clearId1', 'true')
+            } else if (eventId.value === '3') {
+                localStorage.setItem('clearId3', 'true')
+            } else if (eventId.value === '5') {
+                localStorage.setItem('clearId5', 'true')
+            }
+            router.push('/eventout')
         }
 
         const handleTransitionEnd = () => {
             if (image2Width.value === 100) {
-                nextPage();
+                finishModal.value = true;
             } else {
                 hideImage1.value = false;
             }
@@ -149,9 +196,22 @@ export default {
 
         onMounted(() => {
             setVH();
-
             window.addEventListener('resize', setVH);
+
             experience = new Experience(document.querySelector('canvas.webgl'));
+
+            if (localStorage.getItem('characterID') !== null) {
+                characterStore.setCharacterIndex(localStorage.getItem('characterID'))
+            }
+
+            eventId.value = localStorage.getItem('eventId')
+            if (eventId.value === '1') {
+                rewardImage.value = Bell
+            } else if (eventId.value === '3') {
+                rewardImage.value = Uno
+            } else if (eventId.value === '5') {
+                rewardImage.value = Sorina
+            }
         })
 
         onBeforeRouteLeave(() => {
@@ -171,7 +231,13 @@ export default {
             image2Width,
             handleTransitionEnd,
             handleClose,
-            finishModal
+            finishModal,
+            next,
+            eventId,
+            rewardImage,
+            normalReward,
+            premiumReward,
+            home
         }
     }
 }

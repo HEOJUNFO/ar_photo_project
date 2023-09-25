@@ -39,9 +39,19 @@ export default class World
         }
     }
 
-    setCharacter(){
-        this.model  = new Model('unoModel')
+    setCharacter(id){
+        if(id == 0){
+            this.model  = new Model('bellModel')
+        } else if(id == 1){
+        this.model  = new Model('sorinaModel')
+        } else if(id == 2){
+            this.model = new Model('unoModel')
+        }
     }
+
+    removeCharacter(){
+        this.model.scene.remove(this.model.model)
+    }   
 
     update() {
        if(this.model){

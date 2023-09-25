@@ -163,7 +163,7 @@ export const useEventStore = defineStore('events', {
         },
         setEventsData() {
             this.eventData.event.forEach((event,index) => {
-            const itemValue = localStorage.getItem(`eventId${index}`);
+            const itemValue = localStorage.getItem(`clearId${index+1}`);
     
             if (itemValue) {
                 event.required = itemValue;

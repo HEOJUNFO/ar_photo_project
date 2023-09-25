@@ -3,8 +3,6 @@ import {createRouter, createWebHashHistory} from "vue-router";
 import Landing from "@views/Landing.vue"
 import Capture from "@views/Capture.vue"
 import Intro from "@views/Intro.vue"
-import StickerReward from "@views/StickerReward.vue"
-import FrameReward from "@views/FrameReward.vue"
 import CommoneOne3D from "@views/common/CommonOne3D.vue"
 import StorageBox from "@views/StorageBox.vue"
 import Mission1 from "@views/test/Mission1.vue"
@@ -16,14 +14,17 @@ import StorageBox2 from "@views/StorageBox2.vue"
 import Stage from "@views/Stage.vue"
 import ImageTraking from "@views/ImageTraking.vue"
 import CommonFour from "@views/common/CommonFour.vue"
+import Event1 from "@views/event/Event1.vue"
+import Event2 from "@views/event/Event2.vue"
+import Event3 from "@views/event/Event3.vue"
+import Event5 from "@views/event/Event5.vue"
+import EventOut from "@views/event/EventOut.vue"
 
 
 export const routes = [
     {path: '/', component: Landing, name: 'Landing'},
     {path: '/capture', component: Capture, name: 'Capture'},
     {path: '/intro', component: Intro, name: 'Intro'},
-    {path: '/stickerreward', component: StickerReward, name: 'StickerReward'},
-    {path : '/framereward', component: FrameReward, name: 'FrameReward'},
     {path: '/commonone3d', component: CommoneOne3D, name: 'CommoneOne3D'},
     {path: '/storagebox', component: StorageBox, name: 'StorageBox'},
     {path: '/mission1', component: Mission1, name: 'Mission1'},
@@ -35,6 +36,12 @@ export const routes = [
     {path: '/stage',component:Stage, name:'Stage'},
     {path: '/imagetraking',component:ImageTraking, name:'ImageTraking'},
     {path: '/commonfour',component:CommonFour, name:'CommonFour'},
+    {path: '/event1',component:Event1, name:'Event1'},
+    {path: '/event2',component:Event2, name:'Event2'},
+    {path: '/event3',component:Event3, name:'Event3'},
+    {path: '/event5',component:Event5, name:'Event5'},
+    {path: '/eventout',component:EventOut, name:'EventOut'},
+    
 ]
 
 const router = createRouter({

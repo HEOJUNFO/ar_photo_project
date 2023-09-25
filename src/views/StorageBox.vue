@@ -78,8 +78,9 @@
             </div>
         </div>
         <div class="button-container2">
-            <button><img src="@resource/reward/reward_active.png" />일반보상</button>
-            <button><svg xmlns="http://www.w3.org/2000/svg" width="29" height="24" viewBox="0 0 29 24" fill="none">
+            <button @click="normalReward()"><img src="@resource/reward/reward_active.png" />일반보상</button>
+            <button @click="home()"><svg xmlns="http://www.w3.org/2000/svg" width="29" height="24" viewBox="0 0 29 24"
+                    fill="none">
                     <g clip-path="url(#clip0_541_2147)">
                         <path
                             d="M17.2484 23.9912C17.2484 23.9176 17.2484 23.8577 17.2484 23.7982C17.2484 21.5947 17.2359 19.3909 17.2559 17.1874C17.2621 16.5041 16.7792 16.0095 16.1148 16.0247C15.0577 16.049 13.9992 16.0548 12.9424 16.0229C12.2393 16.0016 11.7427 16.4883 11.7516 17.2294C11.7775 19.3973 11.7608 21.5655 11.7608 23.7337C11.7608 23.814 11.7608 23.8942 11.7608 23.9906C11.6989 23.9936 11.6464 23.9985 11.594 23.9985C9.58325 23.9988 7.57221 24.0003 5.56148 23.9982C4.71804 23.9973 4.08791 23.4744 3.94401 22.6604C3.92316 22.5419 3.92167 22.4184 3.92167 22.2972C3.92047 19.6022 3.92137 16.9071 3.91809 14.2121C3.91809 14.1024 3.95623 14.0395 4.03786 13.975C7.49237 11.2563 10.9454 8.5358 14.3966 5.81283C14.4777 5.74899 14.5256 5.74261 14.6108 5.80979C18.0698 8.53914 21.5312 11.2651 24.9893 13.9954C25.0411 14.0364 25.0846 14.1261 25.0846 14.193C25.0894 16.9084 25.0914 19.6234 25.0876 22.3388C25.0861 23.3097 24.4241 23.9939 23.4814 23.9967C21.4457 24.0024 19.4102 23.9985 17.3744 23.9982C17.3399 23.9982 17.3056 23.9945 17.249 23.9912H17.2484Z"
@@ -94,7 +95,7 @@
                         </clipPath>
                     </defs>
                 </svg></button>
-            <button><img src="@resource/reward/premium_active.png" />프리미엄보상</button>
+            <button @click="premiumReward()"><img src="@resource/reward/premium_active.png" />프리미엄보상</button>
         </div>
         <div class="bottom-section">
         </div>
@@ -140,6 +141,17 @@ export default {
             useModal.value = true;
         };
 
+        const normalReward = () => {
+            router.push('/storagebox2')
+        }
+        const premiumReward = () => {
+            router.push('/storagebox')
+        }
+
+        const home = () => {
+            router.push('/stage')
+        }
+
         const setGrayscale = (item) => {
             return item.required === 'true' ? '' : 'grayscale';
         };
@@ -171,7 +183,10 @@ export default {
             useModal2,
             showOverlay,
             showModal2,
-            showHelp
+            showHelp,
+            normalReward,
+            premiumReward,
+            home
         };
     }
 }

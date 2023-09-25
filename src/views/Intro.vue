@@ -101,9 +101,9 @@ export default {
 
         const selectCharacter = () => {
             localStorage.setItem('characterID', imageIndex.value)
-            // setTimeout(() => {
-            //     router.push('/intro3d')
-            // }, 1000);
+            setTimeout(() => {
+                router.push('/stage')
+            }, 1000);
         }
 
         const navigateToNextImage = () => {
