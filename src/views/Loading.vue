@@ -219,7 +219,9 @@ export default {
 
             eventId.value = localStorage.getItem('eventId')
             console.log(eventId.value)
-
+            if (localStorage.getItem('characterID') === null) {
+                localStorage.setItem('characterID', 0)
+            }
 
             if (localStorage.getItem('consentGiven') === 'true') {
                 showModal.value = false

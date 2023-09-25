@@ -71,7 +71,6 @@ export default {
                         }, 0);
                     } else {
                         //android
-                        alert("안드로이드는 크롬 브라우저를 설치해주세요.");
                         location.href = "intent://" + tartgetUrl + "#Intent;scheme=https;package=com.android.chrome;end";
                     }
                 }

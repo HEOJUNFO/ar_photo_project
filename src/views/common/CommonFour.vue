@@ -293,7 +293,7 @@ export default {
 
             setTimeout(() => {
                 typeText()
-            }, 1000);
+            }, 2000);
             eventId.value = localStorage.getItem('eventId')
             if (eventId.value === '1') {
                 rewardImage.value = Bell

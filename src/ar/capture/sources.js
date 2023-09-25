@@ -43,6 +43,11 @@ export default [
         path: '../resource/character/Sorina_Welcome.png'
     },
     {
+        name: 'sorinaNormal',
+        type: 'texture',
+        path: '../resource/character/Sorina_Welcome.png'
+    },
+    {
         name: 'unoNormal',
         type: 'texture',
         path: '../resource/character/Uno_Normal.png'

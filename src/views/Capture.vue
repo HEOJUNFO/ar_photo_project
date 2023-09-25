@@ -261,12 +261,12 @@ export default {
             { id: 0, src: new URL('@resource/icon/Bell_01.png', import.meta.url).href, name: 'bellNormal' },
             { id: 1, src: new URL('@resource/icon/Bell_02.png', import.meta.url).href, name: 'bellHappy' },
             { id: 2, src: new URL('@resource/icon/Bell_03.png', import.meta.url).href, name: 'bellWelcome' },
-            { id: 3, src: new URL('@resource/icon/uno_01.png', import.meta.url).href, name: 'sorinaNormal' },
-            { id: 4, src: new URL('@resource/icon/uno_02.png', import.meta.url).href, name: 'sorinaHappy' },
-            { id: 5, src: new URL('@resource/icon/uno_03.png', import.meta.url).href, name: 'sorinaWelcome' },
-            { id: 6, src: new URL('@resource/icon/sorina_01.png', import.meta.url).href, name: 'unoNormal' },
-            { id: 7, src: new URL('@resource/icon/sorina_02.png', import.meta.url).href, name: 'unoHappy' },
-            { id: 8, src: new URL('@resource/icon/sorina_03.png', import.meta.url).href, name: 'unoWelcome' },
+            { id: 3, src: new URL('@resource/icon/uno_01.png', import.meta.url).href, name: 'unoNormal' },
+            { id: 4, src: new URL('@resource/icon/uno_02.png', import.meta.url).href, name: 'unoHappy' },
+            { id: 5, src: new URL('@resource/icon/uno_03.png', import.meta.url).href, name: 'unoWelcome' },
+            { id: 6, src: new URL('@resource/icon/sorina_01.png', import.meta.url).href, name: 'sorinaNormal' },
+            { id: 7, src: new URL('@resource/icon/sorina_02.png', import.meta.url).href, name: 'sorinaHappy' },
+            { id: 8, src: new URL('@resource/icon/sorina_03.png', import.meta.url).href, name: 'sorinaWelcome' },
         ]
 
         const STICKERS = ref([])
@@ -340,6 +340,11 @@ export default {
             setVH();
 
             window.addEventListener('resize', setVH);
+
+            STICKERSTORE.forEach(sticker => {
+                const img = new Image();
+                img.src = sticker.src;
+            });
 
             if (localStorage.getItem('characterID') !== null) {
                 characterID.value = localStorage.getItem('characterID')

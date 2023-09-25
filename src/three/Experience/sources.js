@@ -60,7 +60,7 @@ export default [
     {
         name: 'sorinaBody',
         type: 'texture',
-        path: '../resource/character/Sorina_EntireBody.png'
+        path: '../resource/character/Sorina_Normal.png'
     },{
         name: 'sorinaNormal',
         type: 'texture',

@@ -28,12 +28,14 @@ export default class Sticker
     }
 
     setGeometry()    {
-        this.geometry = new THREE.PlaneGeometry(this.texture.image.width * 0.0003, this.texture.image.height * 0.0003);
-        
+        this.geometry = new THREE.PlaneGeometry(this.texture.image.width, this.texture.image.height );
+     
     }
     setTextures(name) {
-        
+      
+        console.log(this.resources.items)
         this.texture =  this.resources.items[name]
+        console.log(this.texture)
         this.texture.wrapS = THREE.RepeatWrapping;
         this.texture.wrapT = THREE.RepeatWrapping;
         this.texture.colorSpace = THREE.SRGBColorSpace;
@@ -55,7 +57,7 @@ export default class Sticker
     {
         this.mesh = new THREE.Mesh(this.geometry, this.material)
         this.mesh.receiveShadow = true
-        this.mesh.scale.set(2, 2, 0.1)
+        this.mesh.scale.set(0.0005, 0.0005, 0.1)
         this.mesh.position.set(0.75, 1.5, 0)
         this.scene.add(this.mesh)
         this.mesh.name = 'stickers'
