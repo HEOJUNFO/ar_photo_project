@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import Experience from '../../ar/common1/Experience.js'
+import Experience from '../../ar/Common1/Experience.js'
 import { onMounted, ref, computed } from 'vue';
 import router from '../../router';
 import { useCharacterStore } from '../../stores/characterStore.js'
