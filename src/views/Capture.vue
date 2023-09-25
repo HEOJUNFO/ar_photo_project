@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <div v-show="showOverlay" @click="showOverlay = false, play()" class="overlay">
+        <div v-show="showOverlay" @click="showOverlay = false" class="overlay">
             <img src="@resource/common/AR_Logo_02.png" alt="overlay" />
             <div class="tutorial-inner">
                 <p>안녕! 반가워</p>
@@ -83,7 +83,7 @@
                     </g>
                 </svg></button>
         </div>
-        <div class="webgl-container">
+        <div id="webgl" class="webgl-container">
             <canvas class="webgl"></canvas>
         </div>
 
@@ -318,8 +318,18 @@ export default {
         }
 
         const setFrame = (image) => {
+
+            const webglContainer = document.querySelector('.webgl-container')
             playAudio();
             setFrameSrc.value = image.src
+            if (image.id === 0) {
+
+                webglContainer.style.width = '100%'
+                experience.sizes.resize()
+            } else {
+                webglContainer.style.width = 'calc((4/6) * 70 * var(--vh))'
+                experience.resize()
+            }
         }
 
         const saveImage = (image) => {
@@ -348,10 +358,6 @@ export default {
             let vh = window.innerHeight * 0.01;
 
             document.documentElement.style.setProperty('--vh', `${vh}px`);
-        }
-        const play = () => {
-            const video = document.querySelector('video')
-            console.log(video)
         }
 
         onMounted(() => {
@@ -427,7 +433,6 @@ export default {
             selectedCharacter,
             setFrame,
             setFrameSrc,
-            play,
             characterSrc,
         }
     }

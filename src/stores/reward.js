@@ -60,22 +60,28 @@ export const useRewardsStore = defineStore('rewards', {
                 src: Coupon,
                 required: "null",
                 text:"패션·잡화 1만원 금액할인권",
+                text2:"- 패션·잡화 상품군 5만원이상 구매시 사용가능한 금액할인권의 웹쿠폰",
             },{
                 id: 1,
                 src: Coupon2,
                 required: "null",
                 text:"F&B 5천원 금액할인권",
+                text2:"- F&B 2만원이상 구매시 사용 가능한 금액할인권의 웹쿠폰",
+
             },{
                 id: 2,
                 src: Coupon3,
                 required: "null",
                 text:"몽드이기자 1만원 금액할인권",
+                text2:"- 2F 몽드이가자 매장에서 사용 가능한 금액할인권의 웹쿠폰",
+
             },{
                 id: 3,
-            
                 src: IceCream,
                 required: "null",
                 text:"백미당 아이스크림 1EA 쿠폰 교환권",
+                text2:"- B1 백미당 매장에서 사용 가능한 교환권의 웹쿠폰",
+
             }],
         }
     }),

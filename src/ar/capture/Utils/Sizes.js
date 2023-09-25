@@ -22,4 +22,13 @@ export default class Sizes extends EventEmitter
             this.trigger('resize')
         })
     }
+
+    resize() {
+        this.width = this.container.clientWidth;
+        this.height = this.container.clientHeight;
+        this.pixelRatio = Math.min(window.devicePixelRatio, 2)
+
+        this.trigger('resize')
+
+    }
 }

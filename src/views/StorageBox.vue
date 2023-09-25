@@ -52,18 +52,25 @@
         <div v-if="useModal" class="image-container2">
             <img :src="useItemSrc" />
             <hr class="character-line">
-            <p>유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이
-                입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이
-                입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다.유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이
-                입력됩니다.유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이
-                입력됩니다. 유의사항이
-                입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이
-                입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다.유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이
-                입력됩니다.유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이
-                입력됩니다. 유의사항이
-                입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이
-                입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다.유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이 입력됩니다. 유의사항이
-                입력됩니다.</p>
+            <p class="p1">{{ useItemText }}</p>
+            <p class="p2">유효기간 2023.11.01 ~ 2023.12.31</p>
+            <p class="p3">
+                <br>
+                <span style="color: black;">상품정보</span><br>
+                <span>{{ useItemText2 }}</span><br>
+                <br>
+                <span style="color: black;">교환장소</span><br>
+                - 5F 사은행사장<br>
+                <br>
+                <span style="color: black;">유의사항</span><br>
+                - 기간 내 1아이디당 1회 롯데백화점 앱 교환권으로 교환 가능합니다.
+                - 이 쿠폰은 본 서비스 기간인 10/6 ~ 10/22 까지, 롯데백화점 분당점에서만 교환가능한 웹쿠폰입니다.
+                - 실제 사은품(금액할인권 및 교환권)은 5F 사은행사장에서 확인 후 롯데백화점 앱 쿠폰으로 교환됩니다.
+                - 웹쿠폰은 매장에서 사용 불가능하며, 반드시 롯데백화점 앱 쿠폰으로 교환하여야 사용 가능합니다.
+                - 본 혜택은 현금과 교환되지 않습니다.
+                - 본 쿠폰은 당사 사정에 따라 예고 없이 변경 또는 중단될 수 있습니다.
+                - 쿠폰별 세부 유의사항은 롯데백화점 앱에 발급된 쿠폰의 상세 내용을 참조해주세요.
+            </p>
             <button @click="useModal2 = true, showOverlay = true">사용하기</button>
         </div>
         <div v-if="useModal2" class="text-container2">
@@ -142,6 +149,8 @@ export default {
         const useModal2 = ref(false);
         const tabData = ref([]);
         const useItemSrc = ref('');
+        const useItemText = ref('');
+        const useItemText2 = ref('');
         const showOverlay = ref(false);
         const showHelp = ref(false)
         const selectedItem = ref(null);
@@ -162,6 +171,8 @@ export default {
             selectedItem.value = item;
             if (item.required === 'true') {
                 useItemSrc.value = item.src;
+                useItemText.value = item.text;
+                useItemText2.value = item.text2;
                 useModal.value = true;
             }
         };
@@ -224,7 +235,9 @@ export default {
             normalReward,
             premiumReward,
             home,
-            useCoupon
+            useCoupon,
+            useItemText,
+            useItemText2
         };
     }
 }
@@ -351,23 +364,6 @@ export default {
     height: auto;
     margin-bottom: -5%;
     margin-top: -15%;
-}
-
-.image-container2 p {
-    color: black;
-    text-align: center;
-    font-family: "NanumSquare", sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: 20px;
-    letter-spacing: -0.35px;
-    width: 100%;
-    max-width: 40ch;
-    overflow-wrap: break-word;
-    word-break: keep-all;
-    overflow-y: scroll;
-    max-height: calc(35 * var(--vh));
 }
 
 .image-container2 button {
@@ -711,5 +707,46 @@ export default {
     transform: rotate(45deg);
     margin-top: 25%;
     margin-left: 10%;
+}
+
+.p1 {
+    color: var(--Text-Black, #111);
+    font-family: "NanumSquare", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+    text-align: left;
+    width: 80%;
+}
+
+.p2 {
+    color: var(--Text-Gray, #767676);
+    font-family: "NanumSquare", sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: -0.3px;
+    text-align: left;
+    width: 80%;
+
+}
+
+.p3 {
+    color: var(--Text-Gray, #767676);
+    font-family: "NanumSquare", sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: -0.3px;
+    width: 100%;
+    max-width: 40ch;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+    overflow-y: scroll;
+    max-height: calc(30 * var(--vh));
 }
 </style>
