@@ -173,10 +173,13 @@ export default {
         const next = () => {
             if (eventId.value === '1') {
                 localStorage.setItem('clearId1', 'true')
+                localStorage.setItem('normalItem0', 'true')
             } else if (eventId.value === '3') {
                 localStorage.setItem('clearId3', 'true')
+                localStorage.setItem('normalItem1', 'true')
             } else if (eventId.value === '5') {
                 localStorage.setItem('clearId5', 'true')
+                localStorage.setItem('normalItem2', 'true')
             }
             router.push('/eventout')
         }

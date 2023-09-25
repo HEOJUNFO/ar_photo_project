@@ -71,10 +71,10 @@
             <p class="character-name">사용처리 해주세요.</p>
             <hr class="character-line">
             <p class="character-text">서비스라운지 직원분 께서는</p>
-            <p class="character-text"><span style="color:#d50f4a">[사용하기]]</span>버튼을 눌러주시기 바랍니다.</p>
+            <p class="character-text"><span style="color:#d50f4a">[사용하기]</span>버튼을 눌러주시기 바랍니다.</p>
             <div class="button-container">
                 <button @click="useModal = false, useModal2 = false, showOverlay = false">닫기</button>
-                <button @click="showModal2 = true, useModal2 = false">사용하기</button>
+                <button @click="useCoupon()">사용하기</button>
             </div>
         </div>
         <div class="button-container2">
@@ -124,6 +124,7 @@ export default {
         const useItemSrc = ref('');
         const showOverlay = ref(false);
         const showHelp = ref(false)
+        const selectedItem = ref(null);
 
         const rewardsStore = useRewardsStore();
 
@@ -136,10 +137,20 @@ export default {
         };
 
         const useItem = (item) => {
-            console.log(item);
-            useItemSrc.value = item.src;
-            useModal.value = true;
+            selectedItem.value = item;
+            if (item.required === 'true') {
+                useItemSrc.value = item.src;
+                useModal.value = true;
+            }
         };
+
+        const useCoupon = () => {
+            localStorage.setItem(`premiumItem${selectedItem.value.id}`, 'used');
+            rewardsStore.setRewardsData();
+            showModal2.value = true;
+            useModal2.value = false;
+
+        }
 
         const normalReward = () => {
             router.push('/storagebox2')
@@ -186,7 +197,8 @@ export default {
             showHelp,
             normalReward,
             premiumReward,
-            home
+            home,
+            useCoupon
         };
     }
 }

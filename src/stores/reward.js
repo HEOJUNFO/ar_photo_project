@@ -10,7 +10,7 @@ const Sorina = new URL('@resource/storageBox/Sorina_Reward.png', import.meta.url
 const Filter1 = new URL('@resource/filter/02_filter.png', import.meta.url).href;
 const Filter2 = new URL('@resource/filter/03_filter.png', import.meta.url).href;
 const Filter3 = new URL('@resource/filter/04_filter.png', import.meta.url).href;
-const Filter4 = new URL('@resource/filter/05_filter.png', import.meta.url).href;
+const Filter4 = new URL('@resource/icon/frame_04.png', import.meta.url).href;
 
 export const useRewardsStore = defineStore('rewards', {
     state: () => ({
@@ -47,34 +47,35 @@ export const useRewardsStore = defineStore('rewards', {
                 id:5,
                 src: Filter3,
                 required: "null",
-                text:"겨울 배경 프레임",
+                text:"가을 배경 프레임",
             },{
                 id:6,
                 src: Filter4,
                 required: "null",
-                text:"신비의 숲 모델 프레임",
+                text:"겨울 배경 프레임",
             }],
             
             premium: [{
                 id: 0,
-                src: Coupon3,
-                required: "null",
-                text:"몽드이기자 1만원 금액할인권",
-            },{
-                id: 1,
-                src: IceCream,
-                required: "null",
-                text:"백미당 아이스크림 1EA 쿠폰 교환권",
-            },{
-                id: 2,
                 src: Coupon,
                 required: "null",
                 text:"패션·잡화 1만원 금액할인권",
             },{
-                id: 3,
+                id: 1,
                 src: Coupon2,
                 required: "null",
                 text:"F&B 5천원 금액할인권",
+            },{
+                id: 2,
+                src: Coupon3,
+                required: "null",
+                text:"몽드이기자 1만원 금액할인권",
+            },{
+                id: 3,
+            
+                src: IceCream,
+                required: "null",
+                text:"백미당 아이스크림 1EA 쿠폰 교환권",
             }],
         }
     }),

@@ -17,8 +17,12 @@ import CommonFour from "@views/common/CommonFour.vue"
 import Event1 from "@views/event/Event1.vue"
 import Event2 from "@views/event/Event2.vue"
 import Event3 from "@views/event/Event3.vue"
+import Event4 from "@views/event/Event4.vue"
 import Event5 from "@views/event/Event5.vue"
+import Event6 from "@views/event/Event6.vue"
 import EventOut from "@views/event/EventOut.vue"
+import Culture2nd3D from "@views/culture/Culture2nd3D.vue"
+import CapturePreview from "@views/CapturePreview.vue"
 
 
 export const routes = [
@@ -39,8 +43,13 @@ export const routes = [
     {path: '/event1',component:Event1, name:'Event1'},
     {path: '/event2',component:Event2, name:'Event2'},
     {path: '/event3',component:Event3, name:'Event3'},
+    {path: '/event4',component:Event4, name:'Event4'},
     {path: '/event5',component:Event5, name:'Event5'},
+    {path: '/event6',component:Event6, name:'Event6'},
     {path: '/eventout',component:EventOut, name:'EventOut'},
+    {path: '/culture3',component:Culture2nd3D, name:'Culture2nd3D'},
+    {path: '/capturepreview',component:CapturePreview, name:'CaptruePreview'},
+
     
 ]
 
