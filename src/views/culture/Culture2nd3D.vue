@@ -161,7 +161,7 @@ export default {
                     .map(x => parseInt(x, 16))
 
             let hex = hexToRgb(d);
-            hex[3] = 255;
+            hex[3] = 0;
             hex[0] -= 10;
             hex[1] -= 10;
             hex[2] -= 10;

@@ -50,7 +50,8 @@
             </div>
         </div>
         <div class="top-section">
-            <button><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <button @click="home()"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"
+                    fill="none">
                     <circle cx="20" cy="20" r="19" fill="white" stroke="#D50F4A" stroke-width="2" />
                     <mask id="mask0_541_1822" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="8" width="24"
                         height="24">
@@ -356,6 +357,10 @@ export default {
             showModal.value = true;
         };
 
+        const home = () => {
+            router.push('./stage');
+        };
+
         const setVH = () => {
             document.body.style.overflow = 'hidden';
             let vh = window.innerHeight * 0.01;
@@ -452,7 +457,7 @@ export default {
             setFrame,
             setFrameSrc,
             characterSrc,
-
+            home
         }
     }
 }

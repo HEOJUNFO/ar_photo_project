@@ -235,7 +235,10 @@ export default {
 
         const next = () => {
             playAudio()
-            finishModal.value = true;
+            setTimeout(() => {
+                finishModal.value = true;
+            }, 1500);
+
         }
         const nextPage = () => {
             playAudio2()

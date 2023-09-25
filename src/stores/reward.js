@@ -19,40 +19,40 @@ export const useRewardsStore = defineStore('rewards', {
                 id:0,
                 src: Bell,
                 required: "null",
-                text:"마법사 벨 스티커 5종 세트",
+                text:"마법사 벨 웹스티커 1세트",
             }
             ,{
                 id:1,
                 src: Uno,
                 required: "null",
-                text:"웨어울프 우노 스티커 5종 세트",
+                text:"웨어울프 우노 웹스티커 1세트",
             }
             ,{
                 id:2,
                 src: Sorina,
                 required: "null",
-                text:"뱀파이어 소리나 스티커 5종 세트",
+                text:"뱀파이어 소리나 웹스티커 1세트",
             } ,{
                 id:3,
                 src: Filter1,
                 required: "null",
-                text:"봄 배경 프레임",
+                text:"봄의 숲 웹프레임 1종",
             } ,{
                 id:4,
                 src: Filter2,
                 required: "null",
-                text:"여름 배경 프레임",
+                text:"여름의 숲 웹프레임 1종",
             }
             ,{
                 id:5,
                 src: Filter4,
                 required: "null",
-                text:"가을 배경 프레임",
+                text:"가을의 숲 웹프레임 1종",
             },{
                 id:6,
                 src: Filter3,
                 required: "null",
-                text:"겨울 배경 프레임",
+                text:"겨울의 숲 웹프레임 1종",
             }],
             
             premium: [{
