@@ -174,6 +174,7 @@ export default {
 
 
         onMounted(async () => {
+
             setVH();
             window.addEventListener('resize', setVH);
 
@@ -192,12 +193,17 @@ export default {
             const context = canvas.getContext('2d', { willReadFrequently: true });
 
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({
-                    video: {
-                        facingMode: 'environment'
-                    }
-                });
-                video.srcObject = stream;
+                if (navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function') {
+
+                    const stream = await navigator.mediaDevices.getUserMedia({
+                        video: {
+                            facingMode: 'environment'
+                        }
+                    });
+                    video.srcObject = stream;
+
+                }
+
 
                 video.addEventListener('loadedmetadata', () => {
                     canvas.width = video.videoWidth;
