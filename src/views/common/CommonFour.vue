@@ -1,7 +1,6 @@
 <template>
     <div>
-        <loading-container @closed="handleClose()">
-        </loading-container>
+
         <div class="top-section">
             <div class="text-container1">
                 <p id="typed-text"></p>
@@ -83,7 +82,6 @@
 import { useCharacterStore } from '../../stores/characterStore.js'
 import { ref, computed, watch, onMounted } from 'vue'
 import router from '../../router'
-import LoadingContainer from '../../components/LoadingContainer.vue'
 import Experience from '../../three/Common4/Experience.js'
 import { onBeforeRouteLeave } from 'vue-router'
 
@@ -94,9 +92,7 @@ const Sorina = new URL('@resource/intro/sorina.png', import.meta.url).href;
 
 export default {
     name: 'Common4',
-    components: {
-        LoadingContainer
-    },
+
     setup() {
         let experience;
         const characterStore = useCharacterStore()
@@ -137,11 +133,6 @@ export default {
             typing();
         };
 
-        const handleClose = () => {
-            setTimeout(() => {
-                typeText()
-            }, 1000);
-        }
 
         const handleMouseDown = (event) => {
             event.preventDefault();
@@ -201,10 +192,15 @@ export default {
 
             experience = new Experience(document.querySelector('canvas.webgl'));
 
+
+
             if (localStorage.getItem('characterID') !== null) {
                 characterStore.setCharacterIndex(localStorage.getItem('characterID'))
             }
 
+            setTimeout(() => {
+                typeText()
+            }, 1000);
             eventId.value = localStorage.getItem('eventId')
             if (eventId.value === '1') {
                 rewardImage.value = Bell
@@ -234,7 +230,6 @@ export default {
             handleMouseUp,
             image2Width,
             handleTransitionEnd,
-            handleClose,
             finishModal,
             next,
             eventId,

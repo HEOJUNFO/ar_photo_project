@@ -1,7 +1,6 @@
 <template>
     <div @click.stop="percentage > 99.8 ? next() : null">
-        <loading-container ref="loading" @closed="handleClose()">
-        </loading-container>
+
         <div class="top-section">
             <div class="text-container1">
                 <p id="typed-text"></p>
@@ -53,16 +52,13 @@ import { onMounted, ref, computed, onBeforeUnmount, watch } from 'vue';
 import router from '../../router';
 import { useCharacterStore } from '../../stores/characterStore.js'
 import { onBeforeRouteLeave } from 'vue-router'
-import LoadingContainer from '../../components/LoadingContainer.vue'
 
-const Filter1 = new URL('@resource/icon/frame_01.png', import.meta.url).href;
+
 
 
 export default {
     name: 'Culture',
-    components: {
-        LoadingContainer
-    },
+
     setup() {
         const audio = ref(null);
         const audio2 = ref(null);
@@ -165,11 +161,6 @@ export default {
             typing();
         };
 
-        const handleClose = () => {
-            setTimeout(() => {
-                typeText()
-            }, 1000);
-        }
 
 
         const stone1 = () => {
@@ -295,6 +286,10 @@ export default {
 
             eventId.value = localStorage.getItem('eventId')
 
+            setTimeout(() => {
+                typeText()
+            }, 1000);
+
             const interval = setInterval(updatePercentage, 1);
 
             setTimeout(() => {
@@ -329,7 +324,6 @@ export default {
             isChanging2,
             isChanging3,
             loading,
-            handleClose,
             finishModal,
             nextPage,
         }

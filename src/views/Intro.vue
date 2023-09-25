@@ -1,7 +1,5 @@
 <template>
     <div>
-        <loading-container @closed="handleClose()">
-        </loading-container>
         <div class="loading-container" :style="bgStyle">
             <div class=" top-section">
                 <img src="@resource/common/AR_Logo_02.png" alt="logo" />
@@ -57,7 +55,7 @@
 import { useCharacterStore } from '../stores/characterStore.js'
 import { ref, computed, watch, onMounted } from 'vue'
 import router from '../router'
-import LoadingContainer from '../components/LoadingContainer.vue'
+
 
 const IMAGES = [
     new URL('@resource/intro/Bell.png', import.meta.url).href,
@@ -68,9 +66,7 @@ const IMAGES = [
 
 export default {
     name: 'Intro',
-    components: {
-        LoadingContainer
-    },
+
     setup() {
         const characterStore = useCharacterStore()
         const index = ref(0)
@@ -139,11 +135,6 @@ export default {
             typing();
         };
 
-        const handleClose = () => {
-            setTimeout(() => {
-                typeText()
-            }, 1000);
-        }
 
         const setVH = () => {
             let vh = window.innerHeight * 0.01;
@@ -155,6 +146,12 @@ export default {
             setVH();
 
             window.addEventListener('resize', setVH);
+
+
+
+            setTimeout(() => {
+                typeText()
+            }, 1000);
         })
 
         return {
@@ -167,7 +164,7 @@ export default {
             characterContent: currentCharacterContent,
             selectCharacterSrc: characterStore.currentCharacter?.src,
             bgStyle,
-            handleClose,
+
             selectCharacter
         }
     }

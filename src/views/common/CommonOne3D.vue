@@ -1,7 +1,6 @@
 <template>
     <div class="main">
-        <loading-container @closed="handleClose()">
-        </loading-container>
+
         <div class="top-section">
             <div class="text-container1">
                 <p id="typed-text"></p>
@@ -35,13 +34,11 @@ import { onMounted, ref, computed } from 'vue';
 import router from '../../router';
 import { useCharacterStore } from '../../stores/characterStore.js'
 import { onBeforeRouteLeave } from 'vue-router'
-import LoadingContainer from '../../components/LoadingContainer.vue'
+
 
 export default {
     name: 'CommonOne3d',
-    components: {
-        LoadingContainer
-    },
+
     setup() {
         let experience;
         const characterStore = useCharacterStore()
@@ -78,11 +75,7 @@ export default {
             typing();
         };
 
-        const handleClose = () => {
-            setTimeout(() => {
-                typeText()
-            }, 1000);
-        }
+
 
         const next = () => {
             if (index.value === 0) {
@@ -121,6 +114,10 @@ export default {
             window.addEventListener('resize', setVH);
 
             experience = new Experience(document.querySelector('canvas.webgl'), nextScene);
+
+            setTimeout(() => {
+                typeText()
+            }, 1000);
         });
 
         onBeforeRouteLeave(() => {
@@ -133,7 +130,7 @@ export default {
             characterContent: currentCharacterContent,
             next,
             itemValue,
-            handleClose,
+
             finishModal,
             nextPage
         }

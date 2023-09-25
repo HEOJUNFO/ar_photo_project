@@ -24,6 +24,7 @@ import EventOut from "@views/event/EventOut.vue"
 import Culture2nd3D from "@views/culture/Culture2nd3D.vue"
 import CapturePreview from "@views/CapturePreview.vue"
 import Culture3D from "@views/culture/Culture3D.vue"
+import Loading from "@views/Loading.vue"
 
 
 export const routes = [
@@ -51,6 +52,7 @@ export const routes = [
     {path: '/culture3',component:Culture2nd3D, name:'Culture2nd3D'},
     {path: '/capturepreview',component:CapturePreview, name:'CaptruePreview'},
     {path: '/culture3d',component:Culture3D, name:'Culture3D'},
+    {path: '/loading',component:Loading, name:'Loading'},
     
 ]
 

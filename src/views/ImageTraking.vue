@@ -1,7 +1,5 @@
 <template>
     <div class="main">
-        <loading-container @closed="handleClose()">
-        </loading-container>
         <div class="top-section">
             <div class="text-container1">
                 <p id="typed-text"></p>
@@ -49,13 +47,11 @@
 import { onMounted, ref, computed } from 'vue';
 import router from '../router';
 import { useCharacterStore } from '../stores/characterStore.js'
-import LoadingContainer from '../components/LoadingContainer.vue'
+
 
 export default {
     name: 'ImageTracking',
-    components: {
-        LoadingContainer
-    },
+
     setup() {
         const eventId = ref('8')
         const isBlue = ref(false)
@@ -106,12 +102,6 @@ export default {
             router.push('/eventout')
         }
 
-        const handleClose = () => {
-            setTimeout(async () => {
-                typeText()
-            }, 100);
-        }
-
         const setVH = () => {
             let vh = window.innerHeight * 0.01;
             document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -121,6 +111,11 @@ export default {
         onMounted(async () => {
             setVH();
             window.addEventListener('resize', setVH);
+
+            setTimeout(async () => {
+                typeText()
+            }, 100);
+
             const video = videoRef.value;
             const canvas = canvasRef.value;
             const svgContainer = svgContainerRef.value;
@@ -215,7 +210,6 @@ export default {
             canvasRef,
             svgContainerRef,
             characterContent: currentCharacterContent,
-            handleClose,
             isBlue,
             isGreen,
             isRed,

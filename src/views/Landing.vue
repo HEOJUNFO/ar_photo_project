@@ -39,7 +39,7 @@ export default {
         const start = () => {
             scrollToTop();
             setTimeout(() => {
-                router.push('/intro');
+                router.push('/loading');
             }, 500);
         }
 
@@ -55,6 +55,8 @@ export default {
             setVH();
 
             window.addEventListener('resize', setVH);
+
+            localStorage.setItem('eventId', 0)
 
         });
 

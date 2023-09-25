@@ -56,7 +56,7 @@ export default {
             scrollToTop();
 
             setTimeout(() => {
-                router.push('/commonfour');
+                router.push('/loading');
             }, 500);
         }
 

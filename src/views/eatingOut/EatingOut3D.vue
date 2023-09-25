@@ -1,7 +1,5 @@
 <template>
     <div>
-        <loading-container ref="loading" @closed="handleClose(), resetInactivityTimeout()">
-        </loading-container>
         <div v-if="showOverlay" class="overlay" @touchstart="hideOverlay"><svg :class="{ 'dragging-guide': showOverlay }"
                 xmlns=" http://www.w3.org/2000/svg" width="66" height="74" viewBox="0 0 66 74" fill="none">
                 <g clip-path="url(#clip0_112_660)">
