@@ -138,11 +138,13 @@ export default {
             if (!check1.value || !check2.value) return
 
             try {
-                let stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                if (navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function') {
+                    let stream = await navigator.mediaDevices.getUserMedia({ video: true });
 
-                stream.getTracks().forEach(track => track.stop());
+                    stream.getTracks().forEach(track => track.stop());
 
-                stream = null;
+                    stream = null;
+                }
 
                 localStorage.setItem('consentGiven', 'true');
                 setTimeout(() => {
