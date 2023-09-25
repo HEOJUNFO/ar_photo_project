@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <div class="top-section">
             <div class="text-container1">
                 <p id="typed-text"></p>
@@ -284,8 +283,6 @@ export default {
             window.addEventListener('resize', setVH);
 
             experience = new Experience(document.querySelector('canvas.webgl'));
-
-
 
             if (localStorage.getItem('characterID') !== null) {
                 characterStore.setCharacterIndex(localStorage.getItem('characterID'))

@@ -54,7 +54,6 @@ export default {
         }
 
         const setVH = () => {
-            console.log('setVH')
 
             let vh = window.innerHeight * 0.01;
 
@@ -90,7 +89,6 @@ export default {
     justify-content: center;
     align-items: center;
     background: var(--Main-Pink, #F0D7CA);
-    overflow-y: scroll;
 
 }
 
@@ -103,6 +101,7 @@ export default {
     position: relative;
     width: 100%;
     margin: -1%;
+    overflow-y: scroll;
 }
 
 .image-container::-webkit-scrollbar {
