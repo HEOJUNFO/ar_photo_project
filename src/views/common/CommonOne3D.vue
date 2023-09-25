@@ -40,6 +40,49 @@ export default {
     name: 'CommonOne3d',
 
     setup() {
+        const audio2 = ref(null);
+
+        import('@resource/sounds/acquired.wav')
+            .then(src => {
+                audio2.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio2 = () => {
+            if (audio2.value) {
+                if (!audio2.value.paused) {
+                    audio2.value.pause();
+                    audio2.value.currentTime = 0;
+                }
+                audio2.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
+        const audio3 = ref(null);
+
+        import('@resource/sounds/success.wav')
+            .then(src => {
+                audio3.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio3 = () => {
+            if (audio3.value) {
+                if (!audio3.value.paused) {
+                    audio3.value.pause();
+                    audio3.value.currentTime = 0;
+                }
+                audio3.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
         let experience;
         const characterStore = useCharacterStore()
         const index = ref(0)
@@ -85,10 +128,12 @@ export default {
         }
 
         const nextScene = () => {
+            playAudio2()
             if (itemValue.value < 4) {
                 itemValue.value += 1
                 return;
             }
+
             itemValue.value += 1
             experience.destroy()
             experience.init()
@@ -96,6 +141,7 @@ export default {
         }
 
         const nextPage = () => {
+            playAudio3()
             if (eventId.value === '9') {
                 localStorage.setItem('clearId9', 'true')
                 localStorage.setItem('normalItem6', 'true')

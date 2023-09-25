@@ -74,7 +74,7 @@
                 crossorigin="anonymous" />
         </div>
         <div v-show="showCaptureButton" class="capture-container">
-            <button @click.stop="capture()"><svg xmlns="http://www.w3.org/2000/svg" width="70" height="70"
+            <button @click.stop="capture(), playAudio2()"><svg xmlns="http://www.w3.org/2000/svg" width="70" height="70"
                     viewBox="0 0 70 70" fill="none">
                     <circle cx="35" cy="35" r="28" fill="#D50F4A" />
                     <circle opacity="0.3" cx="35" cy="35" r="33.5" stroke="#D50F4A" stroke-width="3" />
@@ -354,6 +354,48 @@ export default {
         LoadingContainer
     },
     setup() {
+        const audio = ref(null);
+        const audio2 = ref(null);
+
+        import('@resource/sounds/generaltap.wav')
+            .then(src => {
+                audio.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio = () => {
+            if (audio.value) {
+                if (!audio.value.paused) {
+                    audio.value.pause();
+                    audio.value.currentTime = 0;
+                }
+                audio.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
+        import('@resource/sounds/shutter.wav')
+            .then(src => {
+                audio2.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio2 = () => {
+            if (audio2.value) {
+                if (!audio2.value.paused) {
+                    audio2.value.pause();
+                    audio2.value.currentTime = 0;
+                }
+                audio2.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
         const imageDataStore = useImageDataStore()
         const characterStore = useCharacterStore()
         const textIndex = ref(6)
@@ -366,6 +408,7 @@ export default {
         })
 
         const home = () => {
+            playAudio();
             router.push('/stage')
         }
 
@@ -397,6 +440,7 @@ export default {
         }
 
         const saveImage = () => {
+            playAudio();
             let canvasElement = document.getElementById("canvas1");
             let imageData = canvasElement.toDataURL();
             imageDataStore.setImageData(imageData)
@@ -416,7 +460,9 @@ export default {
         return {
             saveImage,
             characterContent: currentCharacterContent,
-            home
+            home,
+            playAudio,
+            playAudio2,
         }
     },
 }

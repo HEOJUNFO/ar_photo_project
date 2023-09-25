@@ -66,6 +66,7 @@ export default {
         const eventId = ref('')
 
         const playAudio2 = inject('playAudio');
+        const stopAudio = inject('stopAudio');
 
         const normalReward = () => {
             playAudio();
@@ -124,6 +125,7 @@ export default {
         }
 
         onMounted(() => {
+            stopAudio();
             setVH();
 
             window.addEventListener('resize', setVH);

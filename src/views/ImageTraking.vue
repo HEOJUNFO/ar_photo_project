@@ -53,6 +53,70 @@ export default {
     name: 'ImageTracking',
 
     setup() {
+        const audio = ref(null);
+
+        import('@resource/sounds/bee.wav')
+            .then(src => {
+                audio.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio = () => {
+            if (audio.value) {
+
+                audio.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+        const stopAudio = () => {
+            audio.value.pause();
+        };
+        const audio2 = ref(null);
+
+        import('@resource/sounds/acquired.wav')
+            .then(src => {
+                audio2.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio2 = () => {
+            if (audio2.value) {
+                if (!audio2.value.paused) {
+                    audio2.value.pause();
+                    audio2.value.currentTime = 0;
+                }
+                audio2.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
+        const audio3 = ref(null);
+
+        import('@resource/sounds/success.wav')
+            .then(src => {
+                audio3.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio3 = () => {
+            if (audio3.value) {
+                if (!audio3.value.paused) {
+                    audio3.value.pause();
+                    audio3.value.currentTime = 0;
+                }
+                audio3.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
         const eventId = ref('8')
         const isBlue = ref(false)
         const isGreen = ref(false)
@@ -95,6 +159,7 @@ export default {
         };
 
         const nextPage = () => {
+            playAudio3();
             if (eventId.value === '8') {
                 localStorage.setItem('clearId8', 'true')
                 localStorage.setItem('normalItem5', 'true')
@@ -165,6 +230,7 @@ export default {
 
                             isScan = true
                             scanning.value = true
+                            playAudio();
 
                         }
 
@@ -176,16 +242,19 @@ export default {
                         } else if (Date.now() - isScanTime >= 1500) {
 
                             if (!isBlue.value) {
+                                playAudio2();
                                 isBlue.value = true;
                                 isScanTime = null;
                                 return;
                             }
                             if (isBlue.value && !isGreen.value) {
+                                playAudio2();
                                 isGreen.value = true;
                                 isScanTime = null;
                                 return;
                             }
                             if (isGreen.value && isBlue.value && !isRed.value) {
+                                playAudio2();
                                 isRed.value = true;
                                 isScanTime = null;
                                 finishModal.value = true
@@ -196,6 +265,7 @@ export default {
                     } else {
                         isScanTime = null;
                         scanning.value = false
+                        stopAudio();
                     }
                 });
 

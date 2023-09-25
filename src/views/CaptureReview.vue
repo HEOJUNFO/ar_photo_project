@@ -104,6 +104,72 @@ import router from '../router';
 export default {
     name: 'captureReview',
     setup() {
+        const audio = ref(null);
+
+        import('@resource/sounds/generaltap.wav')
+            .then(src => {
+                audio.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio = () => {
+            if (audio.value) {
+                if (!audio.value.paused) {
+                    audio.value.pause();
+                    audio.value.currentTime = 0;
+                }
+                audio.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
+        const audio2 = ref(null);
+
+        import('@resource/sounds/acquired.wav')
+            .then(src => {
+                audio2.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio2 = () => {
+            if (audio2.value) {
+                if (!audio2.value.paused) {
+                    audio2.value.pause();
+                    audio2.value.currentTime = 0;
+                }
+                audio2.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
+        const audio3 = ref(null);
+
+        import('@resource/sounds/success.wav')
+            .then(src => {
+                audio3.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio3 = () => {
+            if (audio3.value) {
+                if (!audio3.value.paused) {
+                    audio3.value.pause();
+                    audio3.value.currentTime = 0;
+                }
+                audio3.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
         const showModal = ref(false);
         const premiumModal = ref(true);
         const premiumImageSrc = ref('');
@@ -118,7 +184,6 @@ export default {
             { id: 0, src: new URL('@resource/storageBox/IceCream_active.png', import.meta.url).href, name: 'test' },
 
         ]
-
 
         const characterStore = useCharacterStore()
         const imageDataStore = useImageDataStore()
@@ -144,6 +209,7 @@ export default {
         };
 
         const saveImage = () => {
+            playAudio();
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             const img = new Image();
@@ -161,7 +227,7 @@ export default {
         }
 
         const shareImage = async () => {
-
+            playAudio();
             const blob = await (await fetch(imageDataStore.imageData)).blob();
             const filesArray = [
                 new File([blob], "image.png", {
@@ -181,6 +247,7 @@ export default {
             navigator
                 .share(shareData)
                 .then(() => {
+                    playAudio2();
                     premiumModal.value = false;
                     finishModal.value = true;
                 })
@@ -189,6 +256,7 @@ export default {
 
 
         const next = () => {
+            playAudio3();
             if (eventId.value === '2') {
                 localStorage.setItem('clearId2', 'true')
                 localStorage.setItem('premiumItem0', 'true')
