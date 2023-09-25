@@ -25,6 +25,7 @@ export default {
 
         const playAudio = () => {
             if (audio.value) {
+                audio.value.volume = 0.4;
                 audio.value.play();
             } else {
                 console.error("Audio not initialized yet.");

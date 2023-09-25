@@ -85,6 +85,28 @@ import router from '../router'
 export default {
     name: 'Stage',
     setup() {
+        const audio = ref(null);
+
+        import('@resource/sounds/generaltap.wav')
+            .then(src => {
+                audio.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio = () => {
+            if (audio.value) {
+                if (!audio.value.paused) {
+                    audio.value.pause();
+                    audio.value.currentTime = 0;
+                }
+                audio.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
         const eventModal = ref(false)
         const selectEvent = ref(null)
         const eventData = ref([])
@@ -140,18 +162,22 @@ export default {
         }
 
         const setEvent = (item) => {
+            playAudio()
             selectEvent.value = item;
             eventModal.value = true;
         }
 
         const normalReward = () => {
+            playAudio()
             router.push('/storagebox2')
         }
         const premiumReward = () => {
+            playAudio()
             router.push('/storagebox')
         }
 
         const home = () => {
+            playAudio()
             router.push('/stage')
         }
 

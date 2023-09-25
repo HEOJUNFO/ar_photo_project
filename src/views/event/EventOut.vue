@@ -41,8 +41,6 @@ import router from '../../router'
 export default {
     name: 'Landing',
     setup() {
-        const eventId = ref('')
-
         const audio = ref(null);
 
         import('@resource/sounds/generaltap.wav')
@@ -55,22 +53,31 @@ export default {
 
         const playAudio = () => {
             if (audio.value) {
+                if (!audio.value.paused) {
+                    audio.value.pause();
+                    audio.value.currentTime = 0;
+                }
                 audio.value.play();
             } else {
                 console.error("Audio not initialized yet.");
             }
         };
 
+        const eventId = ref('')
+
         const playAudio2 = inject('playAudio');
 
         const normalReward = () => {
+            playAudio();
             router.push('/storagebox2')
         }
         const premiumReward = () => {
+            playAudio();
             router.push('/storagebox')
         }
 
         const home = () => {
+            playAudio();
             router.push('/stage')
         }
 
@@ -106,7 +113,7 @@ export default {
                 }
 
             }, 500);
-            playAudio();
+
             playAudio2();
         }
 

@@ -117,6 +117,26 @@ import { useRewardsStore } from '../stores/reward.js';
 export default {
     name: 'StorageBox',
     setup() {
+        const audio = ref(null);
+
+        import('@resource/sounds/bgm.wav')
+            .then(src => {
+                audio.value = new Audio(src.default);
+                audio.value.loop = true;
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio = () => {
+            if (audio.value) {
+                audio.value.volume = 0.4;
+                audio.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
         const showModal2 = ref(false);
         const useModal = ref(false);
         const useModal2 = ref(false);
@@ -137,6 +157,8 @@ export default {
         };
 
         const useItem = (item) => {
+            playAudio();
+
             selectedItem.value = item;
             if (item.required === 'true') {
                 useItemSrc.value = item.src;
@@ -145,6 +167,7 @@ export default {
         };
 
         const useCoupon = () => {
+            playAudio();
             localStorage.setItem(`premiumItem${selectedItem.value.id}`, 'used');
             rewardsStore.setRewardsData();
             showModal2.value = true;
@@ -153,13 +176,16 @@ export default {
         }
 
         const normalReward = () => {
+            playAudio();
             router.push('/storagebox2')
         }
         const premiumReward = () => {
+            playAudio();
             router.push('/storagebox')
         }
 
         const home = () => {
+            playAudio();
             router.push('/stage')
         }
 

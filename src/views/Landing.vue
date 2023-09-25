@@ -24,25 +24,25 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject } from 'vue'
 import router from '../router'
 
 export default {
     name: 'Landing',
     setup() {
+        const playAudio2 = inject('playAudio');
 
         const scrollToTop = () => {
             window.scrollTo(0, 0);
         }
 
-
         const start = () => {
             scrollToTop();
+            playAudio2();
             setTimeout(() => {
                 router.push('/loading');
             }, 500);
         }
-
 
         const setVH = () => {
 

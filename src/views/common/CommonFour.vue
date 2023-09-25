@@ -94,6 +94,92 @@ export default {
     name: 'Common4',
 
     setup() {
+        const audio = ref(null);
+        const audio2 = ref(null);
+        const audio3 = ref(null);
+        const audio4 = ref(null);
+
+        import('@resource/sounds/generaltap.wav')
+            .then(src => {
+                audio.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio = () => {
+            if (audio.value) {
+                if (!audio.value.paused) {
+                    audio.value.pause();
+                    audio.value.currentTime = 0;
+                }
+                audio.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
+        import('@resource/sounds/magic.wav')
+            .then(src => {
+                audio2.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio2 = () => {
+            if (audio2.value) {
+                if (!audio2.value.paused) {
+                    audio2.value.pause();
+                    audio2.value.currentTime = 0;
+                }
+                audio2.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
+        import('@resource/sounds/acquired.wav')
+            .then(src => {
+                audio3.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio3 = () => {
+            if (audio3.value) {
+                if (!audio3.value.paused) {
+                    audio3.value.pause();
+                    audio3.value.currentTime = 0;
+                }
+                audio3.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
+        import('@resource/sounds/success.wav')
+            .then(src => {
+                audio4.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio4 = () => {
+            if (audio4.value) {
+                if (!audio4.value.paused) {
+                    audio4.value.pause();
+                    audio4.value.currentTime = 0;
+                }
+                audio4.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
+
         let experience;
         const characterStore = useCharacterStore()
         const textIndex = ref(3)
@@ -136,6 +222,8 @@ export default {
 
         const handleMouseDown = (event) => {
             event.preventDefault();
+            playAudio2()
+
             hideImage1.value = true;
             image3Width.value = 100;
             image2Width.value = 100;
@@ -148,18 +236,22 @@ export default {
 
 
         const normalReward = () => {
+            playAudio()
             router.push('/storagebox2')
         }
         const premiumReward = () => {
+            playAudio()
             router.push('/storagebox')
         }
 
         const home = () => {
+            playAudio()
             router.push('/stage')
         }
 
 
         const next = () => {
+            playAudio4()
             if (eventId.value === '1') {
                 localStorage.setItem('clearId1', 'true')
                 localStorage.setItem('normalItem0', 'true')
@@ -175,6 +267,7 @@ export default {
 
         const handleTransitionEnd = () => {
             if (image2Width.value === 100) {
+                playAudio3()
                 finishModal.value = true;
             } else {
                 hideImage1.value = false;

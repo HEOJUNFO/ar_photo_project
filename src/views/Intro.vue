@@ -68,6 +68,29 @@ export default {
     name: 'Intro',
 
     setup() {
+
+        const audio = ref(null);
+
+        import('@resource/sounds/generaltap.wav')
+            .then(src => {
+                audio.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio = () => {
+            if (audio.value) {
+                if (!audio.value.paused) {
+                    audio.value.pause();
+                    audio.value.currentTime = 0;
+                }
+                audio.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
         const characterStore = useCharacterStore()
         const index = ref(0)
         const imageIndex = ref(0)
@@ -90,12 +113,9 @@ export default {
         const characterName = computed(() => characterStore.currentCharacter?.name)
 
 
-        const next = () => {
-
-
-        }
 
         const selectCharacter = () => {
+            playAudio();
             localStorage.setItem('characterID', imageIndex.value)
             setTimeout(() => {
                 router.push('/stage')
@@ -103,12 +123,14 @@ export default {
         }
 
         const navigateToNextImage = () => {
+            playAudio();
             imageIndex.value = (imageIndex.value + 1) % IMAGES.length;
             characterStore.setCharacterIndex(imageIndex.value)
             typeText()
         }
 
         const navigateToPreviousImage = () => {
+            playAudio();
             imageIndex.value = (imageIndex.value - 1 + IMAGES.length) % IMAGES.length;
             characterStore.setCharacterIndex(imageIndex.value)
             typeText()
@@ -156,7 +178,6 @@ export default {
 
         return {
             index,
-            next,
             currentImageSrc,
             navigateToNextImage,
             navigateToPreviousImage,

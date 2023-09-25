@@ -186,6 +186,48 @@ import router from '../router';
 export default {
     name: 'capture',
     setup() {
+        const audio = ref(null);
+        const audio2 = ref(null);
+
+        import('@resource/sounds/generaltap.wav')
+            .then(src => {
+                audio.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio = () => {
+            if (audio.value) {
+                if (!audio.value.paused) {
+                    audio.value.pause();
+                    audio.value.currentTime = 0;
+                }
+                audio.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
+        import('@resource/sounds/shutter.wav')
+            .then(src => {
+                audio2.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio2 = () => {
+            if (audio2.value) {
+                if (!audio2.value.paused) {
+                    audio2.value.pause();
+                    audio2.value.currentTime = 0;
+                }
+                audio2.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
         let experience;
         const showModal = ref(false);
         const eventName = ref('capture')
@@ -230,20 +272,24 @@ export default {
         const STICKERS = ref([])
 
         const stickerToggle = () => {
+            playAudio();
             stickerList.value = !stickerList.value
             frameList.value = false
         }
 
         const frameToggle = () => {
+            playAudio();
             stickerList.value = false
             frameList.value = !frameList.value
         }
 
         const setSticker = (image) => {
+            playAudio();
             experience.world.setSticker(image.name)
             selectedSticker.value = image.id
         }
         const setCharacter = () => {
+            playAudio();
             if (selectedCharacter.value) {
                 experience.world.removeCharacter()
                 selectedCharacter.value = false
@@ -254,10 +300,12 @@ export default {
         }
 
         const setFrame = (image) => {
+            playAudio();
             setFrameSrc.value = image.src
         }
 
         const saveImage = (image) => {
+            playAudio2();
             imageDataStore.setImageData(image)
             imageDataStore.setEventName(eventName.value)
             router.push({ path: '/capturereview' });
