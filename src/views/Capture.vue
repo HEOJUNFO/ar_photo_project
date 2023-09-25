@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <div v-show="showOverlay" @click="showOverlay = false" class="overlay">
+        <div v-show="showOverlay" @click="showOverlay = false, play()" class="overlay">
             <img src="@resource/common/AR_Logo_02.png" alt="overlay" />
             <div class="tutorial-inner">
                 <p>안녕! 반가워</p>
@@ -283,6 +283,10 @@ export default {
 
             document.documentElement.style.setProperty('--vh', `${vh}px`);
         }
+        const play = () => {
+            const video = document.querySelector('video')
+            console.log(video)
+        }
 
         onMounted(() => {
             setVH();
@@ -342,6 +346,7 @@ export default {
             selectedCharacter,
             setFrame,
             setFrameSrc,
+            play
         }
     }
 }

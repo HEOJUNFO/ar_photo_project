@@ -40,12 +40,15 @@ export default class Renderer
 
     async setWebcamBackground() {
         this.video = document.createElement('video');
+        this.video.setAttribute('playsinline', 'true');
+        this.video.setAttribute('autoplay', 'true');
+        this.video.setAttribute('muted', 'false');
 
         const stream = await this.getCameraStream(this.currentFacingMode);
         this.video.srcObject = stream;
         return new Promise((resolve) => {
             this.video.onloadedmetadata = () => {
-                this.video.play()
+                this.video.play();
 
                 const videoAspectRatio = this.video.videoWidth / this.video.videoHeight;
 
