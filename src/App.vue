@@ -51,7 +51,36 @@ export default {
         };
 
         onMounted(() => {
+            window.onload = () => {
+                if (navigator.userAgent.match(/inapp|NAVER|KAKAOTALK|Snapchat|Line|WirtschaftsWoche|Thunderbird|Instagram|everytimeApp|WhatsApp|Electron|wadiz|AliApp|zumapp|iPhone(.*)Whale|Android(.*)Whale|kakaostory|band|twitter|DaumApps|DaumDevice\/mobile|FB_IAB|FB4A|FBAN|FBIOS|FBSS|SamsungBrowser\/[^1-9]/)) {
+                    document.body.innerHTML = "";
+                    var tartgetUrl = window.location.host + window.location.pathname + window.location.search;
+
+                    if (navigator.userAgent.match(/iPhone|iPad/i)) {
+                        //ios
+                        var visitedAt = (new Date()).getTime(); // 방문 시간
+                        setTimeout(
+                            function () {
+                                if ((new Date()).getTime() - visitedAt < 2000) {
+                                    location.href = IOS_CHROME_MARKET_URL;
+                                }
+                            }, 500);
+
+                        setTimeout(function () {
+                            location.href = "googlechromes://" + tartgetUrl;
+                        }, 0);
+                    } else {
+                        //android
+                        alert("안드로이드는 크롬 브라우저를 설치해주세요.");
+                        location.href = "intent://" + tartgetUrl + "#Intent;scheme=https;package=com.android.chrome;end";
+                    }
+                }
+            };
+
             document.addEventListener('visibilitychange', handleVisibilityChange);
+
+
+
         });
 
         onUnmounted(() => {

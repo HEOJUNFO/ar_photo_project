@@ -1,24 +1,32 @@
 <template>
-    <div class="loading-container">
-        <div class="image-container">
-            <img src="@resource/mission/web-landing-page-1.jpg" alt="Image 1" />
-        </div>
-        <div class="button-container1">
-            <button @click="start()">신비의 숲 시작하기</button>
-            <img src="@resource/common/tap.png" alt="Image 1" />
-        </div>
-        <div class="image-container">
-            <img src="@resource/mission/web-landing-page-2.jpg" alt="Image 1" />
-        </div>
+    <div>
+        <div v-if="imagesLoaded" class="loading-container">
+            <div class="image-container">
+                <img src="@resource/mission/web-landing-page-1.jpg" alt="Image 1" />
+            </div>
+            <div class="button-container1">
+                <button @click="start()">신비의 숲 시작하기</button>
+                <img src="@resource/common/tap.png" alt="Image 1" />
+            </div>
+            <div class="image-container">
+                <img src="@resource/mission/web-landing-page-2.jpg" alt="Image 1" />
+            </div>
 
-        <div class="image-container">
-            <img src="@resource/landing/landing_02.jpg" alt="Image 2" />
+            <div class="image-container">
+                <img src="@resource/landing/landing_02.jpg" alt="Image 2" />
+            </div>
+            <div class="button-container2">
+                <button @click="start()">신비의 숲 시작하기</button>
+            </div>
+            <div class="image-container">
+                <img src="@resource/landing/web-landing-page-3.jpg" alt="Image 3" />
+            </div>
         </div>
-        <div class="button-container2">
-            <button @click="start()">신비의 숲 시작하기</button>
-        </div>
-        <div class="image-container">
-            <img src="@resource/landing/web-landing-page-3.jpg" alt="Image 3" />
+        <div v-if="!imagesLoaded">
+            <div class="loading-container">
+                <img src="@resource/common/bg.png" alt="Loading..." />
+                <img id="spinner" src="@resource/common/Spinner.png" />
+            </div>
         </div>
     </div>
 </template>
@@ -31,6 +39,7 @@ export default {
     name: 'Landing',
     setup() {
         const playAudio2 = inject('playAudio');
+        const imagesLoaded = ref(false);
 
         const scrollToTop = () => {
             window.scrollTo(0, 0);
@@ -45,6 +54,7 @@ export default {
         }
 
         const setVH = () => {
+            console.log('setVH')
 
             let vh = window.innerHeight * 0.01;
 
@@ -58,11 +68,17 @@ export default {
 
             localStorage.setItem('eventId', 0)
 
+
+            setTimeout(() => {
+                imagesLoaded.value = true;
+            }, 3000);
         });
 
 
 
-        return { start }
+
+
+        return { start, imagesLoaded }
     }
 }
 </script>
@@ -75,8 +91,7 @@ export default {
     align-items: center;
     background: var(--Main-Pink, #F0D7CA);
     overflow-y: scroll;
-    scrollbar-width: none !important;
-    -ms-overflow-style: none !important;
+
 }
 
 .loading-container::-webkit-scrollbar {
@@ -88,7 +103,6 @@ export default {
     position: relative;
     width: 100%;
     margin: -1%;
-    overflow: scroll;
 }
 
 .image-container::-webkit-scrollbar {
@@ -102,7 +116,6 @@ export default {
 
 
 .button-container1 {
-    overflow: visible;
     position: relative;
     width: 80%;
     background: var(--Main-Pink, #F0D7CA);
@@ -170,5 +183,23 @@ export default {
     z-index: 1;
     position: relative;
     box-shadow: 0px 3px #922142
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#spinner {
+    position: fixed;
+    width: calc(20 * var(--vh));
+    height: calc(20 * var(--vh));
+    animation: spin 2s linear infinite;
+    top: calc(35 * var(--vh));
 }
 </style>
