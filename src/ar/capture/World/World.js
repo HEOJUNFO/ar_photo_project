@@ -50,8 +50,13 @@ export default class World
     }
 
     removeCharacter(){
+        if(!this.model) return
         this.model.scene.remove(this.model.model)
     }   
+    
+    removeSticker(){
+        this.sticker.scene.remove(this.sticker.mesh)
+    }
 
     update() {
        if(this.model){

@@ -31,9 +31,8 @@ export default class Renderer
         this.instance.punctualLights = true
         this.instance.toneMapping = THREE.LinearToneMapping
         this.instance.colorSpace = THREE.SRGBColorSpace
-        this.instance.toneMappingExposure = 1.75
-        this.instance.shadowMap.enabled = true
-        this.instance.shadowMap.type = THREE.PCFSoftShadowMap
+        this.instance.toneMappingExposure =  Math.pow(2, 0);
+
         this.instance.setSize(this.sizes.width, this.sizes.height)
         this.instance.setPixelRatio(this.sizes.pixelRatio)
     }

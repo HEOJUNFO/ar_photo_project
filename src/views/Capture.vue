@@ -122,6 +122,7 @@
 
         <div v-if="frameList">
             <div class="image-container">
+
                 <button @click="frameList = false"><svg xmlns="http://www.w3.org/2000/svg" width="56" height="56"
                         viewBox="0 0 56 56" fill="none">
                         <rect width="56" height="56" rx="8" fill="white" />
@@ -135,6 +136,7 @@
                                 fill="#9F9F9F" />
                         </g>
                     </svg></button>
+
                 <img @click="setFrame(imageObj)" v-for="(imageObj, index) in FRAMES" :key="index" :src="imageObj.src"
                     :alt="imageObj.text" />
             </div>
@@ -155,8 +157,7 @@
                                 fill="#9F9F9F" />
                         </g>
                     </svg></button>
-                <img @click="setCharacter()" src="@resource/icon/bell_model.png"
-                    :class="{ 'selected': selectedCharacter }" />
+                <img @click="setCharacter()" :src="characterSrc" :class="{ 'selected': selectedCharacter }" />
                 <img @click="setSticker(imageObj)" v-for="(imageObj, index) in STICKERS" :key="index" :src="imageObj.src"
                     :alt="imageObj.text" :class="{ 'selected': selectedSticker === index }" />
             </div>
@@ -192,10 +193,12 @@ const uno03 = new URL('@resource/icon/uno_03.png', import.meta.url).href
 const sorina01 = new URL('@resource/icon/sorina_01.png', import.meta.url).href
 const sorina02 = new URL('@resource/icon/sorina_02.png', import.meta.url).href
 const sorina03 = new URL('@resource/icon/sorina_03.png', import.meta.url).href
-const frame = new URL('@resource/frame/frame_01.png', import.meta.url).href
-const frame2 = new URL('@resource/frame/frame_02.png', import.meta.url).href
-const frame3 = new URL('@resource/frame/frame_03.png', import.meta.url).href
-const frame4 = new URL('@resource/frame/frame_04.png', import.meta.url).href
+
+const frame = new URL('@resource/frame/logo_frame_01.png', import.meta.url).href
+const frame2 = new URL('@resource/frame/logo_frame_02.png', import.meta.url).href
+const frame3 = new URL('@resource/frame/logo_frame_03.png', import.meta.url).href
+const frame4 = new URL('@resource/frame/logo_frame_04.png', import.meta.url).href
+const frame5 = new URL('@resource/frame/logo_frame_05.png', import.meta.url).href
 
 export default {
     name: 'capture',
@@ -251,6 +254,7 @@ export default {
         const selectedSticker = ref(null)
         const selectedCharacter = ref(false)
         const setFrameSrc = ref(null)
+        const characterSrc = ref(null)
         const characterID = ref(0)
 
         const enableFilp = ref(true)
@@ -265,10 +269,11 @@ export default {
         })
 
         const FRAMES = [
-            { id: 0, src: frame, text: '봄' },
-            { id: 1, src: frame2, text: '여름' },
-            { id: 2, src: frame3, text: '가을' },
-            { id: 3, src: frame4, text: '겨울' },
+            { id: 0, src: frame, text: '없음' },
+            { id: 1, src: frame2, text: '봄' },
+            { id: 2, src: frame3, text: '여름' },
+            { id: 3, src: frame4, text: '가을' },
+            { id: 4, src: frame5, text: '겨울' },
         ];
 
         const STICKERSTORE = [
@@ -300,16 +305,15 @@ export default {
         const setSticker = (image) => {
             playAudio();
             experience.world.setSticker(image.name)
+            experience.world.removeCharacter()
             selectedSticker.value = image.id
+            selectedCharacter.value = false
         }
         const setCharacter = () => {
             playAudio();
-            if (selectedCharacter.value) {
-                experience.world.removeCharacter()
-                selectedCharacter.value = false
-                return
-            }
+            experience.world.removeSticker()
             experience.world.setCharacter(characterID.value)
+            selectedSticker.value = null
             selectedCharacter.value = true
         }
 
@@ -381,6 +385,14 @@ export default {
                 STICKERS.value.push(STICKERSTORE[8])
             }
 
+            if (characterID.value === '0') {
+                characterSrc.value = new URL('@resource/frame/frame_bell.png', import.meta.url).href
+            } else if (characterID.value === '1') {
+                characterSrc.value = new URL('@resource/frame/frame_sorina.png', import.meta.url).href
+            } else if (characterID.value === '2') {
+                characterSrc.value = new URL('@resource/frame/frame_uno.png', import.meta.url).href
+            }
+
 
 
             experience = new Experience(document.querySelector('canvas.webgl'), saveImage);
@@ -415,7 +427,8 @@ export default {
             selectedCharacter,
             setFrame,
             setFrameSrc,
-            play
+            play,
+            characterSrc,
         }
     }
 }
@@ -551,6 +564,8 @@ export default {
     background-color: #FFF;
     border-radius: 8px;
 }
+
+
 
 .image-container::-webkit-scrollbar {
     display: none !important;

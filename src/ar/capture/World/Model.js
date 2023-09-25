@@ -63,10 +63,12 @@ export default class Model
         // Actions
         this.animation.actions = {}
         
+        
         // 모든 애니메이션 클립에 대해 Action을 생성합니다.
         this.resource.animations.forEach((clip, index) => {
             const actionName = `action${index}`;
             this.animation.actions[actionName] = this.animation.mixer.clipAction(clip);
+            this.animation.actions[actionName].play()
         });
     
         let currentActionIndex = 0;
@@ -88,6 +90,11 @@ export default class Model
     
             this.animation.actions.current = newAction;
         }
+    }
+
+    update()
+    {
+        this.animation.mixer.update(this.time.delta * 0.001)
     }
 
     onTouchStart(event) {

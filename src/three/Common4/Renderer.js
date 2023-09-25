@@ -38,6 +38,9 @@ export default class Renderer
 
     async setWebcamBackground() {
         this.video = document.createElement('video');
+        this.video.setAttribute('playsinline', 'true');
+        this.video.setAttribute('autoplay', 'true');
+        this.video.setAttribute('muted', 'false');
 
         const stream = await this.getCameraStream(this.currentFacingMode);
         this.video.srcObject = stream;
