@@ -17,6 +17,15 @@
             <img v-for="n in 5" :key="n" src="@resource/common/hail.png"
                 :style="{ filter: n <= itemValue ? 'grayscale(0%)' : '' }" />
         </div>
+        <div v-show="finishModal" class="image-container2">
+            <div class="reward-container">
+                <img class="image1" src="@resource/common/label.png" />
+                <p class="p1">겨울의 숲 웹프레임 1종</p>
+                <p class="p2">(서비스 내 사진촬영에서 확인 및 사용가능)</p>
+                <img class="image2" src="@resource/icon/frame_03.png" />
+                <button @click="nextPage()">상품획득 성공</button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -39,6 +48,8 @@ export default {
         const index = ref(0)
         const textIndex = ref(5)
         const itemValue = ref(0)
+        const finishModal = ref(false)
+        const eventId = ref('9')
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
@@ -81,13 +92,22 @@ export default {
         }
 
         const nextScene = () => {
-            if (itemValue.value < 5) {
+            if (itemValue.value < 4) {
                 itemValue.value += 1
                 return;
             }
+            itemValue.value += 1
             experience.destroy()
             experience.init()
-            // router.push({ path: '/framereward', query: { eventName: "common1" } });
+            finishModal.value = true
+        }
+
+        const nextPage = () => {
+            if (eventId.value === '9') {
+                localStorage.setItem('clearId9', 'true')
+                localStorage.setItem('normalItem6', 'true')
+            }
+            router.push('/eventout')
         }
 
         const setVH = () => {
@@ -114,6 +134,8 @@ export default {
             next,
             itemValue,
             handleClose,
+            finishModal,
+            nextPage
         }
     }
 }
@@ -226,5 +248,91 @@ export default {
     border-radius: 100px;
     padding: 10px;
     filter: grayscale(100%);
+}
+
+.image-container2 {
+    position: absolute;
+    width: 90%;
+    height: auto;
+    z-index: 10;
+    background-color: #fff;
+    border-radius: 16px;
+    left: 50%;
+    top: calc(50 * var(--vh));
+    transform: translate(-50%, -50%);
+    padding-bottom: calc(3 * var(--vh));
+}
+
+
+.reward-container {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: calc(-3 * var(--vh));
+
+}
+
+
+.image1 {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.image2 {
+    position: relative;
+    width: 60%;
+    height: auto;
+}
+
+.p1 {
+    position: relative;
+    color: var(--Text-Black, #111);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+    max-width: 20ch;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+
+}
+
+.p2 {
+    color: var(--Text-Gray, #767676);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: -0.3px;
+}
+
+.reward-container button {
+    width: 80%;
+    padding: 10px;
+    border-radius: 100px;
+    border: 2px solid var(--Point-Red-Dark, #922142);
+    background: var(--Point-Red, #D50F4A);
+    color: var(--Text-White, #FFF);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+    text-align: center;
+    z-index: 1;
+    position: relative;
+    box-shadow: 0px 3px #922142;
+    margin-top: calc(2 * var(--vh));
 }
 </style>

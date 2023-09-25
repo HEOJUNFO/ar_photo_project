@@ -45,12 +45,12 @@ export const useRewardsStore = defineStore('rewards', {
             }
             ,{
                 id:5,
-                src: Filter3,
+                src: Filter4,
                 required: "null",
                 text:"가을 배경 프레임",
             },{
                 id:6,
-                src: Filter4,
+                src: Filter3,
                 required: "null",
                 text:"겨울 배경 프레임",
             }],

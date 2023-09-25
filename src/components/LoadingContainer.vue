@@ -144,12 +144,17 @@ export default {
 
                 stream.getTracks().forEach(track => track.stop());
 
+                // stream = null;
+
                 localStorage.setItem('consentGiven', 'true');
                 systemCheck.value = false
             } catch (err) {
                 console.error("Error accessing the camera: ", err);
             }
-            emit('closed');
+            systemCheck.value = false
+            setTimeout(() => {
+                emit('closed');
+            }, 1000);
         }
 
 

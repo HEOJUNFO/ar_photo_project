@@ -8,14 +8,16 @@ export default class Hail {
         this.resources = this.experience.resources;
 
         this.resource = this.resources.items.iceHailA;
-
+        this.resource2 = this.resources.items.iceHailB;
         this.setModel();
     }
 
     setModel()
     {
-        this.model = this.resource.scene.clone()
-        this.model.scale.set(0.7, 0.7, 0.7)
+        const randomResource = Math.random() < 0.5 ? this.resource : this.resource2;
+
+        this.model = randomResource.scene.clone();
+        this.model.scale.set(0.5, 0.5, 0.5)
         this.model.position.set(Math.random() * 3 - 1.5, 5, 0)
         this.scene.add(this.model)
 
@@ -24,7 +26,11 @@ export default class Hail {
             if(child instanceof THREE.Mesh)
             {
                 child.castShadow = true
+   
+                // child.material.roughness = 0
+                // child.material.metalness = 0.3
             }
+           
         })
     }
 

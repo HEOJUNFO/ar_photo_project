@@ -45,7 +45,7 @@ export default class Renderer
         this.video.srcObject = stream;
         return new Promise((resolve) => {
             this.video.onloadedmetadata = () => {
-                this.video.play();
+                this.video.play()
 
                 const videoAspectRatio = this.video.videoWidth / this.video.videoHeight;
 

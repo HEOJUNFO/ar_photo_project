@@ -17,6 +17,7 @@ import Event4 from "@views/event/Event4.vue"
 import Event5 from "@views/event/Event5.vue"
 import Event6 from "@views/event/Event6.vue"
 import Event7 from "@views/event/Event7.vue"
+import Event8 from "@views/event/Event8.vue"
 import Event9 from "@views/event/Event9.vue"
 import Event10 from "@views/event/Event10.vue"
 import EventOut from "@views/event/EventOut.vue"
@@ -43,6 +44,7 @@ export const routes = [
     {path: '/event5',component:Event5, name:'Event5'},
     {path: '/event6',component:Event6, name:'Event6'},
     {path: '/event7',component:Event7, name:'Event7'},
+    {path: '/event8',component:Event8, name:'Event8'},
     {path: '/event9',component:Event9, name:'Event9'},
     {path: '/event10',component:Event10, name:'Event10'},
     {path: '/eventout',component:EventOut, name:'EventOut'},

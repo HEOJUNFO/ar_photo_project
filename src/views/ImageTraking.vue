@@ -17,6 +17,31 @@
             <img src="@resource/common/green_bee.png" :style="{ filter: isGreen ? 'grayscale(0%)' : '' }" />
             <img src="@resource/common/blue_bee.png" :style="{ filter: isRed ? 'grayscale(0%)' : '' }" />
         </div>
+        <div class="image-container2">
+            <svg ref="svgContainerRef" xmlns="http://www.w3.org/2000/svg" width="234" height="234" viewBox="0 0 234 234"
+                fill="none">
+                <path d="M229 55.1484V5H178.852" stroke="white" stroke-opacity="0.5" stroke-width="10"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M55.1484 5H5V55.1484" stroke="white" stroke-opacity="0.5" stroke-width="10" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                <path d="M5 178.852V229H55.1484" stroke="white" stroke-opacity="0.5" stroke-width="10"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M178.852 229H229V178.852" stroke="white" stroke-opacity="0.5" stroke-width="10"
+                    stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <img v-if="!scanning" src="@resource/common/blue_bee.png" style="filter: grayscale(100%); opacity: 0.5;" />
+            <img v-if="scanning" src="@resource/common/blue_bee.png" style="filter: grayscale(0%); opacity: 0.5;" />
+
+        </div>
+        <div v-show="finishModal" class="image-container3">
+            <div class="reward-container">
+                <img class="image1" src="@resource/common/label.png" />
+                <p class="p1">봄의 숲 웹프레임 1종</p>
+                <p class="p2">(서비스 내 사진촬영에서 확인 및 사용가능)</p>
+                <img class="image2" src="@resource/icon/frame_02.png" />
+                <button @click="nextPage()">상품획득 성공</button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -32,11 +57,18 @@ export default {
         LoadingContainer
     },
     setup() {
+        const eventId = ref('8')
         const isBlue = ref(false)
         const isGreen = ref(false)
         const isRed = ref(false)
+        const finishModal = ref(false)
+        const scanning = ref(false)
+
         const textIndex = ref(5)
         const characterStore = useCharacterStore()
+        const svgContainerRef = ref(null)
+        const videoRef = ref(null);
+        const canvasRef = ref(null);
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
@@ -66,15 +98,19 @@ export default {
             typing();
         };
 
-        const handleClose = () => {
-            setTimeout(() => {
-                typeText()
-            }, 1000);
+        const nextPage = () => {
+            if (eventId.value === '8') {
+                localStorage.setItem('clearId8', 'true')
+                localStorage.setItem('normalItem5', 'true')
+            }
+            router.push('/eventout')
         }
 
-        const videoRef = ref(null);
-        const canvasRef = ref(null);
-
+        const handleClose = () => {
+            setTimeout(async () => {
+                typeText()
+            }, 100);
+        }
 
         const setVH = () => {
             let vh = window.innerHeight * 0.01;
@@ -85,9 +121,12 @@ export default {
         onMounted(async () => {
             setVH();
             window.addEventListener('resize', setVH);
-
             const video = videoRef.value;
             const canvas = canvasRef.value;
+            const svgContainer = svgContainerRef.value;
+            const svgRect = svgContainer.getBoundingClientRect();
+            let isScanTime = null
+            let isScan = false
             if (!video || !canvas) return;
 
             const context = canvas.getContext('2d', { willReadFrequently: true });
@@ -107,14 +146,6 @@ export default {
                     video.play().catch(error => console.error('Play error:', error));
                 });
 
-                const gridX = canvas.width / 3.5;
-                const gridY = canvas.height * 1.5;
-                const gridWidth = canvas.width;
-                const gridHeight = canvas.height * 2;
-
-                // 격자 그리기
-                context.strokeStyle = '#FFFFFF'; // 격자의 색상 설정
-                context.strokeRect(gridX, gridY, gridWidth, gridHeight);
 
                 const colors = new tracking.ColorTracker(['yellow']);
 
@@ -122,37 +153,75 @@ export default {
 
                 colors.on('track', event => {
                     context.clearRect(0, 0, canvas.width, canvas.height);
-
-                    // 격자 다시 그리기
-                    context.strokeStyle = '#FFFFFF';
-                    context.strokeRect(gridX, gridY, gridWidth, gridHeight);
-
+                    let isScan = false
                     event.data.forEach(rect => {
-                        // 격자 내에 있는지 확인
-                        if (rect.x > gridX && rect.y > gridY && rect.x + rect.width < gridX + gridWidth && rect.y + rect.height < gridY + gridHeight) {
-                            // 격자 내의 오브젝트만 그리기
+                        if (
+                            rect.x > svgRect.left &&
+                            rect.y > svgRect.top &&
+                            rect.x + rect.width < svgRect.right &&
+                            rect.y + rect.height < svgRect.bottom
+                        ) {
                             context.strokeStyle = '#a64ceb';
                             context.strokeRect(rect.x, rect.y, rect.width, rect.height);
                             context.font = '11px Helvetica';
                             context.fillStyle = "#fff";
                             context.fillText('x: ' + rect.x + 'px', rect.x + rect.width + 5, rect.y + 11);
                             context.fillText('y: ' + rect.y + 'px', rect.x + rect.width + 5, rect.y + 22);
+
+                            isScan = true
+                            scanning.value = true
+
                         }
+
                     });
+                    if (isScan) {
+                        if (isScanTime === null) {
+                            isScanTime = Date.now();
+
+                        } else if (Date.now() - isScanTime >= 1500) {
+
+                            if (!isBlue.value) {
+                                isBlue.value = true;
+                                isScanTime = null;
+                                return;
+                            }
+                            if (isBlue.value && !isGreen.value) {
+                                isGreen.value = true;
+                                isScanTime = null;
+                                return;
+                            }
+                            if (isGreen.value && isBlue.value && !isRed.value) {
+                                isRed.value = true;
+                                isScanTime = null;
+                                finishModal.value = true
+                                return;
+                            }
+
+                        }
+                    } else {
+                        isScanTime = null;
+                        scanning.value = false
+                    }
                 });
+
             } catch (err) {
                 console.error('Error accessing the camera', err);
             }
+
         });
 
         return {
             videoRef,
             canvasRef,
+            svgContainerRef,
             characterContent: currentCharacterContent,
             handleClose,
             isBlue,
             isGreen,
-            isRed
+            isRed,
+            finishModal,
+            nextPage,
+            scanning
         }
     }
 };
@@ -262,6 +331,114 @@ export default {
     border-radius: 100px;
     padding: 10px;
     filter: grayscale(100%);
+}
+
+.image-container2 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container2 svg,
+.image-container2 img {
+    position: absolute;
+    top: calc(50 * var(--vh));
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.image-container2 img {
+    width: auto;
+    height: calc(20 * var(--vh));
+}
+
+.image-container3 {
+    position: absolute;
+    width: 90%;
+    height: auto;
+    z-index: 10;
+    background-color: #fff;
+    border-radius: 16px;
+    left: 50%;
+    top: calc(50 * var(--vh));
+    transform: translate(-50%, -50%);
+    padding-bottom: calc(3 * var(--vh));
+}
+
+
+.reward-container {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: calc(-3 * var(--vh));
+
+}
+
+
+.image1 {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.image2 {
+    position: relative;
+    width: 60%;
+    height: auto;
+}
+
+.p1 {
+    position: relative;
+    color: var(--Text-Black, #111);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+    max-width: 20ch;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+
+}
+
+.p2 {
+    color: var(--Text-Gray, #767676);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: -0.3px;
+}
+
+.reward-container button {
+    width: 80%;
+    padding: 10px;
+    border-radius: 100px;
+    border: 2px solid var(--Point-Red-Dark, #922142);
+    background: var(--Point-Red, #D50F4A);
+    color: var(--Text-White, #FFF);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+    text-align: center;
+    z-index: 1;
+    position: relative;
+    box-shadow: 0px 3px #922142;
+    margin-top: calc(2 * var(--vh));
 }
 </style>
 
