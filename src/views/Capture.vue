@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <div v-show="showOverlay" @click="showOverlay = false" class="overlay">
+        <div v-show="showOverlay" @click="showOverlay = false, setFrame(FRAMES[0])" class="overlay">
             <img src="@resource/common/AR_Logo_02.png" alt="overlay" />
             <div class="tutorial-inner">
                 <p>안녕! 반가워</p>
@@ -268,13 +268,15 @@ export default {
             return currentCharacter.value.common4[textIndex.value] || {}
         })
 
-        const FRAMES = [
+        const FRAMESTORE = [
             { id: 0, src: frame, text: '없음' },
             { id: 1, src: frame2, text: '봄' },
             { id: 2, src: frame3, text: '여름' },
             { id: 3, src: frame4, text: '가을' },
             { id: 4, src: frame5, text: '겨울' },
-        ];
+        ]
+
+        const FRAMES = ref([{ id: 0, src: frame, text: '없음' },])
 
         const STICKERSTORE = [
             { id: 0, src: bell01, name: 'bellNormal' },
@@ -320,14 +322,15 @@ export default {
         const setFrame = (image) => {
 
             const webglContainer = document.querySelector('.webgl-container')
-            playAudio();
+
             setFrameSrc.value = image.src
             if (image.id === 0) {
 
                 webglContainer.style.width = '100%'
                 experience.sizes.resize()
+                console.log('resize')
             } else {
-                webglContainer.style.width = 'calc((4/6) * 70 * var(--vh))'
+                webglContainer.style.width = 'calc((4/6) * 75 * var(--vh))'
                 experience.resize()
             }
         }
@@ -390,6 +393,19 @@ export default {
                 STICKERS.value.push(STICKERSTORE[7])
                 STICKERS.value.push(STICKERSTORE[8])
             }
+            if (localStorage.getItem('clearId7') === 'true') {
+                FRAMES.value.push(FRAMESTORE[2])
+            }
+            if (localStorage.getItem('clearId8') === 'true') {
+                FRAMES.value.push(FRAMESTORE[1])
+            }
+            if (localStorage.getItem('clearId9') === 'true') {
+                FRAMES.value.push(FRAMESTORE[4])
+            }
+            if (localStorage.getItem('clearId10') === 'true') {
+                FRAMES.value.push(FRAMESTORE[3])
+            }
+
 
             if (characterID.value === '0') {
                 characterSrc.value = new URL('@resource/frame/frame_bell.png', import.meta.url).href
@@ -404,6 +420,8 @@ export default {
             experience = new Experience(document.querySelector('canvas.webgl'), saveImage);
             experience.resources.on('ready', () => {
             })
+
+            // setFrame(FRAMESTORE[0])
         });
 
         onBeforeRouteLeave(() => {
@@ -434,6 +452,7 @@ export default {
             setFrame,
             setFrameSrc,
             characterSrc,
+
         }
     }
 }
@@ -448,8 +467,8 @@ export default {
 }
 
 .webgl-container {
-    height: calc(70 * var(--vh));
-    width: calc((4/6) * 70 * var(--vh));
+    height: calc(75 * var(--vh));
+    width: calc((4/6) * 75 * var(--vh));
     top: calc(10 * var(--vh));
     position: absolute;
     overflow: hidden;
@@ -494,7 +513,7 @@ export default {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     width: 100%;
-    height: calc(20 * var(--vh));
+    height: calc(15 * var(--vh));
     justify-content: space-between;
     align-items: center;
     z-index: 2;
@@ -655,7 +674,7 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.9);
     z-index: 3;
 }
 
@@ -693,7 +712,7 @@ export default {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     width: 100%;
-    height: calc(20 * var(--vh));
+    height: calc(15 * var(--vh));
     justify-content: space-between;
     align-items: center;
     z-index: 2;
@@ -731,8 +750,8 @@ export default {
 .frame {
     position: absolute;
     top: calc(10* var(--vh));
-    height: calc(70 * var(--vh));
-    width: calc((4/6) * 70 * var(--vh));
+    height: calc(75 * var(--vh));
+    width: calc((4/6) * 75 * var(--vh));
     pointer-events: none;
 }
 

@@ -30,8 +30,8 @@ export default class Model
     setModel()
     {
         this.model = this.resource.scene
-        this.model.scale.set(1, 1, 1)
-        this.model.position.set(0, -2.5, 0)
+        this.model.scale.set(0.8, 0.8, 0.8)
+        this.model.position.set(0, -1.5, 0)
         this.scene.add(this.model)
 
         this.model.traverse((child) =>

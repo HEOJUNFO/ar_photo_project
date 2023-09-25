@@ -40,7 +40,7 @@ export default {
             scrollToTop();
 
             setTimeout(() => {
-                router.push('/capture');
+                router.push('/loading');
             }, 500);
         }
 

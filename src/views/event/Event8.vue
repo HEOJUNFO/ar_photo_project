@@ -40,7 +40,7 @@ export default {
             scrollToTop();
 
             setTimeout(() => {
-                router.push('/imagetraking');
+                router.push('/loading');
             }, 500);
         }
 

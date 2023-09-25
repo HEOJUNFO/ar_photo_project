@@ -26,7 +26,7 @@ export default class Renderer
     {
         this.instance = new THREE.WebGLRenderer({
             canvas: this.canvas,
-            antialias: true
+            antialias: false
         })
         this.instance.punctualLights = true
         this.instance.toneMapping = THREE.LinearToneMapping
@@ -49,8 +49,6 @@ export default class Renderer
             this.video.onloadedmetadata = () => {
                 this.video.play();
 
-                const videoAspectRatio = this.video.videoWidth / this.video.videoHeight;
-
                 const newHeight = this.sizes.height
                 const newWidth = this.sizes.height * 0.75
     
@@ -63,12 +61,16 @@ export default class Renderer
                 );
 
                 const videoTexture = new THREE.VideoTexture(this.video);
-                videoTexture.minFilter = THREE.LinearFilter;
-                videoTexture.magFilter = THREE.LinearFilter;
+                videoTexture.minFilter = THREE.NearestFilter
+                videoTexture.magFilter = THREE.NearestFilter
                 videoTexture.format = THREE.RGBAFormat;
                 videoTexture.colorSpace = THREE.SRGBColorSpace;
                 videoTexture.wrapS = THREE.RepeatWrapping
                 videoTexture.wrapT = THREE.ClampToEdgeWrapping;
+
+                if(this.currentFacingMode === 'user') {
+                videoTexture.matrixAutoUpdate = false;
+                videoTexture.matrix.scale(-1, 1);}
             
                 this.scene.background = videoTexture;
             

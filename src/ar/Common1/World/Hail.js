@@ -17,8 +17,11 @@ export default class Hail {
         const randomResource = Math.random() < 0.5 ? this.resource : this.resource2;
 
         this.model = randomResource.scene.clone();
-        this.model.scale.set(0.5, 0.5, 0.5)
+        this.model.scale.set(0.3, 0.3, 0.3)
         this.model.position.set(Math.random() * 3 - 1.5, 5, 0)
+        this.model.rotation.x = Math.random() * 2 * Math.PI;
+        this.model.rotation.y = Math.random() * 2 * Math.PI;
+        this.model.rotation.z = Math.random() * 2 * Math.PI;
         this.scene.add(this.model)
 
         this.model.traverse((child) =>
@@ -36,7 +39,7 @@ export default class Hail {
 
 
     update() {
-        this.model.position.y -= 0.03
+        this.model.position.y -= 0.08
 
         if (this.model.position.y < -100) {
             this.scene.remove(this.mesh);

@@ -100,7 +100,7 @@ export default {
         let typingTimeout;
 
         const typeText = () => {
-            const content = currentCharacterContent.value.text;
+            const content = '숲을 망가뜨리는 우박을 받아내자.우리를 손가락으로 움직여서 우박 5개를 받아줘.';
             const textContainer = document.getElementById("typed-text");
             let index = 0;
 

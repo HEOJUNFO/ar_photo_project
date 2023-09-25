@@ -41,7 +41,7 @@ export default {
             scrollToTop();
 
             setTimeout(() => {
-                router.push('/commonone3d');
+                router.push('/loading');
             }, 500);
         }
 

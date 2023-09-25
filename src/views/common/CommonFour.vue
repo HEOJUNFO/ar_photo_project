@@ -181,7 +181,7 @@ export default {
 
         let experience;
         const characterStore = useCharacterStore()
-        const textIndex = ref(3)
+        const textIndex = ref(0)
         const finishModal = ref(false)
         const eventId = ref(0)
         const rewardImage = ref('')
@@ -200,7 +200,7 @@ export default {
         let typingTimeout;
 
         const typeText = () => {
-            const content = currentCharacterContent.value.text;
+            const content = '마법진을 3초간 꾹 눌러줘. 숲을 복원하는 회복 에너지를 불어 넣어야 해.'
             const textContainer = document.getElementById("typed-text");
             let index = 0;
 

@@ -171,7 +171,7 @@ export default {
         };
 
         const showModal = ref(false);
-        const premiumModal = ref(true);
+        const premiumModal = ref(false);
         const premiumImageSrc = ref('');
         const premiumText = ref('');
         const eventId = ref(0);
@@ -333,8 +333,8 @@ export default {
 }
 
 .image-container {
-    height: calc(70 * var(--vh));
-    width: calc((4/6) * 70 * var(--vh));
+    height: calc(75 * var(--vh));
+    width: calc((4/6) * 75 * var(--vh));
     display: flex;
     justify-content: center;
     align-items: center;
@@ -351,7 +351,7 @@ export default {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     width: 100%;
-    height: calc(20 * var(--vh));
+    height: calc(15 * var(--vh));
     justify-content: space-between;
     align-items: center;
     z-index: 2;

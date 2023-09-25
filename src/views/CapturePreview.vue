@@ -174,7 +174,7 @@ export default {
         };
         const imgData = ref('')
         const showModal = ref(false);
-        const premiumModal = ref(true);
+        const premiumModal = ref(false);
         const finishModal = ref(false);
         const premiumImageSrc = ref('');
         const premiumText = ref('');

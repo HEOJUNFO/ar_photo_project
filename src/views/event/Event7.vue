@@ -40,7 +40,7 @@ export default {
             scrollToTop();
 
             setTimeout(() => {
-                router.push('/culture3d');
+                router.push('/loading');
             }, 500);
         }
 
