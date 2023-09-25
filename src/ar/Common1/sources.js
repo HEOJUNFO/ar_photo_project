@@ -39,5 +39,13 @@ export default [
         name: 'unoModel',
         type: 'gltfModel',
         path: '../models/Uno/TheFlash_Uno_SD_02-001.gltf'
+    },{
+        name: 'iceHailA',
+        type: 'gltfModel',
+        path: '../models/content/IceHailA.gltf'
+    },{
+        name: 'iceHailB',
+        type: 'gltfModel',
+        path: '../models/content/IceHailB.gltf'
     }
 ]

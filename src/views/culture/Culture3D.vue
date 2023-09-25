@@ -2,13 +2,13 @@
     <div @click.stop="percentage > 99.8 ? next() : null">
         <loading-container ref="loading" @closed="handleClose()">
         </loading-container>
-        <div class=" top-section2">
-            <div class="text-container2">
+        <div class="top-section">
+            <div class="text-container1">
                 <p id="typed-text"></p>
             </div>
-            <div class="side-image-container3">
-                <img :src="characterContent?.src" alt="Side Image" />
-            </div>
+        </div>
+        <div class="side-image-container">
+            <img :src="characterContent.src" alt="Side Image" />
         </div>
         <div class="webgl-container">
             <canvas class="webgl2"></canvas>
@@ -33,15 +33,19 @@
                 :class="{ 'fade-out3': isChanging3 }" />
             <img v-if="isChanging3" src="@resource/culture/water_road_04.png" class="fade-in3" />
         </div>
-        <div v-if="finishModal" class="image-container2">
+        <div v-show="finishModal" class="image-container2">
             <div class="reward-container">
-                <img src="@resource/common/success.png" />
-                <img src="@resource/culture/boat.png" />
-                <p>물길 만들기</p>
+                <img class="image1" src="@resource/common/label.png" />
+                <p class="p1">여름의 숲 웹프레임 1종</p>
+                <p class="p2">(서비스 내 사진촬영에서 확인 및 사용가능)</p>
+                <img class="image2" src="@resource/icon/frame_01.png" />
+                <button @click="nextPage()">상품획득 성공</button>
             </div>
         </div>
     </div>
 </template>
+
+
 
 <script>
 import Experience from '../../three/Culture/Experience.js'
@@ -50,6 +54,9 @@ import router from '../../router';
 import { useCharacterStore } from '../../stores/characterStore.js'
 import { onBeforeRouteLeave } from 'vue-router'
 import LoadingContainer from '../../components/LoadingContainer.vue'
+
+const Filter1 = new URL('@resource/icon/frame_01.png', import.meta.url).href;
+
 
 export default {
     name: 'Culture',
@@ -103,6 +110,10 @@ export default {
 
         const playAudio3 = () => {
             if (audio3.value) {
+                if (!audio3.value.paused) {
+                    audio3.value.pause();
+                    audio3.value.currentTime = 0;
+                }
                 audio3.value.play();
             } else {
                 console.error("Audio not initialized yet.");
@@ -113,6 +124,7 @@ export default {
         const index = ref(0)
         const textIndex = ref(5)
         const finishModal = ref(false)
+        const eventId = ref('7')
 
         const percentage = ref(0)
         const maxPercentage = ref(27)
@@ -140,12 +152,8 @@ export default {
             let index = 0;
 
             clearTimeout(typingTimeout);
-            try {
-                textContainer.textContent = "";
-            } catch (error) {
-                console.error("Error occurred:", error);
-            }
 
+            textContainer.textContent = "";
 
             function typing() {
                 if (index < content.length) {
@@ -162,6 +170,7 @@ export default {
                 typeText()
             }, 1000);
         }
+
 
         const stone1 = () => {
             visibleStone1.value = false
@@ -232,18 +241,18 @@ export default {
             }
         }
 
-        const next = () => {
-            if (index.value === 0) {
-                setTimeout(() => {
-                    playAudio()
-                    finishModal.value = true
-                }, 1000);
 
-                setTimeout(() => {
-                    playAudio2()
-                    router.push({ path: '/stickerreward', query: { eventName: "culture" } });
-                }, 3500);
+        const next = () => {
+            playAudio()
+            finishModal.value = true;
+        }
+        const nextPage = () => {
+            playAudio2()
+            if (eventId.value === '7') {
+                localStorage.setItem('clearId7', 'true')
+                localStorage.setItem('normalItem4', 'true')
             }
+            router.push('/eventout')
         }
 
         const updatePercentage = () => {
@@ -284,6 +293,8 @@ export default {
 
             experience = new Experience(document.querySelector('canvas.webgl2'), next);
 
+            eventId.value = localStorage.getItem('eventId')
+
             const interval = setInterval(updatePercentage, 1);
 
             setTimeout(() => {
@@ -319,8 +330,8 @@ export default {
             isChanging3,
             loading,
             handleClose,
-            finishModal
-
+            finishModal,
+            nextPage,
         }
     }
 }
@@ -334,11 +345,7 @@ export default {
     overflow: hidden;
 }
 
-.webgl {
-    position: fixed;
-    left: 0;
-    outline: none;
-}
+
 
 .webgl2 {
     z-index: 4;
@@ -428,84 +435,6 @@ export default {
     animation: scaleAnimation 0.5s;
 }
 
-.top-section2 {
-    overflow: visible;
-    position: absolute;
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: calc(10 * var(--vh));
-    justify-content: space-between;
-    align-items: center;
-    z-index: 10;
-    margin-top: calc(5 * var(--vh));
-}
-
-
-.text-container2 {
-    overflow: visible;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
-    width: 75%;
-    position: relative;
-    border-radius: 16px;
-    margin-left: 5%;
-}
-
-.text-container2::before {
-    content: "";
-    width: 0;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 15px solid #fff;
-    position: absolute;
-    right: -10px;
-    top: 30%;
-    transform: translateY(-50%);
-}
-
-.text-container2 p {
-    overflow: hidden;
-    padding: 15px;
-    color: #000;
-    font-family: "NanumSquare", sans-serif;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 20px;
-    letter-spacing: -0.4px;
-    margin: 0;
-    border-radius: 10px;
-    overflow-wrap: break-word;
-    word-break: keep-all;
-    text-align: center;
-}
-
-
-
-.side-image-container3 {
-    margin-top: calc(-5 * var(--vh));
-    margin-right: -5%;
-    position: relative;
-    overflow: hidden;
-    width: 20%;
-    display: flex;
-    align-items: center;
-}
-
-.side-image-container3 img {
-    background-color: #FFECD6;
-    overflow: hidden;
-    height: 70%;
-    width: 70%;
-    display: block;
-    clip-path: circle(50%);
-    object-fit: cover;
-}
-
 .bg-container {
     position: absolute;
     width: 100%;
@@ -518,7 +447,8 @@ export default {
     top: 0;
     left: 0;
     width: 100%;
-    height: auto;
+    height: calc(100 * var(--vh));
+
     transition: opacity 1s;
 }
 
@@ -553,46 +483,112 @@ export default {
 }
 
 
-.image-container2 {
-    position: fixed;
-    width: 100%;
-    height: calc(100 * var(--vh));
+
+.top-section {
+    overflow: visible;
+    position: absolute;
     display: flex;
-    justify-content: space-evenly;
+    flex-direction: row;
+    width: 100%;
+    height: calc(10 * var(--vh));
+    justify-content: center;
     align-items: center;
-    top: calc(25 * var(--vh));
     z-index: 10;
+    margin-top: calc(5 * var(--vh));
 }
+
+
+.text-container1 {
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    width: 90%;
+    position: relative;
+    border: 2px dashed #D50F4A;
+    border-radius: 16px;
+}
+
+.text-container1 p {
+    overflow: hidden;
+    padding: 20px 10px 20px 10px;
+    color: #000;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+    margin: 0;
+    border-radius: 10px;
+    max-width: 30ch;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+    text-align: left;
+}
+
+.side-image-container {
+    width: 20%;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 2.5%;
+    top: calc(2.5 * var(--vh));
+    z-index: 11;
+}
+
+.side-image-container img {
+    background-color: #fff;
+    overflow: hidden;
+    height: 70%;
+    width: 70%;
+    display: block;
+    clip-path: circle(50%);
+    object-fit: cover;
+    border: 1px solid #D50F4A;
+    border-radius: 100px;
+}
+
+.image-container2 {
+    position: absolute;
+    width: 90%;
+    height: auto;
+    z-index: 10;
+    background-color: #fff;
+    border-radius: 16px;
+    left: 50%;
+    top: calc(50 * var(--vh));
+    transform: translate(-50%, -50%);
+    padding-bottom: calc(3 * var(--vh));
+}
+
 
 .reward-container {
-    position: relative;
     width: 100%;
-    height: calc(100 * var(--vh));
+    height: 100%;
     justify-content: center;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: calc(-3 * var(--vh));
+
 }
 
 
-.reward-container img:first-child {
-    position: absolute;
-    width: 80%;
+.image1 {
+    position: relative;
+    width: 100%;
     height: auto;
-    left: 50%;
-    transform: translateX(-50%);
 }
 
-.reward-container img:nth-child(2) {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50%;
+.image2 {
+    position: relative;
+    width: 60%;
     height: auto;
-    top: calc(15 * var(--vh));
 }
 
-.reward-container p {
-    position: absolute;
-    top: calc(10 * var(--vh));
+.p1 {
+    position: relative;
     color: var(--Text-Black, #111);
     text-align: center;
     font-family: "NanumSquare", sans-serif;
@@ -601,9 +597,41 @@ export default {
     font-weight: 800;
     line-height: 28px;
     letter-spacing: -0.5px;
-    max-width: 11ch;
+    max-width: 20ch;
     overflow-wrap: break-word;
     word-break: keep-all;
 
+}
+
+.p2 {
+    color: var(--Text-Gray, #767676);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: -0.3px;
+}
+
+.reward-container button {
+    width: 80%;
+    padding: 10px;
+    border-radius: 100px;
+    border: 2px solid var(--Point-Red-Dark, #922142);
+    background: var(--Point-Red, #D50F4A);
+    color: var(--Text-White, #FFF);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+    text-align: center;
+    z-index: 1;
+    position: relative;
+    box-shadow: 0px 3px #922142;
+    margin-top: calc(2 * var(--vh));
 }
 </style>

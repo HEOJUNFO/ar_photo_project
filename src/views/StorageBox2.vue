@@ -120,6 +120,7 @@ export default {
         };
 
         onMounted(() => {
+            document.body.style.overflowY = 'scroll';
             setVH();
             window.addEventListener('resize', setVH);
             rewardsStore.setRewardsData();

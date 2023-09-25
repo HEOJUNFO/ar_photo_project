@@ -83,26 +83,26 @@ export default {
             scrollToTop();
             setTimeout(() => {
                 if (eventId.value === '1') {
-                    router.push('/event1');
+                    router.push('/commonfour');
                 } else if (eventId.value === '2') {
-                    router.push('/event2');
+                    router.push('/capture');
                 } else if (eventId.value === '3') {
-                    router.push('/event3');
+                    router.push('/commonfour');
                 } else if (eventId.value === '4') {
-                    router.push('/event4');
+                    router.push('/capture');
                 } else if (eventId.value === '5') {
-                    router.push('/event5');
+                    router.push('/commonfour');
                 } else if (eventId.value === '6') {
-                    router.push('/event6');
+                    router.push('/culture3');
                 } else if (eventId.value === '7') {
-                    router.push('/event7');
+                    router.push('/culture3d');
                 } else if (eventId.value === '8') {
                     router.push('/event8');
                 } else if (eventId.value === '9') {
                     router.push('/event9');
                 }
                 else if (eventId.value === '10') {
-                    router.push('/event10');
+                    router.push('/capture');
                 }
 
             }, 500);

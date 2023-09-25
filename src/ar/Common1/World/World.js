@@ -41,11 +41,11 @@ export default class World
             hail.update();
 
             const foxBox = new THREE.Box3().setFromObject(this.model.model);
-            const hailBox = new THREE.Box3().setFromObject(hail.mesh);
+            const hailBox = new THREE.Box3().setFromObject(hail.model);
 
             if (foxBox.intersectsBox(hailBox)) {
                 this.experience.goToNextScene()
-                this.scene.remove(hail.mesh); 
+                this.scene.remove(hail.model); 
                 const index = this.hails.indexOf(hail);
                 if (index > -1) this.hails.splice(index, 1); 
 

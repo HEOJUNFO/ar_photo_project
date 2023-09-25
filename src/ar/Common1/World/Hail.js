@@ -7,19 +7,32 @@ export default class Hail {
         this.scene = this.experience.scene;
         this.resources = this.experience.resources;
 
-        this.geometry = new THREE.SphereGeometry(0.1, 16, 16);
-        this.material = new THREE.MeshBasicMaterial({ color: 0xFFFFFF }); // White color
-        this.mesh = new THREE.Mesh(this.geometry, this.material);
-        this.scene.add(this.mesh);
+        this.resource = this.resources.items.iceHailA;
 
-        this.mesh.position.y = 10;
-        this.mesh.position.x = Math.random() * 3 - 1.5;
+        this.setModel();
     }
 
-    update() {
-        this.mesh.position.y -= 0.03
+    setModel()
+    {
+        this.model = this.resource.scene.clone()
+        this.model.scale.set(0.7, 0.7, 0.7)
+        this.model.position.set(Math.random() * 3 - 1.5, 5, 0)
+        this.scene.add(this.model)
 
-        if (this.mesh.position.y < -10) {
+        this.model.traverse((child) =>
+        {
+            if(child instanceof THREE.Mesh)
+            {
+                child.castShadow = true
+            }
+        })
+    }
+
+
+    update() {
+        this.model.position.y -= 0.03
+
+        if (this.model.position.y < -100) {
             this.scene.remove(this.mesh);
         }
     }

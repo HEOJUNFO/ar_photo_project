@@ -4,7 +4,7 @@
             <img src="@resource/mission/web-landing-page-1.jpg" alt="Image 1" />
         </div>
         <div class="button-container2">
-            <button class="button1" v-if="!clear" @click="start()">가상 염색 촬영하기</button>
+            <button class="button1" v-if="!clear" @click="start()">우박 모으기</button>
             <button class="button2" v-if="clear" @click="start()">이벤트 참여 완료</button>
         </div>
         <div class="image-container">
@@ -55,7 +55,7 @@ export default {
             scrollToTop();
 
             setTimeout(() => {
-                router.push('/culture3');
+                router.push('/commonone3d');
             }, 500);
         }
 
@@ -70,9 +70,9 @@ export default {
 
             window.addEventListener('resize', setVH);
 
-            localStorage.setItem('eventId', 6)
+            localStorage.setItem('eventId', 9)
 
-            if (localStorage.getItem('clearId6') === 'true') {
+            if (localStorage.getItem('clearId9') === 'true') {
                 // clear.value = true;
             }
 

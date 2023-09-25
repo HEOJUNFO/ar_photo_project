@@ -70,7 +70,7 @@
         <div v-show="finishModal" class="image-container2">
             <div class="reward-container">
                 <img class="image1" src="@resource/common/label.png" />
-                <p class="p1">‘벨’ 웹스티커 1세트</p>
+                <p class="p1">{{ rewardText }}</p>
                 <p class="p2">(서비스 내 사진촬영에서 확인 및 사용가능)</p>
                 <img class="image2" :src="rewardImage" />
                 <button @click="next()">상품획득 성공</button>
@@ -104,9 +104,7 @@ export default {
         const finishModal = ref(false)
         const eventId = ref(0)
         const rewardImage = ref('')
-
-
-
+        const rewardText = ref('')
 
         const currentCharacterContent = computed(() => {
             const char = characterStore.currentCharacter
@@ -210,10 +208,13 @@ export default {
             eventId.value = localStorage.getItem('eventId')
             if (eventId.value === '1') {
                 rewardImage.value = Bell
+                rewardText.value = '벨 웹스티커 1세트'
             } else if (eventId.value === '3') {
                 rewardImage.value = Uno
+                rewardText.value = '우노 웹스티커 1세트'
             } else if (eventId.value === '5') {
                 rewardImage.value = Sorina
+                rewardText.value = '우노 웹스티커 1세트'
             }
         })
 
@@ -238,6 +239,7 @@ export default {
             next,
             eventId,
             rewardImage,
+            rewardText,
             normalReward,
             premiumReward,
             home
