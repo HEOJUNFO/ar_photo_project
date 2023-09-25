@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { ref, onMounted, provide } from 'vue'
+import { ref, onMounted, provide, onUnmounted } from 'vue'
 
 export default {
     name: 'App',
@@ -42,6 +42,25 @@ export default {
 
         provide('playAudio', playAudio);
         provide('stopAudio', stopAudio);
+        const handleVisibilityChange = () => {
+            if (document.hidden) {
+                stopAudio();
+            } else {
+                playAudio();
+            }
+        };
+
+        onMounted(() => {
+            document.addEventListener('visibilitychange', handleVisibilityChange);
+        });
+
+        onUnmounted(() => {
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        });
+
+        provide('playAudio', playAudio);
+        provide('stopAudio', stopAudio);
+
 
         return {}
     }
