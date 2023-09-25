@@ -70,7 +70,7 @@ export default {
 
             setTimeout(() => {
                 imagesLoaded.value = true;
-            }, 3000);
+            }, 1000);
         });
 
 

@@ -81,7 +81,7 @@
 import { useCharacterStore } from '../../stores/characterStore.js'
 import { ref, computed, watch, onMounted } from 'vue'
 import router from '../../router'
-import Experience from '../../three/Common4/Experience.js'
+import Experience from '../../ar/capture/Experience.js'
 import { onBeforeRouteLeave } from 'vue-router'
 
 const Bell = new URL('@resource/intro/bell.png', import.meta.url).href;
