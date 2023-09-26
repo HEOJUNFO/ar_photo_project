@@ -109,13 +109,12 @@ export default {
         const checkBrowser = (useChange) => {
             let os = getOsName();
             let browser = getBrowserName();
-            alert(os + " " + browser)
             if (os.match(/iPhone|iPad|iPod/i)) { // 아이폰 접속 경우
                 // if(browser == 'kakao' || browser == 'whale')
                 if (browser == 'kakao') {
-                    console.log('kakao')
+                    alert('kakao')
                     if (useChange == true) {
-                        console.log('add')
+                        alert('add')
                         var url = window.location.href;
                         var link = url.slice(0, url.lastIndexOf("/")) + "/kakao.html";
                         location.href = link;
