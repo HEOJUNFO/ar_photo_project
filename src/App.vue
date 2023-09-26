@@ -4,9 +4,6 @@
             <component :is="Component" />
         </transition>
     </router-view>
-    <div>
-        <img v-if="isIOS" id="transferDesc" src="@resource/common/kakaoTransfer2.png">
-    </div>
 </template>
 
 <script>
@@ -16,7 +13,6 @@ import router from './router'
 export default {
     name: 'App',
     setup() {
-        const isIOS = ref(false)
 
         const getBrowserName = () => {
             var userAgent = navigator.userAgent.toLowerCase();
@@ -120,8 +116,8 @@ export default {
 
                     if (useChange == true) {
 
-                        isIOS.value = true
-                        // router.push('/ios')
+
+                        router.push({ path: '/ios', query: { hash: window.location.hash } });
                     }
 
                     return false;
@@ -147,8 +143,7 @@ export default {
 
 
         onMounted(() => {
-
-
+            router.push({ path: '/ios', query: { hash: window.location.hash } });
 
             checkBrowser(true)
 
@@ -160,7 +155,7 @@ export default {
         });
 
 
-        return { isIOS }
+        return {}
     }
 }
 </script>
@@ -195,12 +190,6 @@ export default {
 }
 
 
-#transferDesc {
-    position: fixed;
-    width: 100%;
-    height: auto;
-    z-index: 99;
-}
 
 .fade-enter-active,
 .fade-leave-active {

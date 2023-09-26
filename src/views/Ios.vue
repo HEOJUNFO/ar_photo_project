@@ -48,10 +48,12 @@ export default {
 
 
         onMounted(() => {
+
             let browserName = getBrowserName();
             if (browserName !== 'kakao') {
-                let eventId = localStorage.getItem('eventId');
-                alert(eventId)
+                let hash = router.currentRoute.value.query.hash
+                alert(window.location.host + '/' + hash)
+
             }
 
         })
