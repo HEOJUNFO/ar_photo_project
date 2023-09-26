@@ -135,25 +135,28 @@ export default {
         }
 
         const start = () => {
-            console.log(check1.value, check2.value)
+
             if (!check1.value || !check2.value) return
-            console.log('start')
+
             try {
 
-                let stream = navigator.mediaDevices.getUserMedia({ video: true });
-
-                stream = null;
+                const stream = navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(stream => {
+                        stream.getTracks().forEach(track => track.stop());
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    });
 
 
                 localStorage.setItem('consentGiven', 'true');
 
-                console.log('next')
                 next();
 
 
 
             } catch (err) {
-                console.error("Error accessing the camera: ", err);
+                alert(err)
             }
 
 
