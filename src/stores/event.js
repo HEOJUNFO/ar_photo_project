@@ -21,7 +21,7 @@ export const useEventStore = defineStore('events', {
                 id:0,
                 src: Bell,
                 icon: normal,
-                required: "true",
+                required: "null",
                 title1:'봄의 능력',
                 title2:'탄생의 에너지 모으기',
                 title3:'1F 더웨이브',

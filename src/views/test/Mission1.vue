@@ -24,8 +24,6 @@ export default {
     setup() {
         const audio = ref(null);
 
-        const playAudio2 = inject('playAudio');
-
         import('@resource/sounds/generaltap.wav')
             .then(src => {
                 audio.value = new Audio(src.default);
@@ -52,7 +50,7 @@ export default {
 
         const start = () => {
             playAudio();
-            playAudio2();
+
             scrollToTop();
             setTimeout(() => {
                 router.push('/culture3d');

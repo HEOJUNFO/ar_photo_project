@@ -149,7 +149,7 @@ export default {
             typing();
         };
 
-        const stopAudio = inject('stopAudio');
+
 
         const navigateToNextImage = () => {
             playAudio();
@@ -188,7 +188,7 @@ export default {
                 return;
             }
             if (index.value === 2) {
-                stopAudio();
+
                 router.push({ path: '/missionout', query: { eventName: eventName.value } });
                 return;
             }

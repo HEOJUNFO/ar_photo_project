@@ -134,20 +134,20 @@ export default {
             check2.value = !check2.value
         }
 
-        const start = async () => {
+        const start = () => {
+            console.log(check1.value, check2.value)
             if (!check1.value || !check2.value) return
-
+            console.log('start')
             try {
                 if (navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function') {
-                    let stream = await navigator.mediaDevices.getUserMedia({ video: true });
-
-                    stream.getTracks().forEach(track => track.stop());
+                    let stream = navigator.mediaDevices.getUserMedia({ video: true });
 
                     stream = null;
                 }
 
                 localStorage.setItem('consentGiven', 'true');
 
+                console.log('next')
                 next();
 
 
@@ -160,7 +160,7 @@ export default {
         }
 
         const next = () => {
-
+            console.log(eventId.value)
             switch (eventId.value) {
                 case '0':
                     router.push('/intro');
@@ -211,11 +211,11 @@ export default {
             document.documentElement.style.setProperty('--vh', `${vh}px`);
         }
 
-        window.history.pushState(null, null, window.location.href);
+        window.history.pushState(history.state, null, window.location.href);
         window.onpopstate = function () {
             if (check1Modal.value || check2Modal.value) {
-                check1Modal.value = false
-                check2Modal.value = false
+                check1Modal.value = false;
+                check2Modal.value = false;
             }
         };
 

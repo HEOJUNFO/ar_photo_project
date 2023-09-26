@@ -406,10 +406,10 @@ export default {
             const char = characterStore.currentCharacter
             return char?.culture2[textIndex.value] || {}
         })
-        const stopAudio = inject('stopAudio');
+
         const home = () => {
             playAudio();
-            stopAudio();
+
             router.push('/stage')
         }
 

@@ -37,7 +37,7 @@ export default {
                 console.error("Audio not initialized yet.");
             }
         };
-        const playAudio2 = inject('playAudio');
+
 
 
         const scrollToTop = () => {
@@ -47,7 +47,7 @@ export default {
 
         const start = () => {
             playAudio();
-            playAudio2();
+
             scrollToTop();
             setTimeout(() => {
                 router.push('/culture3');

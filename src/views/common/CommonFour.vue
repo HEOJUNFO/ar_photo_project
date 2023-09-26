@@ -243,10 +243,10 @@ export default {
             router.push('/storagebox')
         }
 
-        const stopAudio = inject('stopAudio');
+
         const home = () => {
             playAudio()
-            stopAudio()
+
             router.push('/stage')
         }
 

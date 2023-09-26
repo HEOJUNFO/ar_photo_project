@@ -124,10 +124,10 @@ export default {
             router.push('/storagebox')
         }
 
-        const stopAudio = inject('stopAudio');
+
         const home = () => {
             playAudio();
-            const stopAudio = inject('stopAudio');
+
             router.push('/stage')
         }
         const setGrayscale = (item) => {

@@ -63,6 +63,7 @@ export default {
         const audio = ref(null);
         const audio2 = ref(null);
         const audio3 = ref(null);
+        const audio4 = ref(null);
 
         import('@resource/sounds/acquired.wav')
             .then(src => {
@@ -111,6 +112,25 @@ export default {
                     audio3.value.currentTime = 0;
                 }
                 audio3.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+        import('@resource/sounds/generaltap.wav')
+            .then(src => {
+                audio4.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio4 = () => {
+            if (audio4.value) {
+                if (!audio4.value.paused) {
+                    audio4.value.pause();
+                    audio4.value.currentTime = 0;
+                }
+                audio4.value.play();
             } else {
                 console.error("Audio not initialized yet.");
             }
@@ -208,6 +228,7 @@ export default {
 
             } else {
                 maxPercentage.value = 27;
+                playAudio4()
             }
 
         }
@@ -226,9 +247,10 @@ export default {
                 maxPercentage.value = 47;
                 experience.world.ship.deltaT = 0.32
                 isChanging.value = true
-                playAudio3()
+                playAudio4()
             } else {
                 maxPercentage.value = 27;
+                playAudio4()
             }
         }
 

@@ -357,11 +357,10 @@ export default {
             showModal.value = true;
         };
 
-        const stopAudio = inject('stopAudio');
 
 
         const home = () => {
-            stopAudio();
+
             router.push('./stage');
         };
 

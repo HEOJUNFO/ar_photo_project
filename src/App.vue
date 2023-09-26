@@ -14,42 +14,6 @@ export default {
     setup() {
         const audio = ref(null);
 
-        import('@resource/sounds/bgm.wav')
-            .then(src => {
-                audio.value = new Audio(src.default);
-                audio.value.loop = true;
-            })
-            .catch(error => {
-                console.error("Error importing audio file:", error);
-            });
-
-        const playAudio = () => {
-            if (audio.value) {
-                audio.value.volume = 0.4;
-                audio.value.play();
-            } else {
-                console.error("Audio not initialized yet.");
-            }
-        };
-
-        const stopAudio = () => {
-            if (audio.value) {
-                audio.value.pause();
-            } else {
-                console.error("Audio not initialized yet.");
-            }
-        };
-
-        provide('playAudio', playAudio);
-        provide('stopAudio', stopAudio);
-        const handleVisibilityChange = () => {
-            if (document.hidden) {
-                stopAudio();
-            } else {
-                playAudio();
-            }
-        };
-
         onMounted(() => {
             window.onload = () => {
                 if (navigator.userAgent.match(/inapp|NAVER|KAKAOTALK|Snapchat|Line|WirtschaftsWoche|Thunderbird|Instagram|everytimeApp|WhatsApp|Electron|wadiz|AliApp|zumapp|iPhone(.*)Whale|Android(.*)Whale|kakaostory|band|twitter|DaumApps|DaumDevice\/mobile|FB_IAB|FB4A|FBAN|FBIOS|FBSS|SamsungBrowser\/[^1-9]/)) {
@@ -76,18 +40,15 @@ export default {
                 }
             };
 
-            document.addEventListener('visibilitychange', handleVisibilityChange);
+
 
 
 
         });
 
-        onUnmounted(() => {
-            document.removeEventListener('visibilitychange', handleVisibilityChange);
-        });
 
-        provide('playAudio', playAudio);
-        provide('stopAudio', stopAudio);
+
+
 
 
         return {}

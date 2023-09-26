@@ -23,9 +23,6 @@ export default {
     setup() {
 
 
-        const playAudio2 = inject('playAudio');
-
-
         const clear = ref(false);
 
 
@@ -36,7 +33,7 @@ export default {
 
         const start = () => {
 
-            playAudio2();
+
             scrollToTop();
 
             setTimeout(() => {
@@ -55,7 +52,7 @@ export default {
 
             window.addEventListener('resize', setVH);
 
-            stopAudio();
+
 
             localStorage.setItem('eventId', 2)
 

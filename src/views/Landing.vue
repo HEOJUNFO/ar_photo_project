@@ -38,7 +38,7 @@ import router from '../router'
 export default {
     name: 'Landing',
     setup() {
-        const playAudio2 = inject('playAudio');
+
         const imagesLoaded = ref(false);
 
         const scrollToTop = () => {
@@ -47,7 +47,6 @@ export default {
 
         const start = () => {
             scrollToTop();
-            playAudio2();
             setTimeout(() => {
                 router.push('/loading');
             }, 500);
@@ -60,12 +59,13 @@ export default {
             document.documentElement.style.setProperty('--vh', `${vh}px`);
         }
 
+
+
         onMounted(() => {
             setVH();
 
             window.addEventListener('resize', setVH);
 
-            stopAudio();
 
             localStorage.setItem('eventId', 0)
 
