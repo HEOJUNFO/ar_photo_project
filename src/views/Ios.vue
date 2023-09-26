@@ -45,21 +45,12 @@ export default {
             return browserName;
         }
 
-        const reloadOnce = () => {
-            const url = new URL(window.location.href);
 
-
-            if (!url.searchParams.has('reloaded')) {
-
-                url.searchParams.append('reloaded', 'true');
-                window.location.href = url.toString();
-            }
-        }
 
         onMounted(() => {
             let browserName = getBrowserName();
             if (browserName !== 'kakao') {
-                reloadOnce();
+                // alert(location.href)
             }
 
         })
