@@ -78,7 +78,7 @@
 <script>
 import { useCharacterStore } from '../stores/characterStore.js'
 import { useEventStore } from '../stores/event.js'
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch, onMounted, inject } from 'vue'
 import router from '../router'
 
 
@@ -175,9 +175,10 @@ export default {
             playAudio()
             router.push('/storagebox')
         }
-
+        const stopAudio = inject('stopAudio');
         const home = () => {
             playAudio()
+            stopAudio()
             router.push('/stage')
         }
 

@@ -181,7 +181,7 @@
 import { useCharacterStore } from '../stores/characterStore.js'
 import { useImageDataStore } from '../stores/imageData.js'
 import Experience from '../ar/capture/Experience.js'
-import { onMounted, computed, ref } from 'vue';
+import { onMounted, computed, ref, inject } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router'
 import router from '../router';
 
@@ -357,7 +357,11 @@ export default {
             showModal.value = true;
         };
 
+        const stopAudio = inject('stopAudio');
+
+
         const home = () => {
+            stopAudio();
             router.push('./stage');
         };
 

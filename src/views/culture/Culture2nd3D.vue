@@ -112,7 +112,7 @@ import vision from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0"
 import router from "../../router";
 import { useImageDataStore } from '../../stores/imageData.js'
 import { useCharacterStore } from '../../stores/characterStore.js'
-import { onMounted, computed, ref, watch } from "vue";
+import { onMounted, computed, ref, watch, inject } from "vue";
 import LoadingContainer from '../../components/LoadingContainer.vue'
 
 const { ImageSegmenter, SegmentationMask, FilesetResolver } = vision;
@@ -406,9 +406,10 @@ export default {
             const char = characterStore.currentCharacter
             return char?.culture2[textIndex.value] || {}
         })
-
+        const stopAudio = inject('stopAudio');
         const home = () => {
             playAudio();
+            stopAudio();
             router.push('/stage')
         }
 

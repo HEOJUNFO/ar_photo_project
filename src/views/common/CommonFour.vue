@@ -79,7 +79,7 @@
 
 <script>
 import { useCharacterStore } from '../../stores/characterStore.js'
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch, onMounted, inject } from 'vue'
 import router from '../../router'
 import Experience from '../../ar/capture/Experience.js'
 import { onBeforeRouteLeave } from 'vue-router'
@@ -243,8 +243,10 @@ export default {
             router.push('/storagebox')
         }
 
+        const stopAudio = inject('stopAudio');
         const home = () => {
             playAudio()
+            stopAudio()
             router.push('/stage')
         }
 

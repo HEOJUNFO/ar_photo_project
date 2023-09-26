@@ -117,7 +117,7 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, inject } from 'vue';
 import router from '../router';
 import { useRewardsStore } from '../stores/reward.js';
 
@@ -195,8 +195,11 @@ export default {
             router.push('/storagebox')
         }
 
+        const stopAudio = inject('stopAudio');
+
         const home = () => {
             playAudio();
+            stopAudio();
             router.push('/stage')
         }
 
