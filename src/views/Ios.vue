@@ -47,7 +47,7 @@ export default {
         onMounted(() => {
             let browserName = getBrowserName();
             if (browserName !== 'kakao') {
-                router.go(-1);
+                window.location.reload();
             }
 
         })
