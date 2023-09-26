@@ -140,15 +140,18 @@ export default {
             if (!check1.value || !check2.value) return
 
             const videoElement = document.getElementById('video');
-
-            navigator.mediaDevices.getUserMedia({ video: true })
-                .then((stream) => {
-                    videoElement.srcObject = stream;
-                })
-                .catch((error) => {
-                    alert(error);
-                });
-
+            try {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then((stream) => {
+                        videoElement.srcObject = stream;
+                    })
+                    .catch((error) => {
+                        alert(error);
+                    });
+            }
+            catch (error) {
+                alert(error);
+            }
             localStorage.setItem('consentGiven', 'true');
             next();
 
