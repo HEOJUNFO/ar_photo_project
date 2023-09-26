@@ -53,7 +53,7 @@ export default {
             if (browserName !== 'kakao') {
                 let hash = router.currentRoute.value.query.hash
                 alert(window.location.origin + '/#/' + hash)
-
+                router.push(`/${hash}`);
             }
 
         })
