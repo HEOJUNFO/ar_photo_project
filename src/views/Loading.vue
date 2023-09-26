@@ -139,11 +139,11 @@ export default {
             if (!check1.value || !check2.value) return
             console.log('start')
             try {
-                if (navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function') {
-                    let stream = navigator.mediaDevices.getUserMedia({ video: true });
 
-                    stream = null;
-                }
+                let stream = navigator.mediaDevices.getUserMedia({ video: true });
+
+                stream = null;
+
 
                 localStorage.setItem('consentGiven', 'true');
 
