@@ -11,34 +11,37 @@
         <div v-if="eventId === '1'" class="image-container">
             <img :class="{ 'hidden': hideImage1 }" class="img1" src="@resource/content/mini2.png"
                 @touchstart="handleMouseDown" @touchend="handleMouseUp" />
-            <img :style="{ width: image2Width + '%' }" class="img2" src="@resource/magicCircle/r_01.png"
-                @touchstart="handleMouseDown" @touchend="handleMouseUp" @transitionend="handleTransitionEnd" />
-            <img :style="{ width: image3Width + '%' }" class="img3" src="@resource/magicCircle/r_02.png"
-                @touchstart="handleMouseDown" @touchend="handleMouseUp" />
-            <img :style="{ width: image3Width + '%' }" class="img4" src="@resource/magicCircle/r_03.png"
-                @touchstart="handleMouseDown" @touchend="handleMouseUp" />
+            <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img2"
+                src="@resource/magicCircle/r_01.png" @touchstart="handleMouseDown" @touchend="handleMouseUp"
+                @transitionend="handleTransitionEnd" />
+            <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img3"
+                src="@resource/magicCircle/r_02.png" @touchstart="handleMouseDown" @touchend="handleMouseUp" />
+            <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img4"
+                src="@resource/magicCircle/r_03.png" @touchstart="handleMouseDown" @touchend="handleMouseUp" />
         </div>
         <div v-if="eventId === '3'" class="image-container">
             <img :class="{ 'hidden': hideImage1 }" class="img1" src="@resource/content/mini2.png"
                 @touchstart="handleMouseDown" @touchend="handleMouseUp" />
-            <img :style="{ width: image2Width + '%' }" class="img2" src="@resource/magicCircle/g_01.png"
-                @touchstart="handleMouseDown" @touchend="handleMouseUp" @transitionend="handleTransitionEnd" />
-            <img :style="{ width: image3Width + '%' }" class="img3" src="@resource/magicCircle/g_02.png"
-                @touchstart="handleMouseDown" @touchend="handleMouseUp" />
-            <img :style="{ width: image3Width + '%' }" class="img4" src="@resource/magicCircle/g_03.png"
-                @touchstart="handleMouseDown" @touchend="handleMouseUp" />
+            <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img2"
+                src="@resource/magicCircle/g_01.png" @touchstart="handleMouseDown" @touchend="handleMouseUp"
+                @transitionend="handleTransitionEnd" />
+            <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img3"
+                src="@resource/magicCircle/g_02.png" @touchstart="handleMouseDown" @touchend="handleMouseUp" />
+            <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img4"
+                src="@resource/magicCircle/g_03.png" @touchstart="handleMouseDown" @touchend="handleMouseUp" />
         </div>
         <div v-if="eventId === '5'" class="image-container">
             <img :class="{ 'hidden': hideImage1 }" class="img1" src="@resource/content/mini2.png"
                 @touchstart="handleMouseDown" @touchend="handleMouseUp" />
-            <img :style="{ width: image2Width + '%' }" class="img2" src="@resource/magicCircle/p_01.png"
-                @touchstart="handleMouseDown" @touchend="handleMouseUp" @transitionend="handleTransitionEnd" />
-            <img :style="{ width: image3Width + '%' }" class="img3" src="@resource/magicCircle/p_02.png"
-                @touchstart="handleMouseDown" @touchend="handleMouseUp" />
-            <img :style="{ width: image3Width + '%' }" class="img4" src="@resource/magicCircle/p_03.png"
-                @touchstart="handleMouseDown" @touchend="handleMouseUp" />
+            <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img2"
+                src="@resource/magicCircle/p_01.png" @touchstart="handleMouseDown" @touchend="handleMouseUp"
+                @transitionend="handleTransitionEnd" />
+            <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img3"
+                src="@resource/magicCircle/p_02.png" @touchstart="handleMouseDown" @touchend="handleMouseUp" />
+            <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img4"
+                src="@resource/magicCircle/p_03.png" @touchstart="handleMouseDown" @touchend="handleMouseUp" />
         </div>
-        <div class="loading-container">
+        <div class="loading-container" @touchstart="handleMouseDown" @touchend="handleMouseUp">
             <div class="webgl-container">
                 <canvas class="webgl"></canvas>
             </div>
@@ -138,6 +141,15 @@ export default {
             }
         };
 
+        const stopAudio2 = () => {
+            if (audio2.value) {
+                audio2.value.pause();
+                audio2.value.currentTime = 0;
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        }
+
         import('@resource/sounds/acquired.wav')
             .then(src => {
                 audio3.value = new Audio(src.default);
@@ -196,6 +208,8 @@ export default {
         const animateImage2 = ref(false)
         const image2Width = ref(0)
         const image3Width = ref(0)
+        const imageLeft = ref(50)
+        const imageTop = ref(50)
 
         let typingTimeout;
 
@@ -226,11 +240,15 @@ export default {
             hideImage1.value = true;
             image3Width.value = 100;
             image2Width.value = 100;
+            imageLeft.value = 0;
+            imageTop.value = 20;
         }
 
         const handleMouseUp = () => {
             image3Width.value = 0;
             image2Width.value = 0;
+            imageLeft.value = 50;
+            imageTop.value = 50;
         }
 
 
@@ -252,6 +270,7 @@ export default {
 
 
         const next = () => {
+
             playAudio4()
             if (eventId.value === '1') {
                 localStorage.setItem('clearId1', 'true')
@@ -268,6 +287,7 @@ export default {
 
         const handleTransitionEnd = () => {
             if (image2Width.value === 100) {
+                stopAudio2()
                 playAudio3()
                 finishModal.value = true;
             } else {
@@ -283,6 +303,10 @@ export default {
         onMounted(() => {
             setVH();
             window.addEventListener('resize', setVH);
+
+            document.addEventListener('touchmove', function (e) {
+                e.preventDefault();
+            }, { passive: false });
 
             experience = new Experience(document.querySelector('canvas.webgl'));
 
@@ -329,7 +353,9 @@ export default {
             rewardText,
             normalReward,
             premiumReward,
-            home
+            home,
+            imageLeft,
+            imageTop
         }
     }
 }
@@ -340,13 +366,14 @@ export default {
     height: calc(87.5 * var(--vh));
     width: 100%;
     position: relative;
-    overflow: hidden;
+
 }
 
 .webgl {
     position: fixed;
     left: 0;
     outline: none;
+
 }
 
 .loading-container {
@@ -354,8 +381,8 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 100vh;
     background-color: #fff;
+
 }
 
 .img1,
@@ -383,7 +410,7 @@ export default {
     z-index: 3;
     top: calc(45 * var(--vh));
     width: 0%;
-    transition: width 3s ease-in-out;
+    transition: width 3s ease-in-out, left 3s ease-in-out, top 3s ease-in-out;
     animation: rotate1 3s linear infinite;
 }
 
@@ -391,21 +418,21 @@ export default {
 
 @keyframes rotate1 {
     from {
-        transform: translate(-50%, -50%) rotate(0deg);
+        transform: rotate(0deg);
     }
 
     to {
-        transform: translate(-50%, -50%) rotate(360deg);
+        transform: rotate(360deg);
     }
 }
 
 @keyframes rotate2 {
     from {
-        transform: translate(-50%, -50%) rotate(360deg);
+        transform: rotate(360deg);
     }
 
     to {
-        transform: translate(-50%, -50%) rotate(0deg);
+        transform: rotate(0deg);
     }
 }
 
@@ -413,7 +440,7 @@ export default {
     z-index: 3;
     top: calc(45 * var(--vh));
     width: 0%;
-    transition: width 3s ease-in-out;
+    transition: width 3s ease-in-out, left 3s ease-in-out, top 3s ease-in-out;
     animation: rotate2 3s linear infinite;
 }
 
@@ -421,7 +448,7 @@ export default {
     z-index: 3;
     top: calc(45 * var(--vh));
     width: 0%;
-    transition: width 3s ease-in-out;
+    transition: width 3s ease-in-out, left 3s ease-in-out, top 3s ease-in-out;
     animation: rotate1 3s linear infinite;
 }
 
@@ -452,7 +479,6 @@ export default {
 }
 
 .text-container1 p {
-    overflow: hidden;
     padding: 20px 10px 20px 10px;
     color: #000;
     font-family: "NanumSquare", sans-serif;
@@ -481,7 +507,7 @@ export default {
 
 .side-image-container img {
     background-color: #fff;
-    overflow: hidden;
+
     height: 70%;
     width: 70%;
     display: block;
