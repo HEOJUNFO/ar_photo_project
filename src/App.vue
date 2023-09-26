@@ -116,8 +116,10 @@ export default {
 
                     if (useChange == true) {
 
+                        let hash = window.location.hash;
+                        hash = hash.slice(2, hash.length);
 
-                        router.push({ path: '/ios', query: { hash: window.location.hash } });
+                        router.push({ path: '/ios', query: { hash: hash } });
                     }
 
                     return false;
@@ -143,11 +145,8 @@ export default {
 
 
         onMounted(() => {
-            console.log(window.location)
-            let hash = window.location.hash;
-            hash = hash.slice(2, hash.length);
 
-            router.push({ path: '/ios', query: { hash: hash } });
+
 
             checkBrowser(true)
 
