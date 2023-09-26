@@ -56,6 +56,8 @@ export default {
 
             window.addEventListener('resize', setVH);
 
+            stopAudio();
+
             localStorage.setItem('eventId', 9)
 
             if (localStorage.getItem('clearId9') === 'true') {

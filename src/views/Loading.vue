@@ -110,7 +110,7 @@
 </template>
   
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import router from '../router'
 import { createRouterMatcher } from 'vue-router'
 
@@ -211,14 +211,22 @@ export default {
             document.documentElement.style.setProperty('--vh', `${vh}px`);
         }
 
+        window.history.pushState(null, null, window.location.href);
+        window.onpopstate = function () {
+            if (check1Modal.value || check2Modal.value) {
+                check1Modal.value = false
+                check2Modal.value = false
+            }
+        };
 
         onMounted(() => {
             window.scrollTo(0, 0);
             setVH();
+
             window.addEventListener('resize', setVH);
 
             eventId.value = localStorage.getItem('eventId')
-            console.log(eventId.value)
+
             if (localStorage.getItem('characterID') === null) {
                 localStorage.setItem('characterID', 0)
             }
@@ -239,6 +247,8 @@ export default {
 
 
         })
+
+
         return { showModal, start, close, buttonCheck1, buttonCheck2, check1, check2, check1Modal, check2Modal }
     }
 }
@@ -397,7 +407,7 @@ export default {
 }
 
 .character-text button.active svg circle {
-    fill: #F0D7CA;
+    fill: #D50F4A;
 }
 
 .terms-modal {

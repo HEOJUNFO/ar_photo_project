@@ -274,7 +274,7 @@ export default {
     font-weight: 700;
     line-height: 28px;
     letter-spacing: -0.5px;
-    margin-bottom: 15%;
+
     max-width: 18ch;
     overflow-wrap: break-word;
     word-break: keep-all;
@@ -290,7 +290,8 @@ export default {
     position: relative;
     width: 80%;
     background: var(--Main-Pink, #F0D7CA);
-    margin-top: calc(5 * var(--vh));
+    margin-top: calc(2 * var(--vh));
+    margin-bottom: calc(2 * var(--vh));
 
 
 }

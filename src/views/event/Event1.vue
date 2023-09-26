@@ -24,6 +24,7 @@ export default {
     setup() {
 
         const playAudio2 = inject('playAudio');
+        const stopAudio = inject('stopAudio');
 
         const clear = ref(false);
 
@@ -52,6 +53,8 @@ export default {
             setVH();
 
             window.addEventListener('resize', setVH);
+
+            stopAudio();
 
             localStorage.setItem('eventId', 1)
 
