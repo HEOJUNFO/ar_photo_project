@@ -143,7 +143,11 @@ export default {
 
 
         onMounted(() => {
-            router.push({ path: '/ios', query: { hash: window.location.hash } });
+            console.log(window.location)
+            let hash = window.location.hash;
+            hash = hash.slice(2, hash.length);
+
+            router.push({ path: '/ios', query: { hash: hash } });
 
             checkBrowser(true)
 
