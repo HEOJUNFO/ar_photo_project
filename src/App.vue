@@ -4,6 +4,9 @@
             <component :is="Component" />
         </transition>
     </router-view>
+    <div>
+        <img v-if="isIOS" id="transferDesc" src="@resource/common/kakaoTransfer2.png">
+    </div>
 </template>
 
 <script>
@@ -13,6 +16,7 @@ import router from './router'
 export default {
     name: 'App',
     setup() {
+        const isIOS = ref(false)
 
         const getBrowserName = () => {
             var userAgent = navigator.userAgent.toLowerCase();
@@ -116,7 +120,8 @@ export default {
 
                     if (useChange == true) {
 
-                        router.push('/ios')
+                        isIOS.value = true
+                        // router.push('/ios')
                     }
 
                     return false;
@@ -152,37 +157,10 @@ export default {
                 location.protocol = 'https:';
             }
 
-
-
-            // window.onload = () => {
-            //     if (navigator.userAgent.match(/inapp|NAVER|KAKAOTALK|Snapchat|Line|WirtschaftsWoche|Thunderbird|Instagram|everytimeApp|WhatsApp|Electron|wadiz|AliApp|zumapp|iPhone(.*)Whale|Android(.*)Whale|kakaostory|band|twitter|DaumApps|DaumDevice\/mobile|FB_IAB|FB4A|FBAN|FBIOS|FBSS|SamsungBrowser\/[^1-9]/)) {
-            //         document.body.innerHTML = "";
-            //         var tartgetUrl = window.location.host + window.location.pathname + window.location.search;
-
-            //         if (navigator.userAgent.match(/iPhone|iPad/i)) {
-            //             //ios
-            //             var visitedAt = (new Date()).getTime(); // 방문 시간
-            //             setTimeout(
-            //                 function () {
-            //                     if ((new Date()).getTime() - visitedAt < 2000) {
-            //                         location.href = IOS_CHROME_MARKET_URL;
-            //                     }
-            //                 }, 500);
-
-            //             setTimeout(function () {
-            //                 location.href = "googlechromes://" + tartgetUrl;
-            //             }, 0);
-            //         } else {
-            //             //android
-            //             location.href = "intent://" + tartgetUrl + "#Intent;scheme=https;package=com.android.chrome;end";
-            //         }
-            //     }
-            // };
-
         });
 
 
-        return {}
+        return { isIOS }
     }
 }
 </script>
@@ -217,6 +195,12 @@ export default {
 }
 
 
+#transferDesc {
+    position: fixed;
+    width: 100%;
+    height: auto;
+    z-index: 99;
+}
 
 .fade-enter-active,
 .fade-leave-active {

@@ -50,7 +50,8 @@ export default {
         onMounted(() => {
             let browserName = getBrowserName();
             if (browserName !== 'kakao') {
-                // alert(location.href)
+                let eventId = localStorage.getItem('eventId');
+                alert(eventId)
             }
 
         })
