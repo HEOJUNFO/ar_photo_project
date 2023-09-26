@@ -11,6 +11,8 @@ export default class Renderer
         this.scene = this.experience.scene
         this.camera = this.experience.camera
 
+        this.currentFacingMode = 'environment'
+
         this.setInstance()
         this.setWebcamBackground()
     }
@@ -32,22 +34,44 @@ export default class Renderer
     }
 
     async setWebcamBackground() {
-        const video = document.createElement('video');
+        this.video = document.createElement('video');
+        this.video.setAttribute('playsinline', 'true');
+        this.video.setAttribute('autoplay', 'true');
+        this.video.setAttribute('muted', 'false');
 
-        const stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: 'environment' }
+        const stream = await this.getCameraStream(this.currentFacingMode);
+        this.video.srcObject = stream;
+        return new Promise((resolve) => {
+            this.video.onloadedmetadata = () => {
+                this.video.play();
+
+              
+
+                const videoTexture = new THREE.VideoTexture(this.video);
+                videoTexture.minFilter = THREE.NearestFilter
+                videoTexture.magFilter = THREE.NearestFilter
+                videoTexture.format = THREE.RGBAFormat;
+                videoTexture.colorSpace = THREE.SRGBColorSpace;
+                videoTexture.wrapS = THREE.RepeatWrapping
+                videoTexture.wrapT = THREE.ClampToEdgeWrapping;
+            
+                this.scene.background = videoTexture;
+            
+
+                resolve();
+            };
         });
-        video.srcObject = stream;
-        video.muted = true;
-        video.play();
+    }
 
-        const videoTexture = new THREE.VideoTexture(video);
-        videoTexture.minFilter = THREE.LinearFilter;
-        videoTexture.magFilter = THREE.LinearFilter;
-        videoTexture.format = THREE.RGBAFormat;
-        videoTexture.colorSpace = THREE.SRGBColorSpace;
+    async getCameraStream(facingMode) {
+        if(this.video && this.video.srcObject) {
+            let tracks = this.video.srcObject.getTracks();
+            tracks.forEach(track => track.stop());
+        }
 
-        this.scene.background = videoTexture;
+        return await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: facingMode },
+        });
     }
 
     resize()

@@ -49,17 +49,6 @@ export default class Renderer
             this.video.onloadedmetadata = () => {
                 this.video.play();
 
-                const newHeight = this.sizes.height
-                const newWidth = this.sizes.height * 0.75
-    
-                this.instance.setSize(newWidth, newHeight);
-                this.instance.setViewport(
-                    (this.sizes.width - newWidth) / 2,
-                    (this.sizes.height - newHeight) / 2,
-                    newWidth,
-                    newHeight
-                );
-
                 const videoTexture = new THREE.VideoTexture(this.video);
                 videoTexture.minFilter = THREE.NearestFilter
                 videoTexture.magFilter = THREE.NearestFilter
