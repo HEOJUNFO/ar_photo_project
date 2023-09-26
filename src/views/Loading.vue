@@ -104,6 +104,7 @@
                     <p>- 저장 : 이용 과정에서 웹에 파일을 업로드/다운로드 하는 기능을 이용할 수 있습니다.</p>
 
                 </div>
+                <video id="video" width="0" height="0" autoplay></video>
             </div>
         </div>
     </div>
@@ -137,23 +138,20 @@ export default {
         const start = () => {
 
             if (!check1.value || !check2.value) return
-            try {
-                if (navigator && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                    const stream = navigator.mediaDevices.getUserMedia({ video: true })
-                        .then(stream => {
-                            stream.getTracks().forEach(track => track.stop());
-                        })
-                        .catch(err => {
-                            console.log(err)
-                        });
-                } else {
-                    throw new Error("MediaDevices are not supported");
-                }
-                localStorage.setItem('consentGiven', 'true');
-                next();
-            } catch (err) {
-                alert(err)
-            }
+
+            const videoElement = document.getElementById('video');
+
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then((stream) => {
+                    videoElement.srcObject = stream;
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+
+            localStorage.setItem('consentGiven', 'true');
+            next();
+
 
         }
 
