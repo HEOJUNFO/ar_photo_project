@@ -110,8 +110,6 @@ export default {
             let os = getOsName();
             let browser = getBrowserName();
 
-            alert(os + " " + browser)
-
             if (os.match(/iPhone|iPad|iPod/i)) { // 아이폰 접속 경우
                 // if(browser == 'kakao' || browser == 'whale')
                 if (browser == 'kakao') {
@@ -147,6 +145,11 @@ export default {
             if (location.protocol !== 'https:') {
                 location.protocol = 'https:';
             }
+
+            let os2 = getOsName();
+            let browser2 = getBrowserName();
+
+            alert(os2 + " " + browser2)
 
             checkBrowser(true)
 
