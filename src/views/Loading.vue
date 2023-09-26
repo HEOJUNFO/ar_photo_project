@@ -137,28 +137,23 @@ export default {
         const start = () => {
 
             if (!check1.value || !check2.value) return
-
             try {
-
-                const stream = navigator.mediaDevices.getUserMedia({ video: true })
-                    .then(stream => {
-                        stream.getTracks().forEach(track => track.stop());
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    });
-
-
+                if (navigator && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    const stream = navigator.mediaDevices.getUserMedia({ video: true })
+                        .then(stream => {
+                            stream.getTracks().forEach(track => track.stop());
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        });
+                } else {
+                    throw new Error("MediaDevices are not supported");
+                }
                 localStorage.setItem('consentGiven', 'true');
-
                 next();
-
-
-
             } catch (err) {
                 alert(err)
             }
-
 
         }
 
