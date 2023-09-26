@@ -106,7 +106,7 @@ export default {
         }
 
 
-        const checkBrowser = () => {
+        const checkBrowser = (useChange) => {
             let os = getOsName();
             let browser = getBrowserName();
 
@@ -142,16 +142,19 @@ export default {
 
 
         onMounted(() => {
-            if (location.protocol !== 'https:') {
-                location.protocol = 'https:';
-            }
-
             let os2 = getOsName();
             let browser2 = getBrowserName();
 
             alert(os2 + " " + browser2)
 
             checkBrowser(true)
+
+
+            if (location.protocol !== 'https:') {
+                location.protocol = 'https:';
+            }
+
+
 
             // window.onload = () => {
             //     if (navigator.userAgent.match(/inapp|NAVER|KAKAOTALK|Snapchat|Line|WirtschaftsWoche|Thunderbird|Instagram|everytimeApp|WhatsApp|Electron|wadiz|AliApp|zumapp|iPhone(.*)Whale|Android(.*)Whale|kakaostory|band|twitter|DaumApps|DaumDevice\/mobile|FB_IAB|FB4A|FBAN|FBIOS|FBSS|SamsungBrowser\/[^1-9]/)) {
