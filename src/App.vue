@@ -8,6 +8,7 @@
 
 <script>
 import { ref, onMounted, provide, onUnmounted } from 'vue'
+import router from './router'
 
 export default {
     name: 'App',
@@ -112,12 +113,10 @@ export default {
             if (os.match(/iPhone|iPad|iPod/i)) { // 아이폰 접속 경우
                 // if(browser == 'kakao' || browser == 'whale')
                 if (browser == 'kakao') {
-                    alert('kakao')
+
                     if (useChange == true) {
-                        alert('add')
-                        var url = window.location.href;
-                        var link = url.slice(0, url.lastIndexOf("/")) + "/kakao.html";
-                        location.href = link;
+
+                        router.push('/ios')
                     }
 
                     return false;
@@ -143,7 +142,6 @@ export default {
 
 
         onMounted(() => {
-
 
 
 
