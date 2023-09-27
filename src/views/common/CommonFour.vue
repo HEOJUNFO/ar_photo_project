@@ -132,23 +132,46 @@ export default {
         const playAudio2 = () => {
             if (audio2.value) {
                 if (!audio2.value.paused) {
+
                     audio2.value.pause();
                     audio2.value.currentTime = 0;
                 }
+                console.log("playAudio2")
+                audio2.value.volume = 1;
                 audio2.value.play();
             } else {
                 console.error("Audio not initialized yet.");
             }
         };
 
+        const fadeOutDuration = 1800;
+
         const stopAudio2 = () => {
+            console.log("stopAudio2")
             if (audio2.value) {
-                audio2.value.pause();
-                audio2.value.currentTime = 0;
+                const startTime = Date.now();
+                const startVolume = audio2.value.volume;
+
+                const fadeOut = () => {
+                    const elapsedTime = Date.now() - startTime;
+                    const remainingTime = fadeOutDuration - elapsedTime;
+
+                    if (remainingTime <= 0) {
+                        audio2.value.volume = 0;
+                        audio2.value.pause();
+                        audio2.value.currentTime = 0;
+                    } else {
+                        audio2.value.volume = startVolume * (remainingTime / fadeOutDuration);
+                        console.log(audio2.value.volume)
+                        requestAnimationFrame(fadeOut);
+                    }
+                };
+
+                fadeOut();
             } else {
                 console.error("Audio not initialized yet.");
             }
-        }
+        };
 
         import('@resource/sounds/acquired.wav')
             .then(src => {
@@ -245,6 +268,7 @@ export default {
         }
 
         const handleMouseUp = () => {
+            stopAudio2()
             image3Width.value = 0;
             image2Width.value = 0;
             imageLeft.value = 50;
@@ -489,7 +513,7 @@ export default {
     letter-spacing: -0.4px;
     margin: 0;
     border-radius: 10px;
-    max-width: 30ch;
+    max-width: 26ch;
     overflow-wrap: break-word;
     word-break: keep-all;
     text-align: left;

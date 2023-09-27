@@ -328,7 +328,7 @@ export default {
     letter-spacing: -0.4px;
     align-self: flex-start;
     text-align: left;
-    max-width: 30ch;
+    max-width: 26ch;
     overflow-wrap: break-word;
     word-break: keep-all;
 }

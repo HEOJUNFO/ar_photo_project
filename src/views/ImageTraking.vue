@@ -352,7 +352,7 @@ export default {
     letter-spacing: -0.4px;
     margin: 0;
     border-radius: 10px;
-    max-width: 30ch;
+    max-width: 26ch;
     overflow-wrap: break-word;
     word-break: keep-all;
     text-align: left;

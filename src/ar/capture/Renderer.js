@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import Experience from './Experience.js'
+import { Grayscale } from 'konva/lib/filters/Grayscale.js'
 
 export default class Renderer
 {
@@ -43,6 +44,7 @@ export default class Renderer
         this.video.setAttribute('autoplay', 'true');
         this.video.setAttribute('muted', 'false');
 
+
         const stream = await this.getCameraStream(this.currentFacingMode);
         this.video.srcObject = stream;
         return new Promise((resolve) => {
@@ -55,7 +57,7 @@ export default class Renderer
                 videoTexture.format = THREE.RGBAFormat;
                 videoTexture.colorSpace = THREE.SRGBColorSpace;
                 videoTexture.wrapS = THREE.RepeatWrapping
-                videoTexture.wrapT = THREE.ClampToEdgeWrapping;
+                videoTexture.wrapT = THREE.RepeatWrapping
 
                 if(this.currentFacingMode === 'user') {
                 videoTexture.matrixAutoUpdate = false;

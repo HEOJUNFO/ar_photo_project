@@ -174,6 +174,15 @@
         <div v-show="setFrameSrc" class="frame">
             <img :src="setFrameSrc" alt="봄" />
         </div>
+        <div v-show="finishModal" class="image-container2">
+            <div class="reward-container">
+                <img class="image1" src="@resource/common/label.png" />
+                <p class="p1">가을의 숲 웹프레임 1종</p>
+                <p class="p2">(서비스 내 사진촬영에서 확인 및 사용가능)</p>
+                <img class="image2" src="@resource/icon/frame_04.png" />
+                <button @click="reward()">상품획득 성공</button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -257,6 +266,8 @@ export default {
         const setFrameSrc = ref(null)
         const characterSrc = ref(null)
         const characterID = ref(0)
+        const finishModal = ref(false)
+        const eventId = ref(0)
 
         const enableFilp = ref(true)
 
@@ -357,7 +368,10 @@ export default {
             showModal.value = true;
         };
 
-
+        const reward = () => {
+            finishModal.value = false;
+            localStorage.setItem('normalItem5', 'true')
+        };
 
         const home = () => {
 
@@ -410,9 +424,6 @@ export default {
             if (localStorage.getItem('clearId9') === 'true') {
                 FRAMES.value.push(FRAMESTORE[4])
             }
-            if (localStorage.getItem('clearId10') === 'true') {
-                FRAMES.value.push(FRAMESTORE[3])
-            }
 
 
             if (characterID.value === '0') {
@@ -423,6 +434,11 @@ export default {
                 characterSrc.value = new URL('@resource/frame/frame_uno.png', import.meta.url).href
             }
 
+            eventId.value = localStorage.getItem('eventId')
+            if (eventId.value === '10') {
+                finishModal.value = true
+                FRAMES.value.push(FRAMESTORE[3])
+            }
 
 
             experience = new Experience(document.querySelector('canvas.webgl'), saveImage);
@@ -460,7 +476,9 @@ export default {
             setFrame,
             setFrameSrc,
             characterSrc,
-            home
+            home,
+            finishModal,
+            reward
         }
     }
 }
@@ -789,5 +807,91 @@ export default {
 
 .selected {
     filter: grayscale(100%);
+}
+
+.image-container2 {
+    position: absolute;
+    width: 90%;
+    height: auto;
+    z-index: 10;
+    background-color: #fff;
+    border-radius: 16px;
+    left: 50%;
+    top: calc(50 * var(--vh));
+    transform: translate(-50%, -50%);
+    padding-bottom: calc(3 * var(--vh));
+}
+
+
+.reward-container {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: calc(-3 * var(--vh));
+
+}
+
+
+.image1 {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.image2 {
+    position: relative;
+    width: 60%;
+    height: auto;
+}
+
+.p1 {
+    position: relative;
+    color: var(--Text-Black, #111);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+    max-width: 20ch;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+
+}
+
+.p2 {
+    color: var(--Text-Gray, #767676);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: -0.3px;
+}
+
+.reward-container button {
+    width: 80%;
+    padding: 10px;
+    border-radius: 100px;
+    border: 2px solid var(--Point-Red-Dark, #922142);
+    background: var(--Point-Red, #D50F4A);
+    color: var(--Text-White, #FFF);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+    text-align: center;
+    z-index: 1;
+    position: relative;
+    box-shadow: 0px 3px #922142;
+    margin-top: calc(2 * var(--vh));
 }
 </style>
