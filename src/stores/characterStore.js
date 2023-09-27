@@ -324,7 +324,7 @@ export const useCharacterStore = defineStore('character', {
                 name: "우노",
                 maker: makerUrl2,
                 intro: [
-                    { text: "눈 떳다, 눈 떴어!" },
+                    { text: "눈 떴다, 눈 떴어!" },
                     { text: "안녕, 난 웨어울프 우노야" },
                     { text: "집으로 돌아가는 방법을 아냐고? 숲으로 가면 알 수 있을 거야. 신비의 숲은 모든 걸 알고 있거든." },
                     { text: "어젯밤 불어온 의문의 폭풍때문에 신비의 숲이 망가지고 이상기후가 찾아왔어." },

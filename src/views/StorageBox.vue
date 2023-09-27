@@ -689,11 +689,21 @@ export default {
     text-align: center;
     z-index: 1;
     position: fixed;
-    outline: 1px solid #06734C;
-    outline-offset: 2px;
     transform: rotate(45deg);
     margin-top: 25%;
     margin-left: 10%;
+}
+
+.used-button::before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    bottom: -3px;
+    left: -3px;
+    border: 1px solid #06734C;
+    border-radius: 100px;
+    z-index: -1;
 }
 
 .p1 {

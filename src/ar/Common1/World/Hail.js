@@ -18,7 +18,7 @@ export default class Hail {
 
         this.model = randomResource.scene.clone();
         this.model.scale.set(0.3, 0.3, 0.3)
-        this.model.position.set(Math.random() * 3 - 1.5, 5, 0)
+        this.model.position.set(Math.random() * 4.5 - 2.25, 5, 0)
         this.model.rotation.x = Math.random() * 2 * Math.PI;
         this.model.rotation.y = Math.random() * 2 * Math.PI;
         this.model.rotation.z = Math.random() * 2 * Math.PI;

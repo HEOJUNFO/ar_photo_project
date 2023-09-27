@@ -15,8 +15,8 @@ export default class Model
         
        
         this.startX = 0;
-        this.minX = -1.5;
-        this.maxX = 1.5;
+        this.minX = -2;
+        this.maxX = 2;
 
         window.addEventListener('touchstart', this.onTouchStart.bind(this));
         window.addEventListener('touchmove', this.onTouchMove.bind(this));

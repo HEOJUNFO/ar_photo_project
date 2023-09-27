@@ -289,9 +289,9 @@ export default {
 .button-container2 {
     position: relative;
     width: 80%;
-    background: var(--Main-Pink, #F0D7CA);
     margin-top: calc(2 * var(--vh));
     margin-bottom: calc(2 * var(--vh));
+    background-color: rgba(0, 0, 0, 0);
 
 
 }

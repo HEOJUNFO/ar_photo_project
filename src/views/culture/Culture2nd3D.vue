@@ -162,9 +162,9 @@ export default {
 
             let hex = hexToRgb(d);
             hex[3] = 0;
-            hex[0] -= 10;
-            hex[1] -= 10;
-            hex[2] -= 10;
+            hex[0] -= 50;
+            hex[1] -= 50;
+            hex[2] -= 50;
 
             legendColors[1] = hex;
         },
@@ -544,11 +544,12 @@ export default {
 }
 
 .png-button:hover {
-    border: none;
+    border: 3px solid #D50F4A;
     border-radius: 100px;
-    outline: 1px solid #D50F4A;
-    outline-offset: 2px;
+
 }
+
+
 
 
 .top-section {

@@ -159,6 +159,10 @@ export default {
 
             window.addEventListener('resize', setVH);
 
+            document.addEventListener('touchmove', function (e) {
+                e.preventDefault();
+            }, { passive: false });
+
             experience = new Experience(document.querySelector('canvas.webgl'), nextScene);
 
             setTimeout(() => {
