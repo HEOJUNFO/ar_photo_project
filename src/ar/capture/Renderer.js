@@ -76,7 +76,7 @@ export default class Renderer
             let tracks = this.video.srcObject.getTracks();
             tracks.forEach(track => track.stop());
         }
-
+        console.log(facingMode)
  
         return await navigator.mediaDevices.getUserMedia({
             video: { 
