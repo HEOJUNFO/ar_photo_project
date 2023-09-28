@@ -18,7 +18,7 @@
                 </svg></button>
         </div>
 
-        <div class="image-container">
+        <div class="image-container" :style="{ width: imageDataStore.width, height: imageDataStore.height }">
             <img :src="imageDataStore.imageData" />
         </div>
         <div class="bottom-section">
@@ -333,8 +333,7 @@ export default {
 }
 
 .image-container {
-    height: calc(75 * var(--vh));
-    width: calc((4/6) * 75 * var(--vh));
+
     display: flex;
     justify-content: center;
     align-items: center;

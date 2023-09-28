@@ -3,7 +3,9 @@ import { defineStore } from 'pinia'
 export const useImageDataStore = defineStore('image', {
     state: () => ({
         imageData: null,
-        eventName: null
+        eventName: null,
+        width: null,
+        height: null,
     }),
     actions: {
         setImageData(data) {
@@ -11,6 +13,10 @@ export const useImageDataStore = defineStore('image', {
         },
         setEventName(name) {
             this.eventName = name;
+        },
+        setCanvasSize(width, height) {
+            this.width = width;
+            this.height = height;
         },
         getImageData() {
             return this.imageData;

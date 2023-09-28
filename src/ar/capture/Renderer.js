@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import Experience from './Experience.js'
-import { Grayscale } from 'konva/lib/filters/Grayscale.js'
+
 
 export default class Renderer
 {
@@ -39,6 +39,7 @@ export default class Renderer
     }
 
     async setWebcamBackground() {
+        this.scene.background = null;
         this.video = document.createElement('video');
         this.video.setAttribute('playsinline', 'true');
         this.video.setAttribute('autoplay', 'true');
@@ -76,13 +77,14 @@ export default class Renderer
             let tracks = this.video.srcObject.getTracks();
             tracks.forEach(track => track.stop());
         }
-        console.log(facingMode)
- 
+     
+   
+
         return await navigator.mediaDevices.getUserMedia({
             video: { 
                 facingMode: facingMode,
                 width: { ideal: this.sizes.height },
-                height: { ideal: this.sizes.width }, 
+                height: { ideal:this.sizes.width }, 
             },
         });
     }
@@ -94,10 +96,17 @@ export default class Renderer
         this.video.play();
     }
 
-    resize()
+    async resize()
     {
+
+
         this.instance.setSize(this.sizes.width, this.sizes.height)
         this.instance.setPixelRatio(this.sizes.pixelRatio)
+
+       this.setWebcamBackground();
+
+
+
     }
 
     update()

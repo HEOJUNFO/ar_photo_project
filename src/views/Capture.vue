@@ -340,10 +340,9 @@ export default {
 
                 webglContainer.style.width = '100%'
                 experience.sizes.resize()
-                console.log('resize')
             } else {
                 webglContainer.style.width = 'calc((4/6) * 75 * var(--vh))'
-                experience.resize()
+                experience.sizes.resize()
             }
         }
 
@@ -351,6 +350,12 @@ export default {
             playAudio2();
             imageDataStore.setImageData(image)
             imageDataStore.setEventName(eventName.value)
+            let canvas = document.querySelector('canvas.webgl')
+            let width = canvas.style.width
+            let height = canvas.style.height
+            console.log(width, height)
+            imageDataStore.setCanvasSize(width, height)
+
             router.push({ path: '/capturereview' });
         }
 
