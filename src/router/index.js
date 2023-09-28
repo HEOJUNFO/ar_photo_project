@@ -8,7 +8,6 @@ import StorageBox from "@views/StorageBox.vue"
 import CaptureReview from "@views/CaptureReview.vue"
 import StorageBox2 from "@views/StorageBox2.vue"
 import Stage from "@views/Stage.vue"
-import ImageTraking from "@views/ImageTraking.vue"
 import CommonFour from "@views/common/CommonFour.vue"
 import Event1 from "@views/event/Event1.vue"
 import Event2 from "@views/event/Event2.vue"
@@ -38,7 +37,6 @@ export const routes = [
     {path: '/capturereview', component: CaptureReview, name: 'CaptureReview'},
     {path: '/storagebox2',component:StorageBox2, name:'StorageBox2'},
     {path: '/stage',component:Stage, name:'Stage'},
-    {path: '/imagetraking',component:ImageTraking, name:'ImageTraking'},
     {path: '/commonfour',component:CommonFour, name:'CommonFour'},
     {path: '/event1',component:Event1, name:'Event1'},
     {path: '/event2',component:Event2, name:'Event2'},
