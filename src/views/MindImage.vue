@@ -1,11 +1,19 @@
 <template>
     <div id="sceneContainer">
-        <a-scene
-            mindar-image="imageTargetSrc: https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.2/examples/image-tracking/assets/card-example/card.mind;"
-            vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+        <a-scene mindar-image="imageTargetSrc: https://cdn.jsdelivr.net/gh/HEOJUNFO/tracking@main/newtarget.mind;"
+            color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
+            device-orientation-permission-ui="enabled: false">
             <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-            <a-entity mindar-image-target="targetIndex: 0">
-                <a-plane color="blue" opacity="0.5" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
+
+            <a-assets>
+                <a-asset-item id="blueBeeModel"
+                    src="https://cdn.jsdelivr.net/gh/HEOJUNFO/tracking@main/blue_bee.gltf"></a-asset-item>
+            </a-assets>
+
+            <a-entity id="target" mindar-image-target="targetIndex: 0">
+                <a-gltf-model rotation="0 0 0 " position="0 -0.25 0" scale="0.2 0.2 0.2" src="#blueBeeModel"
+                    animation-mixer>
+                </a-gltf-model>
             </a-entity>
         </a-scene>
     </div>
@@ -19,7 +27,33 @@ import { useCharacterStore } from '../stores/characterStore.js'
 
 export default {
     name: 'ImageTracking',
-};
+    setup() {
+
+
+        onMounted(() => {
+            document.addEventListener("DOMContentLoaded", function () {
+                const sceneEl = document.querySelector('a-scene');
+                let arSystem;
+                sceneEl.addEventListener('loaded', function () {
+                    arSystem = sceneEl.systems["mindar-image-system"];
+                });
+                const exampleTarget = document.querySelector('#target');
+
+
+
+                exampleTarget.addEventListener("targetFound", event => {
+                    alert("target found");
+                });
+
+                exampleTarget.addEventListener("targetLost", event => {
+                    alert("target lost");
+                });
+
+            });
+        });
+
+    }
+}
 </script>
 
 <style scoped>
