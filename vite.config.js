@@ -31,5 +31,11 @@ export default {
     emptyOutDir: true,
     sourcemap: true
   },
-  plugins: [Vue()],
+  plugins: [Vue({
+    template: {
+      compilerOptions: {
+        isCustomElement: tag => tag.startsWith('a-')
+      }
+    }
+  })],
 };

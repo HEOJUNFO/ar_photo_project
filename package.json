@@ -8,6 +8,7 @@
     "build": "vite build"
   },
   "devDependencies": {
+    "@types/aframe": "^1.2.3",
     "@vitejs/plugin-vue": "^4.3.1",
     "vite": "^4.3.9"
   },
@@ -15,6 +16,7 @@
     "@ar-js-org/ar.js": "^3.4.5",
     "@ar-js-org/artoolkit5-js": "^0.3.0",
     "@vue/cli-service": "^5.0.8",
+    "aframe": "^1.4.2",
     "ar.js": "^2.2.2",
     "konva": "^9.2.0",
     "lil-gui": "^0.18.1",
