@@ -324,6 +324,7 @@ export default {
 
                 const constraints = {
                     video: true
+
                 };
                 video = document.getElementById("webcam");
 

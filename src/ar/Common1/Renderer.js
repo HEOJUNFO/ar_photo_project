@@ -70,7 +70,11 @@ export default class Renderer
         }
 
         return await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: facingMode },
+            video: { 
+                facingMode: facingMode,
+                width: { ideal: this.sizes.height },
+                height: { ideal: this.sizes.width }, 
+            },
         });
     }
 
