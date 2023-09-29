@@ -166,7 +166,7 @@ export default {
                         isScanningPaused.value = true;
                         setTimeout(() => {
                             isScanningPaused.value = false;
-                        }, 3000);
+                        }, 5000);
                     }
                 });
 
