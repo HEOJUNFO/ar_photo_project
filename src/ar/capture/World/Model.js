@@ -37,7 +37,7 @@ export default class Model
 
     setModel()
     {
-        this.model = this.resource.scene
+        this.model = this.resource.scene || this.resource.scenes[0]
         this.model.scale.set(2, 2, 2)
         this.scene.add(this.model)
 
@@ -47,55 +47,31 @@ export default class Model
             {
                 child.castShadow = true
                 child.name = 'model'
+                child.material.depthWrite = !child.material.transparent
                 this.experience.clickedObject.push(child);
             }
+            if(child.isMesh && child.morphTargetInfluences)
+            {
+               console.log(child.morphTargetDictionary)
+            }
+        
         })
-        this.experience.clickedObject.push(this.model);
+ this.experience.clickedObject.push(this.model);
     }
 
     setAnimation()
     {
-        this.animation = {}
-        
-        // Mixer
-        this.animation.mixer = new THREE.AnimationMixer(this.model)
-        
-        // Actions
-        this.animation.actions = {}
-        
-        
-        // 모든 애니메이션 클립에 대해 Action을 생성합니다.
-        this.resource.animations.forEach((clip, index) => {
-            const actionName = `action${index}`;
-            this.animation.actions[actionName] = this.animation.mixer.clipAction(clip);
-            this.animation.actions[actionName].play()
-        });
-    
-        let currentActionIndex = 0;
-        const actionKeys = Object.keys(this.animation.actions);
-        this.animation.actions.current = this.animation.actions[actionKeys[currentActionIndex]];
-        this.animation.actions.current.play();
-    
-        // Play the next action
-        this.animation.playNext = () =>
-        {
-            const oldAction = this.animation.actions.current;
-            
-            currentActionIndex = (currentActionIndex + 1) % actionKeys.length;
-            const newAction = this.animation.actions[actionKeys[currentActionIndex]];
-    
-            newAction.reset();
-            newAction.play();
-            newAction.crossFadeFrom(oldAction, 1);
-    
-            this.animation.actions.current = newAction;
-        }
+        this.clips = this.resource.animations || []
+        this.mixer = new THREE.AnimationMixer(this.model)
+ 
+
+        this.clips.forEach((clip) =>{
+                this.mixer.timeScale = 1.0;
+                 this.mixer.clipAction(clip).reset().play();
+
+        })
     }
 
-    update()
-    {
-        this.animation.mixer.update(this.time.delta * 0.001)
-    }
 
     onTouchStart(event) {
         if (this.isMoving) {
@@ -139,6 +115,6 @@ export default class Model
 
     update()
     {
-        this.animation.mixer.update(this.time.delta * 0.001)
+       this.mixer && this.mixer.update(this.time.delta * 0.001)
     }
 }
