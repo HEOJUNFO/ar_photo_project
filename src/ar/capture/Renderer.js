@@ -60,7 +60,9 @@ export default class Renderer
                 videoTexture.wrapS = THREE.RepeatWrapping
                 videoTexture.wrapT = THREE.RepeatWrapping
 
-        
+                if(this.currentFacingMode === 'user') {
+                    videoTexture.matrixAutoUpdate = false;
+                    videoTexture.matrix.scale(-1, 1);}
             
                 this.scene.background = videoTexture;
             
@@ -137,7 +139,9 @@ export default class Renderer
                videoTexture.wrapS = THREE.RepeatWrapping
                videoTexture.wrapT = THREE.RepeatWrapping
 
-       
+               if(this.currentFacingMode === 'user') {
+                videoTexture.matrixAutoUpdate = false;
+                videoTexture.matrix.scale(-1, 1);}
            
                this.scene.background = videoTexture;
            
