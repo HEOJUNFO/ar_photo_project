@@ -42,11 +42,11 @@ export default {
 
 
                 exampleTarget.addEventListener("targetFound", event => {
-                    alert("target found");
+                    // alert("target found");
                 });
 
                 exampleTarget.addEventListener("targetLost", event => {
-                    alert("target lost");
+                    // alert("target lost");
                 });
 
             });
