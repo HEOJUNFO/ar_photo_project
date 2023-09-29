@@ -186,7 +186,7 @@ export default {
                     router.push('/culture3d');
                     break;
                 case '8':
-                    router.push('/imagetraking');
+                    router.push('/mindimage');
                     break;
                 case '9':
                     router.push('/commonone3d');
