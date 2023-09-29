@@ -103,7 +103,7 @@ export default {
                 } else if (eventId.value === '7') {
                     router.push('/culture3d');
                 } else if (eventId.value === '8') {
-                    router.push('/event8');
+                    router.push('/mindimage');
                 } else if (eventId.value === '9') {
                     router.push('/event9');
                 }

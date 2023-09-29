@@ -22,8 +22,14 @@
                 <button @click="nextPage()">상품획득 성공</button>
             </div>
         </div>
+        <div id="example-scanning-overlay" class="">
+            <div class="inner">
+                <div class="scanline"></div>
+            </div>
+        </div>
         <div id="sceneContainer">
-            <a-scene mindar-image="imageTargetSrc: https://cdn.jsdelivr.net/gh/HEOJUNFO/tracking@main/newtarget.mind;"
+            <a-scene
+                mindar-image="uiScanning: no; imageTargetSrc: https://cdn.jsdelivr.net/gh/HEOJUNFO/tracking@main/newtarget.mind; "
                 color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
                 device-orientation-permission-ui="enabled: false">
                 <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
@@ -68,7 +74,9 @@ export default {
         const finishModal = ref(false);
         const eventId = ref('8')
         const uiScanning = ref(false);
-        let arSystem
+
+        let sceneEl = null;
+        let arSystem = null;
 
         const textIndex = ref(5)
         const characterStore = useCharacterStore()
@@ -118,15 +126,20 @@ export default {
             } else if (!isRed.value) {
                 isRed.value = true;
                 currentModel.value = 'red';
+
                 setTimeout(() => {
                     finishModal.value = true;
+                    const scanningOverlay = document.querySelector('#example-scanning-overlay');
+                    scanningOverlay.style.display = 'none';
                 }, 1500);
             }
         }
 
 
         const nextPage = () => {
-            arSystem.pause();
+            const sceneContainer = document.querySelector('#sceneContainer');
+            sceneContainer.style.display = 'none';
+
             if (eventId.value === '8') {
                 localStorage.setItem('clearId8', 'true')
                 localStorage.setItem('normalItem5', 'true')
@@ -143,44 +156,45 @@ export default {
             setTimeout(async () => {
                 typeText()
             }, 100);
-
-            document.addEventListener("DOMContentLoaded", function () {
-                const sceneEl = document.querySelector('a-scene');
-
-                sceneEl.addEventListener('loaded', function () {
-                    arSystem = sceneEl.systems["mindar-image-system"];
-                    console.log(arSystem.uiScanning)
-                });
-                const exampleTarget = document.querySelector('#target');
-
-
-
-
-                exampleTarget.addEventListener("targetFound", event => {
-
-                    if (!isScanningPaused.value) {
-
-                        toggleColorFlag();
-
-                        isScanningPaused.value = true;
-                        setTimeout(() => {
-                            isScanningPaused.value = false;
-                        }, 5000);
-                    }
-                });
-
-                exampleTarget.addEventListener("targetLost", event => {
-
-                    currentModel.value = 'none';
-
-                });
+            sceneEl = document.querySelector('a-scene');
+            sceneEl.addEventListener('loaded', function () {
+                arSystem = sceneEl.systems["mindar-image-system"];
 
             });
+
+
+            const exampleTarget = document.querySelector('#target');
+
+
+
+
+            exampleTarget.addEventListener("targetFound", event => {
+
+                if (!isScanningPaused.value) {
+
+                    toggleColorFlag();
+
+                    isScanningPaused.value = true;
+
+                    const scanningOverlay = document.querySelector('#example-scanning-overlay');
+                    scanningOverlay.style.display = 'none';
+                    setTimeout(() => {
+                        isScanningPaused.value = false;
+                        scanningOverlay.style.display = 'flex';
+                    }, 5000);
+                }
+            });
+
+            exampleTarget.addEventListener("targetLost", event => {
+
+                currentModel.value = 'none';
+
+            });
+
+
         });
 
-        onBeforeRouteLeave(() => {
-            arSystem.pause();
-        })
+
 
         return {
             isBlue,
@@ -198,8 +212,8 @@ export default {
 
 <style scoped>
 #sceneContainer {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: calc(100 * var(--vh));
     overflow: hidden;
 }
 
@@ -383,6 +397,51 @@ a-scene {
     position: relative;
     box-shadow: 0px 3px #922142;
     margin-top: calc(2 * var(--vh));
+}
+
+#example-scanning-overlay {
+    width: 100%;
+    height: calc(100 * var(--vh));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: transparent;
+    z-index: 2;
+}
+
+#example-scanning-overlay .inner {
+    width: 80%;
+    height: calc(45 * var(--vh));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: linear-gradient(to right, white 10px, transparent 10px) 0 0, linear-gradient(to right, white 10px, transparent 10px) 0 100%, linear-gradient(to left, white 10px, transparent 10px) 100% 0, linear-gradient(to left, white 10px, transparent 10px) 100% 100%, linear-gradient(to bottom, white 10px, transparent 10px) 0 0, linear-gradient(to bottom, white 10px, transparent 10px) 100% 0, linear-gradient(to top, white 10px, transparent 10px) 0 100%, linear-gradient(to top, white 10px, transparent 10px) 100% 100%;
+    background-repeat: no-repeat;
+    background-size: 40px 40px;
+}
+
+#example-scanning-overlay .inner .scanline {
+    position: absolute;
+    width: 100%;
+    height: 10px;
+    background: white;
+    animation: move 2s linear infinite;
+}
+
+@keyframes move {
+    0% {
+        transform: translateY(-20vh);
+    }
+
+    100% {
+        transform: translateY(20vh);
+    }
 }
 </style>
 
