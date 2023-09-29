@@ -144,6 +144,11 @@ export default {
                 navigator.mediaDevices.getUserMedia({ video: true })
                     .then((stream) => {
                         videoElement.srcObject = stream;
+
+                        videoElement.onloadedmetadata = () => {
+
+                            videoElement.srcObject.getTracks().forEach(track => track.stop());
+                        };
                     })
                     .catch((error) => {
                         alert(error);
@@ -153,7 +158,9 @@ export default {
                 alert(error);
             }
             localStorage.setItem('consentGiven', 'true');
-            next();
+            setTimeout(() => {
+                next();
+            }, 1000);
 
 
         }
