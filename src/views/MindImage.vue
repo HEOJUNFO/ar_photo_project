@@ -119,7 +119,6 @@ export default {
                 isRed.value = true;
                 currentModel.value = 'red';
                 setTimeout(() => {
-                    arSystem.pause();
                     finishModal.value = true;
                 }, 1500);
             }
@@ -127,7 +126,7 @@ export default {
 
 
         const nextPage = () => {
-
+            arSystem.pause();
             if (eventId.value === '8') {
                 localStorage.setItem('clearId8', 'true')
                 localStorage.setItem('normalItem5', 'true')
