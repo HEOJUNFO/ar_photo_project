@@ -121,6 +121,8 @@ export default class Renderer
 
         this.instance.setSize(this.sizes.width, this.sizes.height)
         this.instance.setPixelRatio(this.sizes.pixelRatio)
+
+        this.video.srcObject = null;
         const stream = await this.getCameraStream(this.currentFacingMode);
         this.video.srcObject = stream;
         this.video.play();
