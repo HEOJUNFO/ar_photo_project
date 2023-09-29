@@ -118,16 +118,33 @@ export default class Renderer
     async resize()
     {
 
-
         this.instance.setSize(this.sizes.width, this.sizes.height)
         this.instance.setPixelRatio(this.sizes.pixelRatio)
 
-        this.video.srcObject = null;
-        const stream = await this.getCameraStream(this.currentFacingMode);
-        this.video.srcObject = stream;
-        this.video.play();
+       this.scene.background = null;
+     
+       const stream = await this.getCameraStream(this.currentFacingMode);
+       this.video.srcObject = stream;
+       return new Promise((resolve) => {
+           this.video.onloadedmetadata = () => {
+               this.video.play();
 
+               const videoTexture = new THREE.VideoTexture(this.video);
+               videoTexture.minFilter = THREE.NearestFilter
+               videoTexture.magFilter = THREE.NearestFilter
+               videoTexture.format = THREE.RGBAFormat;
+               videoTexture.colorSpace = THREE.SRGBColorSpace;
+               videoTexture.wrapS = THREE.RepeatWrapping
+               videoTexture.wrapT = THREE.RepeatWrapping
 
+       
+           
+               this.scene.background = videoTexture;
+           
+
+               resolve();
+           };
+       });
 
     }
 
