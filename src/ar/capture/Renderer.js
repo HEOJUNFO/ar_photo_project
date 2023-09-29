@@ -60,9 +60,7 @@ export default class Renderer
                 videoTexture.wrapS = THREE.RepeatWrapping
                 videoTexture.wrapT = THREE.RepeatWrapping
 
-                if(this.currentFacingMode === 'user') {
-                videoTexture.matrixAutoUpdate = true;
-                videoTexture.matrix.scale(-1, 1);}
+        
             
                 this.scene.background = videoTexture;
             
@@ -93,7 +91,28 @@ export default class Renderer
         this.currentFacingMode = this.currentFacingMode === 'user' ? 'environment' : 'user';
         const stream = await this.getCameraStream(this.currentFacingMode);
         this.video.srcObject = stream;
-        this.video.play();
+        return new Promise((resolve) => {
+            this.video.onloadedmetadata = () => {
+                this.video.play();
+
+                const videoTexture = new THREE.VideoTexture(this.video);
+                videoTexture.minFilter = THREE.NearestFilter
+                videoTexture.magFilter = THREE.NearestFilter
+                videoTexture.format = THREE.RGBAFormat;
+                videoTexture.colorSpace = THREE.SRGBColorSpace;
+                videoTexture.wrapS = THREE.RepeatWrapping
+                videoTexture.wrapT = THREE.RepeatWrapping
+
+                if(this.currentFacingMode === 'user') {
+                    videoTexture.matrixAutoUpdate = false;
+                    videoTexture.matrix.scale(-1, 1);}
+            
+                this.scene.background = videoTexture;
+            
+
+                resolve();
+            };
+        });
     }
 
     async resize()
@@ -102,8 +121,9 @@ export default class Renderer
 
         this.instance.setSize(this.sizes.width, this.sizes.height)
         this.instance.setPixelRatio(this.sizes.pixelRatio)
-
-       this.setWebcamBackground();
+        const stream = await this.getCameraStream(this.currentFacingMode);
+        this.video.srcObject = stream;
+        this.video.play();
 
 
 
