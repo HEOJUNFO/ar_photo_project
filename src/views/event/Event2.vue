@@ -56,7 +56,7 @@ export default {
 
             localStorage.setItem('eventId', 2)
 
-            if (localStorage.getItem('clearId2') === 'true') {
+            if (localStorage.getItem('clearId4') === 'true') {
                 // clear.value = true;
             }
 

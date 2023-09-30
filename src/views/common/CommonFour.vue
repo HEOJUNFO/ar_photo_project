@@ -318,10 +318,10 @@ export default {
 
             playAudio4()
             if (eventId.value === '1') {
-                localStorage.setItem('clearId1', 'true')
+                localStorage.setItem('clearId3', 'true')
                 localStorage.setItem('normalItem0', 'true')
             } else if (eventId.value === '3') {
-                localStorage.setItem('clearId3', 'true')
+                localStorage.setItem('clearId1', 'true')
                 localStorage.setItem('normalItem1', 'true')
             } else if (eventId.value === '5') {
                 localStorage.setItem('clearId5', 'true')

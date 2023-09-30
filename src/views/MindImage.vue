@@ -208,7 +208,7 @@ export default {
             const sceneContainer = document.querySelector('#sceneContainer');
             sceneContainer.style.display = 'none';
 
-            localStorage.setItem('clearId8', 'true')
+            localStorage.setItem('clearId7', 'true')
             localStorage.setItem('normalItem3', 'true')
 
             router.push('/eventout')

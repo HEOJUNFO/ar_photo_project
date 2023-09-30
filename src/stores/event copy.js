@@ -19,32 +19,6 @@ export const useEventStore = defineStore('events', {
         eventData: {
             event: [{
                 id:0,
-                src: Uno,
-                icon: normal,
-                required: "null",
-                title1:'여름의 능력',
-                title2:'생기의 에너지 모으기',
-                title3:'B1층 푸드 에비뉴',
-                content1:'여름의 능력',
-                content2:'B1 식품관 입구',
-                content3:'푸드 에비뉴',
-                content4:'우노 웹스티커 1세트',
-                content5:'(서비스 내 사진 촬영해서 확인 및 사용가능)'
-            },{
-                id:1,
-                src: Coupon2,
-                icon:premium,
-                required: "null",
-                title1:'시간공방',
-                title2:'음식 촬영하기',
-                title3:'B1 F&B',
-                content1:'시간공방',
-                content2:'B1 중앙 에스컬레이터 앞',
-                content3:'F&B',
-                content4:'F&B 5천원 금액할인권',
-                content5:'증정장소 : 5F 사은행사장'
-            },{
-                id:2,
                 src: Bell,
                 icon: normal,
                 required: "null",
@@ -58,7 +32,7 @@ export const useEventStore = defineStore('events', {
                 content5:'(서비스 내 사진 촬영해서 확인 및 사용가능)'
             }
             ,{
-                id:3,
+                id:1,
                 src: Coupon,
                 icon:premium,
                 required: "null",
@@ -69,6 +43,32 @@ export const useEventStore = defineStore('events', {
                 content2:'2F 남문 방면 중앙창문 앞',
                 content3:'휴게공간',
                 content4:'패션·잡화 1만원 금액할인권',
+                content5:'증정장소 : 5F 사은행사장'
+            },{
+                id:2,
+                src: Uno,
+                icon: normal,
+                required: "null",
+                title1:'여름의 능력',
+                title2:'생기의 에너지 모으기',
+                title3:'B1층 푸드 에비뉴',
+                content1:'여름의 능력',
+                content2:'B1 식품관 입구',
+                content3:'푸드 에비뉴',
+                content4:'우노 웹스티커 1세트',
+                content5:'(서비스 내 사진 촬영해서 확인 및 사용가능)'
+            },{
+                id:3,
+                src: Coupon2,
+                icon:premium,
+                required: "null",
+                title1:'시간공방',
+                title2:'음식 촬영하기',
+                title3:'B1 F&B',
+                content1:'시간공방',
+                content2:'B1 중앙 에스컬레이터 앞',
+                content3:'F&B',
+                content4:'F&B 5천원 금액할인권',
                 content5:'증정장소 : 5F 사은행사장'
             },{
                 id:4,
@@ -99,20 +99,6 @@ export const useEventStore = defineStore('events', {
             },
             {
                 id:6,
-                src: Filter2,
-                icon: normal,
-                required: "null",
-                title1:'봄의 숲',
-                title2:'꿀벌 찾기',
-                title3:'3F 부암동 가든',
-                content1:'봄의 숲',
-                content2:'3F 그린동 남문 방면',
-                content3:'부암동 가든',
-                content4:'봄의 숲 웹프레임 1종',
-                content5:'(서비스 내 사진 촬영해서 확인 및 사용가능)'
-            },
-            {
-                id:7,
                 src: Filter1,
                 icon: normal,
                 required: "null",
@@ -123,6 +109,20 @@ export const useEventStore = defineStore('events', {
                 content2:'3F 북문 방면 중앙창문 앞',
                 content3:'휴게공간',
                 content4:'여름의 숲 웹프레임 1종',
+                content5:'(서비스 내 사진 촬영해서 확인 및 사용가능)'
+            },
+            {
+                id:7,
+                src: Filter2,
+                icon: normal,
+                required: "null",
+                title1:'봄의 숲',
+                title2:'꿀벌 찾기',
+                title3:'3F 부암동 가든',
+                content1:'봄의 숲',
+                content2:'3F 그린동 남문 방면',
+                content3:'부암동 가든',
+                content4:'봄의 숲 웹프레임 1종',
                 content5:'(서비스 내 사진 촬영해서 확인 및 사용가능)'
             },
             {

@@ -265,6 +265,7 @@ export default {
                         playAudio2();
                         premiumModal.value = false;
                         finishModal.value = true;
+                        clear.value = true;
                     } else {
                         next();
                     }
@@ -278,14 +279,14 @@ export default {
             playAudio3();
             if (eventId.value === '2') {
 
-                localStorage.setItem('clearId2', 'true')
+                localStorage.setItem('clearId4', 'true')
                 if (localStorage.getItem('premiumItem0') === 'used') {
                     localStorage.setItem('premiumItem0', 'used')
                 } else {
                     localStorage.setItem('premiumItem0', 'true')
                 }
             } else if (eventId.value === '4') {
-                localStorage.setItem('clearId4', 'true')
+                localStorage.setItem('clearId2', 'true')
                 localStorage.getItem('premiumItem1') === 'used' ? localStorage.setItem('premiumItem1', 'used') : localStorage.setItem('premiumItem1', 'true')
             } else if (eventId.value === '10') {
                 localStorage.setItem('clearId10', 'true')
@@ -313,11 +314,11 @@ export default {
                 premiumImageSrc.value = IMAGES[0].src;
                 premiumText.value = '패션·잡화 1만원 금액할인권';
                 localStorage.setItem('premiumItem0', 'true')
-                localStorage.getItem('clearId2') === 'true' ? clear.value = true : clear.value = false
+                localStorage.getItem('clearId4') === 'true' ? clear.value = true : clear.value = false
             } else if (eventId.value === '4') {
                 premiumImageSrc.value = IMAGES[1].src;
                 premiumText.value = 'F&B 5천원 금액할인권';
-                localStorage.getItem('clearId4') === 'true' ? clear.value = true : clear.value = false
+                localStorage.getItem('clearId2') === 'true' ? clear.value = true : clear.value = false
             }
             else if (eventId.value === '10') {
                 premiumImageSrc.value = IMAGES[3].src;

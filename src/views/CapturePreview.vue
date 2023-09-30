@@ -267,6 +267,7 @@ export default {
                         playAudio2();
                         premiumModal.value = false;
                         finishModal.value = true;
+                        clear.value = true;
                     }
                     else {
                         next();

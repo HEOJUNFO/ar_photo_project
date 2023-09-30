@@ -265,7 +265,7 @@ export default {
         const nextPage = () => {
             playAudio2()
             if (eventId.value === '7') {
-                localStorage.setItem('clearId7', 'true')
+                localStorage.setItem('clearId8', 'true')
                 localStorage.setItem('normalItem4', 'true')
             }
             router.push('/eventout')

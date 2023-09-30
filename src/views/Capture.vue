@@ -415,12 +415,12 @@ export default {
             if (localStorage.getItem('characterID') !== null) {
                 characterID.value = localStorage.getItem('characterID')
             }
-            if (localStorage.getItem('clearId1') === 'true') {
+            if (localStorage.getItem('clearId3') === 'true') {
                 STICKERS.value.push(STICKERSTORE[0])
                 STICKERS.value.push(STICKERSTORE[1])
                 STICKERS.value.push(STICKERSTORE[2])
             }
-            if (localStorage.getItem('clearId3') === 'true') {
+            if (localStorage.getItem('clearId1') === 'true') {
                 STICKERS.value.push(STICKERSTORE[3])
                 STICKERS.value.push(STICKERSTORE[4])
                 STICKERS.value.push(STICKERSTORE[5])
@@ -430,10 +430,10 @@ export default {
                 STICKERS.value.push(STICKERSTORE[7])
                 STICKERS.value.push(STICKERSTORE[8])
             }
-            if (localStorage.getItem('clearId7') === 'true') {
+            if (localStorage.getItem('clearId8') === 'true') {
                 FRAMES.value.push(FRAMESTORE[2])
             }
-            if (localStorage.getItem('clearId8') === 'true') {
+            if (localStorage.getItem('clearId7') === 'true') {
                 FRAMES.value.push(FRAMESTORE[1])
             }
             if (localStorage.getItem('clearId9') === 'true') {
