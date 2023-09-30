@@ -66,6 +66,61 @@ import { onBeforeRouteLeave } from 'vue-router'
 export default {
     name: 'ImageTracking',
     setup() {
+        const audio = ref(null);
+        const audio2 = ref(null);
+        const audio3 = ref(null);
+
+        import('@resource/sounds/acquired.wav')
+            .then(src => {
+                audio.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio = () => {
+            if (audio.value) {
+                audio.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
+        import('@resource/sounds/success.wav')
+            .then(src => {
+                audio2.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio2 = () => {
+            if (audio2.value) {
+                audio2.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
+        import('@resource/sounds/fly_bee.wav')
+            .then(src => {
+                audio3.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio3 = () => {
+            if (audio3.value) {
+                if (!audio3.value.paused) {
+                    audio3.value.pause();
+                    audio3.value.currentTime = 0;
+                }
+                audio3.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
         const isBlue = ref(false)
         const isGreen = ref(false)
         const isRed = ref(false)
@@ -117,17 +172,20 @@ export default {
             if (isScanningPaused.value) return;
 
             if (!isBlue.value) {
-
+                playAudio3();
                 isBlue.value = true;
                 currentModel.value = 'blue';
             } else if (!isGreen.value) {
+                playAudio3();
                 isGreen.value = true;
                 currentModel.value = 'green';
             } else if (!isRed.value) {
+                playAudio3();
                 isRed.value = true;
                 currentModel.value = 'red';
 
                 setTimeout(() => {
+                    playAudio();
                     finishModal.value = true;
                     const scanningOverlay = document.querySelector('#example-scanning-overlay');
                     scanningOverlay.style.display = 'none';
@@ -137,13 +195,13 @@ export default {
 
 
         const nextPage = () => {
+            playAudio2();
             const sceneContainer = document.querySelector('#sceneContainer');
             sceneContainer.style.display = 'none';
 
-            if (eventId.value === '8') {
-                localStorage.setItem('clearId8', 'true')
-                localStorage.setItem('normalItem5', 'true')
-            }
+            localStorage.setItem('clearId8', 'true')
+            localStorage.setItem('normalItem5', 'true')
+
             router.push('/eventout')
         }
 
