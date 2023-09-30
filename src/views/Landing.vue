@@ -125,6 +125,13 @@ export default {
 
 }
 
+@media (prefers-color-scheme: dark) {
+    .button-container1 {
+        background: var(--Main-Pink, #F0D7CA);
+
+    }
+}
+
 .button-container1 button {
     width: 100%;
     padding: 10px;

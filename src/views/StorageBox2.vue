@@ -196,7 +196,7 @@ export default {
 .list-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-
+    overflow-y: scroll;
     margin-bottom: calc(15 * var(--vh));
 }
 
@@ -205,7 +205,7 @@ export default {
 }
 
 .image-container {
-    overflow-y: scroll;
+
     position: relative;
     width: 100%;
     height: calc(34 * var(--vh));
