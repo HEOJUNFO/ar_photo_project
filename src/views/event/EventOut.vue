@@ -123,10 +123,15 @@ export default {
         }
 
         onMounted(() => {
+            scrollToTop();
 
             setVH();
 
             window.addEventListener('resize', setVH);
+
+            document.addEventListener('touchmove', function (e) {
+                e.preventDefault();
+            }, { passive: false });
 
             eventId.value = localStorage.getItem('eventId')
 
