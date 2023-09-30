@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <div v-show="showOverlay" @click="showOverlay = false, setFrame(FRAMES[0])" class="overlay">
+        <div v-show="showOverlay" @click="showOverlay = false, setFrame(FRAMES[0]), overlayToggle()" class="overlay">
             <img src="@resource/common/AR_Logo_02.png" alt="overlay" />
             <div class="tutorial-inner">
                 <p>안녕! 반가워</p>
@@ -174,6 +174,8 @@
         <div v-show="setFrameSrc" class="frame">
             <img :src="setFrameSrc" alt="봄" />
         </div>
+        <div v-show="finishModal" class="overlay">
+        </div>
         <div v-show="finishModal" class="image-container2">
             <div class="reward-container">
                 <img class="image1" src="@resource/common/label.png" />
@@ -303,6 +305,14 @@ export default {
         ]
 
         const STICKERS = ref([])
+
+        const overlayToggle = () => {
+            if (eventId.value === '10') {
+                finishModal.value = true
+                FRAMES.value.push(FRAMESTORE[3])
+            }
+
+        }
 
         const stickerToggle = () => {
             playAudio();
@@ -440,10 +450,6 @@ export default {
             }
 
             eventId.value = localStorage.getItem('eventId')
-            if (eventId.value === '10') {
-                finishModal.value = true
-                FRAMES.value.push(FRAMESTORE[3])
-            }
 
 
             experience = new Experience(document.querySelector('canvas.webgl'), saveImage);
@@ -483,7 +489,8 @@ export default {
             characterSrc,
             home,
             finishModal,
-            reward
+            reward,
+            overlayToggle,
         }
     }
 }

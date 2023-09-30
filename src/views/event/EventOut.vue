@@ -67,10 +67,12 @@ export default {
 
 
         const normalReward = () => {
+            sessionStorage.clear();
             playAudio();
             router.push('/storagebox2')
         }
         const premiumReward = () => {
+            sessionStorage.clear();
             playAudio();
             router.push('/storagebox')
         }

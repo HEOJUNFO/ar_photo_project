@@ -125,7 +125,11 @@ export default {
         };
 
         onMounted(() => {
-            document.body.style.overflowY = 'scroll';
+            if (!sessionStorage.getItem('hasReloaded')) {
+                sessionStorage.setItem('hasReloaded', 'true');
+                window.location.reload();
+                return;
+            }
             setVH();
             window.addEventListener('resize', setVH);
             rewardsStore.setRewardsData();

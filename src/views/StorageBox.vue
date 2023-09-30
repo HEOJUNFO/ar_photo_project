@@ -201,12 +201,16 @@ export default {
         };
 
         onMounted(() => {
+
+            if (!sessionStorage.getItem('hasReloaded2')) {
+                sessionStorage.setItem('hasReloaded2', 'true');
+                window.location.reload();
+                return;
+            }
             setVH();
             window.addEventListener('resize', setVH);
 
-            document.addEventListener('touchmove', function (e) {
-                e.preventDefault();
-            }, { passive: false });
+
 
             rewardsStore.setRewardsData();
             fetchTabData('premium');
