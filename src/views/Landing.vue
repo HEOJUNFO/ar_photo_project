@@ -18,8 +18,11 @@
             <div class="button-container2">
                 <button @click="start()">신비의 숲 시작하기</button>
             </div>
-            <div class="image-container">
-                <img src="@resource/landing/web-landing-page-3.jpg" alt="Image 3" />
+            <div class="image-container" style="background-color: white;">
+                <img src="@resource/landing//landing_03.jpg" alt="Image 3" />
+            </div>
+            <div class="image-container" style="margin-top: 1%; background-color: white;">
+                <img src="@resource/landing//landing_05.png" alt="Image 3" />
             </div>
         </div>
         <div v-if="!imagesLoaded">

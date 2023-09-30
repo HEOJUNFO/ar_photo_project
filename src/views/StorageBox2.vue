@@ -45,7 +45,8 @@
             <div v-for="item in tabData" :key="item.id" class="image-container">
                 <img src="@resource/storageBox/bg_reward3.png" :class="setGrayscale(item)" />
                 <img :src="item.src" :class="setGrayscale(item)" />
-                <p :class="setGrayText(item)">{{ item.text }}</p>
+                <p style="bottom:18.5%" :class="setGrayText(item)">{{ item.text }}</p>
+                <p style="bottom:12.5%" :class="setGrayText(item)">{{ item.text2 }}</p>
             </div>
         </div>
 
