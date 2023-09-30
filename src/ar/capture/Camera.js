@@ -47,8 +47,8 @@ export default class Camera
     captureScene() {
         const renderer = this.experience.renderer.instance;
 
-        const width = this.sizes.width
-    const height = this.sizes.height;
+        const width = this.sizes.width*2;
+    const height = this.sizes.height*2;
         
         const rt = new THREE.WebGLRenderTarget(width, height,{
             format: THREE.RGBAFormat,

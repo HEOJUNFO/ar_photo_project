@@ -178,7 +178,9 @@ export default {
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
             let ctx = canvas.getContext('2d');
+            ctx.scale(-1, 1);
 
+            ctx.translate(-canvas.width, 0);
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
             // let logoXPosition = (canvas.width - logo.width) / 2;
 
@@ -340,6 +342,7 @@ export default {
                 video.addEventListener("loadeddata", predictWebcam);
                 video.play();
                 video.style.display = 'block';
+                video.style.transform = 'scaleX(-1)';
             }
 
 

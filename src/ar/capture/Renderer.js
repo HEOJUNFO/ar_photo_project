@@ -83,8 +83,8 @@ export default class Renderer
         return await navigator.mediaDevices.getUserMedia({
             video: { 
                 facingMode: facingMode,
-                width: { ideal: this.sizes.height },
-                height: { ideal:this.sizes.width }, 
+                width: { ideal: this.sizes.height*2 },
+                height: { ideal:this.sizes.width*2 }, 
             },
         });
     }

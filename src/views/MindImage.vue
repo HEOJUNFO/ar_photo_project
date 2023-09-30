@@ -200,7 +200,7 @@ export default {
             sceneContainer.style.display = 'none';
 
             localStorage.setItem('clearId8', 'true')
-            localStorage.setItem('normalItem5', 'true')
+            localStorage.setItem('normalItem3', 'true')
 
             router.push('/eventout')
         }

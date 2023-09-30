@@ -110,6 +110,8 @@ export default {
         const checkBrowser = (useChange) => {
             let os = getOsName();
             let browser = getBrowserName();
+
+            var tartgetUrl = window.location.host + window.location.pathname + window.location.search;
             if (os.match(/iPhone|iPad|iPod/i)) { // 아이폰 접속 경우
                 // if(browser == 'kakao' || browser == 'whale')
                 if (browser == 'kakao') {
