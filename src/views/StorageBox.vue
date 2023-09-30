@@ -146,6 +146,12 @@ export default {
         };
 
         const back = () => {
+            if (useModal.value === true || useModal2.value === true || showModal2.value === true) {
+                useModal.value = false;
+                useModal2.value = false;
+                showModal2.value = false;
+                return;
+            }
             router.go(-1);
         };
 
