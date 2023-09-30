@@ -170,7 +170,7 @@ export default {
 
 @media screen and (orientation: landscape) {
     body::after {
-        content: '가로 모드는 지원하지 않습니다.';
+        content: '가로 모드는 지원하지 않습니다. \A 갤럭시 FOLD 기종은 접힌 상태에서만 이벤트 참여 가능 합니다.';
         display: flex;
         justify-content: center;
         align-items: center;
@@ -179,13 +179,11 @@ export default {
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: rgba(0, 0, 0, 0.85);
-        /* 반투명한 검은색 배경 */
+        background-color: rgba(0, 0, 0, 0.8);
         color: white;
-        /* 텍스트 색상 */
         font-size: 20px;
         z-index: 9999;
-        /* 다른 요소 위에 오버레이가 표시되도록 z-index 설정 */
+        white-space: pre-wrap;
     }
 }
 

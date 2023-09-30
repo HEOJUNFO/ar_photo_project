@@ -1,7 +1,8 @@
 <template>
     <div>
-        <div v-if="showOverlay" class="overlay" @touchstart="hideOverlay"><svg :class="{ 'dragging-guide': showOverlay }"
-                xmlns=" http://www.w3.org/2000/svg" width="66" height="74" viewBox="0 0 66 74" fill="none">
+        <div v-if="showOverlay" class="overlay" @touchstart="showOverlay = false"><svg
+                :class="{ 'dragging-guide': showOverlay }" xmlns=" http://www.w3.org/2000/svg" width="66" height="74"
+                viewBox="0 0 66 74" fill="none">
                 <g clip-path="url(#clip0_112_660)">
                     <mask id="mask0_112_660" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="66"
                         height="74">
@@ -31,34 +32,34 @@
             <img :class="{ 'hidden': hideImage1 }" class="img1" src="@resource/content/mini2.png"
                 @touchstart="handleMouseDown" @touchend="handleMouseUp" />
             <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img2"
-                src="@resource/magicCircle/r_01.png" @touchstart="handleMouseDown" @touchend="handleMouseUp"
-                @transitionend="handleTransitionEnd" />
+                src="@resource/magicCircle/r_01.png" @touchstart="handleMouseDown" @touchend="handleMouseUp" />
             <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img3"
                 src="@resource/magicCircle/r_02.png" @touchstart="handleMouseDown" @touchend="handleMouseUp" />
             <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img4"
-                src="@resource/magicCircle/r_03.png" @touchstart="handleMouseDown" @touchend="handleMouseUp" />
+                src="@resource/magicCircle/r_03.png" @touchstart="handleMouseDown" @touchend="handleMouseUp"
+                @transitionend="handleTransitionEnd" />
         </div>
         <div v-if="eventId === '3'" class="image-container">
             <img :class="{ 'hidden': hideImage1 }" class="img1" src="@resource/content/mini2.png"
                 @touchstart="handleMouseDown" @touchend="handleMouseUp" />
             <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img2"
-                src="@resource/magicCircle/g_01.png" @touchstart="handleMouseDown" @touchend="handleMouseUp"
-                @transitionend="handleTransitionEnd" />
+                src="@resource/magicCircle/g_01.png" @touchstart="handleMouseDown" @touchend="handleMouseUp" />
             <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img3"
                 src="@resource/magicCircle/g_02.png" @touchstart="handleMouseDown" @touchend="handleMouseUp" />
             <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img4"
-                src="@resource/magicCircle/g_03.png" @touchstart="handleMouseDown" @touchend="handleMouseUp" />
+                src="@resource/magicCircle/g_03.png" @touchstart="handleMouseDown" @touchend="handleMouseUp"
+                @transitionend="handleTransitionEnd" />
         </div>
         <div v-if="eventId === '5'" class="image-container">
             <img :class="{ 'hidden': hideImage1 }" class="img1" src="@resource/content/mini2.png"
                 @touchstart="handleMouseDown" @touchend="handleMouseUp" />
             <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img2"
-                src="@resource/magicCircle/p_01.png" @touchstart="handleMouseDown" @touchend="handleMouseUp"
-                @transitionend="handleTransitionEnd" />
+                src="@resource/magicCircle/p_01.png" @touchstart="handleMouseDown" @touchend="handleMouseUp" />
             <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img3"
                 src="@resource/magicCircle/p_02.png" @touchstart="handleMouseDown" @touchend="handleMouseUp" />
             <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img4"
-                src="@resource/magicCircle/p_03.png" @touchstart="handleMouseDown" @touchend="handleMouseUp" />
+                src="@resource/magicCircle/p_03.png" @touchstart="handleMouseDown" @touchend="handleMouseUp"
+                @transitionend="handleTransitionEnd" />
         </div>
         <div class="loading-container" @touchstart="handleMouseDown" @touchend="handleMouseUp">
             <div class="webgl-container">
@@ -163,13 +164,13 @@ export default {
             }
         };
 
-        const fadeOutDuration = 1800;
+        const fadeOutDuration = 2000;
 
         const stopAudio2 = () => {
             console.log("stopAudio2")
             if (audio2.value) {
                 const startTime = Date.now();
-                const startVolume = audio2.value.volume;
+                const startVolume = 1
 
                 const fadeOut = () => {
                     const elapsedTime = Date.now() - startTime;

@@ -85,11 +85,11 @@
             <button @click="colVal('none')" class="png-button"
                 style="background-image: url('../../resource/shopping2/no_select_button.png'); width: 80px; height:  80px;"></button>
             <button @click="colVal('#A52A2A')" class="png-button"
-                style="background-image: url('../resource/culture2/hair_01_redbrown.png')"></button>
+                style="background-image: url('../resource/culture2/redbrown.png')"></button>
             <button @click="colVal('#98623c')" class="png-button"
-                style="background-image: url('../resource/culture2/hair_02_ashbrown.png')"></button>
+                style="background-image: url('../resource/culture2/ashbrown.png')"></button>
             <button @click="colVal('#0047AB')" class="png-button"
-                style="background-image: url('../resource/culture2/hair_03_corbaltblue.png')"></button>
+                style="background-image: url('../resource/culture2/corbaltblue.png')"></button>
             <button @click="colVal('#B2BEB5')" class="png-button"
                 style="background-image: url('../resource/culture2/hair_04_ashgray.png')"></button>
             <button @click="colVal('#7B3F00')" class="png-button"
