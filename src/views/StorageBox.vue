@@ -53,7 +53,7 @@
             <img :src="useItemSrc" />
             <hr class="character-line">
             <p class="p1">{{ useItemText }}</p>
-            <p class="p2">유효기간 2023.11.01 ~ 2023.12.31</p>
+            <p class="p2">유효기간 2023.10.06 ~ 2023.10.22</p>
             <p class="p3">
                 <br>
                 <span style="color: black;">상품정보</span><br>
@@ -203,6 +203,11 @@ export default {
         onMounted(() => {
             setVH();
             window.addEventListener('resize', setVH);
+
+            document.addEventListener('touchmove', function (e) {
+                e.preventDefault();
+            }, { passive: false });
+
             rewardsStore.setRewardsData();
             fetchTabData('premium');
         });
@@ -279,7 +284,6 @@ export default {
 .list-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    overflow-y: scroll;
 }
 
 .list-container::-webkit-scrollbar {

@@ -2,7 +2,7 @@
     <div class="capture-preview">
         <div v-if="showHelp" class=" top-section3">
             <div class="text-container3">
-                <p>원하는 선물을 선택하고 <span style="color:#d50f4a">[사용하기]</span>버튼을 클릭해봐.</p>
+                <p>획득한 스티커와 프레임은 <span style="color:#d50f4a">[촬영하기]</span>이벤트에서 확인할 수 있어.</p>
             </div>
         </div>
         <div v-show="showOverlay" @click="showHelp = false, showOverlay = false" class="overlay"></div>
@@ -196,7 +196,7 @@ export default {
 .list-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    overflow-y: scroll;
+
     margin-bottom: calc(15 * var(--vh));
 }
 
@@ -205,6 +205,7 @@ export default {
 }
 
 .image-container {
+    overflow-y: scroll;
     position: relative;
     width: 100%;
     height: calc(34 * var(--vh));

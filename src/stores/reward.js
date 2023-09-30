@@ -19,7 +19,7 @@ export const useRewardsStore = defineStore('rewards', {
                 id:0,
                 src: Bell,
                 required: "null",
-                text:"마법사 벨 웹스티커 1세트",
+                text: "마법사 벨 웹스티커 1세트",
             }
             ,{
                 id:1,
