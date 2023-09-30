@@ -262,8 +262,9 @@ export default {
             navigator
                 .share(shareData)
                 .then(() => {
-                    playAudio2();
+
                     if (clear.value === false) {
+                        playAudio2();
                         premiumModal.value = false;
                         finishModal.value = true;
                     }
