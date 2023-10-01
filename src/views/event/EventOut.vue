@@ -35,8 +35,10 @@
 </template>
 
 <script>
-import { ref, onMounted, inject } from 'vue'
+import { ref, onMounted, inject, onBeforeUnmount } from 'vue'
 import router from '../../router'
+import { onBeforeRouteLeave } from 'vue-router';
+
 
 export default {
     name: 'Landing',
@@ -78,6 +80,7 @@ export default {
         }
 
         const home = () => {
+            sessionStorage.clear();
             playAudio();
             router.push('/stage')
         }
@@ -138,7 +141,6 @@ export default {
             eventId.value = localStorage.getItem('eventId')
 
         });
-
 
 
         return { start, normalReward, premiumReward, home }

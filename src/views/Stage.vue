@@ -196,6 +196,11 @@ export default {
         }
 
         onMounted(() => {
+            if (!sessionStorage.getItem('hasReloaded3')) {
+                sessionStorage.setItem('hasReloaded3', 'true');
+                window.location.reload();
+                return;
+            }
             setVH();
 
             window.addEventListener('resize', setVH);
