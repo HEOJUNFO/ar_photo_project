@@ -46,15 +46,13 @@ export default class Model
         {
             if(child instanceof THREE.Mesh)
             {
-                child.castShadow = true
+          
                 child.name = 'model'
+       
                 child.material.depthWrite = !child.material.transparent
                 this.experience.clickedObject.push(child);
             }
-            if(child.isMesh && child.morphTargetInfluences)
-            {
-               console.log(child.morphTargetDictionary)
-            }
+           
         
         })
  this.experience.clickedObject.push(this.model);
