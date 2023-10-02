@@ -31,11 +31,11 @@
         <div v-if="eventId === '1'" class="image-container">
             <img :class="{ 'hidden': hideImage1 }" class="img1" src="@resource/content/mini2.png"
                 @touchstart="handleMouseDown" @touchend="handleMouseUp" />
-            <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img2"
+            <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img2" id="img2"
                 src="@resource/magicCircle/r_01.png" @touchstart="handleMouseDown" @touchend="handleMouseUp" />
-            <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img3"
+            <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img3" id="img3"
                 src="@resource/magicCircle/r_02.png" @touchstart="handleMouseDown" @touchend="handleMouseUp" />
-            <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img4"
+            <img :style="{ width: image2Width + '%', left: imageLeft + '%', top: imageTop + '%' }" class="img4" id="img4"
                 src="@resource/magicCircle/r_03.png" @touchstart="handleMouseDown" @touchend="handleMouseUp"
                 @transitionend="handleTransitionEnd" />
         </div>
@@ -280,7 +280,9 @@ export default {
         const handleMouseDown = (event) => {
             event.preventDefault();
             playAudio2()
-
+            document.getElementById('img2').classList.add('image-transition');
+            document.getElementById('img3').classList.add('image-transition');
+            document.getElementById('img4').classList.add('image-transition');
             hideImage1.value = true;
             image3Width.value = 100;
             image2Width.value = 100;
@@ -290,6 +292,9 @@ export default {
 
         const handleMouseUp = () => {
             stopAudio2()
+            document.getElementById('img2').classList.remove('image-transition');
+            document.getElementById('img3').classList.remove('image-transition');
+            document.getElementById('img4').classList.remove('image-transition');
             image3Width.value = 0;
             image2Width.value = 0;
             imageLeft.value = 50;
@@ -456,7 +461,6 @@ export default {
     z-index: 3;
     top: calc(45 * var(--vh));
     width: 0%;
-    transition: width 3s ease-in-out, left 3s ease-in-out, top 3s ease-in-out;
     animation: rotate1 3s linear infinite;
 }
 
@@ -486,7 +490,6 @@ export default {
     z-index: 3;
     top: calc(45 * var(--vh));
     width: 0%;
-    transition: width 3s ease-in-out, left 3s ease-in-out, top 3s ease-in-out;
     animation: rotate2 3s linear infinite;
 }
 
@@ -494,10 +497,13 @@ export default {
     z-index: 3;
     top: calc(45 * var(--vh));
     width: 0%;
-    transition: width 3s ease-in-out, left 3s ease-in-out, top 3s ease-in-out;
     animation: rotate1 3s linear infinite;
 }
 
+.image-transition {
+    transition: width 3s ease-in-out, left 3s ease-in-out, top 3s ease-in-out;
+
+}
 
 .top-section {
     overflow: visible;
