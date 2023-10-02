@@ -153,8 +153,8 @@ export default {
 
         const playAudio2 = () => {
             if (audio2.value) {
-                isStopping = false; // Reset the stopping flag
-                audio2.value.currentTime = 0; // Set the audio to the beginning
+                isStopping = false;
+                audio2.value.currentTime = 0;
                 audio2.value.volume = 1;
                 audio2.value.play();
             } else {
@@ -169,14 +169,10 @@ export default {
                 const startTime = Date.now();
                 const startVolume = 1;
 
-                isStopping = true; // Indicate that the fade out process is starting
+                isStopping = true;
 
                 const fadeOut = () => {
-                    console.log(isStopping)
-                    // If playAudio2 was called, abort the fade out process
                     if (isStopping !== true) {
-
-
                         return;
                     }
 
@@ -189,7 +185,6 @@ export default {
                         audio2.value.currentTime = 0;
                     } else {
                         audio2.value.volume = startVolume * (remainingTime / fadeOutDuration);
-                        console.log(audio2.value.volume)
                         requestAnimationFrame(fadeOut);
                     }
                 };
