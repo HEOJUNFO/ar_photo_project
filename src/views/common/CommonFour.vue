@@ -149,14 +149,12 @@ export default {
                 console.error("Error importing audio file:", error);
             });
 
+        let isStopping = false;
+
         const playAudio2 = () => {
             if (audio2.value) {
-                if (!audio2.value.paused) {
-
-                    audio2.value.pause();
-                    audio2.value.currentTime = 0;
-                }
-                console.log("playAudio2")
+                isStopping = false; // Reset the stopping flag
+                audio2.value.currentTime = 0; // Set the audio to the beginning
                 audio2.value.volume = 1;
                 audio2.value.play();
             } else {
@@ -169,9 +167,19 @@ export default {
         const stopAudio2 = () => {
             if (audio2.value) {
                 const startTime = Date.now();
-                const startVolume = 1
+                const startVolume = 1;
+
+                isStopping = true; // Indicate that the fade out process is starting
 
                 const fadeOut = () => {
+                    console.log(isStopping)
+                    // If playAudio2 was called, abort the fade out process
+                    if (isStopping !== true) {
+
+
+                        return;
+                    }
+
                     const elapsedTime = Date.now() - startTime;
                     const remainingTime = fadeOutDuration - elapsedTime;
 
@@ -181,6 +189,7 @@ export default {
                         audio2.value.currentTime = 0;
                     } else {
                         audio2.value.volume = startVolume * (remainingTime / fadeOutDuration);
+                        console.log(audio2.value.volume)
                         requestAnimationFrame(fadeOut);
                     }
                 };
