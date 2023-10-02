@@ -12,8 +12,7 @@ export default class Model
 
         // Resource
         this.resource = this.resources.items[name]
-        
-       
+
         this.startX = 0;
         this.minX = -2;
         this.maxX = 2;

@@ -267,7 +267,7 @@ export default {
                         finishModal.value = true;
                         clear.value = true;
                     } else {
-                        next();
+
                     }
 
                 })

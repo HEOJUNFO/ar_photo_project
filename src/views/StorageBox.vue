@@ -125,9 +125,6 @@ export default {
     name: 'StorageBox',
     setup() {
 
-
-
-
         const showModal2 = ref(false);
         const useModal = ref(false);
         const useModal2 = ref(false);
@@ -150,14 +147,23 @@ export default {
                 useModal.value = false;
                 useModal2.value = false;
                 showModal2.value = false;
+                showOverlay.value = false;
                 return;
             }
             router.go(-1);
         };
 
+        window.history.pushState(history.state, null, window.location.href);
+        window.onpopstate = function () {
+            if (useModal.value === true || useModal2.value === true || showModal2.value === true) {
+                useModal.value = false;
+                useModal2.value = false;
+                showModal2.value = false;
+                showOverlay.value = false;
+            }
+        };
+
         const useItem = (item) => {
-
-
             selectedItem.value = item;
             if (item.required === 'true') {
                 useItemSrc.value = item.src;
@@ -168,7 +174,6 @@ export default {
         };
 
         const useCoupon = () => {
-
             localStorage.setItem(`premiumItem${selectedItem.value.id}`, 'used');
             rewardsStore.setRewardsData();
             showModal2.value = true;
@@ -177,19 +182,13 @@ export default {
         }
 
         const normalReward = () => {
-
             router.push('/storagebox2')
         }
         const premiumReward = () => {
-
             router.push('/storagebox')
         }
 
-
-
         const home = () => {
-
-
             router.push('/stage')
         }
 
@@ -215,8 +214,6 @@ export default {
             }
             setVH();
             window.addEventListener('resize', setVH);
-
-
 
             rewardsStore.setRewardsData();
             fetchTabData('premium');

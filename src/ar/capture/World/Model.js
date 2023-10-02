@@ -13,6 +13,14 @@ export default class Model
         // Resource
         this.resource = this.resources.items[name]
         
+
+
+        if(name === 'unoModel'){
+            console.log('unoModel')
+        this.experience.world.environment.sunLight.intensity *= 0.6
+        this.experience.world.environment.ambientLight.intensity *= 0.6
+        }        
+       
         this.isMoving = false
 
         this.initialPinchDistance = 0;

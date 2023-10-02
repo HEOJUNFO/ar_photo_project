@@ -177,21 +177,21 @@ export default {
                 currentModel.value = 'blue';
                 setTimeout(() => {
                     currentModel.value = 'none';
-                }, 1600);
+                }, 1500);
             } else if (!isGreen.value) {
                 playAudio3();
                 isGreen.value = true;
                 currentModel.value = 'green';
                 setTimeout(() => {
                     currentModel.value = 'none';
-                }, 1600);
+                }, 1500);
             } else if (!isRed.value) {
                 playAudio3();
                 isRed.value = true;
                 currentModel.value = 'red';
                 setTimeout(() => {
                     currentModel.value = 'none';
-                }, 1600);
+                }, 1500);
 
                 setTimeout(() => {
                     playAudio();

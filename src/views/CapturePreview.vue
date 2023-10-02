@@ -270,7 +270,7 @@ export default {
                         clear.value = true;
                     }
                     else {
-                        next();
+
                     }
 
                 })

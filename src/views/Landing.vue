@@ -21,7 +21,7 @@
             <div class="image-container" style="background-color: white;">
                 <img src="@resource/landing//landing_03.jpg" alt="Image 3" />
             </div>
-            <div class="image-container" style="margin-top: 1%; background-color: white;">
+            <div class="image-container2" style="padding-top: 5%; padding-bottom: 5%; background-color: white;">
                 <img src="@resource/landing//landing_05.png" alt="Image 3" />
             </div>
         </div>
@@ -115,6 +115,21 @@ export default {
 
 .image-container img {
     width: 100%;
+    height: auto;
+}
+
+.image-container2 {
+    position: relative;
+    width: 100%;
+    margin: -1%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.image-container2 img {
+    width: 90%;
     height: auto;
 }
 

@@ -307,7 +307,9 @@ export default {
         const STICKERS = ref([])
 
         const overlayToggle = () => {
-            if (eventId.value === '10') {
+
+
+            if (eventId.value === '10' && localStorage.getItem('clearId10') !== 'true') {
                 finishModal.value = true
                 FRAMES.value.push(FRAMESTORE[3])
             }
