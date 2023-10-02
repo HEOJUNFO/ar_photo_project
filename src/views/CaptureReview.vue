@@ -248,10 +248,20 @@ export default {
                 }),
             ];
 
-            const shareData = {
-                files: filesArray,
-                text: '이미지를 공유합니다!'
-            };
+            //andrioid
+            let isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1;
+            let shareData
+            if (isAndroid) {
+                shareData = {
+                    files: filesArray,
+                    title: "#롯데백화점분당점 #롯데메타버스빌리지 #신비의숲 #theflash",
+                    text: "#롯데백화점분당점 #롯데메타버스빌리지 #신비의숲 #theflash",
+                };
+            } else {
+                shareData = {
+                    files: filesArray,
+                };
+            }
 
             if (!navigator.share) {
                 alert("공유하기 기능을 지원하지 않는 브라우저입니다.");
