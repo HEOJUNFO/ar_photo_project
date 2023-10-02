@@ -380,6 +380,7 @@ export default {
         })
 
         onBeforeRouteLeave(() => {
+
             experience.destroy()
             experience.init()
         });
@@ -449,7 +450,7 @@ export default {
 }
 
 .img1 {
-    z-index: 2;
+    z-index: 1;
     top: calc(45 * var(--vh));
     width: 30%;
     opacity: 0.8;
@@ -513,7 +514,7 @@ export default {
     height: calc(10 * var(--vh));
     justify-content: center;
     align-items: center;
-    z-index: 2;
+    z-index: 3;
     margin-top: calc(5 * var(--vh));
 }
 
@@ -553,7 +554,7 @@ export default {
     position: absolute;
     right: 2.5%;
     top: calc(2.5 * var(--vh));
-    z-index: 2;
+    z-index: 3;
 }
 
 .side-image-container img {
@@ -582,7 +583,7 @@ export default {
     align-items: center;
     height: calc(10 * var(--vh));
     background-color: rgba(0, 0, 0, 0);
-    z-index: 3;
+    z-index: 4;
 }
 
 .button-container button {
@@ -633,7 +634,7 @@ export default {
     height: calc(12.5 * var(--vh));
     justify-content: center;
     align-items: center;
-    z-index: 2;
+    z-index: 3;
     background-color: #D50F4A;
     bottom: 0;
 }
@@ -731,7 +732,7 @@ export default {
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.7);
-    z-index: 1;
+    z-index: 2;
 }
 
 .overlay svg {

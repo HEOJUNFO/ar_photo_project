@@ -78,6 +78,14 @@ export default class Renderer
         });
     }
 
+
+    dispose() {
+        if(this.video && this.video.srcObject) {
+            let tracks = this.video.srcObject.getTracks();
+            tracks.forEach(track => track.stop());
+        }
+    }
+
     resize()
     {
         this.instance.setSize(this.sizes.width, this.sizes.height)

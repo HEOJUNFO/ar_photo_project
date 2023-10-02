@@ -216,17 +216,27 @@ export default {
             let vh = window.innerHeight * 0.01;
             document.documentElement.style.setProperty('--vh', `${vh}px`);
         }
-
         window.history.pushState(history.state, null, window.location.href);
-        window.onpopstate = function () {
-            window.history.pushState(null, null, window.location.href);
+        function debounce(func, wait) {
+            let timeout;
+            return function (...args) {
+                const context = this;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(context, args), wait);
+            };
+        }
+
+        window.onpopstate = debounce(function (event) {
+            window.history.pushState(history.state, null, window.location.href);
             if (check1Modal.value || check2Modal.value) {
                 check1Modal.value = false;
                 check2Modal.value = false;
             } else {
                 router.go(-1)
             }
-        };
+        }, 100);
+
+
 
         onMounted(() => {
             window.scrollTo(0, 0);

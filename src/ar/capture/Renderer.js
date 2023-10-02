@@ -152,6 +152,14 @@ export default class Renderer
 
     }
 
+    dispose() {
+        if(this.video && this.video.srcObject) {
+            let tracks = this.video.srcObject.getTracks();
+            tracks.forEach(track => track.stop());
+        }
+    }
+
+
     update()
     {
         this.instance.render(this.scene, this.camera.instance)

@@ -114,6 +114,7 @@ import { useImageDataStore } from '../../stores/imageData.js'
 import { useCharacterStore } from '../../stores/characterStore.js'
 import { onMounted, computed, ref, watch, inject } from "vue";
 import LoadingContainer from '../../components/LoadingContainer.vue'
+import { onBeforeRouteLeave } from 'vue-router'
 
 const { ImageSegmenter, SegmentationMask, FilesetResolver } = vision;
 let runningMode = "VIDEO"
@@ -459,9 +460,18 @@ export default {
             window.addEventListener('resize', setVH);
             // setTimeout(typeText, 1000);
         })
-        // watch(() => currentCharacterContent.value.text, () => {
-        //     setTimeout(typeText, 200);
-        // });
+
+        const disposeVideo = () => {
+            const video = document.getElementById("webcam");
+            let track = video.srcObject.getTracks()[0];
+            track.stop();
+        }
+
+        onBeforeRouteLeave(() => {
+            disposeVideo();
+        })
+
+
         return {
             saveImage,
             characterContent: currentCharacterContent,

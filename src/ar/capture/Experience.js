@@ -96,6 +96,7 @@ export default class Experience
     }
     dispose(){
         this.world.dispose();
+        this.renderer.dispose();
         if(this.camera.controls){
         this.camera.controls.dispose()
         }
@@ -151,6 +152,7 @@ export default class Experience
 
         // this.camera.controls.dispose()
         this.renderer.instance.dispose()
+        this.renderer.dispose();
 
         if(this.debug.active)
             this.debug.ui.destroy()

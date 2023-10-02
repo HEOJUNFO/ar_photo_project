@@ -81,7 +81,7 @@ export default class Sticker
             const deltaX = event.touches[0].clientX - this.touchStartPosition.x;
             const deltaY = event.touches[0].clientY - this.touchStartPosition.y;
 
-            const factor = 0.01; 
+            const factor = 0.02; 
             this.mesh.position.x += deltaX * factor;
             this.mesh.position.y -= deltaY * factor;
             this.touchStartPosition.set(event.touches[0].clientX, event.touches[0].clientY);

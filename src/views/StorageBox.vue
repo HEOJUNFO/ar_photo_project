@@ -152,10 +152,18 @@ export default {
             }
             router.go(-1);
         };
-
         window.history.pushState(history.state, null, window.location.href);
-        window.onpopstate = function () {
-            window.history.pushState(null, null, window.location.href);
+        function debounce(func, wait) {
+            let timeout;
+            return function (...args) {
+                const context = this;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(context, args), wait);
+            };
+        }
+
+        window.onpopstate = debounce(function (event) {
+            window.history.pushState(history.state, null, window.location.href);
             if (useModal.value === true || useModal2.value === true || showModal2.value === true) {
                 useModal.value = false;
                 useModal2.value = false;
@@ -164,7 +172,8 @@ export default {
             } else {
                 router.go(-1);
             }
-        };
+        }, 100);
+
 
         const useItem = (item) => {
             selectedItem.value = item;
