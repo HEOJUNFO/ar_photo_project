@@ -390,7 +390,7 @@ export default {
     height: calc(10 * var(--vh));
     position: absolute;
     z-index: 2;
-    top: calc(15 * var(--vh));
+    top: calc(17.5 * var(--vh));
 }
 
 .image-container img {

@@ -36,13 +36,7 @@
             </div>
             <div id="dialog-box">
                 <p id="typed-text"></p>
-                <!-- <button><svg xmlns="http://www.w3.org/2000/svg" width="44" height="47" viewBox="0 0 44 47" fill="none">
-                        <circle cx="22" cy="25" r="22" fill="#922142" />
-                        <circle cx="22" cy="22" r="21" fill="#D50F4A" stroke="#922142" stroke-width="2" />
-                        <path
-                            d="M32.75 20.701C33.75 21.2783 33.75 22.7217 32.75 23.299L17.75 31.9593C16.75 32.5366 15.5 31.815 15.5 30.6603L15.5 13.3397C15.5 12.185 16.75 11.4634 17.75 12.0407L32.75 20.701Z"
-                            fill="white" stroke="#D50F4A" />
-                    </svg></button> -->
+
             </div>
             <div class="button-container2">
                 <button @click="selectCharacter()">선택하기</button>

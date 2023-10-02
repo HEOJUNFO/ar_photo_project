@@ -167,7 +167,6 @@ export default {
         const fadeOutDuration = 2000;
 
         const stopAudio2 = () => {
-            console.log("stopAudio2")
             if (audio2.value) {
                 const startTime = Date.now();
                 const startVolume = 1
@@ -182,7 +181,6 @@ export default {
                         audio2.value.currentTime = 0;
                     } else {
                         audio2.value.volume = startVolume * (remainingTime / fadeOutDuration);
-                        console.log(audio2.value.volume)
                         requestAnimationFrame(fadeOut);
                     }
                 };
@@ -515,7 +513,7 @@ export default {
     height: calc(10 * var(--vh));
     justify-content: center;
     align-items: center;
-    z-index: 1;
+    z-index: 2;
     margin-top: calc(5 * var(--vh));
 }
 
@@ -584,7 +582,7 @@ export default {
     align-items: center;
     height: calc(10 * var(--vh));
     background-color: rgba(0, 0, 0, 0);
-    z-index: 2;
+    z-index: 3;
 }
 
 .button-container button {
@@ -635,7 +633,7 @@ export default {
     height: calc(12.5 * var(--vh));
     justify-content: center;
     align-items: center;
-    z-index: 1;
+    z-index: 2;
     background-color: #D50F4A;
     bottom: 0;
 }
@@ -720,7 +718,7 @@ export default {
     line-height: 24px;
     letter-spacing: -0.4px;
     text-align: center;
-    z-index: 1;
+    z-index: 2;
     position: relative;
     box-shadow: 0px 3px #922142
 }
@@ -732,8 +730,8 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
 }
 
 .overlay svg {

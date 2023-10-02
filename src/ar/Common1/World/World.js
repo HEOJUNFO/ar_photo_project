@@ -19,16 +19,19 @@ export default class World
         this.resources.on('ready', () =>
         {
             this.model = new Model('sorinaModel')
-            this.hailInterval = setInterval(() => { 
-                if (this.collisions < 5) { 
-                    const hail = new Hail();
-                    this.hails.push(hail);
-                } else {
-                    clearInterval(this.hailInterval); 
-                }
-            }, 1000);
             this.environment = new Environment()
         })
+    }
+
+    setHail() {
+        this.hailInterval = setInterval(() => { 
+            if (this.collisions < 5) { 
+                const hail = new Hail();
+                this.hails.push(hail);
+            } else {
+                clearInterval(this.hailInterval); 
+            }
+        }, 1000);
     }
 
     update()

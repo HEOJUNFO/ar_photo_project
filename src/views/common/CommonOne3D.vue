@@ -1,6 +1,5 @@
 <template>
     <div class="main">
-
         <div class="top-section">
             <div class="text-container1">
                 <p id="typed-text"></p>
@@ -23,6 +22,19 @@
                 <p class="p2">(서비스 내 사진촬영에서 확인 및 사용가능)</p>
                 <img class="image2" src="@resource/icon/frame_03.png" />
                 <button @click="nextPage()">상품획득 성공</button>
+            </div>
+        </div>
+        <div v-if="startModal" class="overlay">
+            <div id="dialog-box">
+                <p>우박모으기 시작</p>
+                <button @click="startGame()"><svg xmlns="http://www.w3.org/2000/svg" width="44" height="47"
+                        viewBox="0 0 44 47" fill="none">
+                        <circle cx="22" cy="25" r="22" fill="#922142" />
+                        <circle cx="22" cy="22" r="21" fill="#D50F4A" stroke="#922142" stroke-width="2" />
+                        <path
+                            d="M32.75 20.701C33.75 21.2783 33.75 22.7217 32.75 23.299L17.75 31.9593C16.75 32.5366 15.5 31.815 15.5 30.6603L15.5 13.3397C15.5 12.185 16.75 11.4634 17.75 12.0407L32.75 20.701Z"
+                            fill="white" stroke="#D50F4A" />
+                    </svg></button>
             </div>
         </div>
     </div>
@@ -83,6 +95,26 @@ export default {
                 console.error("Audio not initialized yet.");
             }
         };
+        const audio4 = ref(null);
+        import('@resource/sounds/generaltap.wav')
+            .then(src => {
+                audio4.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio4 = () => {
+            if (audio4.value) {
+                if (!audio4.value.paused) {
+                    audio4.value.pause();
+                    audio4.value.currentTime = 0;
+                }
+                audio4.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
         let experience;
         const characterStore = useCharacterStore()
         const index = ref(0)
@@ -90,6 +122,7 @@ export default {
         const itemValue = ref(0)
         const finishModal = ref(false)
         const eventId = ref('9')
+        const startModal = ref(true)
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
@@ -140,6 +173,12 @@ export default {
             finishModal.value = true
         }
 
+        const startGame = () => {
+            playAudio4()
+            startModal.value = false
+            experience.world.setHail()
+        }
+
         const nextPage = () => {
             playAudio3()
             if (eventId.value === '9') {
@@ -180,7 +219,8 @@ export default {
             characterContent: currentCharacterContent,
             next,
             itemValue,
-
+            startModal,
+            startGame,
             finishModal,
             nextPage
         }
@@ -218,7 +258,7 @@ export default {
     height: calc(10 * var(--vh));
     justify-content: center;
     align-items: center;
-    z-index: 1;
+    z-index: 2;
     margin-top: calc(5 * var(--vh));
 }
 
@@ -284,7 +324,7 @@ export default {
     height: calc(10 * var(--vh));
     position: absolute;
     z-index: 2;
-    top: calc(15 * var(--vh));
+    top: calc(17.5 * var(--vh));
 }
 
 .image-container img {
@@ -381,5 +421,55 @@ export default {
     position: relative;
     box-shadow: 0px 3px #922142;
     margin-top: calc(2 * var(--vh));
+}
+
+#dialog-box {
+    position: absolute;
+    border-radius: 16px;
+    border: 2px dashed #D50F4A;
+    background: #FFF;
+    padding: 10px;
+    width: 80%;
+    height: calc(20 * var(--vh));
+    top: calc(50 * var(--vh));
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#dialog-box p {
+    font-family: "NanumSquare", sans-serif;
+    color: #000;
+    text-align: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+    max-width: 18ch;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+    margin-bottom: 5%;
+
+}
+
+#dialog-box button {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 </style>
