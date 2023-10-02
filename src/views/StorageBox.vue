@@ -155,11 +155,14 @@ export default {
 
         window.history.pushState(history.state, null, window.location.href);
         window.onpopstate = function () {
+            window.history.pushState(null, null, window.location.href);
             if (useModal.value === true || useModal2.value === true || showModal2.value === true) {
                 useModal.value = false;
                 useModal2.value = false;
                 showModal2.value = false;
                 showOverlay.value = false;
+            } else {
+                router.go(-1);
             }
         };
 

@@ -219,9 +219,12 @@ export default {
 
         window.history.pushState(history.state, null, window.location.href);
         window.onpopstate = function () {
+            window.history.pushState(null, null, window.location.href);
             if (check1Modal.value || check2Modal.value) {
                 check1Modal.value = false;
                 check2Modal.value = false;
+            } else {
+                router.go(-1)
             }
         };
 
