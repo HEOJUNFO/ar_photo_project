@@ -291,6 +291,7 @@ export default {
         }
 
         const handleMouseUp = () => {
+
             stopAudio2()
             document.getElementById('img2').classList.remove('image-transition');
             document.getElementById('img3').classList.remove('image-transition');
@@ -299,6 +300,8 @@ export default {
             image2Width.value = 0;
             imageLeft.value = 50;
             imageTop.value = 50;
+
+            hideImage1.value = false;
         }
 
 
@@ -336,13 +339,11 @@ export default {
         }
 
         const handleTransitionEnd = () => {
-            if (image2Width.value === 100) {
-                stopAudio2()
-                playAudio3()
-                finishModal.value = true;
-            } else {
-                hideImage1.value = false;
-            }
+
+            stopAudio2()
+            playAudio3()
+            finishModal.value = true;
+
         }
 
         const setVH = () => {
