@@ -9,9 +9,9 @@
             <img :src="characterContent.src" alt="Side Image" />
         </div>
         <div class="image-container">
-            <img src="@resource/common/red_bee.png" :style="{ filter: isBlue ? 'grayscale(0%)' : '' }" />
+            <img src="@resource/common/blue_bee.png" :style="{ filter: isBlue ? 'grayscale(0%)' : '' }" />
             <img src="@resource/common/green_bee.png" :style="{ filter: isGreen ? 'grayscale(0%)' : '' }" />
-            <img src="@resource/common/blue_bee.png" :style="{ filter: isRed ? 'grayscale(0%)' : '' }" />
+            <img src="@resource/common/red_bee.png" :style="{ filter: isRed ? 'grayscale(0%)' : '' }" />
         </div>
         <div v-show="finishModal" class="image-container3">
             <div class="reward-container">

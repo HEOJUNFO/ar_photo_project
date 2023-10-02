@@ -98,11 +98,11 @@ export default class Model
             const deltaX = event.touches[0].clientX - this.touchStartPosition.x;
             const deltaY = event.touches[0].clientY - this.touchStartPosition.y;
 
-            const factor = 0.01;  
+            const factor = 0.02;  
             this.model.position.x += deltaX * factor;
             this.model.position.y -= deltaY * factor; 
 
-            const rotationFactor = 0.001; // Adjust this value to change rotation sensitivity
+            const rotationFactor = 0.002; // Adjust this value to change rotation sensitivity
             this.model.rotation.y -= deltaX * rotationFactor;
             this.model.rotation.x -= deltaY * rotationFactor;
 

@@ -339,9 +339,10 @@ export default {
 }
 
 .image_2 {
-    width: 65%;
+    width: 50%;
     height: auto;
-
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
 
 
