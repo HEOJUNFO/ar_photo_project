@@ -65,8 +65,9 @@ export default {
         const playAudio2 = () => {
             if (audio2.value) {
                 if (!audio2.value.paused) {
-                    audio2.value.pause();
+
                     audio2.value.currentTime = 0;
+                    audio2.value.play();
                 }
                 audio2.value.play();
             } else {
