@@ -44,7 +44,14 @@ export default class World
             hail.update();
 
             const foxBox = new THREE.Box3().setFromObject(this.model.model);
-            const hailBox = new THREE.Box3().setFromObject(hail.model);
+            
+  
+            const originalWidth = foxBox.max.x - foxBox.min.x;
+            const reductionAmount = originalWidth * 0.3; 
+            foxBox.min.x += reductionAmount;
+            foxBox.max.x -= reductionAmount;
+
+                        const hailBox = new THREE.Box3().setFromObject(hail.model);
 
             if (foxBox.intersectsBox(hailBox)) {
                 this.experience.goToNextScene()

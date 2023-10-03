@@ -352,7 +352,7 @@ export default {
     justify-content: center;
     align-items: center;
     z-index: 10;
-    margin-top: calc(5 * var(--vh));
+    margin-top: calc(9 * var(--vh));
 }
 
 

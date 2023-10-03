@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="showOverlay" class="overlay" @touchstart="showOverlay = false"><svg
+        <div v-if="showOverlay" class="overlay" @touchend="showOverlay = false"><svg
                 :class="{ 'dragging-guide': showOverlay }" xmlns=" http://www.w3.org/2000/svg" width="66" height="74"
                 viewBox="0 0 66 74" fill="none">
                 <g clip-path="url(#clip0_112_660)">
@@ -730,7 +730,6 @@ export default {
 
 .overlay {
     position: fixed;
-
     top: 0;
     left: 0;
     right: 0;
