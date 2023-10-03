@@ -37,6 +37,7 @@
 <script>
 import { ref, onMounted, inject } from 'vue'
 import router from '../router'
+import { postData } from '../js/api';
 
 export default {
     name: 'Landing',
@@ -50,6 +51,7 @@ export default {
 
         const start = () => {
             scrollToTop();
+            postData('main_start', '')
             setTimeout(() => {
                 router.push('/loading');
             }, 500);
@@ -77,9 +79,6 @@ export default {
                 imagesLoaded.value = true;
             }, 1000);
         });
-
-
-
 
 
         return { start, imagesLoaded }
