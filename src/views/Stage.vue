@@ -112,7 +112,7 @@ export default {
         const eventData = ref([])
         const characterStore = useCharacterStore()
         const eventStore = useEventStore();
-        const textIndex = ref(3)
+        const textIndex = ref(2)
         const bgImageUrl = new URL('@resource/common/bg.png', import.meta.url).href;
 
         characterStore.setCharacterIndex(localStorage.getItem('characterID'))
