@@ -91,8 +91,8 @@ export default {
         }
 
         const start = () => {
-
             scrollToTop();
+            sessionStorage.clear();
             setTimeout(() => {
                 if (eventId.value === '1') {
                     router.push('/commonfour');

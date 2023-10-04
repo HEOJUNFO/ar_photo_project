@@ -254,7 +254,7 @@ export default {
 
             exampleTarget.addEventListener("targetLost", event => {
 
-                currentModel.value = 'none';
+                // currentModel.value = 'none';
 
             });
 
@@ -300,7 +300,7 @@ a-scene {
     height: calc(10 * var(--vh));
     position: absolute;
     z-index: 2;
-    top: calc(15 * var(--vh));
+    top: calc(20 * var(--vh));
 }
 
 .image-container img {

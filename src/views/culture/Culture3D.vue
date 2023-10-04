@@ -254,7 +254,10 @@ export default {
 
 
         const next = () => {
-            playAudio()
+            if (finishModal.value === false) {
+                playAudio()
+            }
+
             setTimeout(() => {
                 finishModal.value = true;
             }, 1500);

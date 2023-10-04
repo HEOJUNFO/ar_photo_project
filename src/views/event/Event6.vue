@@ -31,7 +31,9 @@ export default {
         const start = () => {
             scrollToTop();
             postData('content_start', 'content6')
+            sessionStorage.clear();
             setTimeout(() => {
+
                 router.push('/loading');
             }, 500);
         }

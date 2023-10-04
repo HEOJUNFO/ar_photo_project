@@ -92,7 +92,7 @@ export default class Model
         const currentX = event.touches[0].clientX;
         const deltaX = currentX - this.startX;
 
-        const potentialNewX = this.model.position.x + deltaX * 0.01;
+        const potentialNewX = this.model.position.x + deltaX * 0.012;
 
         if (potentialNewX <= this.maxX && potentialNewX >= this.minX) {
             this.model.position.x = potentialNewX;

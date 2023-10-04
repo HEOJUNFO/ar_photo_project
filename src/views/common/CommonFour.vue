@@ -104,7 +104,7 @@
 import { useCharacterStore } from '../../stores/characterStore.js'
 import { ref, computed, watch, onMounted, inject } from 'vue'
 import router from '../../router'
-import Experience from '../../ar/capture/Experience.js'
+import Experience from '../../ar/magic/Experience.js'
 import { onBeforeRouteLeave } from 'vue-router'
 import { postData } from '../../js/api';
 

@@ -418,27 +418,6 @@ export default {
             router.push('/stage')
         }
 
-        let typingTimeout;
-
-        const typeText = () => {
-            const content = currentCharacterContent.value.text;
-            const textContainer = document.getElementById("typed-text");
-            let index = 0;
-
-            clearTimeout(typingTimeout);
-
-            textContainer.textContent = "";
-
-            function typing() {
-                if (index < content.length) {
-                    textContainer.textContent += content.charAt(index);
-                    index++;
-                    typingTimeout = setTimeout(typing, 50);
-                }
-            }
-            typing();
-        };
-
 
         const setVH = () => {
             let vh = window.innerHeight * 0.01;
@@ -456,9 +435,15 @@ export default {
         }
 
         onMounted(() => {
+            if (!sessionStorage.getItem('hasReloaded4')) {
+                sessionStorage.setItem('hasReloaded4', 'true');
+                window.location.reload();
+                return;
+            }
             setVH();
             window.addEventListener('resize', setVH);
-            // setTimeout(typeText, 1000);
+
+
         })
 
         const disposeVideo = () => {
