@@ -106,6 +106,7 @@ import { ref, computed, watch, onMounted, inject } from 'vue'
 import router from '../../router'
 import Experience from '../../ar/capture/Experience.js'
 import { onBeforeRouteLeave } from 'vue-router'
+import { postData } from '../../js/api';
 
 const Bell = new URL('@resource/intro/bell.png', import.meta.url).href;
 const Uno = new URL('@resource/intro/uno.png', import.meta.url).href;
@@ -325,17 +326,19 @@ export default {
 
 
         const next = () => {
-
             playAudio4()
             if (eventId.value === '1') {
                 localStorage.setItem('clearId3', 'true')
                 localStorage.setItem('normalItem0', 'true')
+                postData('content_reword', 'content1')
             } else if (eventId.value === '3') {
                 localStorage.setItem('clearId1', 'true')
                 localStorage.setItem('normalItem1', 'true')
+                postData('content_reword', 'content3')
             } else if (eventId.value === '5') {
                 localStorage.setItem('clearId5', 'true')
                 localStorage.setItem('normalItem2', 'true')
+                postData('content_reword', 'content5')
             }
             router.push('/eventout')
         }

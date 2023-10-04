@@ -46,7 +46,7 @@ import { onMounted, ref, computed } from 'vue';
 import router from '../../router';
 import { useCharacterStore } from '../../stores/characterStore.js'
 import { onBeforeRouteLeave } from 'vue-router'
-
+import { postData } from '../../js/api';
 
 export default {
     name: 'CommonOne3d',
@@ -183,6 +183,7 @@ export default {
         const nextPage = () => {
             playAudio3()
             if (eventId.value === '9') {
+                postData('content_reword', 'content9')
                 localStorage.setItem('clearId9', 'true')
                 localStorage.setItem('normalItem6', 'true')
             }

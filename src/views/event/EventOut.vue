@@ -38,6 +38,7 @@
 import { ref, onMounted, inject, onBeforeUnmount } from 'vue'
 import router from '../../router'
 import { onBeforeRouteLeave } from 'vue-router';
+import { postData } from '../../js/api';
 
 
 export default {
@@ -95,24 +96,34 @@ export default {
             setTimeout(() => {
                 if (eventId.value === '1') {
                     router.push('/commonfour');
+                    postData('content_retry', 'content1')
                 } else if (eventId.value === '2') {
+                    postData('content_retry', 'content2')
                     router.push('/capture');
                 } else if (eventId.value === '3') {
+                    postData('content_retry', 'content3')
                     router.push('/commonfour');
                 } else if (eventId.value === '4') {
+                    postData('content_retry', 'content4')
                     router.push('/capture');
                 } else if (eventId.value === '5') {
+                    postData('content_retry', 'content5')
                     router.push('/commonfour');
                 } else if (eventId.value === '6') {
+                    postData('content_retry', 'content6')
                     router.push('/culture3');
                 } else if (eventId.value === '7') {
+                    postData('content_retry', 'content7')
                     router.push('/culture3d');
                 } else if (eventId.value === '8') {
+                    postData('content_retry', 'content8')
                     router.push('/mindimage');
                 } else if (eventId.value === '9') {
+                    postData('content_retry', 'content9')
                     router.push('/event9');
                 }
                 else if (eventId.value === '10') {
+                    postData('content_retry', 'content10')
                     router.push('/capture');
                 }
 

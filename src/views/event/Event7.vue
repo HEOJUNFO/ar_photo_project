@@ -17,15 +17,11 @@
 <script>
 import { ref, onMounted, inject } from 'vue'
 import router from '../../router'
+import { postData } from '../../js/api';
 
 export default {
     name: 'Landing',
     setup() {
-
-
-
-
-
         const clear = ref(false);
 
 
@@ -33,12 +29,9 @@ export default {
             window.scrollTo(0, 0);
         }
 
-
         const start = () => {
-
-
             scrollToTop();
-
+            postData('content_start', 'content7')
             setTimeout(() => {
                 router.push('/loading');
             }, 500);

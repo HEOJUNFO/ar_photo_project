@@ -120,6 +120,7 @@
 import { onMounted, ref, inject } from 'vue';
 import router from '../router';
 import { useRewardsStore } from '../stores/reward.js';
+import { postData } from '../js/api';
 
 export default {
     name: 'StorageBox',
@@ -187,6 +188,15 @@ export default {
 
         const useCoupon = () => {
             localStorage.setItem(`premiumItem${selectedItem.value.id}`, 'used');
+            if (selectedItem.value.id === 0) {
+                postData('use_coupon', 'fashion')
+            } else if (selectedItem.value.id === 1) {
+                postData('use_coupon', 'f&B')
+            } else if (selectedItem.value.id === 2) {
+                postData('use_coupon', 'hair')
+            } else if (selectedItem.value.id === 3) {
+                postData('use_coupon', 'icecream')
+            }
             rewardsStore.setRewardsData();
             showModal2.value = true;
             useModal2.value = false;

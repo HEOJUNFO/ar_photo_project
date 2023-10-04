@@ -49,6 +49,7 @@
 import { useCharacterStore } from '../stores/characterStore.js'
 import { ref, computed, watch, onMounted } from 'vue'
 import router from '../router'
+import { postData } from '../js/api';
 
 
 const IMAGES = [
@@ -111,6 +112,19 @@ export default {
         const selectCharacter = () => {
             playAudio();
             localStorage.setItem('characterID', imageIndex.value)
+            let characterName;
+            switch (imageIndex.value) {
+                case 0:
+                    characterName = 'bell'
+                    break;
+                case 1:
+                    characterName = 'sorina'
+                    break;
+                case 2:
+                    characterName = 'uno'
+                    break;
+            }
+            postData('character_select', characterName)
             setTimeout(() => {
                 router.push('/stage')
             }, 1000);

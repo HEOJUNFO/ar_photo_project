@@ -112,6 +112,7 @@ import { useImageDataStore } from '../stores/imageData.js'
 import { onMounted, computed, ref } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router'
 import router from '../router';
+import { postData } from '../js/api';
 
 export default {
     name: 'captureReview',
@@ -288,8 +289,8 @@ export default {
         const next = () => {
             playAudio3();
             if (eventId.value === '2') {
-
                 localStorage.setItem('clearId4', 'true')
+                postData('content_reword', 'content2')
                 if (localStorage.getItem('premiumItem0') === 'used') {
                     localStorage.setItem('premiumItem0', 'used')
                 } else {
@@ -297,9 +298,11 @@ export default {
                 }
             } else if (eventId.value === '4') {
                 localStorage.setItem('clearId2', 'true')
+                postData('content_reword', 'content4')
                 localStorage.getItem('premiumItem1') === 'used' ? localStorage.setItem('premiumItem1', 'used') : localStorage.setItem('premiumItem1', 'true')
             } else if (eventId.value === '10') {
                 localStorage.setItem('clearId10', 'true')
+                postData('content_reword', 'content10')
                 localStorage.getItem('premiumItem3') === 'used' ? localStorage.setItem('premiumItem3', 'used') : localStorage.setItem('premiumItem3', 'true')
             }
 

@@ -62,6 +62,7 @@ import { onMounted, ref, computed } from 'vue';
 import router from '../router';
 import { useCharacterStore } from '../stores/characterStore.js'
 import { onBeforeRouteLeave } from 'vue-router'
+import { postData } from '../js/api';
 
 export default {
     name: 'ImageTracking',
@@ -205,9 +206,8 @@ export default {
 
         const nextPage = () => {
             playAudio2();
-            const sceneContainer = document.querySelector('#sceneContainer');
-            sceneContainer.style.display = 'none';
 
+            postData('content_reword', 'content8')
             localStorage.setItem('clearId7', 'true')
             localStorage.setItem('normalItem3', 'true')
 

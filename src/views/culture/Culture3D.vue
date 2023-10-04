@@ -52,9 +52,7 @@ import { onMounted, ref, computed, onBeforeUnmount, watch } from 'vue';
 import router from '../../router';
 import { useCharacterStore } from '../../stores/characterStore.js'
 import { onBeforeRouteLeave } from 'vue-router'
-
-
-
+import { postData } from '../../js/api';
 
 export default {
     name: 'Culture',
@@ -265,6 +263,7 @@ export default {
         const nextPage = () => {
             playAudio2()
             if (eventId.value === '7') {
+                postData('content_reword', 'content7')
                 localStorage.setItem('clearId8', 'true')
                 localStorage.setItem('normalItem4', 'true')
             }

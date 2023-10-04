@@ -110,6 +110,7 @@ import router from '../router';
 import { useImageDataStore } from '../stores/imageData';
 import { useRewardsStore } from '../stores/reward';
 import Konva from 'konva';
+import { postData } from '../js/api';
 
 const coupon2 = new URL('@resource/storageBox/02_Coupon_active.png', import.meta.url).href;
 const coupon3 = new URL('@resource/storageBox/03_Coupon_active.png', import.meta.url).href;
@@ -235,6 +236,7 @@ export default {
             playAudio3();
             if (eventId.value === '6') {
                 localStorage.setItem('clearId6', 'true')
+                postData('content_reword', 'content6')
                 localStorage.getItem('premiumItem2') === 'used' ? localStorage.setItem('premiumItem2', 'used') : localStorage.setItem('premiumItem2', 'true')
             }
 
