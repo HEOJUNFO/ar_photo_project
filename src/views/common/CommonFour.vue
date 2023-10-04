@@ -88,7 +88,7 @@
         </div>
         <div class="bottom-section">
         </div>
-        <!-- <div v-show="finishModal" class="image-container2">
+        <div v-show="finishModal" class="image-container2">
             <div class="reward-container">
                 <img class="image1" src="@resource/common/label.png" />
                 <p class="p1">{{ rewardText }}</p>
@@ -96,7 +96,7 @@
                 <img class="image2" :src="rewardImage" />
                 <button @click="next()">상품획득 성공</button>
             </div>
-        </div> -->
+        </div>
     </div>
 </template>
 
