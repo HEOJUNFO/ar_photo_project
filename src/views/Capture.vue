@@ -407,6 +407,10 @@ export default {
 
             window.addEventListener('resize', setVH);
 
+            document.addEventListener('touchmove', function (e) {
+                e.preventDefault();
+            }, { passive: false });
+
 
             STICKERSTORE.forEach(sticker => {
                 const img = new Image();

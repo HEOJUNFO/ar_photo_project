@@ -74,6 +74,14 @@ export default [
         name: 'unoModel',
         type: 'gltfModel',
         path: '../models/Uno/Uno_new.gltf'
+    },{
+        name: 'sunset',
+        type: 'exr',
+        path: '../resource/exr/sunset.exr'
+    },{
+        name: 'footprint',
+        type: 'exr',
+        path: '../resource/exr/footprint.exr'
     }
   
   

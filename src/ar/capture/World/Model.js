@@ -14,11 +14,14 @@ export default class Model
         this.resource = this.resources.items[name]
         
 
-
         if(name === 'unoModel'){
-        this.experience.world.environment.sunLight.intensity *= 0.6
-        this.experience.world.environment.ambientLight.intensity *= 0.6
+        this.experience.world.environment.sunLight.intensity = 1.4
+        
+        } else if(name === 'bellModel'){
+        this.experience.world.environment.sunLight.intensity = 1.4
+
         } 
+
        
         this.isMoving = false
 
@@ -45,8 +48,9 @@ export default class Model
     setModel()
     {
         this.model = this.resource.scene || this.resource.scenes[0]
-        this.model.scale.set(2, 2, 2)
+        this.model.scale.set(1.5, 1.5, 1.5)
         this.model.position.set(0, 1, 0)
+        this.model.rotation.set(0, 0, 0)
         this.scene.add(this.model)
 
         this.model.traverse((child) =>
@@ -101,7 +105,7 @@ export default class Model
             this.model.position.x += deltaX * factor;
             this.model.position.y -= deltaY * factor; 
 
-            const rotationFactor = 0.000; // Adjust this value to change rotation sensitivity
+            const rotationFactor = 0.002; // Adjust this value to change rotation sensitivity
             this.model.rotation.y -= deltaX * rotationFactor;
             this.model.rotation.x -= deltaY * rotationFactor;
 

@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js'
 import EventEmitter from './EventEmitter.js'
 
 export default class Resources extends EventEmitter
@@ -25,6 +26,7 @@ export default class Resources extends EventEmitter
         this.loaders.textureLoader = new THREE.TextureLoader()
         this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader()
         this.loaders.audioLoader = new THREE.AudioLoader()
+        this.loaders.exrLoader = new EXRLoader()
     }
 
     startLoading()
@@ -68,6 +70,15 @@ export default class Resources extends EventEmitter
                     (buffer) =>
                     {
                         this.sourceLoaded(source, buffer)
+                    }
+                )
+            } else if(source.type === 'exr')
+            {
+                this.loaders.exrLoader.load(
+                    source.path,
+                    (texture) =>
+                    {
+                        this.sourceLoaded(source, texture)
                     }
                 )
             }

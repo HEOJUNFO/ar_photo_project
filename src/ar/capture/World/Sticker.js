@@ -57,7 +57,7 @@ export default class Sticker
     {
         this.mesh = new THREE.Mesh(this.geometry, this.material)
         this.mesh.receiveShadow = true
-        this.mesh.scale.set(0.001, 0.001, 0.1)
+        this.mesh.scale.set(0.0005, 0.0005, 0.1)
         this.mesh.position.set(0.75, 1.5, 0)
         this.scene.add(this.mesh)
         this.mesh.name = 'stickers'

@@ -12,22 +12,23 @@ export default class Environment
         this.resources = this.experience.resources
 
         this.setSunLight()
-        // // this.setEnvironmentMap()
-        this.setEnvironmentMap2()
+        // this.setEnvironmentMap()
+        // this.setEnvironmentMap2()
+        // this.setEnvironmentMap3()
+        this.setEnvironmentMap4()
     }
 
     setSunLight()
     {
-        this.ambientLight = new THREE.AmbientLight('#ffffff', 1)
+        this.ambientLight = new THREE.AmbientLight('#ffffff',1.7)
         this.scene.add(this.ambientLight)
-        this.sunLight = new THREE.DirectionalLight('#ffffff',  0.8 * Math.PI)
+        this.sunLight = new THREE.DirectionalLight('#ffffff',2.3)
         this.sunLight.castShadow = true
         this.sunLight.shadow.camera.far = 15
         this.sunLight.shadow.mapSize.set(1024, 1024)
         this.sunLight.shadow.normalBias = 0.05
         this.sunLight.position.set(0.5, 0, 0.866)
         this.scene.add(this.sunLight)
-
     }
 
     setEnvironmentMap()
@@ -59,6 +60,19 @@ export default class Environment
     
         this.neutralEnvironment = this.pmremGenerator.fromScene( new RoomEnvironment() ).texture;
         this.scene.environment = this.neutralEnvironment;
+
+    }
+    setEnvironmentMap3(){
+        this.pmremGenerator = new THREE.PMREMGenerator( this.experience.renderer.instance );
+        this.pmremGenerator.compileEquirectangularShader();
+        const envMap = this.pmremGenerator.fromEquirectangular( this.resources.items.sunset ).texture;
+        this.scene.environment = envMap;  
+    }
+    setEnvironmentMap4(){
+        this.pmremGenerator = new THREE.PMREMGenerator( this.experience.renderer.instance );
+        this.pmremGenerator.compileEquirectangularShader();
+        const envMap = this.pmremGenerator.fromEquirectangular( this.resources.items.footprint ).texture;
+        this.scene.environment = envMap;
 
     }
 }

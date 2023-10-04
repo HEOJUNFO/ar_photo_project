@@ -163,7 +163,7 @@ export default {
             }
         };
 
-        const fadeOutDuration = 2000;
+        const fadeOutDuration = 500;
 
         const stopAudio2 = () => {
             if (audio2.value) {
@@ -186,6 +186,7 @@ export default {
                         audio2.value.currentTime = 0;
                     } else {
                         audio2.value.volume = startVolume * (remainingTime / fadeOutDuration);
+                        console.log(audio2.value.volume)
                         requestAnimationFrame(fadeOut);
                     }
                 };
@@ -382,7 +383,7 @@ export default {
                 rewardText.value = '우노 웹스티커 1세트'
             } else if (eventId.value === '5') {
                 rewardImage.value = Sorina
-                rewardText.value = '우노 웹스티커 1세트'
+                rewardText.value = '소리나 웹스티커 1세트'
             }
         })
 
