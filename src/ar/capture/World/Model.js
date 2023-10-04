@@ -101,7 +101,7 @@ export default class Model
             this.model.position.x += deltaX * factor;
             this.model.position.y -= deltaY * factor; 
 
-            const rotationFactor = 0.002; // Adjust this value to change rotation sensitivity
+            const rotationFactor = 0.000; // Adjust this value to change rotation sensitivity
             this.model.rotation.y -= deltaX * rotationFactor;
             this.model.rotation.x -= deltaY * rotationFactor;
 
