@@ -88,7 +88,7 @@
         </div>
         <div class="bottom-section">
         </div>
-        <div v-show="finishModal" class="image-container2">
+        <!-- <div v-show="finishModal" class="image-container2">
             <div class="reward-container">
                 <img class="image1" src="@resource/common/label.png" />
                 <p class="p1">{{ rewardText }}</p>
@@ -96,7 +96,7 @@
                 <img class="image2" :src="rewardImage" />
                 <button @click="next()">상품획득 성공</button>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -186,7 +186,6 @@ export default {
                         audio2.value.currentTime = 0;
                     } else {
                         audio2.value.volume = startVolume * (remainingTime / fadeOutDuration);
-                        console.log(audio2.value.volume)
                         requestAnimationFrame(fadeOut);
                     }
                 };
@@ -282,6 +281,7 @@ export default {
 
 
         const handleMouseDown = (event) => {
+            experience.world.particle.start()
             event.preventDefault();
             playAudio2()
             document.getElementById('img2').classList.add('image-transition');
@@ -295,7 +295,7 @@ export default {
         }
 
         const handleMouseUp = () => {
-
+            experience.world.particle.pause()
             stopAudio2()
             document.getElementById('img2').classList.remove('image-transition');
             document.getElementById('img3').classList.remove('image-transition');

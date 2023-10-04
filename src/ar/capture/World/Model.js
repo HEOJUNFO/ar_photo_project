@@ -41,13 +41,19 @@ export default class Model
 
         
         this.setModel()
-        this.setAnimation()
       
     }
 
     setModel()
     {
         this.model = this.resource.scene || this.resource.scenes[0]
+        this.mixer = new THREE.AnimationMixer(this.model);
+
+        this.resource.animations.forEach((clip) => {
+            const action = this.mixer.clipAction(clip);
+            action.play();
+        });
+        
         this.model.scale.set(1.5, 1.5, 1.5)
         this.model.position.set(0, 1, 0)
         this.model.rotation.set(0, 0, 0)
@@ -55,6 +61,7 @@ export default class Model
 
         this.model.traverse((child) =>
         {
+            
             if(child instanceof THREE.Mesh)
             {
           
@@ -68,20 +75,6 @@ export default class Model
         })
  this.experience.clickedObject.push(this.model);
     }
-
-    setAnimation()
-    {
-        this.clips = this.resource.animations || []
-        this.mixer = new THREE.AnimationMixer(this.model)
- 
-
-        this.clips.forEach((clip) =>{
-                this.mixer.timeScale = 1.0;
-                 this.mixer.clipAction(clip).reset().play();
-
-        })
-    }
-
 
     onTouchStart(event) {
         if (this.isMoving) {
