@@ -41,6 +41,8 @@
             <div class="button-container2">
                 <button @click="selectCharacter()">선택하기</button>
             </div>
+            <img class="guide" src="@resource/common/tap.png" alt="Image 1" />
+            <img class="guide2" src="@resource/common/tap.png" alt="Image 1" />
         </div>
     </div>
 </template>
@@ -282,11 +284,12 @@ export default {
     font-weight: 700;
     line-height: 28px;
     letter-spacing: -0.5px;
-    max-width: 18ch;
+    max-width: 19ch;
     overflow-wrap: break-word;
     word-break: keep-all;
-
 }
+
+
 
 #dialog-box button {
     background-color: rgba(0, 0, 0, 0);
@@ -321,5 +324,39 @@ export default {
     z-index: 1;
     position: relative;
     box-shadow: 0px 3px #922142
+}
+
+.guide {
+    width: auto;
+    height: 10%;
+    position: absolute;
+    top: calc(45 * var(--vh));
+    left: 80%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    animation: beat .35s infinite alternate;
+    pointer-events: none;
+}
+
+.guide2 {
+    width: auto;
+    height: 10%;
+    position: absolute;
+    top: calc(90 * var(--vh));
+    left: 70%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    animation: beat .35s infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes beat {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.5);
+    }
 }
 </style>

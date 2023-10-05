@@ -120,7 +120,7 @@ export default {
                     router.push('/mindimage');
                 } else if (eventId.value === '9') {
                     postData('content_retry', 'content9')
-                    router.push('/event9');
+                    router.push('/commonone3d');
                 }
                 else if (eventId.value === '10') {
                     postData('content_retry', 'content10')
@@ -278,8 +278,8 @@ export default {
     width: auto;
     height: 10%;
     position: absolute;
-    top: calc(55 * var(--vh));
-    left: 70%;
+    top: calc(85 * var(--vh));
+    left: 45%;
     transform: translate(-50%, -50%);
     z-index: 3;
     animation: beat .35s infinite alternate;

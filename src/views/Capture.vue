@@ -183,6 +183,7 @@
                 <p class="p2">(서비스 내 사진촬영에서 확인 및 사용가능)</p>
                 <img class="image2" src="@resource/icon/frame_04.png" />
                 <button @click="reward()">상품획득 성공</button>
+                <img class="guide" src="@resource/common/tap.png" alt="Image 1" />
             </div>
         </div>
     </div>
@@ -899,5 +900,27 @@ export default {
     position: relative;
     box-shadow: 0px 3px #922142;
     margin-top: calc(2 * var(--vh));
+}
+
+.guide {
+    width: auto;
+    height: 15%;
+    position: absolute;
+    top: 85%;
+    left: 70%;
+    transform: translateX(-50%);
+    z-index: 3;
+    animation: beat .35s infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes beat {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.5);
+    }
 }
 </style>

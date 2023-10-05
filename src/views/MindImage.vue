@@ -20,6 +20,7 @@
                 <p class="p2">(서비스 내 사진촬영에서 확인 및 사용가능)</p>
                 <img class="image2" src="@resource/icon/frame_02.png" />
                 <button @click="nextPage()">상품획득 성공</button>
+                <img class="guide" src="@resource/common/tap.png" alt="Image 1" />
             </div>
         </div>
         <div id="example-scanning-overlay" class="">
@@ -146,7 +147,7 @@ export default {
         let typingTimeout;
 
         const typeText = () => {
-            const content = currentCharacterContent.value.text;
+            const content = "부암동가든 안에 숨어있는 꿀벌 3마리를 찾아 스캔해줘"
             const textContainer = document.getElementById("typed-text");
             let index = 0;
 
@@ -211,7 +212,9 @@ export default {
             localStorage.setItem('clearId7', 'true')
             localStorage.setItem('normalItem3', 'true')
 
-            router.push('/eventout')
+            setTimeout(() => {
+                router.push('/eventout')
+            }, 500);
         }
 
         onMounted(() => {
@@ -508,6 +511,28 @@ a-scene {
 
     100% {
         transform: translateY(20vh);
+    }
+}
+
+.guide {
+    width: auto;
+    height: 15%;
+    position: absolute;
+    top: 85%;
+    left: 70%;
+    transform: translateX(-50%);
+    z-index: 3;
+    animation: beat .35s infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes beat {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.5);
     }
 }
 </style>

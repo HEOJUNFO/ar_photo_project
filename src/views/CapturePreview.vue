@@ -97,6 +97,7 @@
                 <p class="p_2">'증정장소 : 5F 사은행사장'</p>
                 <img class="image2" :src="premiumImageSrc" />
                 <button @click="next()">상품획득 성공</button>
+                <img class="guide" src="@resource/common/tap.png" alt="Image 1" />
             </div>
         </div>
     </div>
@@ -240,7 +241,9 @@ export default {
                 localStorage.getItem('premiumItem2') === 'used' ? localStorage.setItem('premiumItem2', 'used') : localStorage.setItem('premiumItem2', 'true')
             }
 
-            router.push('/eventout')
+            setTimeout(() => {
+                router.push('/eventout')
+            }, 500);
         }
 
         const shareImage = async () => {
@@ -452,15 +455,15 @@ export default {
 
 @keyframes beat {
     0% {
-        transform: scale(0.5);
+        transform: scale(1);
     }
 
     50% {
-        transform: scale(1.5);
+        transform: scale(1.8);
     }
 
     100% {
-        transform: scale(0.5);
+        transform: scale1(1);
     }
 }
 
@@ -695,5 +698,27 @@ export default {
     z-index: 1;
     position: relative;
     box-shadow: 0px 3px #922142
+}
+
+.guide {
+    width: auto;
+    height: 15%;
+    position: absolute;
+    top: 85%;
+    left: 70%;
+    transform: translateX(-50%);
+    z-index: 3;
+    animation: beat2 .35s infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes beat2 {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.5);
+    }
 }
 </style>

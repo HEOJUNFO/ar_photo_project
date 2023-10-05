@@ -22,6 +22,7 @@
                 <p class="p2">(서비스 내 사진촬영에서 확인 및 사용가능)</p>
                 <img class="image2" src="@resource/icon/frame_03.png" />
                 <button @click="nextPage()">상품획득 성공</button>
+                <img class="guide" src="@resource/common/tap.png" alt="Image 1" />
             </div>
         </div>
         <div v-if="startModal" class="overlay">
@@ -187,7 +188,10 @@ export default {
                 localStorage.setItem('clearId9', 'true')
                 localStorage.setItem('normalItem6', 'true')
             }
-            router.push('/eventout')
+            setTimeout(() => {
+                router.push('/eventout')
+            }, 500);
+
         }
 
         const setVH = () => {
@@ -473,5 +477,27 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.guide {
+    width: auto;
+    height: 15%;
+    position: absolute;
+    top: 85%;
+    left: 70%;
+    transform: translateX(-50%);
+    z-index: 3;
+    animation: beat .35s infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes beat {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.5);
+    }
 }
 </style>
