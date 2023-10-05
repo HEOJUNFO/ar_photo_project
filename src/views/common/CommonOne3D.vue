@@ -468,6 +468,17 @@ export default {
 #dialog-box button {
     background-color: rgba(0, 0, 0, 0);
     border: none;
+    animation: beat2 .35s infinite alternate;
+}
+
+@keyframes beat2 {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.2);
+    }
 }
 
 .overlay {

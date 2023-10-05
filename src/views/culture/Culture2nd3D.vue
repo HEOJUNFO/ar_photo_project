@@ -50,8 +50,8 @@
             <p>
                 염색 색상 변경
             </p>
-            <button @click="saveImage()"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"
-                    fill="none">
+            <button class="button-beat" @click="saveImage()"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+                    viewBox="0 0 40 40" fill="none">
                     <circle cx="20" cy="20" r="19" fill="white" stroke="#D50F4A" stroke-width="2" />
                     <mask id="mask0_549_2183" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="8" width="24"
                         height="24">
@@ -491,6 +491,7 @@ export default {
     align-items: center;
     justify-content: center;
     outline: none;
+    animation: beat .35s infinite alternate;
 }
 
 .webcam {
@@ -577,7 +578,14 @@ export default {
     border: none;
     width: 15%;
     height: 100%;
+}
 
+.button-beat {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    width: 15%;
+    height: 100%;
+    animation: beat .35s infinite alternate;
 }
 
 .top-section button svg {
@@ -655,5 +663,15 @@ export default {
     font-weight: 700;
     line-height: 24px;
     letter-spacing: -0.4px;
+}
+
+@keyframes beat {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.2);
+    }
 }
 </style>

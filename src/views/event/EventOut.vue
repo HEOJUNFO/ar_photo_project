@@ -276,9 +276,9 @@ export default {
 
 .guide {
     width: auto;
-    height: 10%;
+    height: 7.5%;
     position: absolute;
-    top: calc(85 * var(--vh));
+    top: calc(90 * var(--vh));
     left: 45%;
     transform: translate(-50%, -50%);
     z-index: 3;
