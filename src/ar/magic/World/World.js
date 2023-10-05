@@ -1,8 +1,7 @@
 import * as THREE from 'three'; 
 import Experience from '../Experience.js'
 import Environment from './Environment.js'
-import Model from './Model.js'
-import Particle from './Particle.js';
+
 
 
 
@@ -22,7 +21,6 @@ export default class World
         // Wait for resources
         this.resources.on('ready', () =>
         {
-            this.particle = new Particle()
             this.environment = new Environment()
         })
     }
@@ -32,9 +30,6 @@ export default class World
 
     update() {
       
-         if(this.particle){
-          this.particle.update()
-         }
   
     }
     dispose(){

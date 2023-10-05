@@ -152,8 +152,7 @@ export default class Particles {
     setPoints() {
         this.points = new THREE.Points(this.geometry, this.material);
         this.points.position.set(0, 2.2, 0);
-        // this.scene.add(this.points);
-  
+        this.scene.add(this.points);
     }
 
 }

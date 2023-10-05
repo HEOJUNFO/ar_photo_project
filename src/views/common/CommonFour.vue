@@ -281,7 +281,6 @@ export default {
 
 
         const handleMouseDown = (event) => {
-            experience.world.particle.start()
             event.preventDefault();
             playAudio2()
             document.getElementById('img2').classList.add('image-transition');
@@ -295,7 +294,6 @@ export default {
         }
 
         const handleMouseUp = () => {
-            experience.world.particle.pause()
             stopAudio2()
             document.getElementById('img2').classList.remove('image-transition');
             document.getElementById('img3').classList.remove('image-transition');
