@@ -104,7 +104,7 @@ export default {
             }
         };
 
-        import('@resource/sounds/fly_bee.wav')
+        import('@resource/sounds/bee2.wav')
             .then(src => {
                 audio3.value = new Audio(src.default);
             })
