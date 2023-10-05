@@ -36,11 +36,11 @@
 
                 <a-assets>
                     <a-asset-item id="blueBeeModel"
-                        src="https://cdn.jsdelivr.net/gh/HEOJUNFO/tracking@main/blue_bee.gltf"></a-asset-item>
+                        src="https://cdn.jsdelivr.net/gh/HEOJUNFO/tracking@main/blue_bee3.gltf"></a-asset-item>
                     <a-asset-item id="greenBeeModel"
-                        src="https://cdn.jsdelivr.net/gh/HEOJUNFO/tracking@main/green_bee.gltf"></a-asset-item>
+                        src="https://cdn.jsdelivr.net/gh/HEOJUNFO/tracking@main/green_bee3.gltf"></a-asset-item>
                     <a-asset-item id="redBeeModel"
-                        src="https://cdn.jsdelivr.net/gh/HEOJUNFO/tracking@main/red_bee.gltf"></a-asset-item>
+                        src="https://cdn.jsdelivr.net/gh/HEOJUNFO/tracking@main/red_bee3.gltf"></a-asset-item>
                 </a-assets>
 
                 <a-entity id="target" mindar-image-target="targetIndex: 0">
@@ -178,21 +178,21 @@ export default {
                 currentModel.value = 'blue';
                 setTimeout(() => {
                     currentModel.value = 'none';
-                }, 1500);
+                }, 2000);
             } else if (!isGreen.value) {
                 playAudio3();
                 isGreen.value = true;
                 currentModel.value = 'green';
                 setTimeout(() => {
                     currentModel.value = 'none';
-                }, 1500);
+                }, 2000);
             } else if (!isRed.value) {
                 playAudio3();
                 isRed.value = true;
                 currentModel.value = 'red';
                 setTimeout(() => {
                     currentModel.value = 'none';
-                }, 1500);
+                }, 2000);
 
                 setTimeout(() => {
                     playAudio();
@@ -300,7 +300,7 @@ a-scene {
     height: calc(10 * var(--vh));
     position: absolute;
     z-index: 2;
-    top: calc(20 * var(--vh));
+    top: calc(17.5 * var(--vh));
 }
 
 .image-container img {

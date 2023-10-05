@@ -15,15 +15,14 @@ export default class Particles {
             this.resources.items.redstar2
         ];
 
-        this.particlesCount = 1000;
-        this.speed = 0.02;
-        this.lifetime = 1000; // 이 값을 조절하여 파티클이 사라지는 시간을 설정
-        this.startTime = 0;
-        this.someInterval = 1;
-        this.emitted = new Array(this.particlesCount).fill(true);
-
-        this.startTimes = [];
-
+        this.particlesCount = 10000;
+        this.particlesPerFrame = 10;
+        this.isCreating = false;  
+        this.speed = 0.01;
+        this.currentParticleIndex = 0;
+        this.particleAngles = [];  
+        this.particleDirections = [];
+    this.currentRadius = 1; 
 
         this.setGeometry();
         this.setMaterial();
@@ -31,76 +30,72 @@ export default class Particles {
     }
 
     pause() {
-        for (let i = 0; i < this.particlesCount; i++) {
-            this.emitted[i] = false;
-        }
-    }
-
-    start() {
-        let currentTime = this.time.elapsed * 0.1;
-        for (let i = 0; i < this.particlesCount; i++) {
-            this.emitted[i] = true;
-            this.startTimes[i] = currentTime + i * this.someInterval;
-        }
+        this.isCreating = false;  // Stop particle creation
     }
     
-
+    start() {
+        this.isCreating = true;   // Start particle creation
+    }
+    
+    update() {
+        const positions = this.geometry.attributes.position.array;
+    
+        for (let j = 0; j < this.particlesPerFrame; j++) {
+            if (this.isCreating && this.currentParticleIndex < this.particlesCount) {
+                const theta = this.particleAngles[this.currentParticleIndex];
+                const x = this.currentRadius * Math.cos(theta);
+                const y = this.currentRadius * Math.sin(theta);
+    
+                const index = this.currentParticleIndex * 3;
+                positions[index] = x;
+                positions[index + 1] = y;
+                positions[index + 2] = 0;
+    
+                const textureIndex = this.currentParticleIndex % 4;
+                this.geometry.attributes.uvIndex.array[this.currentParticleIndex] = textureIndex;
+    
+                this.currentParticleIndex++;
+            }
+        }
+    
+        for (let i = 0; i < this.currentParticleIndex; i++) {
+            const theta = this.particleAngles[i];
+            const direction = this.particleDirections[i];
+    
+            const index = i * 3;
+            positions[index] += direction.x * this.speed; // Update the x position
+            positions[index + 1] += direction.y * this.speed; // Update the y position
+        }
+    
+        this.geometry.attributes.position.needsUpdate = true;
+        this.geometry.attributes.uvIndex.needsUpdate = true;
+    }
+    
     setGeometry() {
         this.geometry = new THREE.BufferGeometry();
     
         const vertices = [];
         const uvs = [];
-        this.directions = []; 
+        this.directions = [];
+ 
     
         for (let i = 0; i < this.particlesCount; i++) {
-            vertices.push(0, 0, 0);
-    
+            vertices.push(0, 0, 0);  // Initial positions will be at the center
+            
             const textureIndex = i % 4;
             uvs.push(textureIndex * 1.0);
-    
-            const theta = 2 * Math.PI * Math.random();
-            const phi = Math.acos(2 * Math.random() - 1);
-            
-            const dir = new THREE.Vector3(
-                Math.sin(phi) * Math.cos(theta),
-                Math.sin(phi) * Math.sin(theta),
-                Math.cos(phi)
-            );
-            this.directions.push(dir);
+        
+            const theta = 2 * Math.PI * Math.random();  // Generate a random angle for each particle
+            this.particleAngles.push(theta);
 
-            this.startTimes.push(this.startTime + i * this.someInterval);
+            const direction = new THREE.Vector2(Math.cos(theta), Math.sin(theta));
+        this.particleDirections.push(direction);
         }
     
         this.geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
         this.geometry.setAttribute('uvIndex', new THREE.Float32BufferAttribute(uvs, 1));
     }
-
-    update() {
-        let currentTime = this.time.elapsed * 0.1;
-        const positions = this.geometry.attributes.position.array;
     
-        for (let i = 0; i < this.particlesCount; i++) {
-            const index = i * 3;
-    
-            if (currentTime - this.startTimes[i] >= this.lifetime) {
-                positions[index] = 0;
-                positions[index + 1] = 0;
-                positions[index + 2] = 0;
-                this.startTimes[i] += this.lifetime;
-                continue;
-            } else if (currentTime < this.startTimes[i] || !this.emitted[i]) {
-                continue; // Particle hasn't started yet or is not allowed to be emitted
-            }
-    
-            const dir = this.directions[i];
-            positions[index] += dir.x * this.speed;
-            positions[index + 1] += dir.y * this.speed;
-            positions[index + 2] += dir.z * this.speed;
-        }
-    
-        this.geometry.attributes.position.needsUpdate = true;
-    }
-
     setMaterial() {
         const vertexShader = `
             attribute float uvIndex;
