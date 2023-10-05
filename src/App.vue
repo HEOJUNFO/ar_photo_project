@@ -13,6 +13,7 @@ import router from './router'
 export default {
     name: 'App',
     setup() {
+        const IOS_CHROME_MARKET_URL = "https://apps.apple.com/kr/app/google-chrome/id535886823";
 
         const getBrowserName = () => {
             var userAgent = navigator.userAgent.toLowerCase();
@@ -20,18 +21,21 @@ export default {
 
             if (userAgent.match(/chrome|chromium|crios/i)) {
                 browserName = "chrome";
-            } else if (userAgent.match(/firefox|fxios/i)) {
+            }
+            if (userAgent.match(/firefox|fxios/i)) {
                 browserName = "firefox";
-            } else if (userAgent.match(/safari/i)) {
+            }
+            if (userAgent.match(/safari/i)) {
                 browserName = "safari";
-            } else if (userAgent.match(/opr\//i)) {
+            }
+            if (userAgent.match(/opr\//i)) {
                 browserName = "opera";
-            } else if (userAgent.match(/edg/i)) {
+            }
+            if (userAgent.match(/edg/i)) {
                 browserName = "edge";
-            } else if (userAgent.match(/samsung/i)) {
+            }
+            if (userAgent.match(/samsung/i)) {
                 browserName = "samsung";
-            } else {
-                browserName = "other";
             }
 
             if (userAgent.match(/kakao/i)) {
@@ -42,6 +46,9 @@ export default {
                 browserName = "whale";
             }
 
+            if (userAgent.match(/NAVER/i)) {
+                browserName = "naver";
+            }
 
             return browserName;
         }
@@ -106,14 +113,40 @@ export default {
             return os;
         }
 
+        const changeBrowser = () => {
+
+
+            var targetUrl = window.location.host + window.location.pathname + window.location.hash;
+            if (navigator.userAgent.match(/iPhone|iPad/i)) {
+                //ios
+                var visitedAt = (new Date()).getTime();
+                setTimeout(
+                    function () {
+                        if ((new Date()).getTime() - visitedAt < 2000) {
+                            location.href = IOS_CHROME_MARKET_URL;
+                        }
+                    }, 500);
+
+                setTimeout(function () {
+                    location.href = "googlechromes://" + targetUrl;
+                }, 0);
+            } else {
+                //android
+                location.href = "intent://" + targetUrl + "#Intent;scheme=https;package=com.android.chrome;end";
+            }
+        }
 
         const checkBrowser = (useChange) => {
             let os = getOsName();
             let browser = getBrowserName();
 
+            if (browser === 'naver' || browser === 'samsung' || browser === 'whale') {
+                changeBrowser();
+            }
+
             var tartgetUrl = window.location.host + window.location.pathname + window.location.search;
             if (os.match(/iPhone|iPad|iPod/i)) { // 아이폰 접속 경우
-                // if(browser == 'kakao' || browser == 'whale')
+
                 if (browser == 'kakao') {
 
                     if (useChange == true) {
@@ -128,7 +161,7 @@ export default {
                 }
             }
             else {
-                if (browser == 'kakao' || browser == 'samsung') { // 안드로이드
+                if (browser == 'kakao') { // 안드로이드
                     // 먼저, 카카오 인앱 브라우저 닫기
                     if (useChange == true) {
                         if (browser == 'kakao')
@@ -149,9 +182,7 @@ export default {
         onMounted(() => {
 
 
-
             checkBrowser(true)
-
 
             if (location.protocol !== 'https:') {
                 location.protocol = 'https:';

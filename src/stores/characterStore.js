@@ -30,7 +30,7 @@ export const useCharacterStore = defineStore('character', {
                 name: "벨", 
                 maker: makerUrl1,
                 intro: [
-                    { text: "일어났어?" },
+                    { text: "안녕, 나는 마법사 벨이야. 숲 복원을 지원해줘서 고마워." },
                     { text: "안녕, 난 마법사 벨이야" },
                     { text: "집으로 돌아가는 방법을 아냐고? 숲으로 가면 알 수 있을 거야. 신비의 숲은 모든 걸 알고 있거든." },
                     { text: "어젯밤 불어온 의문의 폭풍때문에 신비의 숲이 망가지고 이상기후가 찾아왔어." },
@@ -178,7 +178,7 @@ export const useCharacterStore = defineStore('character', {
                 name: "소리나",
                 maker:  makerUrl3,
                 intro: [
-                    { text: "죽은 줄 알았네." },
+                    { text: "나는 뱀파이어 소리나. 숲을 복원하러 같이 간다고?" },
                     { text: "안녕, 난 뱀파이어 소리나야." },
                     { text: "집으로 돌아가는 방법을 아냐고? 숲으로 가면 알 수 있을 거야. 신비의 숲은 모든 걸 알고 있거든." },
                     { text: "어젯밤 불어온 의문의 폭풍때문에 신비의 숲이 망가지고 이상기후가 찾아왔어." },
@@ -324,7 +324,7 @@ export const useCharacterStore = defineStore('character', {
                 name: "우노",
                 maker: makerUrl2,
                 intro: [
-                    { text: "눈 떴다, 눈 떴어!" },
+                    { text: "웨어울프 우노라고 해. 숲 복원하러 함께 갈거야?" },
                     { text: "안녕, 난 웨어울프 우노야" },
                     { text: "집으로 돌아가는 방법을 아냐고? 숲으로 가면 알 수 있을 거야. 신비의 숲은 모든 걸 알고 있거든." },
                     { text: "어젯밤 불어온 의문의 폭풍때문에 신비의 숲이 망가지고 이상기후가 찾아왔어." },

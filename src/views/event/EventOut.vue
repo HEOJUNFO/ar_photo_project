@@ -3,9 +3,9 @@
 
         <div class="image-container">
             <img src="@resource/mission/web-landing-page-1.jpg" alt="Image 1" />
-            <button @click="start()">다시하기
-            </button>
+            <button @click="start()">다시하기</button>
         </div>
+        <img class="guide" src="@resource/common/tap.png" alt="Image 1" />
         <div class="image-container2">
             <img src="@resource/mission/web-landing-page-2.jpg" alt="Image 2" />
         </div>
@@ -272,5 +272,27 @@ export default {
     z-index: 1;
     background-color: #D50F4A;
     bottom: 0;
+}
+
+.guide {
+    width: auto;
+    height: 10%;
+    position: absolute;
+    top: calc(55 * var(--vh));
+    left: 70%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    animation: beat .35s infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes beat {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.5);
+    }
 }
 </style>

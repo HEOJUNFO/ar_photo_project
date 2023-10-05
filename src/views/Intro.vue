@@ -282,7 +282,6 @@ export default {
     font-weight: 700;
     line-height: 28px;
     letter-spacing: -0.5px;
-
     max-width: 18ch;
     overflow-wrap: break-word;
     word-break: keep-all;

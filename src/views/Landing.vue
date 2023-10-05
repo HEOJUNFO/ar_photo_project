@@ -177,6 +177,18 @@ export default {
     left: 80%;
     transform: translateX(-50%);
     z-index: 3;
+    animation: beat .35s infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes beat {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.5);
+    }
 }
 
 

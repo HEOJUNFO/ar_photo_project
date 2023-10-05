@@ -5,6 +5,7 @@
         </div>
         <div class="button-container2">
             <button class="button1" v-if="!clear" @click="start()">가상 염색 촬영하기</button>
+            <img class="guide" src="@resource/common/tap.png" alt="Image 1" />
             <button class="button2" v-if="clear" @click="start()">이벤트 참여 완료</button>
         </div>
         <div class="image-container">
@@ -130,5 +131,27 @@ export default {
     position: relative;
     outline: 1px solid #06734C;
     outline-offset: 2px;
+}
+
+.guide {
+    width: auto;
+    height: 100%;
+    position: absolute;
+    top: 40%;
+    left: 80%;
+    transform: translateX(-50%);
+    z-index: 3;
+    animation: beat .35s infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes beat {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.5);
+    }
 }
 </style>
