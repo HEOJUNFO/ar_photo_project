@@ -124,7 +124,7 @@ export default {
         const itemValue = ref(0)
         const finishModal = ref(false)
         const eventId = ref('9')
-        const startModal = ref(true)
+        const startModal = ref(false)
 
         const currentCharacter = computed(() => characterStore.currentCharacter)
 
@@ -209,6 +209,10 @@ export default {
             }, { passive: false });
 
             experience = new Experience(document.querySelector('canvas.webgl'), nextScene);
+
+            experience.resources.on('ready', () => {
+                startModal.value = true
+            })
 
             setTimeout(() => {
                 typeText()

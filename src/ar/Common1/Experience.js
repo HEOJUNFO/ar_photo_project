@@ -86,6 +86,7 @@ export default class Experience
 
     destroy()
     {
+        clearInterval(this.world.hailInterval); 
         this.sizes.off('resize')
         this.time.off('tick')
 
