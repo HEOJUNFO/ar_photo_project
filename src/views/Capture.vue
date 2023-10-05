@@ -206,11 +206,11 @@ const sorina01 = new URL('@resource/icon/sorina_01.png', import.meta.url).href
 const sorina02 = new URL('@resource/icon/sorina_02.png', import.meta.url).href
 const sorina03 = new URL('@resource/icon/sorina_03.png', import.meta.url).href
 
-const frame = new URL('@resource/frame/logo_frame_01.png', import.meta.url).href
-const frame2 = new URL('@resource/frame/logo_frame_02.png', import.meta.url).href
-const frame3 = new URL('@resource/frame/logo_frame_03.png', import.meta.url).href
-const frame4 = new URL('@resource/frame/logo_frame_04.png', import.meta.url).href
-const frame5 = new URL('@resource/frame/logo_frame_05.png', import.meta.url).href
+const frame = new URL('@resource/frame/logo_frame_5.png', import.meta.url).href
+const frame2 = new URL('@resource/frame/logo_frame_1.png', import.meta.url).href
+const frame3 = new URL('@resource/frame/logo_frame_2.png', import.meta.url).href
+const frame4 = new URL('@resource/frame/logo_frame_3.png', import.meta.url).href
+const frame5 = new URL('@resource/frame/logo_frame_4.png', import.meta.url).href
 
 export default {
     name: 'capture',
@@ -344,9 +344,6 @@ export default {
         }
 
         const setFrame = (image) => {
-
-            const webglContainer = document.querySelector('.webgl-container')
-
             setFrameSrc.value = image.src
         }
 
@@ -357,7 +354,6 @@ export default {
             let canvas = document.querySelector('canvas.webgl')
             let width = canvas.style.width
             let height = canvas.style.height
-            console.log(width, height)
             imageDataStore.setCanvasSize(width, height)
 
             router.push({ path: '/capturereview' });
@@ -429,10 +425,10 @@ export default {
                 STICKERS.value.push(STICKERSTORE[8])
             }
             if (localStorage.getItem('clearId8') === 'true') {
-                FRAMES.value.push(FRAMESTORE[2])
+                FRAMES.value.push(FRAMESTORE[1])
             }
             if (localStorage.getItem('clearId7') === 'true') {
-                FRAMES.value.push(FRAMESTORE[1])
+                FRAMES.value.push(FRAMESTORE[2])
             }
             if (localStorage.getItem('clearId9') === 'true') {
                 FRAMES.value.push(FRAMESTORE[4])
