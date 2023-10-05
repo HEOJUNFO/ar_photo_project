@@ -256,7 +256,7 @@ export default {
         const image2Width = ref(0)
         const image3Width = ref(0)
         const imageLeft = ref(50)
-        const imageTop = ref(50)
+        const imageTop = ref(45)
 
         let typingTimeout;
 
@@ -303,7 +303,7 @@ export default {
             image3Width.value = 0;
             image2Width.value = 0;
             imageLeft.value = 50;
-            imageTop.value = 50;
+            imageTop.value = 45;
 
             hideImage1.value = false;
         }

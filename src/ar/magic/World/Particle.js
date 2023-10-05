@@ -22,7 +22,8 @@ export default class Particles {
         this.currentParticleIndex = 0;
         this.particleAngles = [];  
         this.particleDirections = [];
-    this.currentRadius = 1; 
+        this.currentRadius = 1;   
+        this.rotationSpeed = 0.02; 
 
         this.setGeometry();
         this.setMaterial();
@@ -59,12 +60,23 @@ export default class Particles {
         }
     
         for (let i = 0; i < this.currentParticleIndex; i++) {
-            const theta = this.particleAngles[i];
+            const index = i * 3;
+    
+            // Compute rotation
+            const cosTheta = Math.cos(this.rotationSpeed);
+            const sinTheta = Math.sin(this.rotationSpeed);
+            const x = positions[index];
+            const y = positions[index + 1];
+            
+            // Apply rotation
+            positions[index] = x * cosTheta - y * sinTheta;
+            positions[index + 1] = x * sinTheta + y * cosTheta;
+    
             const direction = this.particleDirections[i];
     
-            const index = i * 3;
-            positions[index] += direction.x * this.speed; // Update the x position
-            positions[index + 1] += direction.y * this.speed; // Update the y position
+            // Update position
+            positions[index] += direction.x * this.speed;
+            positions[index + 1] += direction.y * this.speed;
         }
     
         this.geometry.attributes.position.needsUpdate = true;

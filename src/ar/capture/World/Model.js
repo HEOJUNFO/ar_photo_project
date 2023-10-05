@@ -55,7 +55,7 @@ export default class Model
         });
         
         this.model.scale.set(1.5, 1.5, 1.5)
-        this.model.position.set(0, 1, 0)
+        this.model.position.set(0, 2, 0)
         this.model.rotation.set(0, 0, 0)
         this.scene.add(this.model)
 

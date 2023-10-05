@@ -348,14 +348,6 @@ export default {
             const webglContainer = document.querySelector('.webgl-container')
 
             setFrameSrc.value = image.src
-            if (image.id === 0) {
-
-                webglContainer.style.width = '100%'
-                experience.sizes.resize()
-            } else {
-                webglContainer.style.width = 'calc((4/6) * 75 * var(--vh))'
-                experience.sizes.resize()
-            }
         }
 
         const saveImage = (image) => {
