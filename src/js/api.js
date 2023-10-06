@@ -11,7 +11,8 @@ export const postData = async (param1, param2) => {
             method: 'POST',
             headers: myHeaders,
             body: urlencoded,
-            redirect: 'follow'
+            redirect: 'follow',
+            credentials: 'include'
         };
 
         fetch("https://api.moundxr.com/api/v1/event", requestOptions)
