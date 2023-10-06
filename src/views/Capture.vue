@@ -321,12 +321,24 @@ export default {
             playAudio();
             stickerList.value = !stickerList.value
             frameList.value = false
+            if (stickerList.value) {
+                enableScroll();
+            }
+            else {
+                disableScroll();
+            }
         }
 
         const frameToggle = () => {
             playAudio();
             stickerList.value = false
             frameList.value = !frameList.value
+            if (frameList.value) {
+                enableScroll();
+            }
+            else {
+                disableScroll();
+            }
         }
 
         const setSticker = (image) => {
@@ -391,14 +403,24 @@ export default {
             document.documentElement.style.setProperty('--vh', `${vh}px`);
         }
 
+        const preventTouchMove = (e) => {
+            e.preventDefault();
+        }
+
+        const disableScroll = () => {
+            document.body.addEventListener('touchmove', preventTouchMove, { passive: false });
+        }
+
+        const enableScroll = () => {
+            document.body.removeEventListener('touchmove', preventTouchMove, { passive: false });
+        }
+
         onMounted(() => {
             setVH();
 
             window.addEventListener('resize', setVH);
 
-            document.addEventListener('touchmove', function (e) {
-                e.preventDefault();
-            }, { passive: false });
+            disableScroll();
 
 
             STICKERSTORE.forEach(sticker => {

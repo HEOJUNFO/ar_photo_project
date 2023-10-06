@@ -141,10 +141,15 @@ export default {
             let browser = getBrowserName();
 
             if (browser === 'naver' || browser === 'samsung' || browser === 'whale') {
+                if (browser === 'samsung' || browser === 'whale') {
+                    alert("본 서비스는 Chrome을 권장합니다. 브라우저 팝업이 나타나면 Chrome을 선택해주세요.")
+                }
+
                 changeBrowser();
             }
 
-            var tartgetUrl = window.location.host + window.location.pathname + window.location.search;
+
+            var targetUrl = window.location.host + window.location.pathname + window.location.hash;
             if (os.match(/iPhone|iPad|iPod/i)) { // 아이폰 접속 경우
 
                 if (browser == 'kakao') {
@@ -167,7 +172,7 @@ export default {
                         if (browser == 'kakao')
                             location.href = 'kakaotalk://inappbrowser/close';
 
-                        location.href = "intent://" + tartgetUrl + "#Intent;scheme=https;package=com.android.chrome;end";
+                        location.href = "intent://" + targetUrl + "#Intent;scheme=https;package=com.android.chrome;end";
 
                     }
                     return false;
@@ -180,14 +185,11 @@ export default {
 
 
         onMounted(() => {
-
-
-            checkBrowser(true)
-
             if (location.protocol !== 'https:') {
                 location.protocol = 'https:';
             }
 
+            checkBrowser(true)
         });
 
 

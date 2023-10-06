@@ -28,14 +28,7 @@
         <div v-if="startModal" class="overlay">
             <div id="dialog-box">
                 <p>우박모으기 시작</p>
-                <button @click="startGame()"><svg xmlns="http://www.w3.org/2000/svg" width="44" height="47"
-                        viewBox="0 0 44 47" fill="none">
-                        <circle cx="22" cy="25" r="22" fill="#922142" />
-                        <circle cx="22" cy="22" r="21" fill="#D50F4A" stroke="#922142" stroke-width="2" />
-                        <path
-                            d="M32.75 20.701C33.75 21.2783 33.75 22.7217 32.75 23.299L17.75 31.9593C16.75 32.5366 15.5 31.815 15.5 30.6603L15.5 13.3397C15.5 12.185 16.75 11.4634 17.75 12.0407L32.75 20.701Z"
-                            fill="white" stroke="#D50F4A" />
-                    </svg></button>
+                <button @click="startGame()">게임시작</button>
             </div>
         </div>
     </div>
@@ -466,9 +459,23 @@ export default {
 }
 
 #dialog-box button {
-    background-color: rgba(0, 0, 0, 0);
-    border: none;
-    animation: beat2 .35s infinite alternate;
+    width: 60%;
+    padding: 10px;
+    border-radius: 100px;
+    border: 2px solid var(--Point-Red-Dark, #922142);
+    background: var(--Point-Red, #D50F4A);
+    color: var(--Text-White, #FFF);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+    text-align: center;
+    z-index: 1;
+    position: relative;
+    box-shadow: 0px 3px #922142
 }
 
 @keyframes beat2 {

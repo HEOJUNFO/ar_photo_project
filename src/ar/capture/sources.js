@@ -45,7 +45,7 @@ export default [
     {
         name: 'sorinaNormal',
         type: 'texture',
-        path: '../resource/character/Sorina_Welcome.png'
+        path: '../resource/character/Sorina_Normal.png'
     },
     {
         name: 'unoNormal',
