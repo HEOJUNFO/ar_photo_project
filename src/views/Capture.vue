@@ -200,12 +200,15 @@ import router from '../router';
 const bell01 = new URL('@resource/icon/bell_01.png', import.meta.url).href
 const bell02 = new URL('@resource/icon/bell_02.png', import.meta.url).href
 const bell03 = new URL('@resource/icon/bell_03.png', import.meta.url).href
+const bell04 = new URL('@resource/icon/bell_04.png', import.meta.url).href
 const uno01 = new URL('@resource/icon/uno_01.png', import.meta.url).href
 const uno02 = new URL('@resource/icon/uno_02.png', import.meta.url).href
 const uno03 = new URL('@resource/icon/uno_03.png', import.meta.url).href
+const uno04 = new URL('@resource/icon/uno_04.png', import.meta.url).href
 const sorina01 = new URL('@resource/icon/sorina_01.png', import.meta.url).href
 const sorina02 = new URL('@resource/icon/sorina_02.png', import.meta.url).href
 const sorina03 = new URL('@resource/icon/sorina_03.png', import.meta.url).href
+const sorina04 = new URL('@resource/icon/sorina_04.png', import.meta.url).href
 
 const frame = new URL('@resource/frame/logo_frame_5.png', import.meta.url).href
 const frame2 = new URL('@resource/frame/logo_frame_1.png', import.meta.url).href
@@ -303,6 +306,10 @@ export default {
             { id: 6, src: sorina01, name: 'sorinaNormal' },
             { id: 7, src: sorina02, name: 'sorinaHappy' },
             { id: 8, src: sorina03, name: 'sorinaWelcome' },
+            { id: 9, src: bell04, name: 'bellBody' },
+            { id: 10, src: uno04, name: 'unoBody' },
+            { id: 11, src: sorina04, name: 'sorinaBody' },
+
         ]
 
         const STICKERS = ref([])
@@ -432,16 +439,24 @@ export default {
             if (localStorage.getItem('characterID') !== null) {
                 characterID.value = localStorage.getItem('characterID')
             }
+
+            STICKERS.value.push(STICKERSTORE[9])
+
             if (localStorage.getItem('clearId3') === 'true') {
                 STICKERS.value.push(STICKERSTORE[0])
                 STICKERS.value.push(STICKERSTORE[1])
                 STICKERS.value.push(STICKERSTORE[2])
             }
+
+            STICKERS.value.push(STICKERSTORE[10])
+
             if (localStorage.getItem('clearId1') === 'true') {
                 STICKERS.value.push(STICKERSTORE[3])
                 STICKERS.value.push(STICKERSTORE[4])
                 STICKERS.value.push(STICKERSTORE[5])
             }
+
+            STICKERS.value.push(STICKERSTORE[11])
             if (localStorage.getItem('clearId5') === 'true') {
                 STICKERS.value.push(STICKERSTORE[6])
                 STICKERS.value.push(STICKERSTORE[7])

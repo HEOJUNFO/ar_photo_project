@@ -63,6 +63,21 @@ export default [
         path: '../resource/character/Uno_Welcome.png'
     },
     {
+        name: 'bellBody',
+        type: 'texture',
+        path: '../resource/character/Bell_EntireBody.png'
+    },
+    {
+        name: 'sorinaBody',
+        type: 'texture',
+        path: '../resource/character/Sorina_EntireBody.png'
+    },
+    {
+        name: 'unoBody',
+        type: 'texture',
+        path: '../resource/character/Uno_EntireBody.png'
+    },
+    {
         name: 'bellModel',
         type: 'gltfModel',
         path: '../models/Bell/Bell_new.gltf'
