@@ -429,6 +429,10 @@ export default {
 
             disableScroll();
 
+            experience = new Experience(document.querySelector('canvas.webgl'), saveImage);
+            experience.resources.on('ready', () => {
+            })
+
 
             STICKERSTORE.forEach(sticker => {
                 const img = new Image();
@@ -484,9 +488,7 @@ export default {
             eventId.value = localStorage.getItem('eventId')
 
 
-            experience = new Experience(document.querySelector('canvas.webgl'), saveImage);
-            experience.resources.on('ready', () => {
-            })
+
 
             // setFrame(FRAMESTORE[0])
         });
