@@ -374,6 +374,19 @@ export default {
             experience.init()
         });
 
+        window.onpopstate = function (event) {
+            if (eventId.value === '5') {
+                eventId.value = null;
+                router.push({ path: '/event5' });
+            } else if (eventId.value === '3') {
+                eventId.value = null;
+                router.push({ path: '/event3' });
+            } else if (eventId.value === '1') {
+                eventId.value = null;
+                router.push({ path: '/event1' });
+            }
+        };
+
         return {
             characterContent: currentCharacterContent,
             selectCharacterSrc: characterStore.currentCharacter?.src,

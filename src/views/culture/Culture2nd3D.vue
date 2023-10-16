@@ -404,6 +404,7 @@ export default {
         const imageDataStore = useImageDataStore()
         const characterStore = useCharacterStore()
         const textIndex = ref(6)
+        const eventId = ref(null)
 
         characterStore.setCharacterIndex(localStorage.getItem('characterID'))
 
@@ -443,11 +444,14 @@ export default {
             setVH();
             window.addEventListener('resize', setVH);
 
+            eventId.value = localStorage.getItem('eventId');
+
 
         })
 
         const disposeVideo = () => {
             const video = document.getElementById("webcam");
+            if (video.srcObject === null) return;
             let track = video.srcObject.getTracks()[0];
             track.stop();
         }
@@ -456,7 +460,12 @@ export default {
             disposeVideo();
         })
 
-
+        window.onpopstate = function (event) {
+            if (eventId.value === '6') {
+                eventId.value = null;
+                router.push({ path: '/event6' });
+            }
+        };
         return {
             saveImage,
             characterContent: currentCharacterContent,

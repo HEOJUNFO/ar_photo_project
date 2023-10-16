@@ -217,6 +217,13 @@ export default {
             experience.init()
         });
 
+        window.onpopstate = function (event) {
+            if (eventId.value === '9') {
+                eventId.value = null;
+                router.push({ path: '/event9' });
+            }
+        };
+
         return {
             index,
             characterContent: currentCharacterContent,

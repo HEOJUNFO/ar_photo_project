@@ -216,6 +216,7 @@ export default {
             let vh = window.innerHeight * 0.01;
             document.documentElement.style.setProperty('--vh', `${vh}px`);
         }
+
         window.history.pushState(history.state, null, window.location.href);
         function debounce(func, wait) {
             let timeout;

@@ -337,6 +337,12 @@ export default {
             experience.init()
         });
 
+        window.onpopstate = function (event) {
+            if (eventId.value === '7') {
+                eventId.value = null;
+                router.push({ path: '/event7' });
+            }
+        };
 
         return {
             index,

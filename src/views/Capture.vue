@@ -487,19 +487,30 @@ export default {
 
             eventId.value = localStorage.getItem('eventId')
 
-
-
-
             // setFrame(FRAMESTORE[0])
         });
 
         onBeforeRouteLeave(() => {
+            experience.resources.on('ready', () => {
+                experience.dispose()
+                experience.destroy()
+                experience.init()
+            })
 
-            experience.dispose()
-
-            experience.destroy()
-            experience.init()
         });
+
+        window.onpopstate = function (event) {
+            if (eventId.value === '10') {
+                eventId.value = null;
+                router.push({ path: '/event10' });
+            } else if (eventId.value === '4') {
+                eventId.value = null;
+                router.push({ path: '/event4' });
+            } else if (eventId.value === '2') {
+                eventId.value = null;
+                router.push({ path: '/event2' });
+            }
+        };
 
         return {
             enableFilp,

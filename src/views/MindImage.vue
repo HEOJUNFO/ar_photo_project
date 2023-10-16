@@ -264,7 +264,12 @@ export default {
 
         });
 
-
+        window.onpopstate = function (event) {
+            if (eventId.value === '8') {
+                eventId.value = null;
+                router.push({ path: '/event8' });
+            }
+        };
 
         return {
             isBlue,
