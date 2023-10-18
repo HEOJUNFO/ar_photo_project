@@ -78,8 +78,6 @@ export default class Renderer
             tracks.forEach(track => track.stop());
         }
      
-   
-
         return await navigator.mediaDevices.getUserMedia({
             video: { 
                 facingMode: facingMode,

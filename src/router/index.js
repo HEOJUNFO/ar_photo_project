@@ -26,6 +26,8 @@ import Culture3D from "@views/culture/Culture3D.vue"
 import Loading from "@views/Loading.vue"
 import Ios from "@views/Ios.vue"
 import MindImage from "@views/MindImage.vue"
+import busan from "@views/busan/busan.vue"
+import busan2 from "@views/busan/busan2.vue"
 
 
 export const routes = [
@@ -55,6 +57,8 @@ export const routes = [
     {path: '/loading',component:Loading, name:'Loading'},
     {path: '/ios',component:Ios, name:'Ios'},
     {path: '/mindimage',component:MindImage, name:'MindImage'},
+    {path: '/busan',component:busan, name:'busan'},
+    {path: '/busan2',component:busan2, name:'busan2'},
     
 ]
 

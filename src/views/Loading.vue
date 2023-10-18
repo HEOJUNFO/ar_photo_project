@@ -166,7 +166,6 @@ export default {
         }
 
         const next = () => {
-            console.log(eventId.value)
             switch (eventId.value) {
                 case '0':
                     router.push('/intro');

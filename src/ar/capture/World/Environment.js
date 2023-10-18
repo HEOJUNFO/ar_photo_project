@@ -15,6 +15,7 @@ export default class Environment
         // this.setEnvironmentMap()
         // this.setEnvironmentMap2()
         // this.setEnvironmentMap3()
+    
         this.setEnvironmentMap4()
     }
 
@@ -68,11 +69,31 @@ export default class Environment
         const envMap = this.pmremGenerator.fromEquirectangular( this.resources.items.sunset ).texture;
         this.scene.environment = envMap;  
     }
-    setEnvironmentMap4(){
-        this.pmremGenerator = new THREE.PMREMGenerator( this.experience.renderer.instance );
-        this.pmremGenerator.compileEquirectangularShader();
-        const envMap = this.pmremGenerator.fromEquirectangular( this.resources.items.footprint ).texture;
-        this.scene.environment = envMap;
-
+    setEnvironmentMap4() {
+        try {
+            this.pmremGenerator = new THREE.PMREMGenerator(this.experience.renderer.instance);
+    
+            if (!this.pmremGenerator) {
+                console.warn("PMREMGenerator initialization failed.");
+                return;
+            }
+    
+            this.pmremGenerator.compileEquirectangularShader();
+    
+            if (!this.resources || !this.resources.items || !this.resources.items.footprint) {
+                console.warn("Resources or footprint not available.");
+                return;
+            }
+    
+            const envMap = this.pmremGenerator.fromEquirectangular(this.resources.items.footprint).texture;
+            if (!envMap) {
+                console.warn("Failed to generate environment map.");
+                return;
+            }
+    
+            this.scene.environment = envMap;
+        } catch (error) {
+            console.error("Error setting environment map:", error);
+        }
     }
 }

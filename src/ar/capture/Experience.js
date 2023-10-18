@@ -37,7 +37,9 @@ export default class Experience
         this.resources = new Resources(sources)
         this.camera = new Camera()
         this.renderer = new Renderer()
+
         this.world = new World()
+    
 
         this.raycaster = new THREE.Raycaster();
         this.mouse = new THREE.Vector2();
@@ -45,7 +47,9 @@ export default class Experience
         this.clickedObject = [];
         this.textureKeys = [];
 
+        if(this.canvas){
         this.canvas.addEventListener('touchstart', this._checkForModelClick.bind(this), false);
+        }
 
         this.bindMethods()
 

@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <div v-show="showOverlay" @click="showOverlay = false, setFrame(FRAMES[0]), overlayToggle()" class="overlay">
+        <div v-show="showOverlay" @click="showOverlay = false" class="overlay">
             <img src="@resource/common/AR_Logo_02.png" alt="overlay" />
             <div class="tutorial-inner">
                 <p>안녕! 반가워</p>
@@ -158,9 +158,10 @@
                                 fill="#9F9F9F" />
                         </g>
                     </svg></button>
-                <img @click="setCharacter()" :src="characterSrc" :class="{ 'selected': selectedCharacter }" />
+                <img @click="setCharacter(imageObj)" v-for="(imageObj, index) in CHARACTERS" :src="imageObj.src"
+                    :class="{ 'selected': selectedCharacter === index }" />
                 <img @click="setSticker(imageObj)" v-for="(imageObj, index) in STICKERS" :key="index" :src="imageObj.src"
-                    :alt="imageObj.text" :class="{ 'selected': selectedSticker === index }" />
+                    :class="{ 'selected': selectedSticker === index }" />
             </div>
         </div>
 
@@ -174,28 +175,15 @@
         <div v-show="setFrameSrc" class="frame">
             <img :src="setFrameSrc" alt="봄" />
         </div>
-        <div v-show="finishModal" class="overlay">
-        </div>
-        <div v-show="finishModal" class="image-container2">
-            <div class="reward-container">
-                <img class="image1" src="@resource/common/label.png" />
-                <p class="p1">가을의 숲 웹프레임 1종</p>
-                <p class="p2">(서비스 내 사진촬영에서 확인 및 사용가능)</p>
-                <img class="image2" src="@resource/icon/frame_04.png" />
-                <button @click="reward()">상품획득 성공</button>
-                <img class="guide" src="@resource/common/tap.png" alt="Image 1" />
-            </div>
-        </div>
     </div>
 </template>
 
 <script>
-import { useCharacterStore } from '../stores/characterStore.js'
-import { useImageDataStore } from '../stores/imageData.js'
-import Experience from '../ar/capture/Experience.js'
+import Experience from '../../ar/capture/Experience.js'
 import { onMounted, computed, ref, inject } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router'
-import router from '../router';
+import router from '../../router';
+import { useImageDataStore } from '../../stores/imageData.js'
 
 const bell01 = new URL('@resource/icon/bell_01.png', import.meta.url).href
 const bell02 = new URL('@resource/icon/bell_02.png', import.meta.url).href
@@ -215,6 +203,12 @@ const frame2 = new URL('@resource/frame/logo_frame_1.png', import.meta.url).href
 const frame3 = new URL('@resource/frame/logo_frame_2.png', import.meta.url).href
 const frame4 = new URL('@resource/frame/logo_frame_3.png', import.meta.url).href
 const frame5 = new URL('@resource/frame/logo_frame_4.png', import.meta.url).href
+
+const bellCharacter = new URL('@resource/frame/frame_bell.png', import.meta.url).href
+
+const sorinaCharacter = new URL('@resource/frame/frame_sorina.png', import.meta.url).href
+
+const unoCharacter = new URL('@resource/frame/frame_uno.png', import.meta.url).href
 
 export default {
     name: 'capture',
@@ -262,32 +256,25 @@ export default {
             }
         };
         let experience;
+        const imageDataStore = useImageDataStore()
         const showModal = ref(false);
         const eventName = ref('capture')
         const frameList = ref(false)
         const showOverlay = ref(true)
         const stickerList = ref(false)
         const selectedSticker = ref(null)
-        const selectedCharacter = ref(false)
         const setFrameSrc = ref(null)
-        const characterSrc = ref(null)
-        const characterID = ref(0)
-        const finishModal = ref(false)
-        const eventId = ref(0)
+        const selectedCharacter = ref(false)
 
         const enableFilp = ref(true)
 
-        const characterStore = useCharacterStore()
-        const imageDataStore = useImageDataStore()
-
-        const currentCharacter = computed(() => characterStore.currentCharacter)
-
-        const currentCharacterContent = computed(() => {
-            return currentCharacter.value.common4[textIndex.value] || {}
-        })
+        const CHARACTERS = ref([
+            { id: 0, src: bellCharacter, name: 'bell' },
+            { id: 1, src: unoCharacter, name: 'uno' },
+            { id: 2, src: sorinaCharacter, name: 'sorina' },
+        ])
 
         const FRAMESTORE = [
-            { id: 0, src: frame, text: '없음' },
             { id: 1, src: frame2, text: '봄' },
             { id: 2, src: frame3, text: '여름' },
             { id: 3, src: frame4, text: '가을' },
@@ -314,16 +301,6 @@ export default {
 
         const STICKERS = ref([])
 
-        const overlayToggle = () => {
-
-
-            if (eventId.value === '10' && localStorage.getItem('clearId10') !== 'true') {
-                finishModal.value = true
-                FRAMES.value.push(FRAMESTORE[3])
-            }
-
-        }
-
         const stickerToggle = () => {
             playAudio();
             stickerList.value = !stickerList.value
@@ -335,6 +312,7 @@ export default {
                 disableScroll();
             }
         }
+
 
         const frameToggle = () => {
             playAudio();
@@ -355,15 +333,19 @@ export default {
             selectedSticker.value = image.id
             selectedCharacter.value = false
         }
-        const setCharacter = () => {
+        const setCharacter = (image) => {
             playAudio();
             experience.world.removeSticker()
-            experience.world.setCharacter(characterID.value)
+            experience.world.setCharacter(image.id)
             selectedSticker.value = null
             selectedCharacter.value = true
         }
 
         const setFrame = (image) => {
+            if (image.id === 0) {
+                setFrameSrc.value = null
+                return
+            }
             setFrameSrc.value = image.src
         }
 
@@ -394,13 +376,12 @@ export default {
         };
 
         const reward = () => {
-            finishModal.value = false;
             localStorage.setItem('normalItem5', 'true')
         };
 
         const home = () => {
 
-            router.push('./stage');
+            router.push('./busan');
         };
 
         const setVH = () => {
@@ -431,6 +412,7 @@ export default {
 
             experience = new Experience(document.querySelector('canvas.webgl'), saveImage);
             experience.resources.on('ready', () => {
+                console.log('fs')
             })
 
 
@@ -439,55 +421,22 @@ export default {
                 img.src = sticker.src;
             });
 
-
-            if (localStorage.getItem('characterID') !== null) {
-                characterID.value = localStorage.getItem('characterID')
-            }
-
             STICKERS.value.push(STICKERSTORE[9])
-
-            if (localStorage.getItem('clearId3') === 'true') {
-                STICKERS.value.push(STICKERSTORE[0])
-                STICKERS.value.push(STICKERSTORE[1])
-                STICKERS.value.push(STICKERSTORE[2])
-            }
-
+            STICKERS.value.push(STICKERSTORE[0])
+            STICKERS.value.push(STICKERSTORE[1])
+            STICKERS.value.push(STICKERSTORE[2])
             STICKERS.value.push(STICKERSTORE[10])
-
-            if (localStorage.getItem('clearId1') === 'true') {
-                STICKERS.value.push(STICKERSTORE[3])
-                STICKERS.value.push(STICKERSTORE[4])
-                STICKERS.value.push(STICKERSTORE[5])
-            }
-
+            STICKERS.value.push(STICKERSTORE[3])
+            STICKERS.value.push(STICKERSTORE[4])
+            STICKERS.value.push(STICKERSTORE[5])
             STICKERS.value.push(STICKERSTORE[11])
-            if (localStorage.getItem('clearId5') === 'true') {
-                STICKERS.value.push(STICKERSTORE[6])
-                STICKERS.value.push(STICKERSTORE[7])
-                STICKERS.value.push(STICKERSTORE[8])
-            }
-            if (localStorage.getItem('clearId8') === 'true') {
-                FRAMES.value.push(FRAMESTORE[1])
-            }
-            if (localStorage.getItem('clearId7') === 'true') {
-                FRAMES.value.push(FRAMESTORE[2])
-            }
-            if (localStorage.getItem('clearId9') === 'true') {
-                FRAMES.value.push(FRAMESTORE[4])
-            }
-
-
-            if (characterID.value === '0') {
-                characterSrc.value = new URL('@resource/frame/frame_bell.png', import.meta.url).href
-            } else if (characterID.value === '1') {
-                characterSrc.value = new URL('@resource/frame/frame_sorina.png', import.meta.url).href
-            } else if (characterID.value === '2') {
-                characterSrc.value = new URL('@resource/frame/frame_uno.png', import.meta.url).href
-            }
-
-            eventId.value = localStorage.getItem('eventId')
-
-            // setFrame(FRAMESTORE[0])
+            STICKERS.value.push(STICKERSTORE[6])
+            STICKERS.value.push(STICKERSTORE[7])
+            STICKERS.value.push(STICKERSTORE[8])
+            FRAMES.value.push(FRAMESTORE[0])
+            FRAMES.value.push(FRAMESTORE[1])
+            FRAMES.value.push(FRAMESTORE[2])
+            FRAMES.value.push(FRAMESTORE[3])
         });
 
         onBeforeRouteLeave(() => {
@@ -495,20 +444,10 @@ export default {
             experience.dispose()
             experience.destroy()
             experience.init()
+
+
         });
 
-        window.onpopstate = function (event) {
-            if (eventId.value === '10') {
-                eventId.value = null;
-                router.push({ path: '/event10' });
-            } else if (eventId.value === '4') {
-                eventId.value = null;
-                router.push({ path: '/event4' });
-            } else if (eventId.value === '2') {
-                eventId.value = null;
-                router.push({ path: '/event2' });
-            }
-        };
 
         return {
             enableFilp,
@@ -529,11 +468,9 @@ export default {
             selectedCharacter,
             setFrame,
             setFrameSrc,
-            characterSrc,
             home,
-            finishModal,
             reward,
-            overlayToggle,
+            CHARACTERS,
         }
     }
 }
