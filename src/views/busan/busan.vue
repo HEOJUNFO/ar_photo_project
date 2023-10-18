@@ -22,7 +22,7 @@
 <script>
 import { ref, onMounted } from 'vue'
 import router from '../../router'
-import Experience from '../../ar/magic/Experience.js'
+import Experience from '../../ar/magic2/Experience.js'
 import { onBeforeRouteLeave } from 'vue-router'
 
 
@@ -30,30 +30,8 @@ export default {
     name: 'Common4',
 
     setup() {
-        const audio = ref(null);
         const audio2 = ref(null);
-        const audio3 = ref(null);
         const audio4 = ref(null);
-
-        import('@resource/sounds/generaltap.wav')
-            .then(src => {
-                audio.value = new Audio(src.default);
-            })
-            .catch(error => {
-                console.error("Error importing audio file:", error);
-            });
-
-        const playAudio = () => {
-            if (audio.value) {
-                if (!audio.value.paused) {
-                    audio.value.pause();
-                    audio.value.currentTime = 0;
-                }
-                audio.value.play();
-            } else {
-                console.error("Audio not initialized yet.");
-            }
-        };
 
         import('@resource/sounds/magic.wav')
             .then(src => {
@@ -109,25 +87,6 @@ export default {
             }
         };
 
-        import('@resource/sounds/acquired.wav')
-            .then(src => {
-                audio3.value = new Audio(src.default);
-            })
-            .catch(error => {
-                console.error("Error importing audio file:", error);
-            });
-
-        const playAudio3 = () => {
-            if (audio3.value) {
-                if (!audio3.value.paused) {
-                    audio3.value.pause();
-                    audio3.value.currentTime = 0;
-                }
-                audio3.value.play();
-            } else {
-                console.error("Audio not initialized yet.");
-            }
-        };
 
         import('@resource/sounds/success.wav')
             .then(src => {
@@ -157,6 +116,7 @@ export default {
         const imageTop = ref(50)
 
         const handleMouseDown = (event) => {
+            experience.world.particle.start()
             event.preventDefault();
             playAudio2()
 
@@ -179,6 +139,7 @@ export default {
         }
 
         const handleMouseUp = () => {
+            experience.world.particle.pause()
             stopAudio2()
 
             const removeImageTransition = (id) => {

@@ -84,7 +84,6 @@ import { useImageDataStore } from '../../stores/imageData.js'
 import { onMounted, ref } from 'vue';
 import router from '../../router';
 
-
 export default {
     name: 'captureReview',
     setup() {
@@ -127,28 +126,6 @@ export default {
                     audio2.value.currentTime = 0;
                 }
                 audio2.value.play();
-            } else {
-                console.error("Audio not initialized yet.");
-            }
-        };
-
-        const audio3 = ref(null);
-
-        import('@resource/sounds/success.wav')
-            .then(src => {
-                audio3.value = new Audio(src.default);
-            })
-            .catch(error => {
-                console.error("Error importing audio file:", error);
-            });
-
-        const playAudio3 = () => {
-            if (audio3.value) {
-                if (!audio3.value.paused) {
-                    audio3.value.pause();
-                    audio3.value.currentTime = 0;
-                }
-                audio3.value.play();
             } else {
                 console.error("Audio not initialized yet.");
             }

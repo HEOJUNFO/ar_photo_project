@@ -187,10 +187,7 @@ export default {
 
         const playAudio3 = () => {
             if (audio3.value) {
-                if (!audio3.value.paused) {
-                    audio3.value.pause();
-                    audio3.value.currentTime = 0;
-                }
+
                 audio3.value.play();
             } else {
                 console.error("Audio not initialized yet.");
@@ -207,10 +204,7 @@ export default {
 
         const playAudio4 = () => {
             if (audio4.value) {
-                if (!audio4.value.paused) {
-                    audio4.value.pause();
-                    audio4.value.currentTime = 0;
-                }
+
                 audio4.value.play();
             } else {
                 console.error("Audio not initialized yet.");
