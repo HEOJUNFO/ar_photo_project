@@ -180,7 +180,7 @@
 
 <script>
 import Experience from '../../ar/capture/Experience.js'
-import { onMounted, computed, ref, inject } from 'vue';
+import { onMounted, ref } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router'
 import router from '../../router';
 import { useImageDataStore } from '../../stores/imageData.js'
@@ -358,7 +358,7 @@ export default {
             let height = canvas.style.height
             imageDataStore.setCanvasSize(width, height)
 
-            router.push({ path: '/capturereview' });
+            router.push({ path: '/busan3' });
         }
 
         const confirmBack = () => {
@@ -412,9 +412,8 @@ export default {
 
             experience = new Experience(document.querySelector('canvas.webgl'), saveImage);
             experience.resources.on('ready', () => {
-                console.log('fs')
-            })
 
+            })
 
             STICKERSTORE.forEach(sticker => {
                 const img = new Image();
@@ -799,113 +798,5 @@ export default {
 
 .selected {
     filter: grayscale(100%);
-}
-
-.image-container2 {
-    position: absolute;
-    width: 90%;
-    height: auto;
-    z-index: 10;
-    background-color: #fff;
-    border-radius: 16px;
-    left: 50%;
-    top: calc(50 * var(--vh));
-    transform: translate(-50%, -50%);
-    padding-bottom: calc(3 * var(--vh));
-}
-
-
-.reward-container {
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: calc(-3 * var(--vh));
-
-}
-
-
-.image1 {
-    position: relative;
-    width: 100%;
-    height: auto;
-}
-
-.image2 {
-    position: relative;
-    width: 60%;
-    height: auto;
-}
-
-.p1 {
-    position: relative;
-    color: var(--Text-Black, #111);
-    text-align: center;
-    font-family: "NanumSquare", sans-serif;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: 28px;
-    letter-spacing: -0.5px;
-    max-width: 20ch;
-    overflow-wrap: break-word;
-    word-break: keep-all;
-
-}
-
-.p2 {
-    color: var(--Text-Gray, #767676);
-    text-align: center;
-    font-family: "NanumSquare", sans-serif;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 16px;
-    letter-spacing: -0.3px;
-}
-
-.reward-container button {
-    width: 80%;
-    padding: 10px;
-    border-radius: 100px;
-    border: 2px solid var(--Point-Red-Dark, #922142);
-    background: var(--Point-Red, #D50F4A);
-    color: var(--Text-White, #FFF);
-    text-align: center;
-    font-family: "NanumSquare", sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: -0.4px;
-    text-align: center;
-    z-index: 1;
-    position: relative;
-    box-shadow: 0px 3px #922142;
-    margin-top: calc(2 * var(--vh));
-}
-
-.guide {
-    width: auto;
-    height: 15%;
-    position: absolute;
-    top: 85%;
-    left: 70%;
-    transform: translateX(-50%);
-    z-index: 3;
-    animation: beat .35s infinite alternate;
-    pointer-events: none;
-}
-
-@keyframes beat {
-    from {
-        transform: scale(1);
-    }
-
-    to {
-        transform: scale(1.5);
-    }
 }
 </style>
