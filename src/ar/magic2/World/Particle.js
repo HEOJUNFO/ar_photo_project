@@ -22,9 +22,8 @@ export default class Particles {
         this.currentParticleIndex = 0;
         this.particleAngles = [];  
         this.particleDirections = [];
-        this.currentRadius = 0.5;  
-        this.radiusIncreaseSpeed = 0.01;
-        this.maxRadius = 2.0; 
+        this.currentRadius = 1.8;  
+      
         this.rotationSpeed = 0.02; 
 
         this.setGeometry();
@@ -34,12 +33,12 @@ export default class Particles {
 
     pause() {
         this.state = 'removing';  
-        this.particlesPerFrame = 15;
+        this.particlesPerFrame = 20;
     }
         
     start() {
         this.state = 'creating';
-        this.currentRadius = 0.5;
+
         this.particlesPerFrame = 10;
     }
     
@@ -49,9 +48,11 @@ export default class Particles {
         for (let j = 0; j < this.particlesPerFrame; j++) {
             if (this.state === 'creating'&& this.currentParticleIndex < this.particlesCount) {
                 const theta = this.particleAngles[this.currentParticleIndex];
-                const x = this.currentRadius * Math.cos(theta);
-                const y = this.currentRadius * Math.sin(theta);
-    
+                
+
+                let x = this.currentRadius * Math.cos(theta);
+                let y = this.currentRadius * Math.sin(theta);
+                
                 const index = this.currentParticleIndex * 3;
                 positions[index] = x;
                 positions[index + 1] = y;
@@ -90,11 +91,7 @@ export default class Particles {
             positions[index + 1] += direction.y * this.speed;
         }
 
-        if (this.state === 'creating' && this.currentRadius < this.maxRadius) {
-            this.currentRadius += this.radiusIncreaseSpeed;
-        } else if (this.state === 'removing' && this.currentRadius > 1.5) {
-            this.currentRadius -= this.radiusIncreaseSpeed;
-        }
+  
     
     
         this.geometry.attributes.position.needsUpdate = true;
