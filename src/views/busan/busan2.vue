@@ -1,22 +1,23 @@
 <template>
     <div class="main">
-        <div v-show="showLoading" class="overlay2" style="z-index: 9999;">
+        <div v-show="showLoading" class="overlay2" :style="bgStyle">
             <div class="tutorial-inner2">
-                <p style="color: #d50f4a;">더플래쉬와 함께<br>컬쳐버스로 GoGo!</p>
+                <p class="large-text" style="color: #ffffff;">
+                    <span class="extra-large-text">더플래쉬</span>와 함께<br>컬쳐버스로 <span class="extra-large-text">GoGo!</span>
+                </p>
                 <img src="@resource/common/bell.png">
-
             </div>
             <progress class="loadingbar" value="0" max="100"></progress>
             <div class="tutorial-inner3">
-                <p style="color:#d50f4a">AR 준비중...</p>
+                <p style="color:#ffffff">AR 준비중...</p>
             </div>
         </div>
         <div v-show="showOverlay" @click="showOverlay = false, setFrame(FRAMES[0])" class="overlay">
             <img src="@resource/common/bell.png" alt="overlay" />
             <div class="tutorial-inner">
-                <p><span style="color:#d50f4a">벨, 소리나, 우노</span>마음에 드는</p>
-                <p>캐릭터를 선택해서</p>
-                <p>촬영을 시작해 볼까?</p>
+                <h1><span style="color:#d50f4a">벨, 소리나, 우노</span></h1>
+                <h1>마음에 드는 캐릭터를 선택해서</h1>
+                <h1>촬영을 시작해 볼까?</h1>
                 <br>
                 <p><span style="color:#d50f4a">#드래그</span>로 이동 가능</p>
                 <p><span style="color:#d50f4a">#핀치줌</span>으로 크기 변경도 가능</p>
@@ -163,7 +164,7 @@
 
 <script>
 import Experience from '../../ar/capture/Experience.js'
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router'
 import router from '../../router';
 import { useImageDataStore } from '../../stores/imageData.js'
@@ -246,6 +247,16 @@ export default {
         const selectedCharacter = ref(false)
         const showLoading = ref(true)
         const enableFilp = ref(true)
+
+        const bgImageUrl = new URL('@resource/common/bg2.png', import.meta.url).href;
+
+        const bgStyle = computed(() => {
+            return {
+                backgroundImage: `url(${bgImageUrl})`,
+                backgroundSize: 'cover',
+                zIndex: 9999,
+            }
+        })
 
         const CHARACTERS = ref([
             { id: 0, src: bellCharacter, name: 'bell' },
@@ -425,6 +436,7 @@ export default {
             setFrameSrc,
             CHARACTERS,
             showLoading,
+            bgStyle,
         }
     }
 }
@@ -652,10 +664,10 @@ export default {
 
 .overlay img {
     position: absolute;
-    top: calc(30 * var(--vh));
+    top: calc(35 * var(--vh));
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 80%;
+    width: 100%;
     height: auto;
 }
 
@@ -674,13 +686,13 @@ export default {
     top: calc(30 * var(--vh));
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 80%;
+    width: 100%;
     height: auto;
 }
 
 .tutorial-inner {
     position: absolute;
-    top: calc(65 * var(--vh));
+    top: calc(60 * var(--vh));
     left: 50%;
     transform: translate(-50%, -50%);
     width: 80%;
@@ -697,6 +709,18 @@ export default {
     line-height: 24px;
     letter-spacing: -0.4px;
 }
+
+.tutorial-inner h1 {
+    color: var(--Text-White, #000);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.4px;
+}
+
 
 .tutorial-inner2 {
     position: absolute;
@@ -720,11 +744,12 @@ export default {
     letter-spacing: -0.4px;
 }
 
+
 .tutorial-inner3 {
     position: absolute;
     display: flex;
     flex-direction: column;
-    top: calc(75 * var(--vh));
+    top: calc(70 * var(--vh));
     left: 50%;
     transform: translate(-50%, -50%);
     width: 50%;
@@ -819,11 +844,20 @@ export default {
 
 .loadingbar {
     position: absolute;
-    top: calc(70 * var(--vh));
+    top: calc(65 * var(--vh));
     left: 50%;
     transform: translate(-50%, -50%);
     width: 80%;
     height: calc(5 * var(--vh));
     z-index: 10;
+}
+
+.large-text {
+    font-size: 1.5em;
+}
+
+.extra-large-text {
+    font-size: 1.6em;
+    font-weight: bold;
 }
 </style>
