@@ -3,8 +3,8 @@
         <div class="top-section">
             <button></button>
             <button></button>
-            <button @click="back()"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"
-                    fill="none">
+            <button @click="showModal = true, showHashTag = false"><svg xmlns="http://www.w3.org/2000/svg" width="40"
+                    height="40" viewBox="0 0 40 40" fill="none">
                     <circle cx="20" cy="20" r="19" fill="white" stroke="#D50F4A" stroke-width="2" />
                     <mask id="mask0_541_1827" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="8" width="24"
                         height="24">
@@ -22,8 +22,8 @@
             <img :src="imageDataStore.imageData" />
         </div>
         <div class="bottom-section">
-            <button @click="showModal = true"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
-                    viewBox="0 0 28 28" fill="none">
+            <button @click="back()"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"
+                    fill="none">
                     <mask id="mask0_541_1944" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="28"
                         height="28">
                         <rect width="28" height="28" fill="#D9D9D9" />
@@ -46,14 +46,8 @@
                             fill="#D50F4A" />
                     </g>
                 </svg>저장</button>
-            <button v-if="!clear" class="share-button" @click="shareImage()"><svg xmlns="http://www.w3.org/2000/svg"
-                    width="24" height="23" viewBox="0 0 24 23" fill="none">
-                    <path
-                        d="M2.66665 17.8333V20.1667H21.3333V17.8333H2.66665ZM2.66665 5.00001H5.23331C5.13609 4.82501 5.0729 4.64029 5.04373 4.44584C5.01456 4.2514 4.99998 4.04723 4.99998 3.83334C4.99998 2.86112 5.34026 2.03473 6.02081 1.35418C6.70137 0.673621 7.52776 0.333344 8.49998 0.333344C9.08331 0.333344 9.6229 0.484038 10.1187 0.785427C10.6146 1.08682 11.0472 1.46112 11.4166 1.90834L12 2.66668L12.5833 1.90834C12.9333 1.44168 13.3611 1.06251 13.8666 0.770844C14.3722 0.479177 14.9166 0.333344 15.5 0.333344C16.4722 0.333344 17.2986 0.673621 17.9791 1.35418C18.6597 2.03473 19 2.86112 19 3.83334C19 4.04723 18.9854 4.2514 18.9562 4.44584C18.9271 4.64029 18.8639 4.82501 18.7666 5.00001H21.3333C21.975 5.00001 22.5243 5.22848 22.9812 5.68543C23.4382 6.14237 23.6666 6.69168 23.6666 7.33334V20.1667C23.6666 20.8083 23.4382 21.3576 22.9812 21.8146C22.5243 22.2715 21.975 22.5 21.3333 22.5H2.66665C2.02498 22.5 1.47567 22.2715 1.01873 21.8146C0.561785 21.3576 0.333313 20.8083 0.333313 20.1667V7.33334C0.333313 6.69168 0.561785 6.14237 1.01873 5.68543C1.47567 5.22848 2.02498 5.00001 2.66665 5.00001ZM2.66665 14.3333H21.3333V7.33334H15.3833L17.1333 9.72501C17.3278 9.99723 17.4055 10.284 17.3666 10.5854C17.3278 10.8868 17.1722 11.1347 16.9 11.3292C16.6278 11.5236 16.341 11.5965 16.0396 11.5479C15.7382 11.4993 15.4903 11.3486 15.2958 11.0958L12 6.63334L8.70415 11.0958C8.5097 11.3486 8.26179 11.4993 7.9604 11.5479C7.65901 11.5965 7.3722 11.5236 7.09998 11.3292C6.82776 11.1347 6.66734 10.8868 6.61873 10.5854C6.57012 10.284 6.64304 9.99723 6.83748 9.72501L8.55831 7.33334H2.66665V14.3333ZM8.49998 5.00001C8.83054 5.00001 9.10762 4.8882 9.33123 4.66459C9.55484 4.44098 9.66665 4.1639 9.66665 3.83334C9.66665 3.50279 9.55484 3.2257 9.33123 3.00209C9.10762 2.77848 8.83054 2.66668 8.49998 2.66668C8.16942 2.66668 7.89234 2.77848 7.66873 3.00209C7.44512 3.2257 7.33331 3.50279 7.33331 3.83334C7.33331 4.1639 7.44512 4.44098 7.66873 4.66459C7.89234 4.8882 8.16942 5.00001 8.49998 5.00001ZM15.5 5.00001C15.8305 5.00001 16.1076 4.8882 16.3312 4.66459C16.5548 4.44098 16.6666 4.1639 16.6666 3.83334C16.6666 3.50279 16.5548 3.2257 16.3312 3.00209C16.1076 2.77848 15.8305 2.66668 15.5 2.66668C15.1694 2.66668 14.8923 2.77848 14.6687 3.00209C14.4451 3.2257 14.3333 3.50279 14.3333 3.83334C14.3333 4.1639 14.4451 4.44098 14.6687 4.66459C14.8923 4.8882 15.1694 5.00001 15.5 5.00001Z"
-                        fill="#D50F4A" />
-                </svg>공유</button>
-            <button v-if="clear" class="share-button" @click="shareImage()"><svg xmlns="http://www.w3.org/2000/svg"
-                    width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <button class="share-button" @click="showHashTag = true"><svg xmlns="http://www.w3.org/2000/svg" width="28"
+                    height="28" viewBox="0 0 28 28" fill="none">
                     <mask id="mask0_541_1949" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="28"
                         height="28">
                         <rect width="28" height="28" fill="#D9D9D9" />
@@ -64,17 +58,23 @@
                             fill="#D50F4A" />
                     </g>
                 </svg>공유</button>
-
         </div>
 
         <div v-if="showModal" class="modal">
-            <p>사진 촬영으로 돌아갑니다.</p>
+            <p>정말 종료하시겠습니까?</p>
             <div class="modal-buttons">
                 <button @click="closeModal">취소</button>
                 <button @click="confirmBack">확인</button>
             </div>
         </div>
-
+        <div v-if="showHashTag">
+            <div id="dialog-box">
+                <p>#컬처커넥션 #더플래쉬</p>
+                <p>#Culture_Connection</p>
+                <p>#The_flash_project</p>
+                <button @click="showHashTag = false, hashTagCopy(), shareImage()">해시태그 복사하기</button>
+            </div>
+        </div>
 
     </div>
 </template>
@@ -132,11 +132,38 @@ export default {
         };
 
         const showModal = ref(false);
-
-        const clear = ref(false);
+        const showHashTag = ref(false);
 
         const imageDataStore = useImageDataStore()
 
+        const hashTagCopy = () => {
+            const textToCopy = '#컬처커넥션 #더플래쉬 #Culture_Connection #The_flash_project';
+
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    console.log('Text copied to clipboard successfully!');
+                }).catch(err => {
+                    console.error('Unable to copy text to clipboard:', err);
+                });
+            }
+            else {
+                const el = document.createElement('textarea');
+                el.value = textToCopy;
+                document.body.appendChild(el);
+                el.select();
+                try {
+                    const successful = document.execCommand('copy');
+                    if (successful) {
+                        console.log('Text copied to clipboard successfully!');
+                    } else {
+                        console.error('Unable to copy text to clipboard');
+                    }
+                } catch (err) {
+                    console.error('Unable to copy text to clipboard:', err);
+                }
+                document.body.removeChild(el);
+            }
+        }
 
         const confirmBack = () => {
             showModal.value = false;
@@ -149,7 +176,7 @@ export default {
 
 
         const back = () => {
-            showModal.value = true;
+            router.push('/busan2')
         };
 
         const saveImage = () => {
@@ -191,12 +218,9 @@ export default {
                 .share(shareData)
                 .then(() => {
 
-                    if (clear.value === false) {
-                        playAudio2();
-                        clear.value = true;
-                    } else {
 
-                    }
+                    playAudio2();
+
 
                 })
                 .catch(console.error);
@@ -223,7 +247,8 @@ export default {
             imageDataStore,
             saveImage,
             shareImage,
-            clear
+            showHashTag,
+            hashTagCopy
         }
     }
 }
@@ -404,5 +429,57 @@ export default {
     100% {
         transform: scale(1);
     }
+}
+
+#dialog-box {
+    position: absolute;
+    border-radius: 16px;
+    border: 2px dashed #D50F4A;
+    background: #FFF;
+    padding: 10px;
+    width: 80%;
+    height: calc(27.5 * var(--vh));
+    top: calc(50 * var(--vh));
+    transform: translate(-50%, -50%);
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#dialog-box p {
+    font-family: "NanumSquare", sans-serif;
+    color: #000;
+    text-align: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+    max-width: 18ch;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+}
+
+#dialog-box button {
+    width: 60%;
+    padding: 10px;
+    border-radius: 100px;
+    border: 2px solid var(--Point-Red-Dark, #922142);
+    background: var(--Point-Red, #D50F4A);
+    color: var(--Text-White, #FFF);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+    text-align: center;
+    z-index: 1;
+    position: relative;
+    box-shadow: 0px 3px #922142;
+    margin-top: 5%;
 }
 </style>

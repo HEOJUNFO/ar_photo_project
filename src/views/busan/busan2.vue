@@ -1,36 +1,27 @@
 <template>
     <div class="main">
-        <div v-show="showOverlay" @click="showOverlay = false" class="overlay">
-            <img src="@resource/common/AR_Logo_02.png" alt="overlay" />
+        <div v-show="showLoading" class="overlay2" style="z-index: 9999;">
+            <div class="tutorial-inner2">
+                <p style="color: #d50f4a;">더플래쉬와 함께<br>컬쳐버스로 GoGo!</p>
+                <img src="@resource/common/bell.png">
+
+            </div>
+            <progress class="loadingbar" value="0" max="100"></progress>
+            <div class="tutorial-inner3">
+                <p style="color:#d50f4a">AR 준비중...</p>
+            </div>
+        </div>
+        <div v-show="showOverlay" @click="showOverlay = false, setFrame(FRAMES[0])" class="overlay">
+            <img src="@resource/common/bell.png" alt="overlay" />
             <div class="tutorial-inner">
-                <p>안녕! 반가워</p>
-                <p>마음 드는 <span style="color:#FFFF80">사진프레임</span>과</p>
-                <p><span style="color:#FFFF80">스티커</span>를 선택해서</p>
-                <p>지금부터 사진 촬영을 시작해볼까?</p>
+                <p><span style="color:#d50f4a">벨, 소리나, 우노</span>마음에 드는</p>
+                <p>캐릭터를 선택해서</p>
+                <p>촬영을 시작해 볼까?</p>
                 <br>
-                <br>
-                <p><span style="color:#FFFF80">#드래그</span>로 캐릭터 이동 가능</p>
-                <p><span style="color:#FFFF80">#핀치줌</span>으로 크기 변경도 가능</p>
+                <p><span style="color:#d50f4a">#드래그</span>로 이동 가능</p>
+                <p><span style="color:#d50f4a">#핀치줌</span>으로 크기 변경도 가능</p>
             </div>
             <div class="bottom-section3">
-                <button><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
-                        <mask id="mask0_541_2068" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="28"
-                            height="28">
-                            <rect width="28" height="28" fill="#D9D9D9" />
-                        </mask>
-                        <g mask="url(#mask0_541_2068)">
-                            <path
-                                d="M3.5 15.1667V12.8333H5.83333V15.1667H3.5ZM3.5 10.5V8.16667H5.83333V10.5H3.5ZM8.16667 5.83333V3.5H10.5V5.83333H8.16667ZM12.8333 24.5V22.1667H15.1667V24.5H12.8333ZM12.8333 5.83333V3.5H15.1667V5.83333H12.8333ZM17.5 24.5V22.1667H19.8333V24.5H17.5ZM22.1667 19.8333V17.5H24.5V19.8333H22.1667ZM22.1667 15.1667V12.8333H24.5V15.1667H22.1667ZM23.3333 10.5C23.0028 10.5 22.7257 10.3882 22.5021 10.1646C22.2785 9.94097 22.1667 9.66389 22.1667 9.33333V5.83333H18.6667C18.3361 5.83333 18.059 5.72153 17.8354 5.49792C17.6118 5.27431 17.5 4.99722 17.5 4.66667C17.5 4.33611 17.6118 4.05903 17.8354 3.83542C18.059 3.61181 18.3361 3.5 18.6667 3.5H22.1667C22.8083 3.5 23.3576 3.72847 23.8146 4.18542C24.2715 4.64236 24.5 5.19167 24.5 5.83333V9.33333C24.5 9.66389 24.3882 9.94097 24.1646 10.1646C23.941 10.3882 23.6639 10.5 23.3333 10.5ZM5.83333 24.5C5.19167 24.5 4.64236 24.2715 4.18542 23.8146C3.72847 23.3576 3.5 22.8083 3.5 22.1667V18.6667C3.5 18.3361 3.61181 18.059 3.83542 17.8354C4.05903 17.6118 4.33611 17.5 4.66667 17.5C4.99722 17.5 5.27431 17.6118 5.49792 17.8354C5.72153 18.059 5.83333 18.3361 5.83333 18.6667V22.1667H9.33333C9.66389 22.1667 9.94097 22.2785 10.1646 22.5021C10.3882 22.7257 10.5 23.0028 10.5 23.3333C10.5 23.6639 10.3882 23.941 10.1646 24.1646C9.94097 24.3882 9.66389 24.5 9.33333 24.5H5.83333ZM22.1667 24.5V22.1667H24.5C24.5 22.8083 24.2715 23.3576 23.8146 23.8146C23.3576 24.2715 22.8083 24.5 22.1667 24.5ZM3.5 5.83333C3.5 5.19167 3.72847 4.64236 4.18542 4.18542C4.64236 3.72847 5.19167 3.5 5.83333 3.5V5.83333H3.5Z"
-                                fill="white" />
-                        </g>
-                    </svg>프레임 <div class="icon-tutorial-skin">
-                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="50" cy="50" r="35" fill="none" stroke-width="2" stroke="#ffffff"></circle>
-                            <circle cx="50" cy="50" r="30" fill="none" stroke-width="2" stroke="#ffffff"></circle>
-                        </svg>
-                    </div></button>
-
-                <button></button>
                 <button><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
                         <mask id="mask0_541_2073" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="28"
                             height="28">
@@ -41,28 +32,28 @@
                                 d="M14 14C12.7167 14 11.6181 13.543 10.7042 12.6292C9.7903 11.7153 9.33335 10.6167 9.33335 9.33332C9.33335 8.04999 9.7903 6.95138 10.7042 6.03749C11.6181 5.1236 12.7167 4.66666 14 4.66666C15.2834 4.66666 16.382 5.1236 17.2959 6.03749C18.2097 6.95138 18.6667 8.04999 18.6667 9.33332C18.6667 10.6167 18.2097 11.7153 17.2959 12.6292C16.382 13.543 15.2834 14 14 14ZM4.66669 21V20.0667C4.66669 19.4055 4.83683 18.7979 5.1771 18.2437C5.51738 17.6896 5.96946 17.2667 6.53335 16.975C7.73891 16.3722 8.96391 15.9201 10.2084 15.6187C11.4528 15.3174 12.7167 15.1667 14 15.1667C15.2834 15.1667 16.5472 15.3174 17.7917 15.6187C19.0361 15.9201 20.2611 16.3722 21.4667 16.975C22.0306 17.2667 22.4827 17.6896 22.8229 18.2437C23.1632 18.7979 23.3334 19.4055 23.3334 20.0667V21C23.3334 21.6417 23.1049 22.191 22.6479 22.6479C22.191 23.1049 21.6417 23.3333 21 23.3333H7.00002C6.35835 23.3333 5.80905 23.1049 5.3521 22.6479C4.89516 22.191 4.66669 21.6417 4.66669 21ZM7.00002 21H21V20.0667C21 19.8528 20.9465 19.6583 20.8396 19.4833C20.7327 19.3083 20.5917 19.1722 20.4167 19.075C19.3667 18.55 18.307 18.1562 17.2375 17.8937C16.1681 17.6312 15.0889 17.5 14 17.5C12.9111 17.5 11.832 17.6312 10.7625 17.8937C9.69308 18.1562 8.63335 18.55 7.58335 19.075C7.40835 19.1722 7.26738 19.3083 7.16044 19.4833C7.05349 19.6583 7.00002 19.8528 7.00002 20.0667V21ZM14 11.6667C14.6417 11.6667 15.191 11.4382 15.6479 10.9812C16.1049 10.5243 16.3334 9.97499 16.3334 9.33332C16.3334 8.69166 16.1049 8.14235 15.6479 7.68541C15.191 7.22846 14.6417 6.99999 14 6.99999C13.3584 6.99999 12.809 7.22846 12.3521 7.68541C11.8952 8.14235 11.6667 8.69166 11.6667 9.33332C11.6667 9.97499 11.8952 10.5243 12.3521 10.9812C12.809 11.4382 13.3584 11.6667 14 11.6667Z"
                                 fill="white" />
                         </g>
+                    </svg>캐릭터 <div class="icon-tutorial-skin">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="50" r="35" fill="none" stroke-width="2" stroke="#d50f4a"></circle>
+                            <circle cx="50" cy="50" r="30" fill="none" stroke-width="2" stroke="#d50f4a"></circle>
+                        </svg>
+                    </div></button>
+
+                <button></button>
+                <button><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
+                        <path
+                            d="M15 25.5903C16.3269 26.7779 18.0791 27.5 20 27.5C24.1421 27.5 27.5 24.1422 27.5 20C27.5 16.5413 25.1588 13.6295 21.9748 12.7627M8.02522 12.7627C4.84117 13.6295 2.5 16.5413 2.5 20C2.5 24.1421 5.85786 27.5 10 27.5C14.1421 27.5 17.5 24.1421 17.5 20C17.5 19.0244 17.3137 18.0923 16.9748 17.2373M22.5 10C22.5 14.1421 19.1421 17.5 15 17.5C10.8579 17.5 7.5 14.1421 7.5 10C7.5 5.85786 10.8579 2.5 15 2.5C19.1421 2.5 22.5 5.85786 22.5 10Z"
+                            stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>스티커<div class="icon-tutorial-skin">
                         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="50" cy="50" r="35" fill="none" stroke-width="2" stroke="#ffffff"></circle>
-                            <circle cx="50" cy="50" r="30" fill="none" stroke-width="2" stroke="#ffffff"></circle>
+                            <circle cx="50" cy="50" r="35" fill="none" stroke-width="2" stroke="#d50f4a"></circle>
+                            <circle cx="50" cy="50" r="30" fill="none" stroke-width="2" stroke="#d50f4a"></circle>
                         </svg>
                     </div></button>
             </div>
         </div>
         <div class="top-section">
-            <button @click="home()"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"
-                    fill="none">
-                    <circle cx="20" cy="20" r="19" fill="white" stroke="#D50F4A" stroke-width="2" />
-                    <mask id="mask0_541_1822" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="8" width="24"
-                        height="24">
-                        <rect x="8" y="8" width="24" height="24" fill="#D9D9D9" />
-                    </mask>
-                    <g mask="url(#mask0_541_1822)">
-                        <path
-                            d="M14 27H17V22C17 21.7167 17.0958 21.4792 17.2875 21.2875C17.4792 21.0958 17.7167 21 18 21H22C22.2833 21 22.5208 21.0958 22.7125 21.2875C22.9042 21.4792 23 21.7167 23 22V27H26V18L20 13.5L14 18V27ZM12 27V18C12 17.6833 12.0708 17.3833 12.2125 17.1C12.3542 16.8167 12.55 16.5833 12.8 16.4L18.8 11.9C19.15 11.6333 19.55 11.5 20 11.5C20.45 11.5 20.85 11.6333 21.2 11.9L27.2 16.4C27.45 16.5833 27.6458 16.8167 27.7875 17.1C27.9292 17.3833 28 17.6833 28 18V27C28 27.55 27.8042 28.0208 27.4125 28.4125C27.0208 28.8042 26.55 29 26 29H22C21.7167 29 21.4792 28.9042 21.2875 28.7125C21.0958 28.5208 21 28.2833 21 28V23H19V28C19 28.2833 18.9042 28.5208 18.7125 28.7125C18.5208 28.9042 18.2833 29 18 29H14C13.45 29 12.9792 28.8042 12.5875 28.4125C12.1958 28.0208 12 27.55 12 27Z"
-                            fill="#D50F4A" />
-                    </g>
-                </svg></button>
+            <button></button>
             <button onclick="switchCamera()"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
                     viewBox="0 0 40 40" fill="none">
                     <circle cx="20" cy="20" r="19" fill="white" stroke="#D50F4A" stroke-width="2" />
@@ -91,24 +82,6 @@
         <div class="bottom-section">
             <button class="button2" @click="frameToggle()"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
                     viewBox="0 0 28 28" fill="none">
-                    <mask id="mask0_541_1841" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="28"
-                        height="28">
-                        <rect width="28" height="28" fill="#D9D9D9" />
-                    </mask>
-                    <g mask="url(#mask0_541_1841)">
-                        <path
-                            d="M3.5 15.1667V12.8333H5.83333V15.1667H3.5ZM3.5 10.5V8.16667H5.83333V10.5H3.5ZM8.16667 5.83333V3.5H10.5V5.83333H8.16667ZM12.8333 24.5V22.1667H15.1667V24.5H12.8333ZM12.8333 5.83333V3.5H15.1667V5.83333H12.8333ZM17.5 24.5V22.1667H19.8333V24.5H17.5ZM22.1667 19.8333V17.5H24.5V19.8333H22.1667ZM22.1667 15.1667V12.8333H24.5V15.1667H22.1667ZM23.3333 10.5C23.0028 10.5 22.7257 10.3882 22.5021 10.1646C22.2785 9.94097 22.1667 9.66389 22.1667 9.33333V5.83333H18.6667C18.3361 5.83333 18.059 5.72153 17.8354 5.49792C17.6118 5.27431 17.5 4.99722 17.5 4.66667C17.5 4.33611 17.6118 4.05903 17.8354 3.83542C18.059 3.61181 18.3361 3.5 18.6667 3.5H22.1667C22.8083 3.5 23.3576 3.72847 23.8146 4.18542C24.2715 4.64236 24.5 5.19167 24.5 5.83333V9.33333C24.5 9.66389 24.3882 9.94097 24.1646 10.1646C23.941 10.3882 23.6639 10.5 23.3333 10.5ZM5.83333 24.5C5.19167 24.5 4.64236 24.2715 4.18542 23.8146C3.72847 23.3576 3.5 22.8083 3.5 22.1667V18.6667C3.5 18.3361 3.61181 18.059 3.83542 17.8354C4.05903 17.6118 4.33611 17.5 4.66667 17.5C4.99722 17.5 5.27431 17.6118 5.49792 17.8354C5.72153 18.059 5.83333 18.3361 5.83333 18.6667V22.1667H9.33333C9.66389 22.1667 9.94097 22.2785 10.1646 22.5021C10.3882 22.7257 10.5 23.0028 10.5 23.3333C10.5 23.6639 10.3882 23.941 10.1646 24.1646C9.94097 24.3882 9.66389 24.5 9.33333 24.5H5.83333ZM22.1667 24.5V22.1667H24.5C24.5 22.8083 24.2715 23.3576 23.8146 23.8146C23.3576 24.2715 22.8083 24.5 22.1667 24.5ZM3.5 5.83333C3.5 5.19167 3.72847 4.64236 4.18542 4.18542C4.64236 3.72847 5.19167 3.5 5.83333 3.5V5.83333H3.5Z"
-                            fill="#D50F4A" />
-                    </g>
-                </svg>프레임</button>
-            <button class="button1" onclick="captureImage()"><svg xmlns="http://www.w3.org/2000/svg" width="70" height="70"
-                    viewBox="0 0 70 70" fill="none">
-                    <circle cx="35" cy="35" r="28" fill="#D50F4A" />
-                    <circle opacity="0.3" cx="35" cy="35" r="33.5" stroke="#D50F4A" stroke-width="3" />
-                    <circle cx="35" cy="35" r="10.5" stroke="white" stroke-width="3" />
-                </svg></button>
-            <button class="button2" @click="stickerToggle()"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
-                    viewBox="0 0 28 28" fill="none">
                     <mask id="mask0_541_1846" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="28"
                         height="28">
                         <rect width="28" height="28" fill="#D9D9D9" />
@@ -118,6 +91,18 @@
                             d="M14 14C12.7167 14 11.618 13.543 10.7042 12.6292C9.79027 11.7153 9.33332 10.6167 9.33332 9.33332C9.33332 8.04999 9.79027 6.95138 10.7042 6.03749C11.618 5.1236 12.7167 4.66666 14 4.66666C15.2833 4.66666 16.3819 5.1236 17.2958 6.03749C18.2097 6.95138 18.6667 8.04999 18.6667 9.33332C18.6667 10.6167 18.2097 11.7153 17.2958 12.6292C16.3819 13.543 15.2833 14 14 14ZM4.66666 21V20.0667C4.66666 19.4055 4.8368 18.7979 5.17707 18.2437C5.51735 17.6896 5.96943 17.2667 6.53332 16.975C7.73888 16.3722 8.96388 15.9201 10.2083 15.6187C11.4528 15.3174 12.7167 15.1667 14 15.1667C15.2833 15.1667 16.5472 15.3174 17.7917 15.6187C19.0361 15.9201 20.2611 16.3722 21.4667 16.975C22.0305 17.2667 22.4826 17.6896 22.8229 18.2437C23.1632 18.7979 23.3333 19.4055 23.3333 20.0667V21C23.3333 21.6417 23.1049 22.191 22.6479 22.6479C22.191 23.1049 21.6417 23.3333 21 23.3333H6.99999C6.35832 23.3333 5.80902 23.1049 5.35207 22.6479C4.89513 22.191 4.66666 21.6417 4.66666 21ZM6.99999 21H21V20.0667C21 19.8528 20.9465 19.6583 20.8396 19.4833C20.7326 19.3083 20.5917 19.1722 20.4167 19.075C19.3667 18.55 18.3069 18.1562 17.2375 17.8937C16.168 17.6312 15.0889 17.5 14 17.5C12.9111 17.5 11.8319 17.6312 10.7625 17.8937C9.69305 18.1562 8.63332 18.55 7.58332 19.075C7.40832 19.1722 7.26735 19.3083 7.16041 19.4833C7.05346 19.6583 6.99999 19.8528 6.99999 20.0667V21ZM14 11.6667C14.6417 11.6667 15.191 11.4382 15.6479 10.9812C16.1049 10.5243 16.3333 9.97499 16.3333 9.33332C16.3333 8.69166 16.1049 8.14235 15.6479 7.68541C15.191 7.22846 14.6417 6.99999 14 6.99999C13.3583 6.99999 12.809 7.22846 12.3521 7.68541C11.8951 8.14235 11.6667 8.69166 11.6667 9.33332C11.6667 9.97499 11.8951 10.5243 12.3521 10.9812C12.809 11.4382 13.3583 11.6667 14 11.6667Z"
                             fill="#D50F4A" />
                     </g>
+                </svg>캐릭터</button>
+            <button class="button1" onclick="captureImage()"><svg xmlns="http://www.w3.org/2000/svg" width="70" height="70"
+                    viewBox="0 0 70 70" fill="none">
+                    <circle cx="35" cy="35" r="28" fill="#D50F4A" />
+                    <circle opacity="0.3" cx="35" cy="35" r="33.5" stroke="#D50F4A" stroke-width="3" />
+                    <circle cx="35" cy="35" r="10.5" stroke="white" stroke-width="3" />
+                </svg></button>
+            <button class="button2" @click="stickerToggle()"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                    viewBox="0 0 30 30" fill="none">
+                    <path
+                        d="M15 25.5903C16.3269 26.7779 18.0791 27.5 20 27.5C24.1421 27.5 27.5 24.1422 27.5 20C27.5 16.5413 25.1588 13.6295 21.9748 12.7627M8.02522 12.7627C4.84117 13.6295 2.5 16.5413 2.5 20C2.5 24.1421 5.85786 27.5 10 27.5C14.1421 27.5 17.5 24.1421 17.5 20C17.5 19.0244 17.3137 18.0923 16.9748 17.2373M22.5 10C22.5 14.1421 19.1421 17.5 15 17.5C10.8579 17.5 7.5 14.1421 7.5 10C7.5 5.85786 10.8579 2.5 15 2.5C19.1421 2.5 22.5 5.85786 22.5 10Z"
+                        stroke="#D50F4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>스티커</button>
         </div>
 
@@ -138,8 +123,8 @@
                         </g>
                     </svg></button>
 
-                <img @click="setFrame(imageObj)" v-for="(imageObj, index) in FRAMES" :key="index" :src="imageObj.src"
-                    :alt="imageObj.text" />
+                <img @click="setCharacter(imageObj)" v-for="(imageObj, index) in CHARACTERS" :src="imageObj.src"
+                    :class="{ 'selected': selectedCharacter === index }" />
             </div>
         </div>
 
@@ -158,15 +143,13 @@
                                 fill="#9F9F9F" />
                         </g>
                     </svg></button>
-                <img @click="setCharacter(imageObj)" v-for="(imageObj, index) in CHARACTERS" :src="imageObj.src"
-                    :class="{ 'selected': selectedCharacter === index }" />
                 <img @click="setSticker(imageObj)" v-for="(imageObj, index) in STICKERS" :key="index" :src="imageObj.src"
                     :class="{ 'selected': selectedSticker === index }" />
             </div>
         </div>
 
         <div v-if="showModal" class="modal">
-            <p>뒤로 돌아갑니다.</p>
+            <p>정말 종료하시겠습니까?</p>
             <div class="modal-buttons">
                 <button @click="closeModal">취소</button>
                 <button @click="confirmBack">확인</button>
@@ -198,11 +181,7 @@ const sorina02 = new URL('@resource/icon/sorina_02.png', import.meta.url).href
 const sorina03 = new URL('@resource/icon/sorina_03.png', import.meta.url).href
 const sorina04 = new URL('@resource/icon/sorina_04.png', import.meta.url).href
 
-const frame = new URL('@resource/frame/logo_frame_5.png', import.meta.url).href
-const frame2 = new URL('@resource/frame/logo_frame_1.png', import.meta.url).href
-const frame3 = new URL('@resource/frame/logo_frame_2.png', import.meta.url).href
-const frame4 = new URL('@resource/frame/logo_frame_3.png', import.meta.url).href
-const frame5 = new URL('@resource/frame/logo_frame_4.png', import.meta.url).href
+const frame = new URL('@resource/frame/skin_05.png', import.meta.url).href
 
 const bellCharacter = new URL('@resource/frame/frame_bell.png', import.meta.url).href
 
@@ -265,41 +244,31 @@ export default {
         const selectedSticker = ref(null)
         const setFrameSrc = ref(null)
         const selectedCharacter = ref(false)
-
+        const showLoading = ref(true)
         const enableFilp = ref(true)
 
         const CHARACTERS = ref([
             { id: 0, src: bellCharacter, name: 'bell' },
-            { id: 1, src: unoCharacter, name: 'uno' },
-            { id: 2, src: sorinaCharacter, name: 'sorina' },
+            { id: 1, src: sorinaCharacter, name: 'uno' },
+            { id: 2, src: unoCharacter, name: 'sorina' },
         ])
-
-        const FRAMESTORE = [
-            { id: 1, src: frame2, text: '봄' },
-            { id: 2, src: frame3, text: '여름' },
-            { id: 3, src: frame4, text: '가을' },
-            { id: 4, src: frame5, text: '겨울' },
-        ]
 
         const FRAMES = ref([{ id: 0, src: frame, text: '없음' },])
 
-        const STICKERSTORE = [
-            { id: 0, src: bell01, name: 'bellNormal' },
-            { id: 1, src: bell02, name: 'bellHappy' },
-            { id: 2, src: bell03, name: 'bellWelcome' },
-            { id: 3, src: uno01, name: 'unoNormal' },
-            { id: 4, src: uno02, name: 'unoHappy' },
-            { id: 5, src: uno03, name: 'unoWelcome' },
-            { id: 6, src: sorina01, name: 'sorinaNormal' },
-            { id: 7, src: sorina02, name: 'sorinaHappy' },
-            { id: 8, src: sorina03, name: 'sorinaWelcome' },
-            { id: 9, src: bell04, name: 'bellBody' },
-            { id: 10, src: uno04, name: 'unoBody' },
-            { id: 11, src: sorina04, name: 'sorinaBody' },
 
-        ]
 
-        const STICKERS = ref([])
+        const STICKERS = ref([{ id: 0, src: bell04, name: 'bellBody' },
+        { id: 1, src: bell01, name: 'bellNormal' },
+        { id: 2, src: bell02, name: 'bellHappy' },
+        { id: 3, src: bell03, name: 'bellWelcome' },
+        { id: 4, src: uno04, name: 'unoBody' },
+        { id: 5, src: uno01, name: 'unoNormal' },
+        { id: 6, src: uno02, name: 'unoHappy' },
+        { id: 7, src: uno03, name: 'unoWelcome' },
+        { id: 8, src: sorina04, name: 'sorinaBody' },
+        { id: 9, src: sorina01, name: 'sorinaNormal' },
+        { id: 10, src: sorina02, name: 'sorinaHappy' },
+        { id: 11, src: sorina03, name: 'sorinaWelcome' },])
 
         const stickerToggle = () => {
             playAudio();
@@ -338,14 +307,11 @@ export default {
             experience.world.removeSticker()
             experience.world.setCharacter(image.id)
             selectedSticker.value = null
-            selectedCharacter.value = true
+            selectedCharacter.value = image.id
         }
 
         const setFrame = (image) => {
-            if (image.id === 0) {
-                setFrameSrc.value = null
-                return
-            }
+
             setFrameSrc.value = image.src
         }
 
@@ -373,15 +339,6 @@ export default {
 
         const back = () => {
             showModal.value = true;
-        };
-
-        const reward = () => {
-            localStorage.setItem('normalItem5', 'true')
-        };
-
-        const home = () => {
-
-            router.push('./busan');
         };
 
         const setVH = () => {
@@ -412,30 +369,29 @@ export default {
 
             experience = new Experience(document.querySelector('canvas.webgl'), saveImage);
             experience.resources.on('ready', () => {
-
+                setTimeout(() => {
+                    showLoading.value = false
+                }, 1000);
             })
 
-            STICKERSTORE.forEach(sticker => {
+            STICKERS.value.forEach(sticker => {
                 const img = new Image();
                 img.src = sticker.src;
             });
 
-            STICKERS.value.push(STICKERSTORE[9])
-            STICKERS.value.push(STICKERSTORE[0])
-            STICKERS.value.push(STICKERSTORE[1])
-            STICKERS.value.push(STICKERSTORE[2])
-            STICKERS.value.push(STICKERSTORE[10])
-            STICKERS.value.push(STICKERSTORE[3])
-            STICKERS.value.push(STICKERSTORE[4])
-            STICKERS.value.push(STICKERSTORE[5])
-            STICKERS.value.push(STICKERSTORE[11])
-            STICKERS.value.push(STICKERSTORE[6])
-            STICKERS.value.push(STICKERSTORE[7])
-            STICKERS.value.push(STICKERSTORE[8])
-            FRAMES.value.push(FRAMESTORE[0])
-            FRAMES.value.push(FRAMESTORE[1])
-            FRAMES.value.push(FRAMESTORE[2])
-            FRAMES.value.push(FRAMESTORE[3])
+            var progressBar = document.querySelector('.loadingbar');
+            var progressValue = 0;
+            var intervalDuration = 35; // milliseconds
+            var incrementValue = (intervalDuration / 3500) * 100; // this will increment the value so it fills up in 3 seconds
+
+            var interval = setInterval(function () {
+                progressValue += incrementValue;
+                progressBar.value = progressValue;
+
+                if (progressValue >= 100) {
+                    clearInterval(interval);
+                }
+            }, intervalDuration);
         });
 
         onBeforeRouteLeave(() => {
@@ -467,9 +423,8 @@ export default {
             selectedCharacter,
             setFrame,
             setFrameSrc,
-            home,
-            reward,
             CHARACTERS,
+            showLoading,
         }
     }
 }
@@ -580,8 +535,8 @@ export default {
     height: calc(10 * var(--vh));
     position: absolute;
     z-index: 2;
-    top: calc(68 * var(--vh));
-    left: 3%;
+    top: calc(70 * var(--vh));
+    left: 2%;
     scrollbar-width: none !important;
     -ms-overflow-style: none !important;
 
@@ -691,7 +646,7 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(255, 255, 255, 0.8);
     z-index: 3;
 }
 
@@ -704,9 +659,28 @@ export default {
     height: auto;
 }
 
+.overlay2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 1);
+    z-index: 5;
+}
+
+.overlay2 img {
+    position: absolute;
+    top: calc(30 * var(--vh));
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: auto;
+}
+
 .tutorial-inner {
     position: absolute;
-    top: calc(50 * var(--vh));
+    top: calc(65 * var(--vh));
     left: 50%;
     transform: translate(-50%, -50%);
     width: 80%;
@@ -714,7 +688,7 @@ export default {
 }
 
 .tutorial-inner p {
-    color: var(--Text-White, #FFF);
+    color: var(--Text-White, #000);
     text-align: center;
     font-family: "NanumSquare", sans-serif;
     font-size: 16px;
@@ -724,6 +698,49 @@ export default {
     letter-spacing: -0.4px;
 }
 
+.tutorial-inner2 {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: calc(20 * var(--vh));
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: auto;
+}
+
+.tutorial-inner2 p {
+    color: var(--Text-White, #000);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+}
+
+.tutorial-inner3 {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: calc(75 * var(--vh));
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: auto;
+}
+
+.tutorial-inner3 p {
+    color: var(--Text-White, #000);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+}
 
 .bottom-section3 {
     display: grid;
@@ -782,21 +799,31 @@ export default {
     width: 100%;
     animation: beat .35s infinite alternate;
     transform-origin: center;
-    opacity: 0.5;
-    margin-top: 5%;
+    opacity: 1;
+    margin-top: calc(4 * var(--vh));
 }
 
 @keyframes beat {
     from {
-        transform: scale(2);
+        transform: scale(3);
     }
 
     to {
-        transform: scale(3);
+        transform: scale(5);
     }
 }
 
 .selected {
     filter: grayscale(100%);
+}
+
+.loadingbar {
+    position: absolute;
+    top: calc(70 * var(--vh));
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: calc(5 * var(--vh));
+    z-index: 10;
 }
 </style>

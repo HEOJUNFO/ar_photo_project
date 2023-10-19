@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import Experience from '../Experience.js'
+import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js'
 
 export default class Model
 {
@@ -39,14 +40,13 @@ export default class Model
 
         this.touchStartPosition = new THREE.Vector2();
 
-        
+
         this.setModel()
-      
     }
 
     setModel()
     {
-        this.model = this.resource.scene || this.resource.scenes[0]
+        this.model = SkeletonUtils.clone(this.resource.scene) || SkeletonUtils.clone(this.resource.scene.children[0])
         this.mixer = new THREE.AnimationMixer(this.model);
 
         this.resource.animations.forEach((clip) => {
@@ -75,6 +75,8 @@ export default class Model
         })
  this.experience.clickedObject.push(this.model);
     }
+
+   
 
     onTouchStart(event) {
         if (this.isMoving) {

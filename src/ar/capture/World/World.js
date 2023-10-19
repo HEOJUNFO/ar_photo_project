@@ -41,7 +41,8 @@ export default class World
 
     setCharacter(id){
         if(this.model){
-            this.model.scene.remove(this.model.model)
+            this.scene.remove(this.model.model)
+            this.model = null
         }
         if(id == 0){
             this.model  = new Model('bellModel')
