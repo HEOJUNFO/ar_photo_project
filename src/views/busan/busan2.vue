@@ -340,7 +340,7 @@ export default {
 
         const confirmBack = () => {
             showModal.value = false;
-            router.go(-1);
+            router.push({ path: '/coex' });
         };
 
         const closeModal = () => {

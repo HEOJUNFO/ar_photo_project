@@ -167,7 +167,7 @@ export default {
 
         const confirmBack = () => {
             showModal.value = false;
-            router.push('/busan2')
+            router.push('/coex')
         };
 
         const closeModal = () => {
