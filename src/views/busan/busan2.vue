@@ -12,7 +12,8 @@
                 <p style="color:#ffffff">AR 준비중...</p>
             </div>
         </div>
-        <div v-show="showOverlay" @click="showOverlay = false, setFrame(FRAMES[0])" class="overlay">
+        <div v-show="showOverlay" @click="showOverlay = false, setFrame(FRAMES[0]), setCharacter(CHARACTERS[0])"
+            class="overlay">
             <img src="@resource/common/bell.png" alt="overlay" />
             <div class="tutorial-inner">
                 <h1><span style="color:#d50f4a">벨, 소리나, 우노</span></h1>
