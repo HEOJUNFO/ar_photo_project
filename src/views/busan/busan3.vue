@@ -72,6 +72,7 @@
                 <p>#컬처커넥션 #더플래쉬</p>
                 <p>#Culture_Connection</p>
                 <p>#The_flash_project</p>
+                <p>#메타버스코리아</p>
                 <button @click="showHashTag = false, hashTagCopy(), shareImage()">해시태그 복사하기</button>
             </div>
         </div>
@@ -137,7 +138,7 @@ export default {
         const imageDataStore = useImageDataStore()
 
         const hashTagCopy = () => {
-            const textToCopy = '#컬처커넥션 #더플래쉬 #Culture_Connection #The_flash_project';
+            const textToCopy = '#컬처커넥션 #더플래쉬 #Culture_Connection #The_flash_project #메타버스코리아';
 
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(textToCopy).then(() => {
