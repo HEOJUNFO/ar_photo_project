@@ -439,7 +439,7 @@ export default {
     background: #FFF;
     padding: 10px;
     width: 80%;
-    height: calc(27.5 * var(--vh));
+    height: calc(30 * var(--vh));
     top: calc(50 * var(--vh));
     transform: translate(-50%, -50%);
     left: 50%;
