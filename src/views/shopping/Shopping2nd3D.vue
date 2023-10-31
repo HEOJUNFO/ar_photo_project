@@ -27,10 +27,6 @@
                         fill="white" />
                 </svg></button>
         </div>
-        <div class="side-image-container">
-            <img :src="currentCharacter.src" :style="{ transform: `translate(${currentX}px, ${currentY}px)` }"
-                @touchstart="startDrag" @touchmove="drag" @touchend="endDrag" @touchcancel="endDrag" />
-        </div>
     </div>
 </template>
 
@@ -58,34 +54,6 @@ export default {
         const currentCharacterContent = computed(() => {
             return currentCharacter.value.shopping2[textIndex.value] || {}
         })
-
-        const dragging = ref(false)
-        const currentX = ref(0)
-        const currentY = ref(0)
-        const lastX = ref(0)
-        const lastY = ref(0)
-
-        const startDrag = (event) => {
-            event.preventDefault()
-            dragging.value = true
-            lastX.value = event.touches[0].clientX
-            lastY.value = event.touches[0].clientY
-        }
-
-        const drag = (event) => {
-            if (!dragging.value) return
-            event.preventDefault()
-            const deltaX = event.touches[0].clientX - lastX.value
-            const deltaY = event.touches[0].clientY - lastY.value
-            currentX.value += deltaX
-            currentY.value += deltaY
-            lastX.value = event.touches[0].clientX
-            lastY.value = event.touches[0].clientY
-        }
-
-        const endDrag = () => {
-            dragging.value = false
-        }
 
         const saveImage = (image) => {
             imageDataStore.setImageData(image)
@@ -122,12 +90,6 @@ export default {
             index,
             currentCharacter,
             characterContent: currentCharacterContent,
-            startDrag,
-            drag,
-            endDrag,
-            currentX,
-            currentY,
-
         }
     }
 }
@@ -147,22 +109,6 @@ export default {
     left: 0;
     outline: none;
     overflow: hidden;
-}
-
-.side-image-container {
-    overflow: visible;
-    position: absolute;
-    top: calc(55 * var(--vh));
-    right: -70%;
-    transform: translateX(-50%);
-    z-index: 2;
-}
-
-.side-image-container img {
-
-    height: 50%;
-    width: 50%;
-    display: block;
 }
 
 .capture-container {

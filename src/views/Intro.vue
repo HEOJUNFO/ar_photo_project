@@ -1,52 +1,81 @@
 <template>
     <div>
-        <loading-container>
-        </loading-container>
-        <div class="loading-container" style="background-image: url('../resource/common/bg.png'); background-size: cover;">
+        <div class="loading-container" :style="bgStyle">
             <div class=" top-section">
-                <div class="text-container1">
-                    <p>숲에 동행할 요정을 골라주세요</p>
-                </div>
+                <img src="@resource/common/AR_Logo_02.png" alt="logo" />
             </div>
+            <p class="name">{{ characterName }}</p>
             <div class="image-container">
                 <button @click.stop="navigateToPreviousImage()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 42 42" fill="none">
-                        <circle cx="21" cy="21" r="21" fill="white" />
-                        <mask id="mask0_177_686" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="9" y="9" width="24"
-                            height="24">
-                            <rect x="9" y="9" width="24" height="24" fill="#D9D9D9" />
-                        </mask>
-                        <g mask="url(#mask0_177_686)">
-                            <path
-                                d="M18.55 21L25.9 28.35C26.15 28.6 26.2708 28.8917 26.2625 29.225C26.2542 29.5583 26.125 29.85 25.875 30.1C25.625 30.35 25.3333 30.475 25 30.475C24.6667 30.475 24.375 30.35 24.125 30.1L16.425 22.425C16.225 22.225 16.075 22 15.975 21.75C15.875 21.5 15.825 21.25 15.825 21C15.825 20.75 15.875 20.5 15.975 20.25C16.075 20 16.225 19.775 16.425 19.575L24.125 11.875C24.375 11.625 24.6708 11.5042 25.0125 11.5125C25.3542 11.5208 25.65 11.65 25.9 11.9C26.15 12.15 26.275 12.4417 26.275 12.775C26.275 13.1083 26.15 13.4 25.9 13.65L18.55 21Z"
-                                fill="#D50F4A" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52" fill="none">
+                        <g filter="url(#filter0_d_541_79)">
+                            <circle cx="26" cy="22" r="21" fill="white" />
+                            <circle cx="26" cy="22" r="21.5" stroke="#F8F9FA" />
                         </g>
+                        <mask id="mask0_541_79" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="14" y="10" width="24"
+                            height="24">
+                            <rect x="14.5" y="10.5" width="23" height="23" fill="#D50F4A" stroke="#D50F4A" />
+                        </mask>
+                        <g mask="url(#mask0_541_79)">
+                            <path
+                                d="M23.1965 21.6464L22.8429 22L23.1965 22.3535L30.5465 29.7035C30.7062 29.8632 30.7674 30.025 30.7627 30.2125C30.7577 30.4093 30.6868 30.5811 30.5215 30.7464C30.3589 30.909 30.1921 30.975 30 30.975C29.808 30.975 29.6411 30.909 29.4786 30.7464L29.478 30.7459L21.7786 23.0714C21.7785 23.0714 21.7785 23.0713 21.7784 23.0713C21.6239 22.9167 21.5128 22.7482 21.4393 22.5643C21.361 22.3688 21.325 22.1816 21.325 22C21.325 21.8184 21.361 21.6312 21.4393 21.4357C21.5128 21.2517 21.624 21.0831 21.7786 20.9285L29.4786 13.2285C29.6356 13.0715 29.8007 13.0075 30.0003 13.0123C30.2088 13.0174 30.3838 13.0909 30.5465 13.2535C30.709 13.4161 30.775 13.5829 30.775 13.775C30.775 13.967 30.709 14.1339 30.5465 14.2964L23.1965 21.6464Z"
+                                fill="#D50F4A" stroke="#D50F4A" />
+                        </g>
+                        <defs>
+                            <filter id="filter0_d_541_79" x="0" y="0" width="52" height="52" filterUnits="userSpaceOnUse"
+                                color-interpolation-filters="sRGB">
+                                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                                <feColorMatrix in="SourceAlpha" type="matrix"
+                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                                <feOffset dy="4" />
+                                <feGaussianBlur stdDeviation="2" />
+                                <feComposite in2="hardAlpha" operator="out" />
+                                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
+                                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_541_79" />
+                                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_541_79" result="shape" />
+                            </filter>
+                        </defs>
                     </svg></button>
                 <img :src="currentImageSrc" alt="Loading..." />
-                <button @click.stop="navigateToNextImage()"><svg xmlns="http://www.w3.org/2000/svg" width="42" height="42"
-                        viewBox="0 0 42 42" fill="none">
-                        <circle cx="21" cy="21" r="21" fill="white" />
-                        <mask id="mask0_177_685" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="10" y="9" width="24"
-                            height="24">
-                            <rect x="10" y="9" width="24" height="24" fill="#D9D9D9" />
-                        </mask>
-                        <g mask="url(#mask0_177_685)">
-                            <path
-                                d="M24.475 21L17.125 13.65C16.875 13.4 16.7542 13.1042 16.7625 12.7625C16.7708 12.4208 16.9 12.125 17.15 11.875C17.4 11.625 17.6958 11.5 18.0375 11.5C18.3792 11.5 18.675 11.625 18.925 11.875L26.6 19.575C26.8 19.775 26.95 20 27.05 20.25C27.15 20.5 27.2 20.75 27.2 21C27.2 21.25 27.15 21.5 27.05 21.75C26.95 22 26.8 22.225 26.6 22.425L18.9 30.125C18.65 30.375 18.3583 30.4958 18.025 30.4875C17.6917 30.4792 17.4 30.35 17.15 30.1C16.9 29.85 16.775 29.5542 16.775 29.2125C16.775 28.8708 16.9 28.575 17.15 28.325L24.475 21Z"
-                                fill="#D50F4A" />
+                <button @click.stop="navigateToNextImage()"><svg xmlns="http://www.w3.org/2000/svg" width="52" height="52"
+                        viewBox="0 0 52 52" fill="none">
+                        <g filter="url(#filter0_d_541_84)">
+                            <circle cx="26" cy="22" r="21" fill="white" />
+                            <circle cx="26" cy="22" r="21.5" stroke="#F8F9FA" />
                         </g>
+                        <mask id="mask0_541_84" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="15" y="10" width="24"
+                            height="24">
+                            <rect x="15.5" y="10.5" width="23" height="23" fill="#D50F4A" stroke="#D50F4A" />
+                        </mask>
+                        <g mask="url(#mask0_541_84)">
+                            <path
+                                d="M29.8285 22.3536L30.1821 22L29.8285 21.6464L22.4785 14.2964C22.3215 14.1394 22.2575 13.9743 22.2623 13.7747C22.2674 13.5662 22.3409 13.3912 22.5035 13.2286C22.6634 13.0687 22.8335 13 23.0375 13C23.2414 13 23.4114 13.0686 23.5712 13.2283C23.5713 13.2284 23.5714 13.2285 23.5714 13.2286L31.2459 20.928L31.2464 20.9286C31.401 21.0831 31.5122 21.2517 31.5858 21.4357C31.664 21.6312 31.7 21.8184 31.7 22C31.7 22.1816 31.664 22.3688 31.5858 22.5643C31.5122 22.7483 31.401 22.9169 31.2464 23.0714L23.5464 30.7714C23.3867 30.9311 23.2249 30.9923 23.0375 30.9877C22.8407 30.9827 22.6689 30.9118 22.5035 30.7464C22.3437 30.5866 22.275 30.4165 22.275 30.2125C22.275 30.0085 22.3437 29.8384 22.5035 29.6786L29.8285 22.3536Z"
+                                fill="#D50F4A" stroke="#D50F4A" />
+                        </g>
+                        <defs>
+                            <filter id="filter0_d_541_84" x="0" y="0" width="52" height="52" filterUnits="userSpaceOnUse"
+                                color-interpolation-filters="sRGB">
+                                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                                <feColorMatrix in="SourceAlpha" type="matrix"
+                                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                                <feOffset dy="4" />
+                                <feGaussianBlur stdDeviation="2" />
+                                <feComposite in2="hardAlpha" operator="out" />
+                                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
+                                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_541_84" />
+                                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_541_84" result="shape" />
+                            </filter>
+                        </defs>
                     </svg></button>
             </div>
-            <div class="text-container2">
-                <p class="character-name">{{ characterName }}</p>
-                <hr class="character-line">
-                <p class="character-text">{{ characterContent.text }}</p>
-                <div class="button-container">
-                    <button v-show="index === 0" @click.stop="next()">
-                        선택하기
-                    </button>
-                </div>
+            <div id="dialog-box">
+                <p id="typed-text"></p>
+
             </div>
+            <div class="button-container2">
+                <button @click="selectCharacter()">선택하기</button>
+            </div>
+            <img class="guide2" src="@resource/common/tap.png" alt="Image 1" />
         </div>
     </div>
 </template>
@@ -55,24 +84,54 @@
 import { useCharacterStore } from '../stores/characterStore.js'
 import { ref, computed, watch, onMounted } from 'vue'
 import router from '../router'
-import LoadingContainer from '../components/LoadingContainer.vue'
+import { postData } from '../js/api';
+
 
 const IMAGES = [
-    '../resource/intro/bell.png',
-    '../resource/intro/uno.png',
-    '../resource/intro/sorina.png',
-]
+    new URL('@resource/intro/Bell.png', import.meta.url).href,
+    new URL('@resource/intro/Sorina.png', import.meta.url).href,
+    new URL('@resource/intro/Uno.png', import.meta.url).href,
+];
 
 
 export default {
     name: 'Intro',
-    components: {
-        LoadingContainer
-    },
+
     setup() {
+
+        const audio = ref(null);
+
+        import('@resource/sounds/generaltap.wav')
+            .then(src => {
+                audio.value = new Audio(src.default);
+            })
+            .catch(error => {
+                console.error("Error importing audio file:", error);
+            });
+
+        const playAudio = () => {
+            if (audio.value) {
+                if (!audio.value.paused) {
+                    audio.value.pause();
+                    audio.value.currentTime = 0;
+                }
+                audio.value.play();
+            } else {
+                console.error("Audio not initialized yet.");
+            }
+        };
+
         const characterStore = useCharacterStore()
         const index = ref(0)
         const imageIndex = ref(0)
+        const bgImageUrl = new URL('@resource/common/bg.png', import.meta.url).href;
+
+        const bgStyle = computed(() => {
+            return {
+                backgroundImage: `url(${bgImageUrl})`,
+                backgroundSize: 'cover',
+            }
+        })
 
         const currentImageSrc = computed(() => IMAGES[imageIndex.value])
 
@@ -84,29 +143,63 @@ export default {
         const characterName = computed(() => characterStore.currentCharacter?.name)
 
 
-        const handleScroll = () => {
-            preventDefault()
-            stopPropagation()
-        }
 
-
-        const next = () => {
+        const selectCharacter = () => {
+            playAudio();
             localStorage.setItem('characterID', imageIndex.value)
+            let characterName;
+            switch (imageIndex.value) {
+                case 0:
+                    characterName = 'bell'
+                    break;
+                case 1:
+                    characterName = 'sorina'
+                    break;
+                case 2:
+                    characterName = 'uno'
+                    break;
+            }
+            postData('character_select', characterName)
             setTimeout(() => {
-                router.push('/intro3d')
+                router.push('/stage')
             }, 1000);
-
         }
 
         const navigateToNextImage = () => {
+            playAudio();
             imageIndex.value = (imageIndex.value + 1) % IMAGES.length;
             characterStore.setCharacterIndex(imageIndex.value)
+            typeText()
         }
 
         const navigateToPreviousImage = () => {
+            playAudio();
             imageIndex.value = (imageIndex.value - 1 + IMAGES.length) % IMAGES.length;
             characterStore.setCharacterIndex(imageIndex.value)
+            typeText()
         }
+
+        let typingTimeout;
+
+        const typeText = () => {
+            const content = currentCharacterContent.value.text;
+            const textContainer = document.getElementById("typed-text");
+            let index = 0;
+
+            clearTimeout(typingTimeout);
+
+            textContainer.textContent = "";
+
+            function typing() {
+                if (index < content.length) {
+                    textContainer.textContent += content.charAt(index);
+                    index++;
+                    typingTimeout = setTimeout(typing, 50);
+                }
+            }
+            typing();
+        };
+
 
         const setVH = () => {
             let vh = window.innerHeight * 0.01;
@@ -118,18 +211,25 @@ export default {
             setVH();
 
             window.addEventListener('resize', setVH);
+
+
+
+            setTimeout(() => {
+                typeText()
+            }, 1000);
         })
 
         return {
             index,
-            next,
             currentImageSrc,
             navigateToNextImage,
             navigateToPreviousImage,
             characterName: characterName,
             characterContent: currentCharacterContent,
             selectCharacterSrc: characterStore.currentCharacter?.src,
-            handleScroll
+            bgStyle,
+
+            selectCharacter
         }
     }
 }
@@ -146,125 +246,107 @@ export default {
 
 .top-section {
     overflow: visible;
-    position: absolute;
+    position: relative;
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: calc(10 * var(--vh));
+    height: calc(25 * var(--vh));
     justify-content: space-between;
     align-items: center;
     z-index: 10;
 }
 
-
-.text-container1 {
-    overflow: visible;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
-    width: 85%;
-    position: relative;
-    border-radius: 16px;
-    margin-left: 5%;
-    margin-top: calc(2.5 * var(--vh));
+.top-section img {
+    width: 100%;
+    height: auto;
 }
 
-.text-container1::before {
-    content: "";
-    width: 0;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 15px solid #fff;
-    position: absolute;
-    right: -15px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.text-container1 p {
-    overflow: hidden;
-    padding: 15px;
-    color: #000;
+.name {
+    color: var(--Point-Red, #D50F4A);
+    text-align: center;
     font-family: "NanumSquare", sans-serif;
-    font-size: 15px;
+    font-size: 24px;
     font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: -0.4px;
-    margin: 0;
-    border-radius: 10px;
+    font-weight: 800;
+    line-height: 34px;
+    letter-spacing: -0.6px;
+    position: relative
 }
 
-.text-container2 {
-    bottom: 0%;
-    position: absolute;
+.image-container {
+    width: 60%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    position: relative
+}
+
+
+.image-container img {
+    width: 100%;
+    height: auto;
+}
+
+.image-container button {
+    background: rgba(0, 0, 0, 0);
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    animation: beat2 .35s infinite alternate;
+    border: none
+}
+
+#dialog-box {
+    border-radius: 16px;
+    border: 2px dashed #D50F4A;
+    background: #FFF;
+    padding: 10px;
+    width: 80%;
+    height: calc(20 * var(--vh));
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
-    border: none;
-    border-radius: 0px;
-    background-color: #fff;
-    width: 100%;
-    height: calc(30 * var(--vh));
-    padding-top: 5%
+    justify-content: center
 }
 
-.text-container2 .character-name {
-    padding: 2.5px 21.5px;
-    color: var(--Text-Black, #111);
+#dialog-box p {
     font-family: "NanumSquare", sans-serif;
+    color: #000;
+    text-align: center;
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
     line-height: 28px;
     letter-spacing: -0.5px;
-    align-self: flex-start;
-    text-align: left;
-}
-
-.text-container2 .character-text {
-    padding: 7.5px 15px 7.5px 15px;
-    color: #767676;
-    font-family: "NanumSquare", sans-serif;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 26px;
-    letter-spacing: -0.45px;
-    align-self: flex-start;
-    text-align: left;
-    max-width: 25ch;
+    max-width: 19ch;
     overflow-wrap: break-word;
     word-break: keep-all;
 }
 
-.character-line {
-    width: 90%;
-    border: 1px solid #D9D9D9;
-    margin: 2% 0 2% 0;
-    align-self: center
-}
 
-.button-container {
-    margin-top: 5%;
-    display: flex;
-    flex-direction: rows;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    gap: 2.5%
-}
 
-.button-container button:first-child {
-    width: 80%;
-    border-radius: 100px;
-    background: var(--Main-Pink, #F0D7CA);
-    padding: 15px 15px;
+#dialog-box button {
+    background-color: rgba(0, 0, 0, 0);
     border: none;
-    color: var(--Text-Black, #111);
+}
+
+.button-container2 {
+    position: relative;
+    width: 80%;
+    margin-top: calc(2 * var(--vh));
+    margin-bottom: calc(2 * var(--vh));
+    background-color: rgba(0, 0, 0, 0);
+
+
+}
+
+.button-container2 button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 100px;
+    border: 2px solid var(--Point-Red-Dark, #922142);
+    background: var(--Point-Red, #D50F4A);
+    color: var(--Text-White, #FFF);
     text-align: center;
     font-family: "NanumSquare", sans-serif;
     font-size: 16px;
@@ -272,26 +354,42 @@ export default {
     font-weight: 700;
     line-height: 24px;
     letter-spacing: -0.4px;
-}
-
-.image-container {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    margin-top: calc(20 * var(--vh));
+    text-align: center;
+    z-index: 1;
+    position: relative;
+    box-shadow: 0px 3px #922142
 }
 
 
-.image-container img {
-    width: 60%;
-    height: 100%;
+
+.guide2 {
+    width: auto;
+    height: 7.5%;
+    position: absolute;
+    top: calc(90 * var(--vh));
+    left: 70%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    animation: beat .35s infinite alternate;
+    pointer-events: none;
 }
 
-.image-container button {
-    background: rgba(0, 0, 0, 0);
-    color: #fff;
-    cursor: pointer;
-    border: none;
-    transition: background-color 0.3s;
+@keyframes beat {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.5);
+    }
 }
-</style>
+
+@keyframes beat2 {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.2);
+    }
+}</style>

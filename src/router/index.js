@@ -1,68 +1,69 @@
 import {createRouter, createWebHashHistory} from "vue-router";
 
+import Ios from "@views/Ios.vue"
 import Landing from "@views/Landing.vue"
 import Capture from "@views/Capture.vue"
 import Intro from "@views/Intro.vue"
-import Intro3D from "@views/Intro3D.vue"
-import Help from "@views/Help.vue"
-import Terms from "@views/Terms.vue"
-import CapturePreview from "@views/CapturePreview.vue"
-import Shopping3D from "@views/shopping/Shopping3D.vue"
-import Culture3D from "@views/culture/Culture3D.vue"
-import Culture from "@views/culture/Culture.vue"
-import Culture2nd from "@views/culture/Culture2nd.vue"
-import Culture2nd3D from "@views/culture/Culture2nd3D.vue"
-import Shopping2nd from "@views/shopping/Shopping2nd.vue"
-import Shopping2nd3D from "@views/shopping/Shopping2nd3D.vue"
-import Shopping from "@views/shopping/Shopping.vue"
-import StickerReward from "@views/StickerReward.vue"
-import FrameReward from "@views/FrameReward.vue"
-import Outro from "@views/Outro.vue"
-import EatingOut from "@views/eatingOut/EatingOut.vue"
-import EatingOut3D from "@views/eatingOut/EatingOut3D.vue"
-import EatingOut2nd from "@views/eatingOut/EatingOut2nd.vue"
-import EatingOut2nd3D from "@views/eatingOut/EatingOut2nd3D.vue"
-import CommonOne from "@views/common/CommonOne.vue"
 import CommoneOne3D from "@views/common/CommonOne3D.vue"
-import CommonThree from "@views/common/CommonThree.vue"
-import CommonThree3D from "@views/common/CommonThree3D.vue"
 import StorageBox from "@views/StorageBox.vue"
-import Tutorial from "@views/Tutorial.vue"
-import Map from "@views/Map.vue"
-import TextEditor from "@views/TextEditor.vue"
+import CaptureReview from "@views/CaptureReview.vue"
+import StorageBox2 from "@views/StorageBox2.vue"
+import Stage from "@views/Stage.vue"
+import CommonFour from "@views/common/CommonFour.vue"
+import Event1 from "@views/event/Event1.vue"
+import Event2 from "@views/event/Event2.vue"
+import Event3 from "@views/event/Event3.vue"
+import Event4 from "@views/event/Event4.vue"
+import Event5 from "@views/event/Event5.vue"
+import Event6 from "@views/event/Event6.vue"
+import Event7 from "@views/event/Event7.vue"
+import Event8 from "@views/event/Event8.vue"
+import Event9 from "@views/event/Event9.vue"
+import Event10 from "@views/event/Event10.vue"
+import EventOut from "@views/event/EventOut.vue"
+import Culture2nd3D from "@views/culture/Culture2nd3D.vue"
+import CapturePreview from "@views/CapturePreview.vue"
+import Culture3D from "@views/culture/Culture3D.vue"
+import Loading from "@views/Loading.vue"
+
+import MindImage from "@views/MindImage.vue"
+
+import busan2 from "@views/busan/busan2.vue"
+import busan3 from "@views/busan/busan3.vue"
+import coex from "@views/busan/coex.vue"
+
 
 export const routes = [
     {path: '/', component: Landing, name: 'Landing'},
     {path: '/capture', component: Capture, name: 'Capture'},
     {path: '/intro', component: Intro, name: 'Intro'},
-    {path: '/intro3d', component: Intro3D, name: 'Intro3D'},
-    {path: '/help', component: Help, name: 'Help'},
-    {path: '/terms', component: Terms, name: 'Terms'},
-    {path: '/capturepreview', component: CapturePreview, name: 'CapturePreview'},
-    {path: '/shopping3d', component: Shopping3D, name: 'Shopping3D'},
-    {path: '/culture3d', component: Culture3D, name: 'Culture3D'},
-    {path: '/culture', component: Culture, name: 'Culture'},
-    {path: '/culture2', component: Culture2nd, name: 'Culture2nd'},
-    {path: '/culture3', component: Culture2nd3D, name: 'Culture2nd3D'},
-    {path: '/shopping2', component: Shopping2nd, name: 'Shopping2nd'},
-    {path: '/shopping3', component: Shopping2nd3D, name: 'Shopping2nd3D'},
-    {path: '/shopping', component: Shopping, name: 'Shopping'},
-    {path: '/stickerreward', component: StickerReward, name: 'StickerReward'},
-    {path : '/framereward', component: FrameReward, name: 'FrameReward'},
-    {path: '/outro', component: Outro, name: 'Outro'},
-    {path: '/eatingout', component: EatingOut, name: 'EatingOut'},
-    {path: '/eatingout3d', component: EatingOut3D, name: 'EatingOut3D'},
-    {path: '/eatingout2', component: EatingOut2nd, name: 'EatingOut2nd'},
-    {path: '/eatingout3', component: EatingOut2nd3D, name: 'EatingOut2nd3D'},
-    {path: '/commonone', component: CommonOne, name: 'CommonOne'},
     {path: '/commonone3d', component: CommoneOne3D, name: 'CommoneOne3D'},
-    {path: '/commonthree', component: CommonThree, name: 'CommonThree'},
-    {path: '/commonthree3d', component: CommonThree3D, name: 'CommonThree3D'},
     {path: '/storagebox', component: StorageBox, name: 'StorageBox'},
-    {path: '/tutorial', component: Tutorial, name: 'Tutorial'},
-    {path: '/map', component: Map, name: 'Map'},
-    {path: '/texteditor', component: TextEditor, name: 'TextEditor'},
-
+    {path: '/capturereview', component: CaptureReview, name: 'CaptureReview'},
+    {path: '/storagebox2',component:StorageBox2, name:'StorageBox2'},
+    {path: '/stage',component:Stage, name:'Stage'},
+    {path: '/commonfour',component:CommonFour, name:'CommonFour'},
+    {path: '/event1',component:Event1, name:'Event1'},
+    {path: '/event2',component:Event2, name:'Event2'},
+    {path: '/event3',component:Event3, name:'Event3'},
+    {path: '/event4',component:Event4, name:'Event4'},
+    {path: '/event5',component:Event5, name:'Event5'},
+    {path: '/event6',component:Event6, name:'Event6'},
+    {path: '/event7',component:Event7, name:'Event7'},
+    {path: '/event8',component:Event8, name:'Event8'},
+    {path: '/event9',component:Event9, name:'Event9'},
+    {path: '/event10',component:Event10, name:'Event10'},
+    {path: '/eventout',component:EventOut, name:'EventOut'},
+    {path: '/culture3',component:Culture2nd3D, name:'Culture2nd3D'},
+    {path: '/capturepreview',component:CapturePreview, name:'CaptruePreview'},
+    {path: '/culture3d',component:Culture3D, name:'Culture3D'},
+    {path: '/loading',component:Loading, name:'Loading'},
+    {path: '/ios',component:Ios, name:'Ios'},
+    {path: '/mindimage',component:MindImage, name:'MindImage'},
+    {path: '/busan2',component:busan2, name:'busan2'},
+    {path: '/busan3',component:busan3, name:'busan3'},
+    {path: '/coex',component:coex, name:'coex'},
+    
 ]
 
 const router = createRouter({

@@ -34,12 +34,6 @@ export default class Ship
         new THREE.Vector3(1.1, -0.8, 0),
     ]);
 
-//     const points = this.path.getPoints(50);
-//     const geometry = new THREE.BufferGeometry().setFromPoints(points);
-//     const material = new THREE.LineBasicMaterial({ color: 0xff0000 }); 
-//     const line = new THREE.Line(geometry, material);
-//     this.scene.add(line);
-
     }
 
     setGeometry()    {
@@ -73,7 +67,7 @@ export default class Ship
     }
 
     update() {
-            this.t += 0.0015; 
+            this.t += 0.003; 
             this.t = Math.min(this.t, this.deltaT); 
     
             const position = this.path.getPoint(this.t);
