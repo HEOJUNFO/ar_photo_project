@@ -25,7 +25,7 @@
         </div>
         <div class="content-section">
             <div class="content-item1">
-                <label>예쁜글 쏨씨 남기기</label>
+                <label>방명록 남기기</label>
             </div>
             <div class="content-item">
                 <label>작성자<span class="redstar">*</span></label>
@@ -42,36 +42,36 @@
                     <div class="tag" @click="toggleTagSelection(0)">
                         <span
                             :style="{ backgroundColor: selectTags[0] ? '#D50F4A' : 'white', color: selectTags[0] ? 'white' : 'black' }">인생
-                            한 컷<img src="../resource/gestBook/camera-with-flash.png" alt="Image 1"></span>
+                            한 컷<img src="@resource/gestBook/camera-with-flash.png" alt="Image 1"></span>
                     </div>
                     <div class="tag" @click="toggleTagSelection(1)">
                         <span
                             :style="{ backgroundColor: selectTags[1] ? '#D50F4A' : 'white', color: selectTags[1] ? 'white' : 'black' }">좋아요<img
-                                src="../resource/gestBook/sparkling-heart.png" alt="Image 1"></span>
+                                src="@resource/gestBook/sparkling-heart.png" alt="Image 1"></span>
                     </div>
                     <div class="tag" @click="toggleTagSelection(2)">
                         <span
                             :style="{ backgroundColor: selectTags[2] ? '#D50F4A' : 'white', color: selectTags[2] ? 'white' : 'black' }">멋져멋져<img
-                                src="../resource/gestBook/smiling-face-with-sunglasses.png" alt="Image 1"></span>
+                                src="@resource/gestBook/smiling-face-with-sunglasses.png" alt="Image 1"></span>
                     </div>
                     <div class="tag" @click="toggleTagSelection(3)">
                         <span
                             :style="{ backgroundColor: selectTags[3] ? '#D50F4A' : 'white', color: selectTags[3] ? 'white' : 'black' }">예뻐예뻐<img
-                                src="../resource/gestBook/blossom.png" alt="Image 1"></span>
+                                src="@resource/gestBook/blossom.png" alt="Image 1"></span>
                     </div>
                     <div class="tag" @click="toggleTagSelection(4)">
                         <span
                             :style="{ backgroundColor: selectTags[4] ? '#D50F4A' : 'white', color: selectTags[4] ? 'white' : 'black' }">재밌다<img
-                                src="../resource/gestBook/rolling-on-the-floor-laughing.png" alt="Image 1"></span>
+                                src="@resource/gestBook/rolling-on-the-floor-laughing.png" alt="Image 1"></span>
                     </div>
                     <div class="tag" @click="toggleTagSelection(5)">
                         <span
                             :style="{ backgroundColor: selectTags[5] ? '#D50F4A' : 'white', color: selectTags[5] ? 'white' : 'black' }">신선하다<img
-                                src="../resource/gestBook/iphonesparkles.png" alt="Image 1"></span>
+                                src="@resource/gestBook/iphonesparkles.png" alt="Image 1"></span>
                     </div>
                 </div>
             </div>
-            <div :class="{ 'hidden-content': attachedImages.length === 0 }" class="attached-images">
+            <div class="attached-images">
                 <div class="image-container" v-for="(image, index) in attachedImages" :key="index">
                     <img :src="image">
                     <button @click="removeImage(index)" class="remove-btn">x</button>
@@ -93,9 +93,23 @@
                     </svg>사진첨부</button>
                 <input ref="fileInput" type="file" @change="onImageUpload" multiple style="display: none;">
             </div>
-            <!-- <div class="terms-container">
-                <h2></h2>
-            </div> -->
+            <div class="privacy-agreement">
+                <h3>개인정보 수집·이용 동의</h3>
+                <p class="p1">귀하께서는 본 동의 안내 문구를 숙지하셨으며, 안내문구에 대해 거절하실 수 있습니다.</p>
+                <p class="p1"> 단, 거절하신 경우에는 이벤트 참여가 제한되실 수 있습니다.</p>
+                <p class="p2">※ 귀하께서는 필수항목 수집·이용에 대한 동의를 거부하실 수 있으나, 이는 서비스 제공에 필수적으로 제공되어야 하는 정보이므로, 동의를 거부하실 경우 이벤트에 참여하실
+                    수 없습니다.</p>
+                <button>동의 및 게시</button>
+                <p class="p4">위 버튼을 누르시면 약관에 동의하는 것으로 간주됩니다.</p>
+                <p class="p3">회사명 주식회사 컬쳐커넥션 | 대표 유현식</p>
+                <p class="p3">사업자등록번호 807-86-02252</p>
+                <p class="p3">주소 경기도 수원시 영통구 광교로 156, 광교비즈니스센터 11층 3호</p>
+                <p class="p3">전화 031-8064-1822 | 메일 contact@culturecon.co.kr</p>
+                <p class="p3">고객지원 메일, 전화 | 업무시간 10:00 ~ 18:00</p>
+                <hr class="character-line2">
+                <p class="p3">Copyright(c) 2022. 컬쳐커넥션 All rights reserved.</p>
+
+            </div>
         </div>
         <div v-if="showModal" class="modal">
             <p>뒤로 돌아갑니다.</p>
@@ -143,11 +157,12 @@ export default {
         const eventName = ref('')
 
         const isComplete = computed(() => {
+
             return authorInput.value && contentInput.value && selectTags.value.some(tag => tag);
         });
 
         const save = () => {
-            if (isComplete.value === '') {
+            if (isComplete.value === false) {
                 saveFailModal.value = true;
 
             } else {
@@ -166,6 +181,9 @@ export default {
             } else if (eventName.value === 'eatingOut2') {
                 imageDataStore.setEventName('eatingOut2Clear');
                 localStorage.setItem('item3', 'true')
+            } else if (eventName.value === 'common4') {
+                imageDataStore.setEventName('common4Clear');
+                localStorage.setItem('item1', 'true')
             }
 
             rewardsStore.setRewardsData();
@@ -455,7 +473,7 @@ export default {
     display: flex;
     flex-direction: column;
     margin-top: calc(2.5 * var(--vh));
-    margin-left: 5%
+    margin-left: 4%
 }
 
 .content-item1 label {
@@ -473,7 +491,7 @@ export default {
     display: flex;
     flex-direction: column;
     margin-bottom: calc(1 * var(--vh));
-    margin-left: 5%
+    margin-left: 4%
 }
 
 .content-item label {
@@ -492,7 +510,7 @@ export default {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     margin-left: -1%;
-    margin-bottom: calc(3 * var(--vh));
+    margin-bottom: calc(0 * var(--vh));
 }
 
 .tag-container span {
@@ -518,7 +536,7 @@ export default {
 
 .tag img {
     position: relative;
-    margin-left: 5%;
+    margin-left: 4%;
     height: 20px;
     width: 20px;
 }
@@ -540,7 +558,7 @@ export default {
 .multi-line-input {
     width: 90%;
     height: auto;
-    min-height: calc(1.5em * 8);
+    min-height: calc(1.5em * 4);
     border: none;
     border-radius: 4px;
     resize: vertical;
@@ -565,10 +583,12 @@ export default {
     flex-direction: column;
     margin-top: calc(2 * var(--vh));
     margin-bottom: calc(2 * var(--vh));
-    margin-left: 5%
+    margin-left: 4%
 }
 
 .picture-item button {
+    padding-top: 5px;
+    padding-bottom: 5px;
     color: var(--Text-Black, #111);
     font-family: "NanumSquare", sans-serif;
     font-size: 12px;
@@ -577,27 +597,23 @@ export default {
     line-height: 16px;
     letter-spacing: -0.3px;
     margin-bottom: 10px;
-    border: none;
-    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid #D9D9D9;
+    border-radius: 100px;
+    width: 30%;
+    background: var(--Background_Grey, #D9D9D9);
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
-.hidden-content {
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
-    height: calc(15 * var(--vh));
-    overflow: hidden;
-}
 
 .attached-images {
     overflow: visible;
     overflow-x: auto;
     white-space: nowrap;
-    margin-left: 5%;
+    margin-left: 4%;
+    margin-bottom: calc(2 * var(--vh));
 }
 
 
@@ -661,9 +677,89 @@ export default {
     letter-spacing: -0.4px;
 }
 
-.terms-container {
-    max-height: 300px;
-    overflow-y: auto;
-    width: 100%;
+.privacy-agreement {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: calc(2 * var(--vh));
+    margin-left: 5%;
+}
+
+.privacy-agreement h3 {
+    color: var(--Text-Black, #111);
+    font-family: "NanumSquare", sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 16px;
+    letter-spacing: -0.3px;
+    margin-bottom: 10px;
+}
+
+.privacy-agreement button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 80%;
+    height: calc(5 * var(--vh));
+    margin-left: 5%;
+    border-radius: 100px;
+    background: var(--Main-Pink, #F0D7CA);
+    border: none;
+    color: var(--Text-Black, #111);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+
+
+}
+
+.p1 {
+    color: var(--Text-Black, #111);
+    font-family: "NanumSquare", sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: -0.3px;
+    width: 95%;
+
+}
+
+.p2 {
+    margin-top: 10px;
+    color: var(--Text-Gray, #767676);
+    font-family: "NanumSquare", sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: -0.3px;
+    width: 96%;
+}
+
+.p3 {
+    color: var(--text_lightgray, #9F9F9F);
+    font-family: "NanumSquare", sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: -0.3px;
+
+}
+
+.p4 {
+    margin-bottom: 10%;
+    color: var(--text_lightgray, #9F9F9F);
+    font-family: "NanumSquare", sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: -0.3px;
+
 }
 </style>

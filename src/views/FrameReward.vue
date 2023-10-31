@@ -1,14 +1,14 @@
 <template>
-    <div @click.stop="next()" class="loading-container">
+    <div @click.stop="next()" class="loading-container" :style="bgStyle">
         <div class="image-container2">
             <div class="reward-container">
-                <img src="../resource/common/sticker_reward_bg.png" />
-                <img
-                    src="https://playar.syrup.co.kr/sodarimg/is/marketing/202308/17TZcrb5Q*38b3ed16b02bec43416b4a7dec923cb0.gif" />
+                <img src="@resource/common/sticker_reward_bg.png" />
+                <img :src="currentImageSrc" />
+                <p class="p">{{ currentImageText }}</p>
             </div>
         </div>
         <div class="text-container2">
-            <img :src="selectCharacterSrc" alt="Description" class="overlap-image" />
+            <img :src="characterContent?.src" alt="Description" class="overlap-image" />
             <p class="character-name">{{ selectCharacterName }}</p>
             <hr class="character-line">
             <p class="character-text">{{ characterContent?.text }}</p>
@@ -21,12 +21,11 @@ import { ref, computed, watch, onMounted } from 'vue'
 import router from '../router'
 import { useCharacterStore } from '../stores/characterStore.js'
 
-const IMAGES = [
-    'https://dt-static.syrup.co.kr/sodar/character/Thumbnail/Thumbnail_character(1).png',
-    'https://dt-static.syrup.co.kr/sodar/character/Thumbnail/Thumbnail_character(2).png',
-    'https://dt-static.syrup.co.kr/sodar/sticker/Thumbnail/Thumbnail_sticker (1).png'
-]
 
+const filter2 = new URL('@resource/filter/02_filter.png', import.meta.url).href;
+const filter3 = new URL('@resource/filter/03_filter.png', import.meta.url).href;
+const filter4 = new URL('@resource/filter/04_filter.png', import.meta.url).href;
+const filter5 = new URL('@resource/filter/05_filter.png', import.meta.url).href;
 export default {
     name: 'FrameReward',
     setup() {
@@ -34,8 +33,18 @@ export default {
         const characterStore = useCharacterStore()
         const index = ref(0)
         const textIndex = ref(5)
+        const commonIndex = ref(0)
+        const bgImageUrl = new URL('@resource/common/bg.png', import.meta.url).href;
 
-        const currentImageSrc = computed(() => IMAGES[imageIndex.value])
+        const bgStyle = computed(() => {
+            return {
+                backgroundImage: `url(${bgImageUrl})`,
+                backgroundSize: 'cover',
+            }
+        })
+
+        const currentImageSrc = ref('')
+        const currentImageText = ref('')
 
         characterStore.setCharacterIndex(localStorage.getItem('characterID'))
 
@@ -43,15 +52,19 @@ export default {
             const char = characterStore.currentCharacter
 
             if (router.currentRoute.value.query.eventName === 'common1') {
+
                 return char.common1[textIndex.value] || {}
             }
             else if (router.currentRoute.value.query.eventName === 'common2') {
+
                 return char.common2[textIndex.value] || {}
             }
             else if (router.currentRoute.value.query.eventName === 'common3') {
+
                 return char.common3[textIndex.value] || {}
             }
             else if (router.currentRoute.value.query.eventName === 'common4') {
+
                 return char.common4[textIndex.value] || {}
             }
         })
@@ -75,15 +88,20 @@ export default {
         const next = () => {
             if (index.value === 0) {
                 index.value = 1
-                textIndex.value = 6
+                textIndex.value += 1
+                return;
+            }
+            if (index.value === 1) {
+                index.value = 2
+                textIndex.value += 1
+                return;
             }
             if (index.value === 2) {
-                index.value = 3
-                textIndex.value = 8
+                if (router.currentRoute.value.query.eventName === 'common4') {
+                    router.push('/commonfour3d')
+                }
             }
-            if (index.value === 3) {
-                // router.push('/shopping')
-            }
+
         }
         const setVH = () => {
             let vh = window.innerHeight * 0.01;
@@ -91,6 +109,26 @@ export default {
         }
 
         onMounted(() => {
+            if (router.currentRoute.value.query.eventName === 'common1') {
+                currentImageText.value = '여름의 숲 프레임 모델링'
+                currentImageSrc.value = filter3
+            }
+            else if (router.currentRoute.value.query.eventName === 'common2') {
+                currentImageText.value = '봄의 숲 프레임 모델링'
+                currentImageSrc.value = filter2
+            }
+            else if (router.currentRoute.value.query.eventName === 'common3') {
+                currentImageText.value = '겨울의 숲 프레임 모델링'
+                currentImageSrc.value = filter4
+            }
+            else if (router.currentRoute.value.query.eventName === 'common4') {
+                currentImageText.value = '신비의 숲 프레임 모델링'
+                currentImageSrc.value = filter5
+                localStorage.setItem('item11', 'used')
+                textIndex.value = 6
+
+            }
+
             setVH();
 
             window.addEventListener('resize', setVH);
@@ -103,6 +141,10 @@ export default {
             selectCharacterSrc: characterStore.currentCharacter.src,
             selectCharacterName: characterStore.currentCharacter.name,
             next,
+            currentImageSrc,
+            currentImageText,
+            index,
+            bgStyle
         }
     }
 }
@@ -121,7 +163,6 @@ export default {
 .image-container2 {
     width: 80%;
     height: calc(35 * var(--vh));
-
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -132,29 +173,43 @@ export default {
     position: relative;
     width: 100%;
     height: 100%;
+    justify-content: center;
+    display: flex;
 }
 
 
 .reward-container img:first-child {
     position: absolute;
-    top: 0;
+    top: -10%;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: auto;
 }
 
 .reward-container img:nth-child(2) {
     position: absolute;
-    top: 20%;
+    top: 35%;
     left: 50%;
     transform: translateX(-50%);
-    width: 80%;
-    height: 60%;
+    width: 55%;
+    height: 55%;
 }
 
-.text-container2 p {
-    padding: 7.5px 15px 7.5px 15px;
-    font-size: 0.5rem;
+.reward-container p {
+    position: absolute;
+    top: 15%;
+    color: var(--Text-Black, #111);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+    max-width: 11ch;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+
 }
 
 .text-container2 {
@@ -164,10 +219,10 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    border: 1px solid black;
+    border: none;
     background-color: #fff;
     width: 100%;
-    height: calc(20 * var(--vh));
+    height: calc(25 * var(--vh));
 }
 
 .text-container2 .character-name {
@@ -193,7 +248,7 @@ export default {
     letter-spacing: -0.45px;
     align-self: flex-start;
     text-align: left;
-    max-width: 25ch;
+    max-width: 20ch;
     overflow-wrap: break-word;
     word-break: keep-all;
 }

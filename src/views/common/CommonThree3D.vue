@@ -56,7 +56,6 @@ export default {
 
             experience = new Experience(document.querySelector('canvas.webgl'), next);
 
-            console.log('characterID', localStorage.getItem('characterID'))
 
 
             experience.resources.on('ready', () => {
