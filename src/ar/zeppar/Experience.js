@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import * as ZapparThree from '@zappar/zappar-threejs';
 
 import Debug from './Utils/Debug.js'
 import Sizes from './Utils/Sizes.js'
@@ -21,6 +22,14 @@ export default class Experience
         {
             return instance
         }
+
+        if (ZapparThree.browserIncompatible()) {
+         
+            ZapparThree.browserIncompatibleUI();
+        
+            throw new Error('Unsupported browser');
+          }
+
         instance = this
         
         // Global access

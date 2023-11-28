@@ -32,6 +32,8 @@ import busan2 from "@views/busan/busan2.vue"
 import busan3 from "@views/busan/busan3.vue"
 import coex from "@views/busan/coex.vue"
 
+import zeppar from "@views/test/zeppar.vue"
+
 
 export const routes = [
     {path: '/', component: Landing, name: 'Landing'},
@@ -63,7 +65,7 @@ export const routes = [
     {path: '/busan2',component:busan2, name:'busan2'},
     {path: '/busan3',component:busan3, name:'busan3'},
     {path: '/coex',component:coex, name:'coex'},
-    
+    {path: '/zeppar',component:zeppar, name:'zeppar'},
 ]
 
 const router = createRouter({
