@@ -14,8 +14,6 @@
   },
   "dependencies": {
     "@vue/cli-service": "^5.0.8",
-    "@zappar/sharing": "^1.1.7",
-    "@zappar/zappar-threejs": "^2.4.8",
     "konva": "^9.2.0",
     "lil-gui": "^0.18.1",
     "pinia": "^2.1.6",
