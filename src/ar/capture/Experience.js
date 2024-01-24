@@ -47,9 +47,10 @@ export default class Experience
         this.clickedObject = [];
         this.textureKeys = [];
 
-        if(this.canvas){
-        this.canvas.addEventListener('touchstart', this._checkForModelClick.bind(this), false);
-        }
+        if (this.canvas) {
+            this.canvas.addEventListener('touchstart', this._checkForModelClick.bind(this), { passive: true });
+          }
+          
 
         this.bindMethods()
 
@@ -100,37 +101,17 @@ export default class Experience
     }
     dispose(){
         this.world.dispose();
-        this.renderer.dispose();
+        this.renderer.instance.dispose()
         if(this.camera.controls){
         this.camera.controls.dispose()
         }
 
-        this.scene.traverse((child) =>
-        {
-            // Test if it's a mesh
-            if(child instanceof THREE.Mesh)
-            {
-                child.geometry.dispose()
-
-                // Loop through the material properties
-                for(const key in child.material)
-                {
-                    const value = child.material[key]
-
-                    // Test if there is a dispose function
-                    if(value && typeof value.dispose === 'function')
-                    {
-                        value.dispose()
-                    }
-                }
-            }
-        })
     }
 
     destroy()
     {
         this.sizes.off('resize')
-        // this.time.off('tick')
+        this.time.off('tick')
 
         // Traverse the whole scene
         this.scene.traverse((child) =>
@@ -154,9 +135,10 @@ export default class Experience
             }
         })
 
-        // this.camera.controls.dispose()
-        this.renderer.instance.dispose()
-        this.renderer.dispose();
+
+
+        this.renderer.dispose()
+     
 
         if(this.debug.active)
             this.debug.ui.destroy()

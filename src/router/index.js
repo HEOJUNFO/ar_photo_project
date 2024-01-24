@@ -31,6 +31,9 @@ import MindImage from "@views/MindImage.vue"
 import busan2 from "@views/busan/busan2.vue"
 import busan3 from "@views/busan/busan3.vue"
 import coex from "@views/busan/coex.vue"
+import plane from "@views/plane/plane.vue"
+
+
 
 
 export const routes = [
@@ -63,7 +66,8 @@ export const routes = [
     {path: '/busan2',component:busan2, name:'busan2'},
     {path: '/busan3',component:busan3, name:'busan3'},
     {path: '/coex',component:coex, name:'coex'},
-    
+    {path: '/plane',component:plane, name:'plane'},
+
 ]
 
 const router = createRouter({
