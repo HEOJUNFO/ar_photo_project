@@ -1,7 +1,6 @@
 import * as THREE from 'three'
 import Experience from './Experience.js'
 import { DeviceOrientationControls } from '../../js/DeviceOrientationControls.js'
-import loadImage from '../../js/loadImage.js'
 
 export default class Camera
 {
