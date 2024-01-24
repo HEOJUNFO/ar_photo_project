@@ -35,7 +35,7 @@ export default {
                     onxrloaded();
                     setTimeout(() => {
                         document.getElementById('loadingScreen').style.display = 'none';
-                    }, 1000);
+                    }, 3000);
                 }
             })
         }
