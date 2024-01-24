@@ -1,4 +1,7 @@
 <template>
+    <div id="loadingScreen" class="loading-screen">
+        <p>로딩 중...</p>
+    </div>
     <canvas id="camerafeed"></canvas>
 </template>
 
@@ -25,10 +28,21 @@ export default {
         }
 
         // Show loading screen before the full XR library has been loaded.
-        const load = () => { XRExtras.Loading.showLoading({ onxrloaded }) }
+        const load = () => {
+            XRExtras.Loading.showLoading({
+                onxrloaded: () => {
+                    // XR 라이브러리 로드 완료 후 로딩 화면 숨기기
+                    onxrloaded();
+                    setTimeout(() => {
+                        document.getElementById('loadingScreen').style.display = 'none';
+                    }, 1000);
+                }
+            })
+        }
         window.onload = () => { window.XRExtras ? load() : window.addEventListener('xrextrasloaded', load) }
 
         const placegroundScenePipelineModule = () => {
+
             const modelFile = new URL('@resource/plane/tree.glb', import.meta.url).href                          // 3D model to spawn at tap
             const startScale = new THREE.Vector3(0.01, 0.01, 0.01)  // Initial scale value for our model
             const endScale = new THREE.Vector3(2, 2, 2)             // Ending scale value for our model
@@ -184,5 +198,19 @@ body {
     height: 100%;
     margin: -1px 0px 0px 0px !important;
     padding: 0;
+}
+
+.loading-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 1);
+    z-index: 1000;
+    font-size: 2em;
 }
 </style>
