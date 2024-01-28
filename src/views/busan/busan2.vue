@@ -353,12 +353,7 @@ export default {
             showModal.value = true;
         };
 
-        const setVH = () => {
-            document.body.style.overflow = 'hidden';
-            let vh = window.innerHeight * 0.01;
 
-            document.documentElement.style.setProperty('--vh', `${vh}px`);
-        }
 
         const preventTouchMove = (e) => {
             e.preventDefault();
@@ -370,6 +365,13 @@ export default {
 
         const enableScroll = () => {
             document.body.removeEventListener('touchmove', preventTouchMove, { passive: false });
+        }
+
+        const setVH = () => {
+            document.body.style.overflow = 'hidden';
+            let vh = window.innerHeight * 0.01;
+
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
         }
 
         onMounted(() => {
