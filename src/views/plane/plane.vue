@@ -69,7 +69,7 @@ export default {
 
             const placegroundScenePipelineModule = () => {
 
-                const modelFile = new URL('@resource/plane/tree.glb', import.meta.url).href                          // 3D model to spawn at tap
+                const modelFile = new URL('@resource/plane/tree2.glb', import.meta.url).href                          // 3D model to spawn at tap
                 const startScale = new THREE.Vector3(0.01, 0.01, 0.01)  // Initial scale value for our model
                 const endScale = new THREE.Vector3(3, 3, 3)             // Ending scale value for our model
                 const animationMillis = 750                             // Animate over 0.75 seconds
