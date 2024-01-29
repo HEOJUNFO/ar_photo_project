@@ -19,6 +19,9 @@ export default {
         }
         onMounted(() => {
             setVH();
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.display = 'none';
+            }, 3000);
             var progressBar = document.querySelector('.loadingbar');
             var progressValue = 0;
             var intervalDuration = 35; // milliseconds
@@ -57,9 +60,6 @@ export default {
             const load = () => {
                 XRExtras.Loading.showLoading({
                     onxrloaded: () => {
-                        setTimeout(() => {
-                            document.getElementById('loadingScreen').style.display = 'none';
-                        }, 3000);
                         onxrloaded();
 
                     }
@@ -69,9 +69,9 @@ export default {
 
             const placegroundScenePipelineModule = () => {
 
-                const modelFile = new URL('@resource/plane/tree2.glb', import.meta.url).href                          // 3D model to spawn at tap
+                const modelFile = new URL('@resource/plane/bear.gltf', import.meta.url).href                          // 3D model to spawn at tap
                 const startScale = new THREE.Vector3(0.01, 0.01, 0.01)  // Initial scale value for our model
-                const endScale = new THREE.Vector3(3, 3, 3)             // Ending scale value for our model
+                const endScale = new THREE.Vector3(0.2, 0.2, 0.2)             // Ending scale value for our model
                 const animationMillis = 750                             // Animate over 0.75 seconds
 
                 const raycaster = new THREE.Raycaster()
@@ -90,7 +90,7 @@ export default {
                     light.position.set(1, 4.3, 2.5)  // default
 
                     scene.add(light)  // Add soft white light to the scene.
-                    scene.add(new THREE.AmbientLight(0x404040, 5))  // Add soft white light to the scene.
+                    scene.add(new THREE.AmbientLight(0x404040, 2.5))  // Add soft white light to the scene.
 
                     light.shadow.mapSize.width = 1024  // default
                     light.shadow.mapSize.height = 1024  // default
@@ -112,6 +112,7 @@ export default {
 
                     // Set the initial camera position relative to the scene we just laid out. This must be at a
                     // height greater than y=0.
+                    // camera.near = 0.01
                     camera.position.set(0, 3, 0)
                 }
 
@@ -121,7 +122,12 @@ export default {
                     model.scene.rotation.set(0.0, yDegrees, 0.0)
                     model.scene.position.set(pointX, 0.0, pointZ)
                     model.scene.scale.set(scale.x, scale.y, scale.z)
-                    model.scene.children[0].children[0].children[0].castShadow = true
+                    model.scene.traverse((o) => {
+                        if (o.isMesh) {
+                            o.castShadow = true
+                        }
+                    })
+                    // model.scene.children[0].children[0].children[0].castShadow = true
                     XR8.Threejs.xrScene().scene.add(model.scene)
 
                     new TWEEN.Tween(scale)
