@@ -4,10 +4,25 @@
         <p>로딩 중...</p>
     </div>
     <canvas id="camerafeed"></canvas>
+    <div id="recorder" class="recorder-container">
+        <svg viewBox="0 0 38 38" class="progress-container">
+            <circle class="progress-track" r="16" cx="19" cy="19"></circle>
+            <circle id="progressBar" class="progress-bar" r="16" cx="19" cy="19"></circle>
+            <circle class="loading-circle" r="16" cx="19" cy="19"></circle>
+        </svg>
+
+        <button id="recorder-button" class="style-reset">
+            Record
+        </button>
+    </div>
+    <div id="flashElement" class="flash-element"></div>
 </template>
 
 <script>
 import { onMounted, ref } from 'vue';
+import { MediaRecorder } from './mediarecorder/mediarecorder.js'
+import './style.css';
+
 export default {
     name: 'plane',
     setup() {
@@ -39,17 +54,27 @@ export default {
             const cameraFeed = ref(null);
 
             const onxrloaded = () => {
+                console.log(MediaRecorder);
+                MediaRecorder.initRecordButton();
+                // MediaRecorder.initMediaPreview();
+                MediaRecorder.configure({
+                    watermarkMaxWidth: 100,
+                    watermarkMaxHeight: 10,
+                })
+                MediaRecorder.setCaptureMode('photo')
+
+
+
                 XR8.addCameraPipelineModules([  // Add camera pipeline modules.
-                    // Existing pipeline modules.
                     XR8.GlTextureRenderer.pipelineModule(),      // Draws the camera feed.
-                    XR8.Threejs.pipelineModule(),                // Creates a ThreeJS AR Scene.
+                    XR8.Threejs.pipelineModule(),
+                    XR8.CanvasScreenshot.pipelineModule(),
                     XR8.XrController.pipelineModule(),           // Enables SLAM tracking.
                     XRExtras.AlmostThere.pipelineModule(),       // Detects unsupported browsers and gives hints.
                     XRExtras.FullWindowCanvas.pipelineModule(),  // Modifies the canvas to fill the window.
                     XRExtras.Loading.pipelineModule(),           // Manages the loading screen on startup.
                     XRExtras.RuntimeError.pipelineModule(),      // Shows an error image on runtime error.
-
-                    placegroundScenePipelineModule(),
+                    // placegroundScenePipelineModule(),
                 ])
 
                 // Open the camera and start running the camera run loop.
