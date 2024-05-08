@@ -40,5 +40,5 @@ export default {
       }
     }
   })],
-  assetsInclude: ['**/*.html'] 
+
 };
