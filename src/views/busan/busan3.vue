@@ -69,10 +69,10 @@
         </div>
         <div v-if="showHashTag">
             <div id="dialog-box">
-                <p>#컬처커넥션 #더플래쉬</p>
+                <p>#컬쳐커넥션 #컬쳐버스</p>
                 <p>#Culture_Connection</p>
                 <p>#The_flash_project</p>
-                <p>#메타버스코리아</p>
+                <p>#PlayX4, #플레이엑스포</p>
                 <button @click="showHashTag = false, hashTagCopy(), shareImage()">해시태그 복사하기</button>
             </div>
         </div>
@@ -138,7 +138,7 @@ export default {
         const imageDataStore = useImageDataStore()
 
         const hashTagCopy = () => {
-            const textToCopy = '#컬처커넥션 #더플래쉬 #Culture_Connection #The_flash_project #메타버스코리아';
+            const textToCopy = '#컬쳐커넥션 #컬쳐버스 #Culture_Connection #The_flash_project #PlayX4 #플레이엑스포';
 
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(textToCopy).then(() => {
