@@ -2,7 +2,13 @@
     <div class="main">
         <div class="top-section">
             <button></button>
-            <button></button>
+            <button @click="aiButton()"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"
+                    fill="none">
+                    <circle cx="20" cy="20" r="19" fill="white" stroke="#D50F4A" stroke-width="2" />
+                    <text x="20" y="25" fill="#D50F4A" font-size="16" font-family="Arial" font-weight="bold"
+                        text-anchor="middle">AI</text>
+                </svg>
+            </button>
             <button @click="showModal = true, showHashTag = false"><svg xmlns="http://www.w3.org/2000/svg" width="40"
                     height="40" viewBox="0 0 40 40" fill="none">
                     <circle cx="20" cy="20" r="19" fill="white" stroke="#D50F4A" stroke-width="2" />
@@ -227,6 +233,10 @@ export default {
                 .catch(console.error);
         }
 
+        const aiButton = () => {
+            router.push('/aiPhoto')
+        }
+
         const setVH = () => {
             document.body.style.overflow = 'hidden';
             let vh = window.innerHeight * 0.01;
@@ -236,8 +246,10 @@ export default {
 
         onMounted(() => {
             setVH();
-
             window.addEventListener('resize', setVH);
+
+            imageDataStore.getImageData();
+            imageDataStore.getCanvasSize();
         });
 
         return {
@@ -249,7 +261,8 @@ export default {
             saveImage,
             shareImage,
             showHashTag,
-            hashTagCopy
+            hashTagCopy,
+            aiButton
         }
     }
 }

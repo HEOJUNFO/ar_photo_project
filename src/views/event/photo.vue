@@ -329,12 +329,37 @@ export default {
 
         const saveImage = (image) => {
             playAudio2();
-            imageDataStore.setImageData(image)
-            imageDataStore.setEventName(eventName.value)
-            let canvas = document.querySelector('canvas.webgl')
-            let width = canvas.style.width
-            let height = canvas.style.height
-            imageDataStore.setCanvasSize(width, height)
+            imageDataStore.setImageData(image);
+            imageDataStore.setEventName(eventName.value);
+
+            // Assuming the image is in a canvas or an Image element and needs to be converted to a data URL
+            let imageDataUrl = image;
+
+            // If the image is an HTMLImageElement or CanvasElement, convert it to a data URL
+            if (image instanceof HTMLImageElement || image instanceof HTMLCanvasElement) {
+                let canvas = document.createElement('canvas');
+                let ctx = canvas.getContext('2d');
+
+                // Set canvas dimensions to the image dimensions
+                canvas.width = image.width;
+                canvas.height = image.height;
+
+                // Draw the image onto the canvas
+                ctx.drawImage(image, 0, 0, image.width, image.height);
+
+                // Get the data URL of the image
+                imageDataUrl = canvas.toDataURL();
+            }
+
+            // Save the image data URL to local storage
+            localStorage.setItem('savedImage', imageDataUrl);
+
+            let canvas = document.querySelector('canvas.webgl');
+            let width = canvas.style.width;
+            let height = canvas.style.height;
+            imageDataStore.setCanvasSize(width, height);
+
+            localStorage.setItem('canvasSize', JSON.stringify({ width, height }));
 
             router.push({ path: '/review' });
         }
