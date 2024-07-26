@@ -105,7 +105,6 @@ export default class Experience
         if(this.camera.controls){
         this.camera.controls.dispose()
         }
-
     }
 
     destroy()
