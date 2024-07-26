@@ -177,7 +177,7 @@ export default {
 
 
         const back = () => {
-            router.push('/busan2')
+            router.push('/photo')
         };
 
         const saveImage = () => {

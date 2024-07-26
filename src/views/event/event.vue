@@ -44,7 +44,7 @@ export default {
 
         const start = () => {
             playAudio();
-            router.push('/busan2')
+            router.push('/photo')
         }
 
         const setVH = () => {

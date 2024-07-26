@@ -4,9 +4,9 @@ import Ios from "@views/Ios.vue"
 import Landing from "@views/Landing.vue"
 
 
-import busan2 from "@views/busan/busan2.vue"
-import busan3 from "@views/busan/busan3.vue"
-import coex from "@views/busan/coex.vue"
+import photo from "@views/event/photo.vue"
+import review from "@views/event/review.vue"
+import event from "@views/event/event.vue"
 
 
 
@@ -14,9 +14,9 @@ import coex from "@views/busan/coex.vue"
 export const routes = [
     {path: '/', component: Landing, name: 'Landing'},
     {path: '/ios',component:Ios, name:'Ios'},
-    {path: '/busan2',component:busan2, name:'busan2'},
-    {path: '/busan3',component:busan3, name:'busan3'},
-    {path: '/coex',component:coex, name:'coex'},
+    {path: '/photo',component:photo, name:'photo'},
+    {path: '/review',component:review, name:'review'},
+    {path: '/event',component:event, name:'event'},
 
 ]
 

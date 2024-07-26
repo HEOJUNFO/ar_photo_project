@@ -336,12 +336,12 @@ export default {
             let height = canvas.style.height
             imageDataStore.setCanvasSize(width, height)
 
-            router.push({ path: '/busan3' });
+            router.push({ path: '/review' });
         }
 
         const confirmBack = () => {
             showModal.value = false;
-            router.push({ path: '/coex' });
+            router.push({ path: '/event' });
         };
 
         const closeModal = () => {
