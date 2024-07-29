@@ -53,7 +53,7 @@ export default {
         const originalFile = ref(null);
 
         const API_URL = 'https://api.stability.ai/v2beta/stable-image/control/structure';
-        const API_KEY = 'sk-jszl1b3O0N7pI3spaKjFRvrNom9h1mck7WfS7rvvM5akbrrB';
+        const API_KEY = import.meta.env.VITE_API_KEY;
 
         const transformImage = async (prompt) => {
             console.log("Transforming image...", API_URL, prompt);

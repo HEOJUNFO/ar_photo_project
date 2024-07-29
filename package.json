@@ -10,11 +10,12 @@
   "devDependencies": {
     "@types/aframe": "^1.2.3",
     "@vitejs/plugin-vue": "^4.3.1",
-    "vite": "^4.3.9"
+    "vite": "^5.3.5"
   },
   "dependencies": {
     "@vue/cli-service": "^5.0.8",
     "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
     "form-data": "^4.0.0",
     "konva": "^9.2.0",
     "lil-gui": "^0.18.1",
