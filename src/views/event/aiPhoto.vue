@@ -54,6 +54,7 @@ export default {
 
         const API_URL = 'https://api.stability.ai/v2beta/stable-image/control/structure';
         const API_KEY = import.meta.env.VITE_API_KEY;
+        console.log('API_KEY:', API_KEY);
 
         const transformImage = async (prompt) => {
             console.log("Transforming image...", API_URL, prompt);
