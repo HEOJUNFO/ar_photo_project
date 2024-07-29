@@ -23,8 +23,8 @@
         </div>
         <div class="bottom-section">
             <button @click="changeImageKorea()">한국</button>
-            <button @click="">일본</button>
-            <button @click="">중국</button>
+            <button @click="changeImageJapan()">일본</button>
+            <button @click="changeImageUSA()">미국</button>
         </div>
 
         <div v-if="showModal" class="modal">
@@ -41,124 +41,102 @@
 import { useImageDataStore } from '../../stores/imageData.js'
 import { onMounted, ref } from 'vue';
 import router from '../../router';
-import OpenAI from 'openai';
+import axios from "axios";
+import FormData from "form-data";
 
 export default {
     name: 'captureReview',
     setup() {
         const showModal = ref(false);
+        const imageDataStore = useImageDataStore();
+        const originalImage = ref(null);
+        const originalFile = ref(null);
 
+        const API_URL = 'https://api.stability.ai/v2beta/stable-image/control/structure';
+        const API_KEY = 'sk-jszl1b3O0N7pI3spaKjFRvrNom9h1mck7WfS7rvvM5akbrrB';
 
-        const imageDataStore = useImageDataStore()
+        const transformImage = async (prompt) => {
+            console.log("Transforming image...", API_URL, prompt);
+            try {
+                const payload = {
+                    image: originalFile.value,
+                    prompt: prompt,
+                    control_strength: 0.9,
+                    output_format: "png",
+                };
 
-        const changeImageKorea = async () => {
-            function base64ToBlob(base64, mime) {
-                const byteString = atob(base64);
-                const ab = new ArrayBuffer(byteString.length);
-                const ia = new Uint8Array(ab);
+                const response = await axios.postForm(
+                    API_URL,
+                    axios.toFormData(payload, new FormData()),
+                    {
+                        validateStatus: undefined,
+                        responseType: "arraybuffer",
+                        headers: {
+                            Authorization: `Bearer ${API_KEY}`,
+                            Accept: "image/*",
+                        },
+                    }
+                );
 
-                for (let i = 0; i < byteString.length; i++) {
-                    ia[i] = byteString.charCodeAt(i);
+                if (response.status === 200) {
+                    const blob = new Blob([response.data], { type: "image/png" });
+                    const url = URL.createObjectURL(blob);
+                    imageDataStore.imageData = url;
+                } else {
+                    console.error(`${response.status}: ${response.statusText}`);
                 }
-
-                return new Blob([ab], { type: mime });
+            } catch (error) {
+                console.error('Error transforming image:', error);
             }
-
-            function base64ToFile(base64, filename) {
-                const [header, data] = base64.split(',');
-                const mime = header.match(/:(.*?);/)[1];
-                const blob = base64ToBlob(data, mime);
-                return new File([blob], filename, { type: mime });
-            }
-
-            function makeCenterTransparent(img, mime) {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-
-                // Set canvas dimensions
-                canvas.width = img.width;
-                canvas.height = img.height;
-
-                // Draw the original image on the canvas
-                ctx.drawImage(img, 0, 0);
-
-                // Define the transparent region
-                const width = img.width;
-                const height = img.height;
-                const centerX = width / 2;
-                const centerY = height / 2;
-                const transparentWidth = width * 0.8;
-                const transparentHeight = height * 0.8;
-
-                // Clear the center area (make it transparent)
-                ctx.clearRect(centerX - transparentWidth / 2, centerY - transparentHeight / 2, transparentWidth, transparentHeight);
-
-                // Convert canvas to base64
-                return canvas.toDataURL(mime);
-            }
-
-            function downloadBase64File(base64Data, filename) {
-                const link = document.createElement('a');
-                link.href = base64Data;
-                link.download = filename;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
-
-            const base64Data = imageDataStore.imageData;
-            const [header, data] = base64Data.split(',');
-            const mime = header.match(/:(.*?);/)[1];
-            const originalFile = base64ToFile(base64Data, "image.png");
-
-            // Create a temporary image to get the dimensions
-            const tempImg = new Image();
-            tempImg.src = base64Data;
-            tempImg.onload = async () => {
-                const newBase64Data = makeCenterTransparent(tempImg, mime);
-                const maskFile = base64ToFile(newBase64Data, "mask.png");
-
-                // Convert the new base64 data to a file and trigger download
-                downloadBase64File(newBase64Data, "image_with_transparent_center.png");
-
-                console.log('imagechange');
-                const response = await openai.images.edit({
-                    model: "dall-e-2",
-                    image: originalFile,
-                    mask: maskFile,
-                    prompt: "원본사진 최대한 유지하면서 사진에 사람이 안보이게 해줘",
-                    n: 1,
-                    size: "1024x1024"
-                });
-                const image_url = response.data[0].url;
-                console.log(image_url);
-
-            };
         };
 
+        const changeImageKorea = () => transformImage("A person in a Korean webtoon drawing style is looking at the viewer.");
+        const changeImageJapan = () => transformImage("A Ghibli-style person is looking at the viewer");
+        const changeImageUSA = () => transformImage("A person in a Marvel comic style is looking at the viewer.");
 
         const closeModal = () => {
             showModal.value = false;
         };
 
         const back = () => {
-            router.push('/review')
+            router.push('/review');
         };
 
         const setVH = () => {
             document.body.style.overflow = 'hidden';
-            let vh = window.innerHeight * 0.01;
+            const vh = window.innerHeight * 0.01;
             document.documentElement.style.setProperty('--vh', `${vh}px`);
-        }
+        };
 
+        const base64ToBlob = (base64, mime) => {
+            const byteString = atob(base64);
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
 
+            for (let i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+
+            return new Blob([ab], { type: mime });
+        };
+
+        const base64ToFile = (base64, filename) => {
+            const [header, data] = base64.split(',');
+            const mime = header.match(/:(.*?);/)[1];
+            const blob = base64ToBlob(data, mime);
+            return new File([blob], filename, { type: mime });
+        };
         onMounted(() => {
             setVH();
             window.addEventListener('resize', setVH);
 
             imageDataStore.getImageData();
+            originalImage.value = imageDataStore.imageData;
             imageDataStore.getCanvasSize();
 
+            if (originalImage.value) {
+                originalFile.value = base64ToFile(originalImage.value, "image.png");
+            }
         });
 
         return {
@@ -166,7 +144,9 @@ export default {
             showModal,
             closeModal,
             imageDataStore,
-            changeImageKorea
+            changeImageKorea,
+            changeImageJapan,
+            changeImageUSA
         }
     }
 }

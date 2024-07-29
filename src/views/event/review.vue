@@ -174,7 +174,7 @@ export default {
 
         const confirmBack = () => {
             showModal.value = false;
-            router.push('/coex')
+            router.push('/event')
         };
 
         const closeModal = () => {
