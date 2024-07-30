@@ -7,8 +7,7 @@ const isCodeSandbox = 'SANDBOX_URL' in process.env || 'CODESANDBOX_HOST' in proc
 const cert = fs.readFileSync('localhost.pem');
 const key = fs.readFileSync('localhost-key.pem');
 
-
-
+// Vite 설정을 내보냅니다.
 export default {
   root: 'src/',
   publicDir: '../static/',

@@ -3,8 +3,8 @@
         <div class="top-section">
             <button></button>
             <button></button>
-            <button @click="showModal = true, showHashTag = false"><svg xmlns="http://www.w3.org/2000/svg" width="40"
-                    height="40" viewBox="0 0 40 40" fill="none">
+            <button @click="showModal = true"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+                    viewBox="0 0 40 40" fill="none">
                     <circle cx="20" cy="20" r="19" fill="white" stroke="#D50F4A" stroke-width="2" />
                     <mask id="mask0_541_1827" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="8" width="24"
                         height="24">
@@ -25,6 +25,10 @@
             <button @click="changeImageKorea()">한국</button>
             <button @click="changeImageJapan()">일본</button>
             <button @click="changeImageUSA()">미국</button>
+        </div>
+
+        <div v-if="loading" class="spinner-overlay">
+            <div class="spinner"></div>
         </div>
 
         <div v-if="showModal" class="modal">
@@ -51,12 +55,15 @@ export default {
         const imageDataStore = useImageDataStore();
         const originalImage = ref(null);
         const originalFile = ref(null);
+        const loading = ref(false);
 
         const API_URL = 'https://api.stability.ai/v2beta/stable-image/control/structure';
         const API_KEY = import.meta.env.VITE_API_KEY;
+
         console.log('API_KEY:', API_KEY);
 
         const transformImage = async (prompt) => {
+            loading.value = true;
             console.log("Transforming image...", API_URL, prompt);
             try {
                 const payload = {
@@ -88,6 +95,9 @@ export default {
                 }
             } catch (error) {
                 console.error('Error transforming image:', error);
+            }
+            finally {
+                loading.value = false;
             }
         };
 
@@ -147,7 +157,8 @@ export default {
             imageDataStore,
             changeImageKorea,
             changeImageJapan,
-            changeImageUSA
+            changeImageUSA,
+            loading
         }
     }
 }
@@ -310,5 +321,37 @@ export default {
     width: auto;
     height: calc(5* var(--vh));
 
+}
+
+.spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #D50F4A;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 </style>
