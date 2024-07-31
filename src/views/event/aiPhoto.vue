@@ -18,6 +18,13 @@
                 </svg></button>
         </div>
 
+        <div v-if="loading" class="loading-container">
+            <div class="progress-bar-container">
+                <div class="progress-bar"></div>
+            </div>
+            <p class="loading-text">{{ currentMessage }}</p>
+        </div>
+
         <div class="image-container" :style="{ width: imageDataStore.width, height: imageDataStore.height }">
             <img :src="imageDataStore.imageData" />
         </div>
@@ -25,10 +32,6 @@
             <button @click="changeImageKorea()">한국</button>
             <button @click="changeImageJapan()">일본</button>
             <button @click="changeImageUSA()">미국</button>
-        </div>
-
-        <div v-if="loading" class="spinner-overlay">
-            <div class="spinner"></div>
         </div>
 
         <div v-if="showModal" class="modal">
@@ -56,6 +59,24 @@ export default {
         const originalImage = ref(null);
         const originalFile = ref(null);
         const loading = ref(false);
+        const currentMessageIndex = ref(0);
+        const currentMessage = ref("");
+
+        const messages = [
+            "이미지 생성중...",
+            "조금만 기다려 주세요...",
+            "잠시 후 이미지가 완성됩니다...",
+            "이미지 처리 중...",
+            "곧 완료됩니다..."
+        ];
+
+        const startMessageRotation = () => {
+            currentMessage.value = messages[currentMessageIndex.value];
+            setInterval(() => {
+                currentMessageIndex.value = (currentMessageIndex.value + 1) % messages.length;
+                currentMessage.value = messages[currentMessageIndex.value];
+            }, 5500);
+        };
 
         const API_URL = 'https://api.stability.ai/v2beta/stable-image/control/structure';
         const API_KEY = import.meta.env.VITE_API_KEY;
@@ -64,6 +85,7 @@ export default {
 
         const transformImage = async (prompt) => {
             loading.value = true;
+            startMessageRotation();
             console.log("Transforming image...", API_URL, prompt);
             try {
                 const payload = {
@@ -101,9 +123,10 @@ export default {
             }
         };
 
-        const changeImageKorea = () => transformImage("A person in a Korean webtoon drawing style is looking at the viewer.");
-        const changeImageJapan = () => transformImage("A Ghibli-style person is looking at the viewer");
-        const changeImageUSA = () => transformImage("A person in a Marvel comic style is looking at the viewer.");
+        const changeImageKorea = () => transformImage("A young person in a stylized Korean webtoon drawing style, with exaggerated and vibrant features, is looking at the viewer. The style should emphasize cartoonish qualities.");
+        const changeImageJapan = () => transformImage("A young person in a Ghibli-style drawing, with soft and whimsical features, is looking at the viewer. The design should focus on artistic, animation-like qualities.");
+        const changeImageUSA = () => transformImage("A young person in a Marvel comic style, with bold and dynamic features, is looking at the viewer. The style should emphasize comic book characteristics.");
+
 
         const closeModal = () => {
             showModal.value = false;
@@ -158,7 +181,8 @@ export default {
             changeImageKorea,
             changeImageJapan,
             changeImageUSA,
-            loading
+            loading,
+            currentMessage
         }
     }
 }
@@ -323,35 +347,42 @@ export default {
 
 }
 
-.spinner-overlay {
+.loading-container {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
+    width: 100%;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 9999;
 }
 
-.spinner {
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    border-top: 4px solid #D50F4A;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
+.progress-bar-container {
+    width: 100%;
+    height: 4px;
+    background-color: #f3f3f3;
 }
 
-@keyframes spin {
+.progress-bar {
+    width: 100%;
+    height: 100%;
+    background-color: #D50F4A;
+    animation: progressAnimation 25s linear;
+}
+
+.loading-text {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #D50F4A;
+}
+
+@keyframes progressAnimation {
     0% {
-        transform: rotate(0deg);
+        width: 0;
     }
 
     100% {
-        transform: rotate(360deg);
+        width: 100%;
     }
 }
 </style>
