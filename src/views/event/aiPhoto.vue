@@ -79,7 +79,7 @@ export default {
         };
 
         const API_URL = 'https://api.stability.ai/v2beta/stable-image/control/structure';
-        const API_KEY = import.meta.env.VITE_API_KEY;
+        const API_KEY = 'sk-jszl1b3O0N7pI3spaKjFRvrNom9h1mck7WfS7rvvM5akbrrB';
 
         console.log('API_KEY:', API_KEY);
 
@@ -123,9 +123,10 @@ export default {
             }
         };
 
-        const changeImageKorea = () => transformImage("A young person in a stylized Korean webtoon drawing style, with exaggerated and vibrant features, is looking at the viewer. The style should emphasize cartoonish qualities.");
-        const changeImageJapan = () => transformImage("A young person in a Ghibli-style drawing, with soft and whimsical features, is looking at the viewer. The design should focus on artistic, animation-like qualities.");
-        const changeImageUSA = () => transformImage("A young person in a Marvel comic style, with bold and dynamic features, is looking at the viewer. The style should emphasize comic book characteristics.");
+        const changeImageKorea = () => transformImage("A young person in a stylized Korean webtoon drawing style, with extremely cute, exaggerated, and vibrant features. The person has very large, sparkling eyes, a small, rounded face, and an adorable expression, looking directly at the viewer. The style should be overwhelmingly adorable, with cartoonish qualities being the most prominent aspect.");
+        const changeImageJapan = () => transformImage("A young person in a Ghibli-style drawing, with exceptionally cute, soft, and whimsical features. The person has rounded cheeks, big, expressive eyes, and a sweet, gentle expression, looking at the viewer. The design should radiate a sense of overwhelming cuteness, with artistic, animation-like qualities being infused with a high level of sweetness.");
+        const changeImageUSA = () => transformImage("A young person in a Marvel comic style, with extremely cute, bold, and dynamic features. The person has slightly larger, more expressive eyes, a youthful, rounded face, and a charmingly cute expression, looking at the viewer. The style should strongly emphasize comic book characteristics while making the overall look irresistibly adorable.");
+
 
 
         const closeModal = () => {
