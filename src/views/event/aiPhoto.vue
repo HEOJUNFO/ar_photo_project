@@ -168,6 +168,7 @@ export default {
         const changeImageUSA = () => transformImage("A child in a Disney animation style, with extremely cute, soft, and expressive features. The person has slightly larger, more expressive eyes, a youthful, rounded face, and a charmingly cute expression, looking at the viewer. The style should strongly emphasize the classic Disney animation characteristics while making the overall look irresistibly adorable.");
 
         const replay = () => {
+            imageDataStore.imageData = originalImage.value;
             isCapture.value = false;
         };
 
