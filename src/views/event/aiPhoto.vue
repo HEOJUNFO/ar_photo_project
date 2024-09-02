@@ -89,6 +89,7 @@ import { onMounted, ref } from 'vue';
 import router from '../../router';
 import axios from "axios";
 import FormData from "form-data";
+
 export default {
     name: 'captureReview',
     setup() {
@@ -100,6 +101,7 @@ export default {
         const currentMessageIndex = ref(0);
         const currentMessage = ref("");
         const isCapture = ref(false);
+        const generationLimit = 3;
 
         const messages = [
             "이미지 생성중...",
@@ -120,12 +122,64 @@ export default {
         const API_URL = 'https://api.stability.ai/v2beta/stable-image/control/structure';
         const API_KEY = 'sk-jszl1b3O0N7pI3spaKjFRvrNom9h1mck7WfS7rvvM5akbrrB';
 
-        console.log('API_KEY:', API_KEY);
+        const dbPromise = window.indexedDB.open('ImageGenDB', 1);
+
+        dbPromise.onupgradeneeded = (event) => {
+            const db = event.target.result;
+            if (!db.objectStoreNames.contains('generationStore')) {
+                db.createObjectStore('generationStore', { keyPath: 'id', autoIncrement: true });
+            }
+        };
+
+        const incrementGenerationCount = async () => {
+            return new Promise((resolve, reject) => {
+                const request = dbPromise.result.transaction('generationStore', 'readwrite')
+                    .objectStore('generationStore')
+                    .get(1);
+
+                request.onsuccess = (event) => {
+                    const data = event.target.result || { id: 1, count: 0 };
+                    data.count += 1;
+                    dbPromise.result.transaction('generationStore', 'readwrite')
+                        .objectStore('generationStore')
+                        .put(data);
+
+                    resolve(data.count);
+                };
+
+                request.onerror = (event) => {
+                    reject(event);
+                };
+            });
+        };
+
+        const getGenerationCount = async () => {
+            return new Promise((resolve, reject) => {
+                const request = dbPromise.result.transaction('generationStore', 'readonly')
+                    .objectStore('generationStore')
+                    .get(1);
+
+                request.onsuccess = (event) => {
+                    const data = event.target.result || { count: 0 };
+                    resolve(data.count);
+                };
+
+                request.onerror = (event) => {
+                    reject(event);
+                };
+            });
+        };
 
         const transformImage = async (prompt) => {
+            const generationCount = await getGenerationCount();
+            if (generationCount >= generationLimit) {
+                alert("이미지 생성 제한 횟수를 초과했습니다.");
+                return;
+            }
+
             loading.value = true;
             startMessageRotation();
-            console.log("Transforming image...", API_URL, prompt);
+
             try {
                 const payload = {
                     image: originalFile.value,
@@ -151,13 +205,13 @@ export default {
                     const blob = new Blob([response.data], { type: "image/png" });
                     const url = URL.createObjectURL(blob);
                     imageDataStore.imageData = url;
+                    await incrementGenerationCount();  // Increment the count after successful image generation
                 } else {
                     console.error(`${response.status}: ${response.statusText}`);
                 }
             } catch (error) {
                 console.error('Error transforming image:', error);
-            }
-            finally {
+            } finally {
                 loading.value = false;
                 isCapture.value = true;
             }
@@ -200,7 +254,6 @@ export default {
                 files: filesArray,
             };
 
-
             if (!navigator.share) {
                 alert("공유하기 기능을 지원하지 않는 브라우저입니다.");
                 return;
@@ -209,7 +262,6 @@ export default {
                 .share(shareData)
                 .catch(console.error);
         };
-
 
         const closeModal = () => {
             showModal.value = false;
@@ -243,6 +295,7 @@ export default {
             const blob = base64ToBlob(data, mime);
             return new File([blob], filename, { type: mime });
         };
+
         onMounted(() => {
             setVH();
             window.addEventListener('resize', setVH);
@@ -274,6 +327,7 @@ export default {
     }
 }
 </script>
+
 
 <style scoped>
 .main {
