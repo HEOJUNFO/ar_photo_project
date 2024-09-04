@@ -59,8 +59,8 @@
                             fill="#D50F4A" />
                     </g>
                 </svg>저장</button>
-            <button class="share-button" @click="share()"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
-                    viewBox="0 0 28 28" fill="none">
+            <button class="share-button" @click="showHashTag = true"><svg xmlns="http://www.w3.org/2000/svg" width="28"
+                    height="28" viewBox="0 0 28 28" fill="none">
                     <mask id="mask0_541_1949" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="28"
                         height="28">
                         <rect width="28" height="28" fill="#D9D9D9" />
@@ -80,6 +80,15 @@
                 <button @click="back()">확인</button>
             </div>
         </div>
+
+        <div v-if="showHashTag">
+            <div id="dialog-box">
+                <p>#성결대학교 #XR센터 #컬쳐커넥션 </p>
+                <p>#Culture_Connection</p>
+                <p>#과천시청소년진로페스티벌</p>
+                <button @click="showHashTag = false, hashTagCopy(), share()">해시태그 복사하기</button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -94,6 +103,7 @@ export default {
     name: 'captureReview',
     setup() {
         const showModal = ref(false);
+        const showHashTag = ref(false);
         const imageDataStore = useImageDataStore();
         const originalImage = ref(null);
         const originalFile = ref(null);
@@ -171,11 +181,11 @@ export default {
         };
 
         const transformImage = async (prompt) => {
-            const generationCount = await getGenerationCount();
-            if (generationCount >= generationLimit) {
-                alert("이미지 생성 제한 횟수를 초과했습니다.");
-                return;
-            }
+            // const generationCount = await getGenerationCount();
+            // if (generationCount >= generationLimit) {
+            //     alert("이미지 생성 제한 횟수를 초과했습니다.");
+            //     return;
+            // }
 
             loading.value = true;
             startMessageRotation();
@@ -242,6 +252,35 @@ export default {
                 a.click();
             };
         };
+
+        const hashTagCopy = () => {
+            const textToCopy = '#성결대학교 #XR센터 #컬쳐커넥션 #Culture_Connection #과천시청소년진로페스티벌';
+
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    console.log('Text copied to clipboard successfully!');
+                }).catch(err => {
+                    console.error('Unable to copy text to clipboard:', err);
+                });
+            }
+            else {
+                const el = document.createElement('textarea');
+                el.value = textToCopy;
+                document.body.appendChild(el);
+                el.select();
+                try {
+                    const successful = document.execCommand('copy');
+                    if (successful) {
+                        console.log('Text copied to clipboard successfully!');
+                    } else {
+                        console.error('Unable to copy text to clipboard');
+                    }
+                } catch (err) {
+                    console.error('Unable to copy text to clipboard:', err);
+                }
+                document.body.removeChild(el);
+            }
+        }
 
         const share = async () => {
             const blob = await (await fetch(imageDataStore.imageData)).blob();
@@ -322,7 +361,9 @@ export default {
             isCapture,
             replay,
             saveImage,
-            share
+            share,
+            showHashTag,
+            hashTagCopy
         }
     }
 }
@@ -525,5 +566,57 @@ export default {
     100% {
         width: 100%;
     }
+}
+
+#dialog-box {
+    position: absolute;
+    border-radius: 16px;
+    border: 2px dashed #D50F4A;
+    background: #FFF;
+    padding: 10px;
+    width: 80%;
+    height: calc(30 * var(--vh));
+    top: calc(50 * var(--vh));
+    transform: translate(-50%, -50%);
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#dialog-box p {
+    font-family: "NanumSquare", sans-serif;
+    color: #000;
+    text-align: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 28px;
+    letter-spacing: -0.5px;
+    max-width: 25ch;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+}
+
+#dialog-box button {
+    width: 60%;
+    padding: 10px;
+    border-radius: 100px;
+    border: 2px solid var(--Point-Red-Dark, #922142);
+    background: var(--Point-Red, #D50F4A);
+    color: var(--Text-White, #FFF);
+    text-align: center;
+    font-family: "NanumSquare", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+    text-align: center;
+    z-index: 1;
+    position: relative;
+    box-shadow: 0px 3px #922142;
+    margin-top: 5%;
 }
 </style>
