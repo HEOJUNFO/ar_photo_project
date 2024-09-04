@@ -102,6 +102,7 @@ import FormData from "form-data";
 export default {
     name: 'captureReview',
     setup() {
+        const isGenerating = ref(false);
         const showModal = ref(false);
         const showHashTag = ref(false);
         const imageDataStore = useImageDataStore();
@@ -181,6 +182,12 @@ export default {
         };
 
         const transformImage = async (prompt) => {
+            if (isGenerating.value) {
+                alert("이미지 생성 중입니다. 잠시만 기다려 주세요.");
+                return;
+            }
+            isGenerating.value = true;
+
             // const generationCount = await getGenerationCount();
             // if (generationCount >= generationLimit) {
             //     alert("이미지 생성 제한 횟수를 초과했습니다.");
@@ -215,7 +222,7 @@ export default {
                     const blob = new Blob([response.data], { type: "image/png" });
                     const url = URL.createObjectURL(blob);
                     imageDataStore.imageData = url;
-                    await incrementGenerationCount();  // Increment the count after successful image generation
+                    await incrementGenerationCount();
                 } else {
                     console.error(`${response.status}: ${response.statusText}`);
                 }
@@ -223,6 +230,7 @@ export default {
                 console.error('Error transforming image:', error);
             } finally {
                 loading.value = false;
+                isGenerating.value = false;
                 isCapture.value = true;
             }
         };
