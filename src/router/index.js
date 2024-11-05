@@ -8,6 +8,7 @@ import photo from "@views/event/photo.vue"
 import review from "@views/event/review.vue"
 import event from "@views/event/event.vue"
 import aiPhoto from "@views/event/aiPhoto.vue"
+import photoTemplate from "../views/event/photoTemplate.vue";
 
 
 
@@ -19,6 +20,7 @@ export const routes = [
     {path: '/review',component:review, name:'review'},
     {path: '/event',component:event, name:'event'},
     {path: '/aiPhoto',component:aiPhoto, name:'aiPhoto'},
+    {path: '/photoTemplate',component:photoTemplate, name:'photoTemplate'},
 ]
 
 const router = createRouter({
