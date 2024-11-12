@@ -2,8 +2,8 @@
     <div class="main">
         <div class="top-section">
             <button></button>
-            <button @click="aiButton()"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"
-                    fill="none">
+            <button @click="aiButton()"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+                    viewBox="0 0 40 40" fill="none">
                     <circle cx="20" cy="20" r="19" fill="white" stroke="#D50F4A" stroke-width="2" />
                     <text x="20" y="25" fill="#D50F4A" font-size="16" font-family="Arial" font-weight="bold"
                         text-anchor="middle">AI</text>
@@ -40,8 +40,8 @@
                             fill="#D50F4A" />
                     </g>
                 </svg>뒤로</button>
-            <button @click="saveImage()"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"
-                    fill="none">
+            <button @click="saveImage()"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                    viewBox="0 0 28 28" fill="none">
                     <mask id="mask0_541_1954" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="28"
                         height="28">
                         <rect width="28" height="28" fill="#D9D9D9" />
@@ -78,7 +78,6 @@
                 <p>#컬쳐커넥션 #컬쳐버스</p>
                 <p>#Culture_Connection</p>
                 <p>#The_flash_project</p>
-                <p>#PlayX4, #플레이엑스포</p>
                 <button @click="showHashTag = false, hashTagCopy(), shareImage()">해시태그 복사하기</button>
             </div>
         </div>

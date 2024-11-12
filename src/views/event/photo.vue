@@ -25,8 +25,8 @@
             </div>
             <div class="bottom-section3">
                 <button><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
-                        <mask id="mask0_541_2073" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="28"
-                            height="28">
+                        <mask id="mask0_541_2073" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
+                            width="28" height="28">
                             <rect width="28" height="28" fill="#D9D9D9" />
                         </mask>
                         <g mask="url(#mask0_541_2073)">
@@ -82,8 +82,8 @@
         </div>
 
         <div class="bottom-section">
-            <button class="button2" @click="frameToggle()"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
-                    viewBox="0 0 28 28" fill="none">
+            <button class="button2" @click="frameToggle()"><svg xmlns="http://www.w3.org/2000/svg" width="28"
+                    height="28" viewBox="0 0 28 28" fill="none">
                     <mask id="mask0_541_1846" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="28"
                         height="28">
                         <rect width="28" height="28" fill="#D9D9D9" />
@@ -94,14 +94,14 @@
                             fill="#D50F4A" />
                     </g>
                 </svg>캐릭터</button>
-            <button class="button1" onclick="captureImage()"><svg xmlns="http://www.w3.org/2000/svg" width="70" height="70"
-                    viewBox="0 0 70 70" fill="none">
+            <button class="button1" onclick="captureImage()"><svg xmlns="http://www.w3.org/2000/svg" width="70"
+                    height="70" viewBox="0 0 70 70" fill="none">
                     <circle cx="35" cy="35" r="28" fill="#D50F4A" />
                     <circle opacity="0.3" cx="35" cy="35" r="33.5" stroke="#D50F4A" stroke-width="3" />
                     <circle cx="35" cy="35" r="10.5" stroke="white" stroke-width="3" />
                 </svg></button>
-            <button class="button2" @click="stickerToggle()"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                    viewBox="0 0 30 30" fill="none">
+            <button class="button2" @click="stickerToggle()"><svg xmlns="http://www.w3.org/2000/svg" width="30"
+                    height="30" viewBox="0 0 30 30" fill="none">
                     <path
                         d="M15 25.5903C16.3269 26.7779 18.0791 27.5 20 27.5C24.1421 27.5 27.5 24.1422 27.5 20C27.5 16.5413 25.1588 13.6295 21.9748 12.7627M8.02522 12.7627C4.84117 13.6295 2.5 16.5413 2.5 20C2.5 24.1421 5.85786 27.5 10 27.5C14.1421 27.5 17.5 24.1421 17.5 20C17.5 19.0244 17.3137 18.0923 16.9748 17.2373M22.5 10C22.5 14.1421 19.1421 17.5 15 17.5C10.8579 17.5 7.5 14.1421 7.5 10C7.5 5.85786 10.8579 2.5 15 2.5C19.1421 2.5 22.5 5.85786 22.5 10Z"
                         stroke="#D50F4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -145,8 +145,8 @@
                                 fill="#9F9F9F" />
                         </g>
                     </svg></button>
-                <img @click="setSticker(imageObj)" v-for="(imageObj, index) in STICKERS" :key="index" :src="imageObj.src"
-                    :class="{ 'selected': selectedSticker === index }" />
+                <img @click="setSticker(imageObj)" v-for="(imageObj, index) in STICKERS" :key="index"
+                    :src="imageObj.src" :class="{ 'selected': selectedSticker === index }" />
             </div>
         </div>
 

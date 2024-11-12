@@ -84,21 +84,21 @@ export default class Camera
         const ctx = canvas.getContext('2d');
         ctx.putImageData(data, 0, 0);
 
-        const frameImageElement = document.querySelector('.frame img');
+        // const frameImageElement = document.querySelector('.frame img');
 
     
-        if (frameImageElement.complete) {
+        // if (frameImageElement.complete) {
           
-            ctx.drawImage(frameImageElement, 0, 0, canvas.width, canvas.height);
-        } else {
+        //     ctx.drawImage(frameImageElement, 0, 0, canvas.width, canvas.height);
+        // } else {
             
-            await new Promise((resolve) => {
-                frameImageElement.onload = () => {
-                    ctx.drawImage(frameImageElement, 0, 0, canvas.width, canvas.height);
-                    resolve();
-                };
-            });
-        }
+        //     await new Promise((resolve) => {
+        //         frameImageElement.onload = () => {
+        //             ctx.drawImage(frameImageElement, 0, 0, canvas.width, canvas.height);
+        //             resolve();
+        //         };
+        //     });
+        // }
         
         const image = canvas.toDataURL('image/png');
         this.experience.saveImage(image)
