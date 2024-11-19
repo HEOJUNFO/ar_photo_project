@@ -131,7 +131,7 @@ export default {
         };
 
         const API_URL = 'https://api.stability.ai/v2beta/stable-image/control/structure';
-        const API_KEY = 'sk-jszl1b3O0N7pI3spaKjFRvrNom9h1mck7WfS7rvvM5akbrrB';
+        const API_KEY = 'sk-cD8t0xqaanFuazdUufkpiFTw4yGxjS6QU8oNs5z3shUzMJnN';
 
         const dbPromise = window.indexedDB.open('ImageGenDB', 1);
 
